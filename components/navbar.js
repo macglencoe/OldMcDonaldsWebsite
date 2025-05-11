@@ -37,6 +37,10 @@ export const Navbar = () => {
                         <li className={pathname === "/faq" ? styles.active : null}><a href="/faq">FAQ</a></li>
                     </ul>
                 </nav>
+                <div className={styles.buttons + ' ' + styles.mobile}>
+                    <a href="tel:304-839-2330">Call</a>
+                    <a href="/visit">Visit</a>
+                </div>
             </div>
         </header>
     )
