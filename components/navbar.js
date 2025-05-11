@@ -7,7 +7,7 @@ export const Navbar = () => {
 
     return (
         <header className={styles.navbar}>
-            <h1>Old McDonald's</h1>
+            <a href="/"><h1>Old McDonald's</h1></a>
             <nav>
                 <ul>
                     <li><a href="/activities">Activities</a></li>

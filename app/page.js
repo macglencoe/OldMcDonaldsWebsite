@@ -77,14 +77,6 @@ export default function Home() {
               </li>
             </ul>
           </div>
-          <div>
-            {/* <Calendar
-              month={10}
-              year={2025}
-              events={events}
-              openDates={octoberOpenDates}
-            /> */}
-          </div>
         </section>
         <section className={styles.rates}>
           <Image
