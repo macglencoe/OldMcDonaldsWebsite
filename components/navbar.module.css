@@ -20,6 +20,16 @@
     gap: 1rem;
     padding: 0 1rem;
 }
+.navbar nav li.active {
+    border-bottom: 3px solid var(--foreground);
+}
+.navbar nav li:hover {
+    border-bottom: 3px solid var(--accent);
+}
+.navbar nav li {
+    border-bottom: 3px solid transparent;
+    transition: border-bottom 0.2s ease-out;
+}
 .navbar nav li a {
     text-transform: uppercase;
     font-weight: 600;

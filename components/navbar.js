@@ -1,19 +1,21 @@
 "use client"
 import { useState } from "react"
 import styles from "./navbar.module.css"
+import { usePathname, useRouter } from "next/navigation"
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
+    const pathname = usePathname();
 
     return (
         <header className={styles.navbar}>
             <a href="/"><h1>Old McDonald's</h1></a>
             <nav>
                 <ul>
-                    <li><a href="/activities">Activities</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="/reservations">Reservations</a></li>
-                    <li><a href="/faq">FAQ</a></li>
+                    <li className={pathname === "/activities" ? styles.active : null}><a href="/activities">Activities</a></li>
+                    <li className={pathname === "/#about" ? styles.active : null}><a href="/#about">About</a></li>
+                    <li className={pathname === "/reservations" ? styles.active : null}><a href="/reservations">Reservations</a></li>
+                    <li className={pathname === "/faq" ? styles.active : null}><a href="/faq">FAQ</a></li>
                 </ul>
             </nav>
             <div className={styles.buttons}>
@@ -29,10 +31,10 @@ export const Navbar = () => {
             <div className={styles.menu + (isOpen ? " " + styles.open : "")}>
                 <nav>
                     <ul>
-                        <li><a href="/activities">Activities</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="/reservations">Reservations</a></li>
-                        <li><a href="/faq">FAQ</a></li>
+                        <li className={pathname === "/activities" ? styles.active : null}><a href="/activities">Activities</a></li>
+                        <li className={pathname === "/#about" ? styles.active : null}><a href="/#about">About</a></li>
+                        <li className={pathname === "/reservations" ? styles.active : null}><a href="/reservations">Reservations</a></li>
+                        <li className={pathname === "/faq" ? styles.active : null}><a href="/faq">FAQ</a></li>
                     </ul>
                 </nav>
             </div>
