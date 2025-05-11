@@ -45,7 +45,6 @@ export const PumpkinPatch = () => {
                                 <li>Winter squash</li>
                                 <li>Ornamental varieties</li>
                             </ul>
-                            <p>Kinda sounds like DEI to me</p>
                         </div>
                         <img src="https://images.unsplash.com/photo-1507919181268-0a42063f9704?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></img>
                     </div>
@@ -60,9 +59,9 @@ export const PumpkinPatch = () => {
                             </ul>
                             <p>Do:</p>
                             <ul>
-                                <li>Crack femboys</li>
-                                <li>Crack femboys</li>
-                                <li>Crack femboys</li>
+                                <li>Smoke Skooma</li>
+                                <li>Smoke Skooma</li>
+                                <li>Smoke Skooma</li>
                             </ul>
                         </div>
                         <img src="https://preview.redd.it/oimju2x5eax41.jpg?width=640&crop=smart&auto=webp&s=81616ac7a07b76ced24a06968dc9dc6475a3fb05"></img>

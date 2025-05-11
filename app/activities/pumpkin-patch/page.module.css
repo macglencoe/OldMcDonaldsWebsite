@@ -102,4 +102,14 @@
     .andImage > img {
         width: 100%;
     }
+
+    .body h2 {
+        font-size: 3rem;
+    }
+    .body p.big {
+        font-size: 2rem;
+    }
+    .body p {
+        font-size: 1rem;
+    }
 }
