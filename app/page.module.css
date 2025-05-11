@@ -1,0 +1,348 @@
+
+
+.wrapper section > h1 {
+    font-size: 3em;
+    font-family: Satisfy;
+}
+
+section.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    padding: 4rem;
+    flex-direction: column;
+    gap: 5vmax
+}
+section.hero img {
+    position: absolute;
+    object-fit: cover;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    z-index: -1;
+}
+section.hero .text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+section.hero .text b {
+    position: relative;
+    font-family: Satisfy;
+    color: var(--color-foreground);
+    font-size: 2rem;
+    font-weight: 700;
+    text-decoration: underline;
+}
+section.hero .text .tagline {
+    font-size: 4em;
+    font-family: Satisfy;
+}
+
+section.hero .cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
+section.hero .cta p {
+    font-weight: 600;
+    color: var(--background);
+    padding: 0.3em;
+    text-transform: uppercase;
+}
+section.hero .cta .buttons {
+    display: flex;
+    gap: 1rem;
+}
+section.hero .cta .buttons a {
+    font-size: 1.3em;
+    font-weight: 700;
+    background-color: var(--accent);
+    padding: 0.25em 0.5em;
+    color: var(--background);
+    border-bottom: 3px solid transparent;
+}
+section.hero .cta .buttons a:last-child {
+    background-color: var(--foreground);
+}
+section.hero .cta .buttons a:hover {
+    border-bottom: 3px solid var(--background);
+}
+
+section.season {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 20px;
+    background-color: var(--foreground);
+    color: var(--background);
+}
+section.season > h1 {
+    font-size: 3em;
+    font-family: Satisfy;
+}
+section.season .times {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+    width: 100%;
+    color: var(--foreground);
+}
+section.season .times ul {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-evenly;
+    width: 100%;
+    flex-wrap: wrap;
+}
+section.season .times li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--background);
+    padding: 1rem;
+    border-style: dashed;
+    border-color: var(--foreground);
+    border-width: 0px 4px 0 4px;
+}
+section.season .times li h2 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-family: Satisfy;
+}
+section.season .times li div span:first-child {
+    font-weight: 600;
+}
+section.season .times li div span:last-child::before {
+    content: ' - ';
+}
+
+section.season .dates {
+    width: 100%;
+}
+section.season .dates ul {
+    display: flex;
+    gap: 2em;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    align-items: center;
+    flex-wrap: wrap;
+    
+}
+section.season .dates li {
+    font-size: 2.5em;
+    font-weight: 700;
+}
+section.season .dates ul > p {
+    text-align: center;
+    font-size: 1.5em;
+    margin: 0.5em 0;
+    font-weight: 600;
+}
+
+
+section.rates {
+    position: relative;
+    overflow: hidden;
+}
+
+section.rates img {
+    position: absolute;
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    z-index: -1;
+}
+section.rates > .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px) saturate(10%) invert(7%) sepia(8%) saturate(579%) hue-rotate(313deg) brightness(93%) contrast(91%);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: -1;
+}
+section.rates > h1 {
+    font-size: 3em;
+    font-family: Satisfy;
+    text-align: center;
+    font-weight: 700;
+    width: 100%;
+}
+
+section.rates > p {
+    text-align: center;
+    font-size: 1.5em;
+    margin: 1em 0;
+    color: var(--background);
+}
+
+section.rates > ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+section.rates > ul > li {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background);
+    color: var(--foreground);
+    overflow: hidden;
+    border-radius: 10px;
+    width: min-content;
+    min-width: 250px;
+    justify-content: flex-start;
+}
+section.rates > ul > li h2 {
+    white-space: nowrap;
+    font-size: 2.1em;
+    font-weight: 600;
+    padding: 0.5em;
+    border-bottom: 5px solid var(--accent);
+    text-align: center;
+}
+section.rates > ul > li > div {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 5px solid var(--accent);
+}
+section.rates > ul > li > div:last-child {
+    border: none;
+}
+section.rates .rateInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+section.rates .rateInfo ul {
+    list-style: disc inside;
+}
+section.rates .price {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0;
+    height: 100%;
+}
+section.rates .price b {
+    font-size: 3em;
+    font-weight: 400;
+}
+section.rates .price span, section.rates .price p {
+    text-align: center;
+}
+section.rates .price span {
+    translate: 0 -1em;
+}
+
+
+
+section.about {
+    background-color: var(--foreground);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+section.about > h1 {
+    color: var(--background);
+    font-weight: 700;
+}
+section.about .infoTop {
+    background-color: var(--background);
+    border-top: 5px solid var(--accent);
+}
+section.about p {
+    font-size: 19px;
+    font-weight: 500;
+    white-space: pre-wrap;
+    line-height: 1.5em;
+}
+section.about .infoTop p {
+    color: var(--foreground);
+    padding: 1rem;
+}
+section.about .infoBottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    flex-wrap: wrap;
+
+}
+section.about .infoBottom img {
+    flex: 1;
+    height: 100%;
+    min-width: 400px;
+    max-width: 500px;
+    object-fit: cover;
+    object-position: center;
+    
+}
+section.about .infoBottom > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 500px;
+}
+section.about h2 {
+    color: var(--background);
+    font-family: Satisfy;
+    font-size: 3em;
+    font-weight: 700;
+}
+
+section.about p {
+    color: var(--background);
+    font-weight: 500;
+}
+
+@media screen and (max-width: 600px) {
+    section.hero .text .tagline {
+        font-size: 2.5em;
+        text-align: center;
+    }
+    section.hero .cta .buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    section.season .dates ul {
+        flex-direction: column;
+        gap: 0px;
+    }
+    section.rates > ul {
+        padding: 10px;
+    }
+    section.rates > ul > li {
+        min-width: 100%;
+    }
+    section.about .infoBottom > div {
+        min-width: 100%;
+    }
+    section.about .infoBottom img {
+        min-width: 100%;
+    }
+
+}
+
+

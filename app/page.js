@@ -1,103 +1,181 @@
 import Image from "next/image";
+import styles from "./page.module.css";
+import Layout from "@/components/layout";
+import Calendar from "@/components/calendar";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+  const events = [
+    { name: 'Event 1', date: '2025-10-12' },
+    { name: 'Event 2', date: '2025-10-15' },
+    { name: 'Event 3', date: '2025-10-20' },
+  ];
+
+  const octoberOpenDates = [
+    1, 2, 7, 8, 9, 14, 15, 16, 21,22,23,28,29,30
+  ]
+
+  
+
+  return (
+    <Layout>
+      <div className={styles.wrapper}>
+        <section className={styles.hero}>
           <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            src="https://images.unsplash.com/photo-1572978385565-b4c1c4b9ce17?ixid=M3w5MTMyMXwwfDF8c2VhcmNofDEwfHxwdW1wa2luJTIwcGF0Y2h8ZW58MHx8fHwxNzQzMDE4NTUwfDA&ixlib=rb-4.0.3&w=1500"
+            width={1500}
+            height={1000}
+            alt="Old McDonald's"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+          <div className={styles.text}>
+            <b>Open Soon</b>
+            <h1 className={styles.tagline}>Real Farm Fun</h1>
+          </div>
+          <div className={styles.cta}>
+            <p>Available Through August 20</p>
+            <div className={styles.buttons}>
+              <a href="/reservations">Book Your Event</a>
+              <a href="/vendor-application">Vendor Application</a>
+            </div>
+          </div>
+        </section>
+        <section className={styles.season}>
+          <h1>2025 Season</h1>
+          <div className={styles.times}>
+            <ul>
+              <li>
+                <h2>Fridays</h2>
+                <div>
+                  <span>1:00 AM</span>
+                  <span>6:00 PM</span>
+                </div>
+              </li>
+              <li>
+                <h2>Saturdays</h2>
+                <div>
+                  <span>11:00 AM</span>
+                  <span>6:00 PM</span>
+                </div>
+              </li>
+              <li>
+                <h2>Sundays</h2>
+                <div>
+                  <span>12:00 PM</span>
+                  <span>6:00 PM</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div className={styles.dates}>
+            <ul>
+              <li>
+                September 26
+              </li>
+              <p>-</p>
+              <li>
+                October 26
+              </li>
+            </ul>
+          </div>
+          <div>
+            {/* <Calendar
+              month={10}
+              year={2025}
+              events={events}
+              openDates={octoberOpenDates}
+            /> */}
+          </div>
+        </section>
+        <section className={styles.rates}>
           <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+            src="https://images.unsplash.com/photo-1720084562445-1a10783fbe5c?q=80&w=1294&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            width={1500}
+            height={1000}
+            alt="Old McDonald's"
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+          <div className={styles.overlay}></div>
+          <h1>Rates</h1>
+          <ul>
+            <li>
+              <h2>General Admission</h2>
+              <div className={styles.rateInfo}>
+                <h3>Includes:</h3>
+                <ul>
+                  <li>Corn Maze</li>
+                  <li>Nature Trails</li>
+                  <li>Photo Opportunities</li>
+                  <li>Various Games</li>
+                  <li>Sunflower Fields</li>
+                  <li>Petting Zoo</li>
+                  <li>Playground</li>
+                  <li>Picnic Area</li>
+                </ul>
+              </div>
+              <div className={styles.price}>
+                <b>$6</b>
+                <span>/ person*</span>
+                <p>Must be paid at the admission booth</p>
+              </div>
+            </li>
+            <li>
+              <h2>Hayride</h2>
+              <div className={styles.rateInfo}>
+                <p>Take a tour of the farm on a hayride, featuring scenic views</p>
+                <p>Rules apply</p>
+              </div>
+              <div className={styles.price}>
+                <b>$4</b>
+                <span>/ person*</span>
+                <p>Must be paid at the admission booth</p>
+              </div>
+            </li>
+            <li>
+              <h2>U-Pick Pumpkins</h2>
+              <div className={styles.rateInfo}>
+                <p>Pick your own pumpkins and enjoy a scenic walk</p>
+                <p>Carts for hauling pumpkins are available, but may be limited on busy days</p>
+                <p>Please be prepared to brawl for pumpkins</p>
+              </div>
+              <div className={styles.price}>
+                <b>¢50</b>
+                <span>/ pound</span>
+                <p>Must be paid at weighing station</p>
+                <p>Card & cash are accepted</p>
+              </div>
+            </li>
+            <li>
+              <h2>U-Pick Flowers</h2>
+              <div className={styles.rateInfo}>
+                <p>Pick from our Zinnia & Sunflower fields, and enjoy a scenic walk</p>
+                <p>Cutters and cups are available at the arrangement wagon, near the flower fields</p>
+                <p>Vases are also available for sale at the arrangement wagon, priced individually</p>
+              </div>
+              <div className={styles.price}>
+                <b>$7</b>
+                <span>/ cup</span>
+                <p>Must be paid at the weighing station</p>
+              </div>
+            </li>
+          </ul>
+          <p>*Age 3 and under are free</p>
+  
+        </section>
+        <section className={styles.about} id="about">
+          <h1>About Us</h1>
+          <div className={styles.infoTop}>
+            <p>Take a break from the hustle and bustle of everyday and visit us on our family farm.<br></br>Glencoe Farm is located along Middle Creek, the stream runs through our park-like setting where you and your family can relax and enjoy the peaceful countryside. We are only open 6 weeks each Fall. This is a family effort to get the farm ready to open up to the community. All the work is done by our immediate family. It is a labor of love to be able to bring a farm experience to you and your family. We feel blessed to be able to share our home place with you!</p>
+          </div>
+          <div className={styles.infoBottom}>
+            <Image src="/mcdonaldporch.jpg" width={1500} height={1000} alt="McDonald Family on Porch" />
+            <div>
+              <h2>We've got history!</h2>
+              <p>The McDonald family has lived here on Glencoe farm for seven generations. Since the late 1700s, our farm has been in operation continously. Recently, we received a sestercentennial award - that means 250 years!</p>
+              <p>Currently, the farm consists of 175 acres. Over the years, the farm has had many uses including an orchard, dairy & beef farm.  Currently the fields are used for hay, corn, and pumpkins.    Glencoe Farm is located along Middle Creek, the stream runs through our park-like setting where you and your family can relax and enjoy the peaceful countryside.</p>
+              <p>In 2007, Glencoe was accepted into the Berkeley County Farm Preservation.  It is a great feeling knowing it will remain a green space and will be forever protected.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </Layout>
+  )
 }
