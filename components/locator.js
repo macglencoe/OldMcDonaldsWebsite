@@ -26,7 +26,7 @@ const Locator = () => {
                         { "title": "Old McDonalds Pumpkin Patch \u0026 Corn Maze", "address1": "1597 Arden Nollville Rd", "address2": "Inwood, WV 25428, USA", "coords": { "lat": 39.38584378443022, "lng": -78.04222809325408 }, "placeId": "ChIJfeseHkAHyokRyt3qHueG008" }
                     ],
                     "mapOptions": { "center": { "lat": 38.0, "lng": -100.0 }, "fullscreenControl": true, "mapTypeControl": false, "streetViewControl": false, "zoom": 4, "zoomControl": true, "maxZoom": 17, "mapId": "" },
-                    "mapsApiKey": "AIzaSyCcdVPh_Oa6KTCMp294s5yAJWLAA60ZXa0",
+                    "mapsApiKey": key,
                     "capabilities": { "input": false, "autocomplete": false, "directions": false, "distanceMatrix": false, "details": false, "actions": false }
                 };
 
