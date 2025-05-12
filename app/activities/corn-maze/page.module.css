@@ -1,0 +1,71 @@
+.cornMaze {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.cornMaze img {
+    height: 100%;
+    width: 90%;
+    aspect-ratio: 2/1;
+    object-fit: cover;
+    padding: 10px;
+    border: solid var(--foreground);
+    border-width: 3px 0;
+    max-width: 700px;
+}
+
+.rules {
+    margin: 2em;
+    padding: 2em;
+    border-left: 3px solid var(--foreground);
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+.rules ol {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.pastMazes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 2em;
+}
+.pastMazes ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 20px;
+    justify-content: space-evenly;
+}
+.pastMazes li {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    border: solid var(--foreground);
+    border-width: 4px 0;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.pastMazes li img {
+    width: 100%;
+    padding-bottom: 0.5em;
+}
+.pastMazes li span {
+    text-align: center;
+    width: 100%;
+    font-size: 1.3em;
+    font-weight: 600;
+    background-color: var(--foreground);
+    color: var(--background);
+}
