@@ -1,0 +1,59 @@
+.andImage {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    padding: 1em;
+    margin: auto;
+}
+.andImage:nth-child(even) {
+    flex-direction: row-reverse;
+}
+.andImage > div {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--background);
+    height: fit-content;
+    translate: 3em;
+    border-left: 3px solid var(--foreground);
+}
+.andImage:nth-child(even) > div {
+    border-left: none;
+    border-right: 3px solid var(--foreground);
+    translate: -3em;
+    text-align: right;
+}
+.andImage:nth-child(even) > div ul {
+    text-align: left;
+}
+.andImage > img {
+    height: 20em;
+    min-width: 320px;
+    width: 50%;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 768px) {
+    .andImage {
+        flex-direction: column;
+    }
+    .andImage:nth-child(even) {
+        flex-direction: column;
+    }
+    .andImage > div {
+        translate: 0;
+        border-left: none;
+        border-right: none;
+    }
+    .andImage:nth-child(even) > div {
+        translate: 0;
+        border-left: none;
+        border-right: none;
+    }
+    .andImage > img {
+        width: 100%;
+    }
+}
