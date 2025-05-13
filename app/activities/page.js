@@ -44,7 +44,7 @@ export default function Activities() {
                     </div>
                     <div className={styles.largeActivity}>
                         <img className={styles.backdrop} src="https://images.unsplash.com/photo-1473554198449-fd330ccd766e?q=80&w=1744&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></img>
-                        <a href="/hayrides"><h2 className={styles.light}>Hayrides</h2></a>
+                        <a href="activities/hayrides"><h2 className={styles.light}>Hayrides</h2></a>
                     </div>
                     <div className={styles.mediumActivity}>
                         <img className={styles.backdrop} src="https://images.unsplash.com/photo-1626186241349-5d5f44407f55?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></img>
