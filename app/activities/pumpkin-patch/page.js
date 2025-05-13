@@ -5,7 +5,7 @@ import { AndImage } from "@/components/andImage"
 export const PumpkinPatch = () => {
     return (
         <Layout>
-            <div className={styles.wrapper}>
+            <div className="body basic">
                 <div className={styles.header}>
                     <h1>Pumpkin Patch</h1>
                     <span>2025 Season</span>

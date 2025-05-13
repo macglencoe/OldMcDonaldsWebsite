@@ -1,7 +1,6 @@
 .container {
     display: flex;
     flex-direction: row;
-    margin: 1em;
     padding: 1em;
     gap: 1em;
     overflow: hidden;
@@ -11,8 +10,8 @@
 }
 .container > img {
     flex: 1;
-    width: 300px; 
-    height: 250px;
+    min-width: 300px; 
+    max-height: 250px;
     padding: 1em;
     object-fit: cover;
 }
@@ -55,5 +54,7 @@
     width: fit-content;
 
     font-size: 1.2em;
+}
+.website:hover {
     font-weight: 600;
 }

@@ -9,7 +9,7 @@ export const Vendors = () => {
                 <h1>Vendors</h1>
                 <span>2025 Season</span>
             </div>
-            <div className='body basic'>
+            <div className="body basic">
                 <VendorProfile
                     name="Doggystyle"
                     subtitle="Hotdogs"

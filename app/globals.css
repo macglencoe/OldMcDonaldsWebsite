@@ -67,6 +67,14 @@ body {
   margin: 0 0.5em;
 }
 
+.body.basic {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  max-width: 1300px;
+  margin: auto;
+}
+
 .body.basic h2 {
   font-size: 4rem;
   font-family: Satisfy;
