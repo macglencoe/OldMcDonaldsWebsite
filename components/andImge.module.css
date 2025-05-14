@@ -10,30 +10,45 @@
 .andImage:nth-child(even) {
     flex-direction: row-reverse;
 }
-.andImage > div {
+.andImage .content {
     padding: 1em;
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: var(--background);
     height: fit-content;
-    translate: 3em;
-    border-left: 3px solid var(--foreground);
+    translate: 3em -1em;
+    border-left: 5px solid var(--foreground);
 }
-.andImage:nth-child(even) > div {
+.andImage:nth-child(even) .content {
     border-left: none;
-    border-right: 3px solid var(--foreground);
-    translate: -3em;
+    border-right: 5px solid var(--foreground);
+    translate: -3em 1em;
     text-align: right;
+    
 }
-.andImage:nth-child(even) > div ul {
+.andImage:nth-child(even) .content {
     text-align: left;
+}
+.andImage .content > * {
+    color: var(--foreground);
 }
 .andImage > img {
     height: 20em;
     min-width: 320px;
     width: 50%;
     object-fit: cover;
+    z-index: 0;
+}
+
+.andImage .backdrop {
+    background-color: var(--accent);
+    z-index: 2;
+    height: fit-content;
+    translate: 0 1em;
+}
+.andImage:nth-child(even) .backdrop {
+    translate: 0 -1em;
 }
 
 @media screen and (max-width: 768px) {
