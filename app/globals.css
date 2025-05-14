@@ -67,7 +67,7 @@ body {
   margin: 0 0.5em;
 }
 
-.body.basic {
+.body {
   display: flex;
   flex-direction: column;
   gap: 2em;
