@@ -73,10 +73,15 @@ body {
   gap: 2em;
   max-width: 1300px;
   margin: auto;
+  padding: 0 2em;
 }
 
 .body.basic h2 {
   font-size: 4rem;
+  font-family: Satisfy;
+}
+.body.basic h3 {
+  font-size: 2rem;
   font-family: Satisfy;
 }
 .body.basic p {
@@ -94,8 +99,28 @@ body {
   list-style: decimal;
   text-align: left;
 }
+.body.basic a {
+  color: var(--accent);
+  text-decoration: none;
+  word-break: break-all;
+}
+.body.basic a:hover {
+  text-decoration: underline;
+}
+.body.basic section > h2 {
+  font-size: 3rem;
+  text-align: center;
+}
+.body.basic section > .description {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
 
 @media screen and (max-width: 768px) {
+  .body.basic {
+    padding: 0.5em;
+  }
   .body.basic h2 {
     font-size: 2.5rem;
   }
