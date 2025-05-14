@@ -58,15 +58,21 @@
     .andImage:nth-child(even) {
         flex-direction: column;
     }
-    .andImage > div {
-        translate: 0;
-        border-left: none;
-        border-right: none;
+    .andImage .backdrop {
+        translate: 0.6em -0.3em;
     }
-    .andImage:nth-child(even) > div {
-        translate: 0;
-        border-left: none;
+    .andImage:nth-child(even) > .backdrop {
+        translate: -0.6em 0.3em;
+    }
+    .andImage .content {
+        translate: -0.6em 0.3em;
         border-right: none;
+        border-left: none;
+    }
+    .andImage:nth-child(even) .content {
+        translate: 0.6em 0.3em;
+        border-right: none;
+        border-left: none;
     }
     .andImage > img {
         width: 100%;
