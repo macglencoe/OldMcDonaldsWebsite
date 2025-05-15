@@ -74,7 +74,7 @@ export const Reservations = () => {
                         <div className={styles.options}>
                             <p>Call us: <a href="tel:304-839-2330">304-839-2330</a></p>
                             <p>OR</p>
-                            <a href="https://example.com" className={styles.button}>Fill Out Form</a>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfUPYvXsF4qcMsmtgOuidB06WPJkKKwlSLmo3uPnNDWgziPsw/viewform?usp=sharing&ouid=100113173059112922558" className={styles.button}>Fill Out Form</a>
                         </div>
                     </div>
             </div>
