@@ -5,6 +5,7 @@
     justify-content: center;
     flex-direction: column;
 }
+
 .cornMaze img {
     height: 100%;
     width: 90%;
@@ -24,6 +25,7 @@
     flex-direction: column;
     gap: 1em;
 }
+
 .rules ol {
     display: flex;
     flex-direction: column;
@@ -38,6 +40,7 @@
     gap: 20px;
     padding: 2em;
 }
+
 .pastMazes ul {
     list-style: none;
     display: flex;
@@ -46,6 +49,7 @@
     gap: 20px;
     justify-content: space-evenly;
 }
+
 .pastMazes li {
     flex: 1;
     min-width: 300px;
@@ -57,10 +61,12 @@
     flex-direction: column;
     justify-content: flex-end;
 }
+
 .pastMazes li img {
     width: 100%;
     padding-bottom: 0.5em;
 }
+
 .pastMazes li span {
     text-align: center;
     width: 100%;
@@ -68,4 +74,32 @@
     font-weight: 600;
     background-color: var(--foreground);
     color: var(--background);
+}
+
+.nightMaze {
+    width: 100%;
+    display: flex;
+    gap: 0.2em;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.nightMaze a.button {
+    width: fit-content;
+    gap: 1em;
+    padding: 0.5em 1em;
+    background-color: var(--nightMazeAccent);
+    color: var(--nightMazeForeground) !important;
+    font-weight: 600;
+    align-self: center;
+    cursor: pointer;
+}
+
+.nightMaze h2, .nightMaze p {
+    color: var(--nightMazeForeground);
+}
+
+.nightMaze a.button:hover {
+    background-color: var(--nightMazeForeground);
+    color: var(--nightMazeAccent) !important;
 }

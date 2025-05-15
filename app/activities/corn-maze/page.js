@@ -22,6 +22,15 @@ export const CornMaze = () => {
                     <p>We have two corn mazes, each being 5 acres in area</p>
                     <p>In order to get to Maze #2, you must first traverse Maze #1 😱</p>
                 </AndImage>
+                <AndImage style="night" src="https://images.unsplash.com/photo-1603174378108-63103ad2f24b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                    <div className={styles.nightMaze}>
+                        <h2>Night Maze</h2>
+                        <p>Starting on October nth, we will have the maze open from 7pm to 10:30pm</p>
+                        <p>Bring your flashlight and your friends for a spooky night on the farm</p>
+                        <a href='/activities/night-maze' className={styles.button}>See More</a>
+                    </div>
+
+                </AndImage>
                 <AndImage src="https://images.unsplash.com/photo-1530194031436-911753a437bf?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                     <h2>Maze Game</h2>
                     <p>There are <b>4 stamps</b> hidden throughout the maze</p>

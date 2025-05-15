@@ -4,6 +4,9 @@
   --background: #FDFFFF;
   --foreground: #16280C;
   --accent: #E38B26;
+  --nightMazeBackground: #714468;
+  --nightMazeForeground: #fce896;
+  --nightMazeAccent: #e1501d;
 }
 
 @theme {
@@ -42,11 +45,13 @@ body {
   align-items: center;
   margin: 2rem 0;
 }
+
 .header h1 {
   text-align: center;
   font-size: 4rem;
   font-family: Satisfy;
 }
+
 .header span {
   font-size: 1.2rem;
   font-weight: 600;
@@ -58,7 +63,9 @@ body {
   display: flex;
 
 }
-.header span::before, .header span::after {
+
+.header span::before,
+.header span::after {
   content: "";
   display: inline-block;
   width: 1em;
@@ -80,40 +87,60 @@ body {
   font-size: 4rem;
   font-family: Satisfy;
 }
+
 .body.basic h3 {
   font-size: 2rem;
   font-family: Satisfy;
 }
+
 .body.basic p {
   font-size: 1.2rem;
 }
+
 .body.basic p.big {
   font-size: 3rem;
 }
+
 .body.basic ul {
   list-style: disc;
   padding-left: 2em;
   text-align: left;
 }
+
 .body.basic ol {
   list-style: decimal;
   text-align: left;
 }
+
 .body.basic a {
   color: var(--accent);
   text-decoration: none;
   word-break: break-all;
 }
+
 .body.basic a:hover {
   text-decoration: underline;
 }
-.body.basic section > h2 {
+
+.body.basic section>h2 {
   font-size: 3rem;
   text-align: center;
 }
-.body.basic section > .description {
+
+.body.basic section>.description {
   font-size: 1.2rem;
   text-align: center;
+}
+
+.body.basic a.button {
+  width: fit-content;
+  gap: 1em;
+  padding: 0.5em 1em;
+  background-color: var(--accent);
+  color: var(--background) !important;
+  font-weight: 600;
+  align-self: center;
+  cursor: pointer;
 }
 
 
@@ -121,9 +148,11 @@ body {
   .body.basic {
     padding: 0.5em;
   }
+
   .body.basic h2 {
     font-size: 2.5rem;
   }
+
   .body.basic p {
     font-size: 1em;
   }

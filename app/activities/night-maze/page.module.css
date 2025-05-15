@@ -1,0 +1,23 @@
+.wrapper {
+    background-color: var(--nightMazeBackground);
+}
+.header {
+    color: var(--nightMazeForeground);
+}
+.header span {
+    color: var(--nightMazeBackground);
+    background-color: var(--nightMazeForeground);
+}
+.header span::before, .header span::after {
+    background-color: var(--nightMazeBackground);
+}
+
+.body h2 {
+    color: var(--nightMazeForeground) !important;
+}
+.body p {
+    color: var(--nightMazeForeground) !important;
+}
+.body ul {
+    color: var(--nightMazeForeground) !important;
+}

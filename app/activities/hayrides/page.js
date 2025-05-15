@@ -26,6 +26,14 @@ export const HayRide = () => {
                     <p>When your time comes, go to the hayride corral, which is across the creek</p>
                     <p>The drivers will direct you to the correct wagon, and take your ticket</p>
                 </AndImage>
+                <AndImage style="night" src="https://images.unsplash.com/photo-1707755939969-e9c1da71c5bb?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                    <div className={styles.nightMaze}>
+                        <h2>Hayrides at night</h2>
+                        <p>Starting October nth, we will have hayrides open from 7pm to 10:30pm</p>
+                        <p>Bring your friends and some warm clothes for a spooky tour of the deep dark forest at night</p>
+                        <a href='/activities/night-maze' className={styles.button}>See More</a>
+                    </div>
+                </AndImage>
             </div>
         </Layout>
     )

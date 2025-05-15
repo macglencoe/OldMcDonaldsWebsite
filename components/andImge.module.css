@@ -51,6 +51,15 @@
     translate: 0 -1em;
 }
 
+
+.andImage.night .content {
+    background-color: var(--nightMazeBackground);
+    border-color: var(--nightMazeForeground);
+}
+.andImage.night .backdrop {
+    background-color: var(--nightMazeAccent);
+}
+
 @media screen and (max-width: 768px) {
     .andImage {
         flex-direction: column;
