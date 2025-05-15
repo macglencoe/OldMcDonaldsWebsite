@@ -4,6 +4,13 @@ import styles from "./navbar.module.css"
 import { usePathname, useRouter } from "next/navigation"
 
 export const Navbar = () => {
+    const items = [
+        { title: "Activities", path: '/activities' },
+        { title: "About", path: '/#about' },
+        { title: "Reservations", path: '/reservations' },
+        { title: "FAQ", path: '/faq' },
+        { title: "Gallery", path: '/gallery' },
+    ]
     const [isOpen, setIsOpen] = useState(false)
     const pathname = usePathname();
 
@@ -12,10 +19,11 @@ export const Navbar = () => {
             <a href="/"><h1>Old McDonald's</h1></a>
             <nav>
                 <ul>
-                    <li className={pathname === "/activities" ? styles.active : null}><a href="/activities">Activities</a></li>
-                    <li className={pathname === "/#about" ? styles.active : null}><a href="/#about">About</a></li>
-                    <li className={pathname === "/reservations" ? styles.active : null}><a href="/reservations">Reservations</a></li>
-                    <li className={pathname === "/faq" ? styles.active : null}><a href="/faq">FAQ</a></li>
+                    {items.map((item) => (
+                        <li key={item.path} className={pathname === item.path ? styles.active : null}>
+                            <a href={item.path}>{item.title}</a>
+                        </li>
+                    ))}
                 </ul>
             </nav>
             <div className={styles.buttons}>
@@ -31,10 +39,11 @@ export const Navbar = () => {
             <div className={styles.menu + (isOpen ? " " + styles.open : "")}>
                 <nav>
                     <ul>
-                        <li className={pathname === "/activities" ? styles.active : null}><a href="/activities">Activities</a></li>
-                        <li className={pathname === "/#about" ? styles.active : null}><a href="/#about">About</a></li>
-                        <li className={pathname === "/reservations" ? styles.active : null}><a href="/reservations">Reservations</a></li>
-                        <li className={pathname === "/faq" ? styles.active : null}><a href="/faq">FAQ</a></li>
+                        {items.map((item) => (
+                            <li key={item.path} className={pathname === item.path ? styles.active : null}>
+                                <a href={item.path}>{item.title}</a>
+                            </li>
+                        ))}
                     </ul>
                 </nav>
                 <div className={styles.buttons + ' ' + styles.mobile}>

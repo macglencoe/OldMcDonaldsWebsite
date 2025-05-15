@@ -1,0 +1,36 @@
+.gallery {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 25px;
+    align-items: center;
+    justify-content: center;
+    margin: 2em 0;
+}
+
+.gallery .item {
+    flex: 1 300px;
+    max-width: 300px;
+    max-height: 300px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery .item * {
+    overflow: hidden;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .gallery .item {
+        flex: 1 150px;
+        max-width: 150px;
+        max-height: 150px;
+        min-height: 150px;
+    }
+}
