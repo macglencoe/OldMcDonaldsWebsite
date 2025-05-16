@@ -27,19 +27,25 @@ section.hero .text {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
-section.hero .text b {
-    position: relative;
+section.hero .text p {
     font-family: Satisfy;
     color: var(--color-foreground);
     font-size: 2rem;
-    font-weight: 700;
-    text-decoration: underline;
 }
 section.hero .text .tagline {
     font-size: 4em;
     font-family: Satisfy;
 }
+
+section.hero .winter {
+    background-color: rgba(255, 255, 255, 0.4);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    padding: 15px;
+}
+
 
 section.hero .cta {
     display: flex;
@@ -71,6 +77,7 @@ section.hero .cta .buttons a:last-child {
 section.hero .cta .buttons a:hover {
     border-bottom: 3px solid var(--background);
 }
+
 
 section.season {
     display: flex;

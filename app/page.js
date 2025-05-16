@@ -2,8 +2,11 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import Layout from "@/components/layout";
 import Calendar from "@/components/calendar";
+import { createFeatureGate } from "@/flags";
 
-export default function Home() {
+
+export default async function Home() {
+
 
   const events = [
     { name: 'Event 1', date: '2025-10-12' },
@@ -12,32 +15,88 @@ export default function Home() {
   ];
 
   const octoberOpenDates = [
-    1, 2, 7, 8, 9, 14, 15, 16, 21,22,23,28,29,30
-  ]
+    1, 2, 7, 8, 9, 14, 15, 16, 21, 22, 23, 28, 29, 30
+  ];
 
-  
+
+  const summerHeroGate = await createFeatureGate("summer_hero")();
+  const fallHeroGate = await createFeatureGate("fall_hero")();
+  const winterHeroGate = await createFeatureGate("winter_hero")();
+
+  console.log(fallHeroGate);
+
+
+
+
+
+
 
   return (
     <Layout>
       <div className={styles.wrapper}>
         <section className={styles.hero}>
-          <Image
-            src="https://images.unsplash.com/photo-1572978385565-b4c1c4b9ce17?ixid=M3w5MTMyMXwwfDF8c2VhcmNofDEwfHxwdW1wa2luJTIwcGF0Y2h8ZW58MHx8fHwxNzQzMDE4NTUwfDA&ixlib=rb-4.0.3&w=1500"
-            width={1500}
-            height={1000}
-            alt="Old McDonald's"
-          />
-          <div className={styles.text}>
-            <b>Open Soon</b>
-            <h1 className={styles.tagline}>Real Farm Fun</h1>
-          </div>
-          <div className={styles.cta}>
-            <p>Available Through August 20</p>
-            <div className={styles.buttons}>
-              <a href="/reservations">Book Your Event</a>
-              <a href="/vendor-application">Vendor Application</a>
-            </div>
-          </div>
+          {fallHeroGate && // Fall Hero
+            <>
+              <Image
+                src="https://images.unsplash.com/photo-1572978385565-b4c1c4b9ce17?ixid=M3w5MTMyMXwwfDF8c2VhcmNofDEwfHxwdW1wa2luJTIwcGF0Y2h8ZW58MHx8fHwxNzQzMDE4NTUwfDA&ixlib=rb-4.0.3&w=1500"
+                width={1500}
+                height={1000}
+                alt="Old McDonald's"
+              />
+              <div className={styles.text}>
+                <h1 className={styles.tagline}>Real Farm Fun</h1>
+                <p><b>Open Now</b></p>
+              </div>
+              <div className={styles.cta}>
+                <div className={styles.buttons}>
+                  <a href="/visit">Visit Us</a>
+                  <a href="/activities">See Activities</a>
+                </div>
+              </div>
+            </>
+          }
+
+          {(summerHeroGate || (!fallHeroGate && !winterHeroGate && !summerHeroGate)) && // or default
+            <>
+              <Image
+                src="https://images.unsplash.com/photo-1564085007988-8566e9f276cc?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                width={1500}
+                height={1000}
+                alt="Old McDonald's"
+              />
+              <div className={styles.text}>
+                <p><b>Open Soon</b></p>
+                <h1 className={styles.tagline}>Real Farm Fun</h1>
+              </div>
+              <div className={styles.cta}>
+                <p>Available Through August 20</p>
+                <div className={styles.buttons}>
+                  <a href="/reservations">Book Your Event</a>
+                  <a href="/vendor-application">Vendor Application</a>
+                </div>
+              </div>
+            </>
+          }
+
+          {winterHeroGate && // Winter Hero
+            <>
+              <Image
+                src="https://images.unsplash.com/photo-1574457572226-7cc7ea7dd6c2?q=80&w=1746&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                width={1500}
+                height={1000}
+                alt="Old McDonald's"
+              />
+              <div className={styles.text +' '+ styles.winter}>
+                <p>See You Next Year!</p>
+                <h1 className={styles.tagline}>Real Farm Fun</h1>
+              </div>
+              <div className={styles.cta}>
+                <div className={styles.buttons}>
+                  <a href="/gallery">Gallery</a>
+                </div>
+              </div>
+            </>
+          }
         </section>
         <section className={styles.season}>
           <h1>2025 Season</h1>
@@ -150,7 +209,7 @@ export default function Home() {
             </li>
           </ul>
           <p>*Age 3 and under are free</p>
-  
+
         </section>
         <section className={styles.about} id="about">
           <h1>About Us</h1>
