@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import Layout from "@/components/layout";
 import Calendar from "@/components/calendar";
 import { createFeatureGate } from "@/flags";
+import YearProgressBar from "@/components/yearProgress";
 
 
 export default async function Home() {
@@ -98,6 +99,7 @@ export default async function Home() {
             </>
           }
         </section>
+        <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
         <section className={styles.season}>
           <h1>2025 Season</h1>
           <div className={styles.times}>
