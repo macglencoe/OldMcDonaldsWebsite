@@ -24,8 +24,6 @@ export default async function Home() {
   const fallHeroGate = await createFeatureGate("fall_hero")();
   const winterHeroGate = await createFeatureGate("winter_hero")();
 
-  console.log(fallHeroGate);
-
 
 
 
@@ -44,14 +42,33 @@ export default async function Home() {
                 height={1000}
                 alt="Old McDonald's"
               />
-              <div className={styles.text}>
-                <h1 className={styles.tagline}>Real Farm Fun</h1>
-                <p><b>Open Now</b></p>
-              </div>
-              <div className={styles.cta}>
-                <div className={styles.buttons}>
-                  <a href="/visit">Visit Us</a>
-                  <a href="/activities">See Activities</a>
+              <div className={styles.cover}>
+                <div className={styles.top}>
+                  <h1 className={styles.tagline}>Real Farm Fun</h1>
+                  <div>
+                    <p className={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  </div>
+                </div>
+                <div className={styles.bottom}>
+                  <div className={styles.cta}>
+                    <p>See what we're all about</p>
+                    <div className={styles.buttons}>
+                      <a href="/visit">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" /></svg>
+                        Visit
+                      </a>
+                      <a href="/activities">
+                        Activities
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+                      </a>
+                    </div>
+                  </div>
+                  <div className={styles.seasonInfo}>
+                    <div className={styles.card}>
+                      <h2>Open Now</h2>
+                      <p>Come visit us on the weekend!</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </>
@@ -65,15 +82,33 @@ export default async function Home() {
                 height={1000}
                 alt="Old McDonald's"
               />
-              <div className={styles.text}>
-                <p><b>Open Soon</b></p>
-                <h1 className={styles.tagline}>Real Farm Fun</h1>
-              </div>
-              <div className={styles.cta}>
-                <p>Available Through August 20</p>
-                <div className={styles.buttons}>
-                  <a href="/reservations">Book Your Event</a>
-                  <a href="/vendor-application">Vendor Application</a>
+              <div className={styles.cover}>
+                <div className={styles.top}>
+                  <h1 className={styles.tagline}>Real Farm Fun</h1>
+                  <div>
+                    <p className={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  </div>
+                </div>
+                <div className={styles.bottom}>
+                  <div className={styles.cta}>
+                    <p>Available through August 20</p>
+                    <div className={styles.buttons}>
+                      <a href="/reservations">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" /></svg>
+                        Book Your Event
+                      </a>
+                      <a href="https://example.com">
+                        Vendor Application
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m256-240-56-56 384-384H240v-80h480v480h-80v-344L256-240Z"/></svg>
+                      </a>
+                    </div>
+                  </div>
+                  <div className={styles.seasonInfo}>
+                    <div className={styles.card}>
+                      <h2>Open Soon</h2>
+                      <p>We'e still getting ready for the season</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </>
@@ -87,19 +122,34 @@ export default async function Home() {
                 height={1000}
                 alt="Old McDonald's"
               />
-              <div className={styles.text +' '+ styles.winter}>
-                <p>See You Next Year!</p>
-                <h1 className={styles.tagline}>Real Farm Fun</h1>
-              </div>
-              <div className={styles.cta}>
-                <div className={styles.buttons}>
-                  <a href="/gallery">Gallery</a>
+              <div className={styles.cover}>
+                <div className={styles.top}>
+                  <h1 className={styles.tagline}>Real Farm Fun</h1>
+                  <div>
+                    <p className={styles.winter + " " + styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  </div>
+                </div>
+                <div className={styles.bottom}>
+                  <div className={styles.cta}>
+                    <p>Want to reminisce?</p>
+                    <div className={styles.buttons}>
+                      <a href="/gallery">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" /></svg>
+                        Gallery
+                      </a>
+                    </div>
+                  </div>
+                  <div className={styles.seasonInfo}>
+                    <div className={styles.card}>
+                      <h2>Closed for the season</h2>
+                      <p>We'll see you next year!</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </>
           }
         </section>
-        <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
         <section className={styles.season}>
           <h1>2025 Season</h1>
           <div className={styles.times}>
@@ -139,6 +189,7 @@ export default async function Home() {
             </ul>
           </div>
         </section>
+        <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
         <section className={styles.rates}>
           <Image
             src="https://images.unsplash.com/photo-1720084562445-1a10783fbe5c?q=80&w=1294&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
