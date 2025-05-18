@@ -6,6 +6,14 @@
     box-shadow: none;
 }
 
+.pIconTooltip {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
 .marker {
     background-color: var(--background);
     border-radius: 50%;

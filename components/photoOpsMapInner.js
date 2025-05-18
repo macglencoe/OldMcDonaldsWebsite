@@ -123,7 +123,7 @@ const parkingPolyCoords = [
     [39.38557449780491, -78.04243316678473],
     [39.38594359859185, -78.04237517121719],
     [39.38660945959089, -78.04296323498832],
-    [39.38720632587738, -78.04344518352950],
+    [39.38720632587738, -78.0434451835295],
     [39.38717355678357, -78.04351886489675],
     [39.38705758919716, -78.04352382114078],
     [39.38696536038696, -78.04366733880218],
@@ -138,6 +138,48 @@ const parkingPolyCoords = [
     [39.38629599754798, -78.04336242767336],
     [39.38563767398374, -78.04289324715265],
     [39.38481031761221, -78.04301429122442]
+  ]
+
+const meadowPolyCoords = [
+    [39.38455262999532, -78.04309069124558],
+    [39.38441534779643, -78.04311799366127],
+    [39.38429809133059, -78.04324174451209],
+    [39.38422705255935, -78.04329425947746],
+    [39.38412947802303, -78.04333772403662],
+    [39.3841296119118, -78.04342741468267],
+    [39.38406097237566, -78.0434919949827],
+    [39.38401126081848, -78.04347371656286],
+    [39.38387974735232, -78.04344407779992],
+    [39.38375138758046, -78.0434290773179],
+    [39.38361932482493, -78.04342472224465],
+    [39.3834635342841, -78.04338572874086],
+    [39.38328919418718, -78.04332832384449],
+    [39.38307631169106, -78.04328125832755],
+    [39.38288055282338, -78.04323301628214],
+    [39.38279158533962, -78.04319153828723],
+    [39.38285376768982, -78.04288093191941],
+    [39.38290304542633, -78.04280662364224],
+    [39.38322659747622, -78.04260185407503],
+    [39.38341153599814, -78.04252206775986],
+    [39.38337503618315, -78.04266417461662],
+    [39.38406450526296, -78.04287269926859],
+    [39.3840656300847, -78.04280423483901],
+    [39.38458632660144, -78.04278092139923],
+    [39.38455262999532, -78.04309069124558]
+  ]
+
+const natureMazePolyCoords = [
+    [39.38433755056818, -78.04815356994779],
+    [39.38560011456507, -78.04826795658059],
+    [39.38643624099736, -78.04837284514873],
+    [39.38621890421253, -78.04990261399008],
+    [39.38611174169476, -78.05040874068244],
+    [39.38598493327811, -78.05053777844014],
+    [39.38584508966504, -78.05054106290775],
+    [39.38502786979112, -78.0505339172381],
+    [39.3844381979019, -78.05051266087392],
+    [39.38414821849114, -78.04900918251774],
+    [39.38433755056818, -78.04815356994779]
   ]
   
 
@@ -279,6 +321,52 @@ function LocateControl({ children }) {
     return null;
 }
 
+function ZoomLogger() { // This is for debugging
+    const map = useMap();
+
+    useEffect(() => {
+        const handleZoom = () => {
+            console.log('Zoom level:', map.getZoom());
+        };
+
+        map.on('zoomend', handleZoom);
+
+        return () => {
+            map.off('zoomend', handleZoom);
+        };
+    }, [map]);
+
+    return null;
+}
+
+function ZoomVisibilityController() {
+    const map = useMap();
+
+    useEffect(() => {
+        const handleZoom = () => {
+            const zoom = map.getZoom();
+            const shouldHide = zoom < 18; // Adjust threshold as needed
+
+            const tooltips = document.querySelectorAll(`.${styles.pIconTooltip}`);
+            tooltips.forEach(el => {
+                el.style.display = shouldHide ? 'none' : 'block';
+            });
+        };
+
+        map.on('zoomend', handleZoom);
+
+        // Run once on mount
+        handleZoom();
+
+        return () => {
+            map.off('zoomend', handleZoom);
+        };
+    }, [map]);
+
+    return null;
+}
+
+
 
 
 export default function PhotoOpsMapInner() {
@@ -288,12 +376,16 @@ export default function PhotoOpsMapInner() {
                 center={[39.383299, -78.044536]}
                 zoom={18}
                 style={{ height: '100%', width: '100%' }}
+                maxZoom={19}
             >
             <LocateControl />
+            <ZoomLogger />
+            <ZoomVisibilityController />
                 {/* -- Map Tile Layer -- */}
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    maxZoom={19}
                 />
 
                 {/* -- Buildings -- */}
@@ -306,6 +398,8 @@ export default function PhotoOpsMapInner() {
                     </Popup>
                     market
                 </Polygon>
+
+                {/* -- Zones -- */}
 
                 <Polygon
                     positions={cornMazeRectCoords}
@@ -363,6 +457,25 @@ export default function PhotoOpsMapInner() {
                         PARKING
                     </Tooltip>
                 </Polygon>
+
+                <Polygon
+                    positions={meadowPolyCoords}
+                    color='green'
+                >
+                    <Tooltip className={styles.pTooltip} permanent direction='center' offset={[0, 50]}>
+                        MEADOW
+                    </Tooltip>
+                </Polygon>
+
+                <Polygon
+                    positions={natureMazePolyCoords}
+                    color='green'
+                >
+                    <Tooltip className={styles.pTooltip} permanent direction='center' offset={[0, 0]}>
+                        NATURE MAZE
+                    </Tooltip>
+                </Polygon>
+
 
 
 
@@ -437,7 +550,7 @@ export default function PhotoOpsMapInner() {
                     icon={tractorIcon}
                 >
                     <Popup><a href='/activities/hayrides'>See More</a></Popup>
-                    <Tooltip className={styles.pTooltip} permanent direction='center' offset={[0, 30]}>
+                    <Tooltip className={styles.pIconTooltip} permanent direction='center' offset={[0, 30]}>
                         Hay Rides
                     </Tooltip>
                 </Marker>
@@ -446,7 +559,7 @@ export default function PhotoOpsMapInner() {
                     icon={starIcon}
                 >
                     <Popup><a href='/activities/playground'>See More</a></Popup>
-                    <Tooltip className={styles.pTooltip} permanent direction='center' offset={[0, 30]}>
+                    <Tooltip className={styles.pIconTooltip} permanent direction='center' offset={[0, 30]}>
                         Playground
                     </Tooltip>
                 </Marker>
@@ -455,7 +568,7 @@ export default function PhotoOpsMapInner() {
                     icon={starIcon}
                 >
                     <Popup><a href='/activities/petting-zoo'>See More</a></Popup>
-                    <Tooltip className={styles.pTooltip} permanent direction='center' offset={[0, 30]}>
+                    <Tooltip className={styles.pIconTooltip} permanent direction='center' offset={[0, 30]}>
                         Petting Zoo
                     </Tooltip>
                 </Marker>
@@ -463,7 +576,7 @@ export default function PhotoOpsMapInner() {
                     position={[39.382430004649066, -78.04272123387958]}
                     icon={starIcon}
                 >
-                    <Tooltip className={styles.pTooltip} permanent direction='center' offset={[0, 30]}>
+                    <Tooltip className={styles.pIconTooltip} permanent direction='center' offset={[0, 30]}>
                         Football Nets
                     </Tooltip>
                 </Marker>
@@ -472,7 +585,7 @@ export default function PhotoOpsMapInner() {
                     icon={foodIcon}
                 >
                     <Popup><a href='/vendors'>See More</a></Popup>
-                    <Tooltip className={styles.pTooltip} permanent direction='center' offset={[0, 30]}>
+                    <Tooltip className={styles.pIconTooltip} permanent direction='center' offset={[0, 30]}>
                         Food Vendors
                     </Tooltip>
                 </Marker>
