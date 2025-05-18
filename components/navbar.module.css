@@ -31,12 +31,18 @@
     border-bottom: 3px solid var(--accent);
 }
 .navbar nav li {
+    display: flex;
+    align-items: flex-end;
     border-bottom: 3px solid transparent;
     transition: border-bottom 0.2s ease-out;
 }
 .navbar nav li a {
     text-transform: uppercase;
     font-weight: 600;
+}
+.navbar nav li svg {
+    scale: 1.2;
+    fill: var(--foreground);
 }
 .navbar .buttons {
     display: flex;
@@ -51,6 +57,26 @@
 .navbar .buttons a:last-child {
     background-color: var(--foreground);
 }
+
+.navbar .mobileNav {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar .mobileMap svg {
+    fill: var(--foreground);
+    height: 2.5rem;
+    width: 2.5rem;
+}
+.navbar .mobileMap svg:active {
+    scale: 0.9;
+}
+.navbar .mobileMap.active svg {
+    fill: var(--accent);
+}
+
 
 .navbar .hamburger {
     display: none;
@@ -116,6 +142,9 @@
 
 
 @media screen and (max-width: 768px) {
+    .navbar .mobileNav {
+        display: flex;
+    }
     .navbar > nav,
     .navbar .buttons:not(.mobile) {
         display: none;
