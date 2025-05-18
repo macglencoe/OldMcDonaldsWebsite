@@ -1,0 +1,36 @@
+.pTooltip {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.marker {
+    background-color: var(--background);
+    border-radius: 50%;
+    padding: 15px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.marker svg {
+    fill: var(--accent);
+}
+
+.imgPopup > div:first-child {
+    width: 200px;
+    position: relative;
+}
+.imgPopup > div > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.imgPopup img {
+    width: 200px
+}
