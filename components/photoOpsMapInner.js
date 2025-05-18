@@ -1,5 +1,6 @@
-import { MapContainer, TileLayer, Marker, Popup, Polygon, Polyline, Tooltip } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, Polygon, Polyline, Tooltip, useMap } from 'react-leaflet'
 import L, { icon } from 'leaflet'
+import React, { useRef, useEffect } from 'react'
 import 'leaflet/dist/leaflet.css'
 import styles from './photoOpsMap.module.css'
 
@@ -58,6 +59,14 @@ const foodIcon = new L.DivIcon({
 const bathroomIcon = new L.DivIcon({
     className: styles.marker,
     html: `<div><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M220-80v-300h-60v-220q0-33 23.5-56.5T240-680h120q33 0 56.5 23.5T440-600v220h-60v300H220Zm80-640q-33 0-56.5-23.5T220-800q0-33 23.5-56.5T300-880q33 0 56.5 23.5T380-800q0 33-23.5 56.5T300-720ZM600-80v-240H480l102-306q8-26 29.5-40t48.5-14q27 0 48.5 14t29.5 40l102 306H720v240H600Zm60-640q-33 0-56.5-23.5T580-800q0-33 23.5-56.5T660-880q33 0 56.5 23.5T740-800q0 33-23.5 56.5T660-720Z"/></svg></div>`,
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+    popupAnchor: [0, -12],
+})
+
+const locationIcon = new L.DivIcon({
+    className: styles.marker,
+    html: `<div><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-360q56 0 101-27.5t71-72.5q-35-29-79-44.5T480-520q-49 0-93 15.5T308-460q26 45 71 72.5T480-360Zm0-200q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0 374q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"/></svg></div>`,
     iconSize: [24, 24],
     iconAnchor: [12, 12],
     popupAnchor: [0, -12],
@@ -224,19 +233,63 @@ const forestLanePath = [
     [39.38468690512128, -78.04876015139557]
 ]
 
+// -- Custom Components -- //
 
+function LocateControl({ children }) {
+    const map = useMap();
 
+    useEffect(() => {
+        const control = L.control({ position: 'topright' });
+
+        control.onAdd = function () {
+            const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+
+            div.innerHTML = `<button class="${styles.locateButton}" title="Locate Me" style="background:white;border:none;padding:6px 10px;cursor:pointer;font-size:14px;"> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--foreground)"><path d="M440-42v-80q-125-14-214.5-103.5T122-440H42v-80h80q14-125 103.5-214.5T440-838v-80h80v80q125 14 214.5 103.5T838-520h80v80h-80q-14 125-103.5 214.5T520-122v80h-80Zm40-158q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-80q33 0 56.5-23.5T560-480q0-33-23.5-56.5T480-560q-33 0-56.5 23.5T400-480q0 33 23.5 56.5T480-400Zm0-80Z"/></svg></button>`;
+
+            div.onclick = function () {
+                if (!navigator.geolocation) {
+                    alert('Geolocation is not supported by your browser');
+                    return;
+                }
+
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        map.flyTo([latitude, longitude], 18);
+                        L.marker([latitude, longitude], {
+                            icon: locationIcon,
+                        }).addTo(map);
+                    },
+                    () => {
+                        alert('Unable to retrieve your location');
+                    }
+                );
+            };
+
+            return div;
+        };
+
+        control.addTo(map);
+
+        return () => {
+            control.remove();
+        };
+    }, [map]);
+
+    return null;
+}
 
 
 
 export default function PhotoOpsMapInner() {
     return (
-        <div style={{ height: '600px', width: '100%' }}>
+        <div className='flex flex-col' style={{ height: '600px', width: '100%' }}>
             <MapContainer
                 center={[39.383299, -78.044536]}
                 zoom={18}
                 style={{ height: '100%', width: '100%' }}
             >
+            <LocateControl />
                 {/* -- Map Tile Layer -- */}
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

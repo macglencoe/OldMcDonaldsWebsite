@@ -34,3 +34,11 @@
 .imgPopup img {
     width: 200px
 }
+
+.locateButton:hover {
+    outline: 3px solid var(--foreground);
+}
+.locateButton:active svg {
+    scale: 0.9;
+}
+
