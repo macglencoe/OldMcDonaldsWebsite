@@ -487,7 +487,7 @@ export default function PhotoOpsMapInner() {
                     color="var(--accent)"
                 >
                     <Popup>
-                        <a href='/activities/sunflower-field'>See More</a>
+                        <a href='/activities/flower-fields'>See More</a>
                     </Popup>
                     <Tooltip className={styles.pTooltip} permanent direction='center' offset={[0, 0]}>
                         SUNFLOWER FIELD

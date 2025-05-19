@@ -45,6 +45,7 @@ body {
   align-items: center;
   margin: 2rem 0;
   text-align: center;
+  gap: 0.5rem;
 }
 
 .header h1 {

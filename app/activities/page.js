@@ -14,6 +14,10 @@ export default function Activities() {
                         <img className={styles.backdrop} src="https://images.unsplash.com/photo-1696629842172-1b71b45e8e07?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></img>
                         <a href="activities/pumpkin-patch"><h2 className={styles.light}>Pumpkin Patch</h2></a>
                     </div>
+                    <div className={styles.mediumActivity}>
+                        <img className={styles.backdrop} src="https://images.unsplash.com/photo-1627891374362-c6ca6c675cb3?q=80&w=1674&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></img>
+                        <a href="activities/flower-fields"><h2 className={styles.light}>Flower Fields</h2></a>
+                    </div>
                     <div className={styles.largeActivity}>
                         <img className={styles.backdrop} src="https://images.unsplash.com/photo-1611942110143-7f81974e49cd?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></img>
                         <a href="activities/corn-maze"><h2 className={styles.light}>Corn Maze</h2></a>
