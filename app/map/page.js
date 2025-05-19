@@ -8,6 +8,9 @@ export default function PhotoOps() {
             <div className="header">
                 <h1>Map</h1>
                 <p>Explore the farm from the palm of your hand</p>
+                <div className="body basic">
+                    <a href="/visit">Click here for directions</a>
+                </div>
             </div>
             <div className="body basic">
                 <PhotoOpsMapClient />
