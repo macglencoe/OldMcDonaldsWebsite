@@ -4,6 +4,24 @@ import React, { useRef, useEffect } from 'react'
 import 'leaflet/dist/leaflet.css'
 import styles from './photoOpsMap.module.css'
 
+// -- Functons -- //
+
+function getDistanceMiles(lat1, lon1, lat2, lon2) {
+    const R = 3958.8; // Radius of Earth in miles
+    const toRad = (value) => value * Math.PI / 180;
+
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) ** 2;
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+}
+
+
 // -- Custom Icons -- //
 
 const entranceIcon = new L.DivIcon({
@@ -138,7 +156,7 @@ const parkingPolyCoords = [
     [39.38629599754798, -78.04336242767336],
     [39.38563767398374, -78.04289324715265],
     [39.38481031761221, -78.04301429122442]
-  ]
+]
 
 const meadowPolyCoords = [
     [39.38455262999532, -78.04309069124558],
@@ -166,7 +184,7 @@ const meadowPolyCoords = [
     [39.3840656300847, -78.04280423483901],
     [39.38458632660144, -78.04278092139923],
     [39.38455262999532, -78.04309069124558]
-  ]
+]
 
 const natureMazePolyCoords = [
     [39.38433755056818, -78.04815356994779],
@@ -180,8 +198,8 @@ const natureMazePolyCoords = [
     [39.3844381979019, -78.05051266087392],
     [39.38414821849114, -78.04900918251774],
     [39.38433755056818, -78.04815356994779]
-  ]
-  
+]
+
 
 // -- Barrier Polyline Coords -- //
 
@@ -296,16 +314,42 @@ function LocateControl({ children }) {
 
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                        const { latitude, longitude } = position.coords;
-                        map.flyTo([latitude, longitude], 18);
-                        L.marker([latitude, longitude], {
-                            icon: locationIcon,
-                        }).addTo(map);
+                        const userLat = position.coords.latitude;
+                        const userLng = position.coords.longitude;
+
+                        const centerLat = 39.383299;
+                        const centerLng = -78.044536;
+
+                        const distance = getDistanceMiles(centerLat, centerLng, userLat, userLng);
+
+                        if (distance > 3) {
+                            // Show temporary popup at center saying “you’re not on the farm”
+                            const popup = L.popup()
+                                .setLatLng([centerLat, centerLng])
+                                .setContent("You're not on the farm.")
+                                .openOn(map);
+
+                            setTimeout(() => {
+                                map.closePopup(popup);
+                            }, 3000);
+                        } else {
+                            // Valid location – fly and drop marker
+                            map.flyTo([userLat, userLng], 18);
+
+                            if (locationMarkerRef.current) {
+                                map.removeLayer(locationMarkerRef.current);
+                            }
+
+                            locationMarkerRef.current = L.marker([userLat, userLng], {
+                                icon: locationIcon,
+                            }).addTo(map);
+                        }
                     },
                     () => {
                         alert('Unable to retrieve your location');
                     }
                 );
+
             };
 
             return div;
@@ -378,9 +422,9 @@ export default function PhotoOpsMapInner() {
                 style={{ height: '100%', width: '100%' }}
                 maxZoom={19}
             >
-            <LocateControl />
-            <ZoomLogger />
-            <ZoomVisibilityController />
+                <LocateControl />
+                <ZoomLogger />
+                <ZoomVisibilityController />
                 {/* -- Map Tile Layer -- */}
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
