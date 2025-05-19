@@ -50,7 +50,7 @@
 | Project Manager  | Liam McDonald         | Plan, manage, and document progress      |
 | Designer         | Liam McDonald  | Create visual designs and choose imagery |
 | Developer        | Liam McDonald               | Build the website and deploy             |
-| Content Provider | Stephanie McDonald <br/> Alaina Miller <br/> Reece McDonald <br/> Theodore McDonald| Provide event info, pricing, and media   |
+| Content Provider | Stephanie McDonald <br/> Alaina Miller <br/> Reece McDonald <br/> Theodore McDonald| Provide event info, pricing, and media. This will be tracked as [Issue 4](https://github.com/macglencoe/OldMcDonaldsWebsite/issues/4)   |
 
 # Risks & Mitigation
 | Risk                              | Mitigation                                      |
