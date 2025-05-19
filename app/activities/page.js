@@ -44,7 +44,7 @@ export default function Activities() {
                     </div>
                     <div className={styles.mediumActivity}>
                         <img className={styles.backdrop} src="https://plus.unsplash.com/premium_photo-1664355811395-265c2c8051d4?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></img>
-                        <h2 className={styles.light}>Petting Zoo</h2>
+                        <a href="activities/petting-zoo"><h2 className={styles.light}>Petting Zoo</h2></a>
                     </div>
                     <div className={styles.largeActivity}>
                         <img className={styles.backdrop} src="https://images.unsplash.com/photo-1473554198449-fd330ccd766e?q=80&w=1744&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></img>
