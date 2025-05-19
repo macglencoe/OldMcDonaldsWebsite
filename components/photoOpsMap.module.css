@@ -28,6 +28,12 @@
 .marker svg {
     fill: var(--accent);
 }
+.t {
+    background-color: transparent;
+}
+.t svg {
+    fill: var(--foreground);
+}
 
 .imgPopup > div:first-child {
     width: 200px;
