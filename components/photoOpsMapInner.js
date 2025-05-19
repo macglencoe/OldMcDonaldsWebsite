@@ -421,6 +421,7 @@ export default function PhotoOpsMapInner() {
                 zoom={18}
                 style={{ height: '100%', width: '100%' }}
                 maxZoom={19}
+                minZoom={16}
             >
                 <LocateControl />
                 <ZoomLogger />
