@@ -369,75 +369,97 @@ const hillLanePath = [
 
 // -- Custom Components -- //
 
-function LocateControl({ children }) {
+export function LocateControl() {
     const map = useMap();
-
+    const locationMarkerRef = useRef(null);
+    const positionRef = useRef({ lat: null, lng: null });
+    const buttonRef = useRef(null);
+  
     useEffect(() => {
-        const control = L.control({ position: 'topright' });
-
-        control.onAdd = function () {
-            const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
-
-            div.innerHTML = `<button class="${styles.locateButton}" title="Locate Me" style="background:white;border:none;padding:6px 10px;cursor:pointer;font-size:14px;"> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--foreground)"><path d="M440-42v-80q-125-14-214.5-103.5T122-440H42v-80h80q14-125 103.5-214.5T440-838v-80h80v80q125 14 214.5 103.5T838-520h80v80h-80q-14 125-103.5 214.5T520-122v80h-80Zm40-158q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-80q33 0 56.5-23.5T560-480q0-33-23.5-56.5T480-560q-33 0-56.5 23.5T400-480q0 33 23.5 56.5T480-400Zm0-80Z"/></svg></button>`;
-
-            div.onclick = function () {
-                if (!navigator.geolocation) {
-                    alert('Geolocation is not supported by your browser');
-                    return;
-                }
-
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const userLat = position.coords.latitude;
-                        const userLng = position.coords.longitude;
-
-                        const centerLat = 39.383299;
-                        const centerLng = -78.044536;
-
-                        const distance = getDistanceMiles(centerLat, centerLng, userLat, userLng);
-
-                        if (distance > 3) {
-                            // Show temporary popup at center saying “you’re not on the farm”
-                            const popup = L.popup()
-                                .setLatLng([centerLat, centerLng])
-                                .setContent("You're not on the farm.")
-                                .openOn(map);
-
-                            setTimeout(() => {
-                                map.closePopup(popup);
-                            }, 3000);
-                        } else {
-                            // Valid location – fly and drop marker
-                            map.flyTo([userLat, userLng], 18);
-
-                            if (locationMarkerRef.current) {
-                                map.removeLayer(locationMarkerRef.current);
-                            }
-
-                            locationMarkerRef.current = L.marker([userLat, userLng], {
-                                icon: locationIcon,
-                            }).addTo(map);
-                        }
-                    },
-                    () => {
-                        alert('Unable to retrieve your location');
-                    }
-                );
-
-            };
-
-            return div;
-        };
-
-        control.addTo(map);
-
-        return () => {
-            control.remove();
-        };
+      // 1. Function to update ref + marker and clear loading
+      const updatePosition = ({ latitude: lat, longitude: lng }) => {
+        positionRef.current = { lat, lng };
+        // move or create marker
+        if (!locationMarkerRef.current) {
+          locationMarkerRef.current = L.marker([lat, lng], { icon: locationIcon }).addTo(map);
+        } else {
+          locationMarkerRef.current.setLatLng([lat, lng]);
+        }
+        // remove loading state once we have a position
+        if (buttonRef.current) {
+          buttonRef.current.classList.remove(styles.loading);
+          buttonRef.current.removeAttribute('disabled');
+        }
+      };
+  
+      // 2. Initial fetch & permission prompt
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => updatePosition(pos.coords),
+          (err) => console.error('Geolocation error:', err)
+        );
+      } else {
+        console.error('Geolocation not supported by your browser');
+      }
+  
+      // 3. Poll every 8s
+      const intervalId = setInterval(() => {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => updatePosition(pos.coords),
+          (err) => console.error('Geolocation error:', err)
+        );
+      }, 8000);
+  
+      // 4. Create the "fly" control
+      const control = L.control({ position: 'topright' });
+      control.onAdd = () => {
+        const btn = L.DomUtil.create('button', styles.locateButton);
+        buttonRef.current = btn;
+        btn.title = 'Center on Me';
+        Object.assign(btn.style, {
+          background: 'white',
+          border: 'none',
+          padding: '6px 10px',
+          cursor: 'pointer',
+          fontSize: '14px',
+        });
+        // initial loading state until first position arrives
+        btn.classList.add(styles.loading);
+        btn.setAttribute('disabled', '');
+        // your SVG icon here
+        btn.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--foreground)">
+            <path d="M440-42v-80q-125-14-214.5-103.5T122-440H42v-80h80q14-125 103.5-214.5T440-838v-80h80v80q125 14 214.5 103.5T838-520h80v80h-80q-14 125-103.5 214.5T520-122v80h-80Zm40-158q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-80q33 0 56.5-23.5T560-480q0-33-23.5-56.5T480-560q-33 0-56.5 23.5T400-480q0 33 23.5 56.5T480-400Zm0-80Z"/>
+          </svg>`;
+        L.DomEvent.disableClickPropagation(btn);
+        L.DomEvent.disableScrollPropagation(btn);
+        btn.addEventListener('click', () => {
+          const { lat, lng } = positionRef.current;
+          if (lat != null && lng != null) {
+            map.flyTo([lat, lng], 18);
+          } else {
+            // still loading; button should show spinner
+            alert('Still locating…');
+          }
+        });
+        return btn;
+      };
+      control.addTo(map);
+  
+      // 5. Cleanup
+      return () => {
+        clearInterval(intervalId);
+        control.remove();
+        if (locationMarkerRef.current) {
+          map.removeLayer(locationMarkerRef.current);
+        }
+      };
     }, [map]);
-
+  
     return null;
-}
+  }
+
+
 
 function ZoomLogger() { // This is for debugging
     const map = useMap();

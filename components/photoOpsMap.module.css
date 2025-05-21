@@ -25,26 +25,31 @@
     align-items: center;
     cursor: pointer;
 }
+
 .marker svg {
     fill: var(--accent);
 }
+
 .t {
     background-color: transparent;
 }
+
 .t svg {
     fill: var(--foreground);
 }
 
-.imgPopup > div:first-child {
+.imgPopup>div:first-child {
     width: 200px;
     position: relative;
 }
-.imgPopup > div > div {
+
+.imgPopup>div>div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
 .imgPopup img {
     width: 200px
 }
@@ -52,7 +57,73 @@
 .locateButton:hover {
     outline: 3px solid var(--foreground);
 }
+
 .locateButton:active svg {
     scale: 0.9;
 }
 
+.locateButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.locateButton.loading svg {
+    animation: pulse 1s infinite linear;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* the container that replaces your button */
+.locate-loading {
+    position: relative;
+    width: 32px;
+    height: 32px;
+}
+
+/* static center dot */
+.locate-loading::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0 -4px;
+    background: var(--foreground);
+    border-radius: 50%;
+}
+
+/* the animated ring */
+@keyframes pulse {
+    0% {
+        transform: scale(0.6);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(2.4);
+        opacity: 0;
+    }
+}
+
+.locate-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0 -4px;
+    border: 2px solid var(--foreground);
+    border-radius: 50%;
+    animation: pulse 1.2s ease-out infinite;
+}
