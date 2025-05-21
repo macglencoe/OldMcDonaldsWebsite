@@ -46,7 +46,7 @@ export default async function Home() {
                 <div className={styles.top}>
                   <h1 className={styles.tagline}>Real Farm Fun</h1>
                   <div>
-                    <p className={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p className={styles.description}>Celebrate fall in Berkeley County, West Virginia with pumpkins, hayrides, and fun for the whole family</p>
                   </div>
                 </div>
                 <div className={styles.bottom}>
@@ -86,7 +86,7 @@ export default async function Home() {
                 <div className={styles.top}>
                   <h1 className={styles.tagline}>Real Farm Fun</h1>
                   <div>
-                    <p className={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p className={styles.description}>Celebrate fall in Berkeley County, West Virginia with pumpkins, hayrides, and fun for the whole family</p>
                   </div>
                 </div>
                 <div className={styles.bottom}>
@@ -126,7 +126,7 @@ export default async function Home() {
                 <div className={styles.top}>
                   <h1 className={styles.tagline}>Real Farm Fun</h1>
                   <div>
-                    <p className={styles.winter + " " + styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p className={styles.winter + " " + styles.description}>Celebrate fall in Berkeley County, West Virginia with pumpkins, hayrides, and fun for the whole family</p>
                   </div>
                 </div>
                 <div className={styles.bottom}>
