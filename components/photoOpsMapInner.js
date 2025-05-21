@@ -57,7 +57,7 @@ export function LocateControl() {
         const updatePosition = ({ latitude: lat, longitude: lng }) => {
             positionRef.current = { lat, lng };
             if (!locationMarkerRef.current) {
-                locationMarkerRef.current = L.marker([lat, lng], { icon: locationIcon }).addTo(map);
+                locationMarkerRef.current = L.marker([lat, lng], { icon: icons.location }).addTo(map);
             } else {
                 locationMarkerRef.current.setLatLng([lat, lng]);
             }
@@ -188,6 +188,55 @@ function ZoomVisibilityController() {
 }
 
 
+// -- Markers -- //
+
+const photoOps = [
+    {
+        label: 'Door',
+        pos: [39.3843654, -78.0429576],
+        imgSrc: null
+    },
+    {
+        label: 'Stocks',
+        pos: [39.3835555, -78.0433421],
+        imgSrc: '/gallery/0b2c98_f05cbe60cd6e4a5fb0fc1af18748eb20~mv2.avif'
+    },
+    {
+        label: 'Bench & Bridge',
+        pos: [39.3836282, -78.0433265],   
+    },
+    {
+        label: 'Big Chair',
+        pos: [39.3833115, -78.0432332],
+        imgSrc: '/placeholder.png'
+    },
+    {
+        label: '"Love"',
+        pos: [39.38272287986978, -78.0436764211604],
+    },
+    {
+        label: 'Swing',
+        pos: [39.381654454401975, -78.04468704613781]
+    },
+    {
+        label: 'Kissing Booth & Tractor',
+        pos: [39.38242472380304, -78.04515311653932]
+    },
+    {
+        label: 'Ꮤ Bug',
+        pos: [39.3829251383536, -78.04528277916505]
+    }
+]
+
+const bathrooms = [
+    {
+        pos: [39.38282398140298, -78.04305006931251]
+    },
+    {
+        pos: [39.38473337003943, -78.04291993823446]
+    }
+]
+
 
 
 export default function PhotoOpsMapInner() {
@@ -235,6 +284,17 @@ export default function PhotoOpsMapInner() {
                         CORN MAZE
                     </Tooltip>
                 </Polygon>
+                <Polygon
+                    positions={features.cornMaze2}
+                    color="var(--accent)"
+                >
+                    <Popup>
+                        <a href='/activities/corn-maze'>See More</a>
+                    </Popup>
+                    <Tooltip className={styles.pTooltip} permanent direction='center' offset={[0, 0]}>
+                        CORN MAZE 2
+                    </Tooltip>
+                </Polygon>
 
                 <Polygon
                     positions={features.pumpkinPatch1}
@@ -268,7 +328,7 @@ export default function PhotoOpsMapInner() {
                         <a href='/activities/flower-fields'>See More</a>
                     </Popup>
                     <Tooltip className={styles.pTooltip} permanent direction='center' offset={[0, 0]}>
-                        SUNFLOWER FIELD
+                        SUNFLOWERS
                     </Tooltip>
                 </Polygon>
 
@@ -299,74 +359,58 @@ export default function PhotoOpsMapInner() {
                     </Tooltip>
                 </Polygon>
 
+                <Polygon
+                    positions={features.zinnias}
+                    color="green"
+                >
+                    <Tooltip className={styles.pTooltip} permanent direction='center' offset={[0, 0]}>
+                        ZINNIAS
+                    </Tooltip>
+                    <Popup>
+                        <a href='/activities/flower-fields'>See More</a>
+                    </Popup>
+                </Polygon>
 
 
 
 
+                {/* -- Photo Ops -- */}
+                {photoOps.map(({ pos, label, imgSrc }, i) => (
+                    <Marker
+                        key={i}
+                        position={pos}
+                        icon={icons.photoOp}
+                        className={styles.marker}
+                    >
+                        <Popup className={styles.imgPopup}>
+                            <span>Photo Op: {label}</span>
+                            {imgSrc &&
+                                <img src={imgSrc}/>
+                            }
+                        </Popup>
+                    </Marker>
+                ))}
 
-                {/* -- Markers -- */}
+                {/* -- Bathrooms -- */}
+
+                {bathrooms.map(({ pos }, i) => (
+                    <Marker
+                        key={i}
+                        position={pos}
+                        icon={icons.bathroom}
+                        className={styles.marker}
+                    >
+                        <Popup>Portable Toilet</Popup>
+                    </Marker>
+                ))}
+
+                {/* -- Other Markers -- */}
                 <Marker
                     position={[39.3845852, -78.0428097]}
                     icon={icons.entrance}
                     className={styles.marker}
                 >
                     <Popup>Entrance</Popup>
-                </Marker>
-                <Marker
-                    position={[39.3843654, -78.0429576]}
-                    icon={icons.photoOp}
-                >
-                    <Popup>Door Photo Op</Popup>
-                </Marker>
-                <Marker
-                    position={[39.3835555, -78.0433421]}
-                    icon={icons.photoOp}
-                >
-                    <Popup
-                        className={styles.imgPopup}
-                    >
-                        <img src='/gallery/0b2c98_f05cbe60cd6e4a5fb0fc1af18748eb20~mv2.avif'></img>
-                        <span>Stocks Photo Op</span>
-                    </Popup>
-                </Marker>
-                <Marker
-                    position={[39.3836282, -78.0433265]}
-                    icon={icons.photoOp}
-                >
-                    <Popup>Bench & Bridge Photo Op</Popup>
-                </Marker>
-                <Marker
-                    position={[39.3833115, -78.0432332]}
-                    icon={icons.photoOp}
-                >
-                    <Popup className={styles.imgPopup}>
-                        <span>Photo Op: Big Chair</span>
-                        <img src='/placeholder.png'></img>
-                    </Popup>
-                </Marker>
-                <Marker
-                    position={[39.38272287986978, -78.0436764211604]}
-                    icon={icons.photoOp}
-                >
-                    <Popup>"Love" Photo Op</Popup>
-                </Marker>
-                <Marker
-                    position={[39.381654454401975, -78.04468704613781]}
-                    icon={icons.photoOp}
-                >
-                    <Popup>Swing Photo Op</Popup>
-                </Marker>
-                <Marker
-                    position={[39.38242472380304, -78.04515311653932]}
-                    icon={icons.photoOp}
-                >
-                    <Popup>Kissing Booth & Tractor Photo Op</Popup>
-                </Marker>
-                <Marker
-                    position={[39.3829251383536, -78.04528277916505]}
-                    icon={icons.photoOp}
-                >
-                    <Popup>VW Bug Photo Op</Popup>
                 </Marker>
                 <Marker
                     position={[39.38255709772837, -78.04351475851128]}
@@ -412,18 +456,6 @@ export default function PhotoOpsMapInner() {
                     </Tooltip>
                 </Marker>
                 <Marker
-                    position={[39.38282398140298, -78.04305006931251]}
-                    icon={icons.bathroom}
-                >
-                    <Popup>Portable Toilet</Popup>
-                </Marker>
-                <Marker
-                    position={[39.38473337003943, -78.04291993823446]}
-                    icon={icons.bathroom}
-                >
-                    <Popup>Portable Toilet</Popup>
-                </Marker>
-                <Marker
                     position={[39.38163138370034, -78.04489454865366]}
                     icon={icons.flower}
                 >
@@ -438,6 +470,20 @@ export default function PhotoOpsMapInner() {
                     icon={icons.maze}
                 >
                     <Popup>Corn Maze Entrance</Popup>
+                </Marker>
+                <Marker
+                    position={[39.38465031501388, -78.04952943171128]}
+                    icon={icons.clearing}
+                >
+                    <Tooltip className={styles.pIconTooltip} permanent direction='center' offset={[0, 30]}>
+                        Walnut Bottom
+                    </Tooltip>
+                </Marker>
+                <Marker
+                    position={[39.384037840804034, -78.04459340078672]}
+                    icon={icons.maze}
+                >
+                    <Popup>Maze 2 Entrance</Popup>
                 </Marker>
 
                 {/* -- Barriers -- */}
@@ -501,6 +547,128 @@ export default function PhotoOpsMapInner() {
                 />
                 <Polyline
                     positions={features.hillLane}
+                    pathOptions={{
+                        color: 'var(--foreground)',
+                        weight: 4,
+                        opacity: 0.7,
+                        lineCap: 'round',
+                        lineJoin: 'round',
+                        dashArray: '10, 10',
+                    }}
+                />
+                <Polyline
+                    positions={features.shadoa1}
+                    pathOptions={{
+                        color: 'var(--foreground)',
+                        weight: 4,
+                        opacity: 0.7,
+                        lineCap: 'round',
+                        lineJoin: 'round',
+                        dashArray: '10, 10',
+                    }}
+                />
+                <Polyline
+                    positions={features.shadoa2}
+                    pathOptions={{
+                        color: 'var(--foreground)',
+                        weight: 4,
+                        opacity: 0.7,
+                        lineCap: 'round',
+                        lineJoin: 'round',
+                        dashArray: '10, 10',
+                    }}
+                />
+                <Polyline
+                    positions={features.shadoa3}
+                    pathOptions={{
+                        color: 'var(--foreground)',
+                        weight: 4,
+                        opacity: 0.7,
+                        lineCap: 'round',
+                        lineJoin: 'round',
+                        dashArray: '10, 10',
+                    }}
+                />
+                <Polyline
+                    positions={features.backLane}
+                    pathOptions={{
+                        color: 'var(--foreground)',
+                        weight: 4,
+                        opacity: 0.7,
+                        lineCap: 'round',
+                        lineJoin: 'round',
+                        dashArray: '10, 10',
+                    }}
+                />
+                <Polyline
+                    positions={features.cornMazeExit}
+                    pathOptions={{
+                        color: 'var(--foreground)',
+                        weight: 4,
+                        opacity: 0.7,
+                        lineCap: 'round',
+                        lineJoin: 'round',
+                        dashArray: '10, 10',
+                    }}
+                />
+                <Polyline
+                    positions={features.Nm1}
+                    pathOptions={{
+                        color: 'var(--foreground)',
+                        weight: 4,
+                        opacity: 0.7,
+                        lineCap: 'round',
+                        lineJoin: 'round',
+                        dashArray: '10, 10',
+                    }}
+                />
+                <Polyline
+                    positions={features.Nm2}
+                    pathOptions={{
+                        color: 'var(--foreground)',
+                        weight: 4,
+                        opacity: 0.7,
+                        lineCap: 'round',
+                        lineJoin: 'round',
+                        dashArray: '10, 10',
+                    }}
+                />
+                
+                <Polyline
+                    positions={features.Nm3}
+                    pathOptions={{
+                        color: 'var(--foreground)',
+                        weight: 4,
+                        opacity: 0.7,
+                        lineCap: 'round',
+                        lineJoin: 'round',
+                        dashArray: '10, 10',
+                    }}
+                />
+                <Polyline
+                    positions={features.Nm4}
+                    pathOptions={{
+                        color: 'var(--foreground)',
+                        weight: 4,
+                        opacity: 0.7,
+                        lineCap: 'round',
+                        lineJoin: 'round',
+                        dashArray: '10, 10',
+                    }}
+                />
+                <Polyline
+                    positions={features.Nm5}
+                    pathOptions={{
+                        color: 'var(--foreground)',
+                        weight: 4,
+                        opacity: 0.7,
+                        lineCap: 'round',
+                        lineJoin: 'round',
+                        dashArray: '10, 10',
+                    }}
+                />
+                <Polyline
+                    positions={features.newgroundsPath}
                     pathOptions={{
                         color: 'var(--foreground)',
                         weight: 4,

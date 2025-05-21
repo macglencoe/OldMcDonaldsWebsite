@@ -12,6 +12,7 @@ import location from '../icons/location.svg?raw';
 import playset from '../icons/playset.svg?raw';
 import flower from '../icons/flower.svg?raw';
 import maze from '../icons/maze.svg?raw';
+import clearing from '../icons/clearing.svg?raw';
 
 export function makeIcon({ svg, className = styles.marker, size = 24, anchor = size / 2 }) {
     console.log(svg)
@@ -35,7 +36,8 @@ export const icons = {
     location: makeIcon({ svg: location }),
     playset: makeIcon({ svg: playset, className: styles.marker + ' ' + styles.t, size: 30 }),
     flower: makeIcon({ svg: flower }),
-    maze: makeIcon({ svg: maze })
+    maze: makeIcon({ svg: maze }),
+    clearing: makeIcon({ svg: clearing })
 }
 
 export default icons;
