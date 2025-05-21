@@ -371,93 +371,100 @@ const hillLanePath = [
 
 // Continuously watch position and update a shared ref + marker
 export function LocateControl() {
-  const map = useMap();
-  const locationMarkerRef = useRef(null);
-  const positionRef = useRef({ lat: null, lng: null });
-  const buttonRef = useRef(null);
-
-  useEffect(() => {
-    // Clear loading state helper
-    const clearLoading = () => {
-      if (buttonRef.current) {
-        buttonRef.current.classList.remove(styles.loading);
-        buttonRef.current.removeAttribute('disabled');
-      }
-    };
-
-    // Update position + marker
-    const updatePosition = ({ latitude: lat, longitude: lng }) => {
-      positionRef.current = { lat, lng };
-      if (!locationMarkerRef.current) {
-        locationMarkerRef.current = L.marker([lat, lng], { icon: locationIcon }).addTo(map);
-      } else {
-        locationMarkerRef.current.setLatLng([lat, lng]);
-      }
-      // first successful update clears loading
-      clearLoading();
-    };
-
-    // Start watching position
-    let watchId;
-    if (navigator.geolocation) {
-      watchId = navigator.geolocation.watchPosition(
-        (pos) => updatePosition(pos.coords),
-        (err) => {
-          console.error(`Geolocation error (${err.code}): ${err.message}`);
-          clearLoading();
-        },
-        { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
-      );
-    } else {
-      console.error('Geolocation not supported by your browser');
-      clearLoading();
-    }
-
-    // Create the "fly" control button
-    const control = L.control({ position: 'topright' });
-    control.onAdd = () => {
-      const btn = L.DomUtil.create('button', styles.locateButton);
-      buttonRef.current = btn;
-      btn.title = 'Center on Me';
-      Object.assign(btn.style, {
-        background: 'white',
-        border: 'none',
-        padding: '6px 10px',
-        cursor: 'pointer',
-        fontSize: '14px',
-      });
-      // set loading state until first fix
-      btn.classList.add(styles.loading);
-      btn.setAttribute('disabled', '');
-      btn.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--foreground)">
-          <path d="M440-42v-80q-125-14-214.5-103.5T122-440H42v-80h80q14-125 103.5-214.5T440-838v-80h80v80q125 14 214.5 103.5T838-520h80v80h-80q-14 125-103.5 214.5T520-122v80h-80Zm40-158q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-80q33 0 56.5-23.5T560-480q0-33-23.5-56.5T480-560q-33 0-56.5 23.5T400-480q0 33 23.5 56.5T480-400Zm0-80Z"/>
-        </svg>`;
-      L.DomEvent.disableClickPropagation(btn);
-      L.DomEvent.disableScrollPropagation(btn);
-      btn.addEventListener('click', () => {
-        const { lat, lng } = positionRef.current;
-        if (lat != null && lng != null) {
-          map.flyTo([lat, lng], 18);
-        } else {
-          // still waiting for initial fix
-          alert('Still locating…');
+    const map = useMap();
+    const locationMarkerRef = useRef(null);
+    const positionRef = useRef({ lat: null, lng: null });
+    const buttonRef = useRef(null);
+  
+    // SVGs for button states
+    const normalSVG = `
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--foreground)">
+        <path d="M440-42v-80q-125-14-214.5-103.5T122-440H42v-80h80q14-125 103.5-214.5T440-838v-80h80v80q125 14 214.5 103.5T838-520h80v80h-80q-14 125-103.5 214.5T520-122v80h-80Zm40-158q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-80q33 0 56.5-23.5T560-480q0-33-23.5-56.5T480-560q-33 0-56.5 23.5T400-480q0 33 23.5 56.5T480-400Zm0-80Z"/>
+      </svg>`;
+  
+    const loadingSVG = `
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+        <path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q56 0 105.5-17.5T676-227l-57-57q-29 21-64.5 32.5T480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 39-12 75t-33 65l57 57q32-41 50-91t18-106q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-160q22 0 42.5-5.5T561-342l-61-61q-5 2-10 2.5t-10 .5q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 6-.5 11.5T557-458l60 60q11-18 17-38.5t6-43.5q0-66-47-113t-113-47q-66 0-113 47t-47 113q0 66 47 113t113 47Z"/>
+      </svg>`;
+  
+    useEffect(() => {
+      // Helper to clear loading state and show normal icon
+      const clearLoading = () => {
+        if (buttonRef.current) {
+          buttonRef.current.innerHTML = normalSVG;
+          buttonRef.current.classList.remove(styles.loading);
+          buttonRef.current.removeAttribute('disabled');
         }
-      });
-      return btn;
-    };
-    control.addTo(map);
-
-    // Cleanup on unmount
-    return () => {
-      if (watchId != null) navigator.geolocation.clearWatch(watchId);
-      control.remove();
-      if (locationMarkerRef.current) map.removeLayer(locationMarkerRef.current);
-    };
-  }, [map]);
-
-  return null;
-}
+      };
+  
+      // Update position + marker
+      const updatePosition = ({ latitude: lat, longitude: lng }) => {
+        positionRef.current = { lat, lng };
+        if (!locationMarkerRef.current) {
+          locationMarkerRef.current = L.marker([lat, lng], { icon: locationIcon }).addTo(map);
+        } else {
+          locationMarkerRef.current.setLatLng([lat, lng]);
+        }
+        clearLoading();
+      };
+  
+      let watchId;
+      if (navigator.geolocation) {
+        watchId = navigator.geolocation.watchPosition(
+          (pos) => updatePosition(pos.coords),
+          (err) => {
+            console.error(`Geolocation error (${err.code}): ${err.message}`);
+            clearLoading();
+          },
+          { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
+        );
+      } else {
+        console.error('Geolocation not supported by your browser');
+        clearLoading();
+      }
+  
+      // Create the "fly" control button
+      const control = L.control({ position: 'topright' });
+      control.onAdd = () => {
+        const btn = L.DomUtil.create('button', styles.locateButton);
+        buttonRef.current = btn;
+        btn.title = 'Center on Me';
+        Object.assign(btn.style, {
+          background: 'white',
+          border: 'none',
+          padding: '6px 10px',
+          cursor: 'pointer',
+          fontSize: '14px',
+        });
+        // show loading SVG until first fix
+        btn.innerHTML = loadingSVG;
+        btn.classList.add(styles.loading);
+        btn.setAttribute('disabled', '');
+        L.DomEvent.disableClickPropagation(btn);
+        L.DomEvent.disableScrollPropagation(btn);
+        btn.addEventListener('click', () => {
+          const { lat, lng } = positionRef.current;
+          if (lat != null && lng != null) {
+            map.flyTo([lat, lng], 18);
+          } else {
+            alert('Still locating…');
+          }
+        });
+        return btn;
+      };
+      control.addTo(map);
+  
+      // Cleanup on unmount
+      return () => {
+        if (watchId != null) navigator.geolocation.clearWatch(watchId);
+        control.remove();
+        if (locationMarkerRef.current) map.removeLayer(locationMarkerRef.current);
+      };
+    }, [map]);
+  
+    return null;
+  }
+  
 
 
 

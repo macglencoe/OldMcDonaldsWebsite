@@ -54,6 +54,24 @@
     width: 200px
 }
 
+.locateButton {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 3px solid var(--foreground);
+    background-color: var(--background);
+    cursor: pointer;
+}
+
+.locateButton svg {
+    fill: var(--foreground);
+    min-width: 30px;
+    min-height: 30px;
+}
+
 .locateButton:hover {
     outline: 3px solid var(--foreground);
 }
@@ -68,62 +86,19 @@
 }
 
 .locateButton.loading svg {
-    animation: pulse 1s infinite linear;
+    animation: search 2s infinite linear;
 }
 
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-
-/* the container that replaces your button */
-.locate-loading {
-    position: relative;
-    width: 32px;
-    height: 32px;
-}
-
-/* static center dot */
-.locate-loading::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 8px;
-    height: 8px;
-    margin: -4px 0 0 -4px;
-    background: var(--foreground);
-    border-radius: 50%;
-}
 
 /* the animated ring */
-@keyframes pulse {
+@keyframes search {
     0% {
-        transform: scale(0.6);
-        opacity: 1;
+        rotate: 0deg;
     }
 
+   
+    
     100% {
-        transform: scale(2.4);
-        opacity: 0;
+        rotate: 360deg;
     }
-}
-
-.locate-loading::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 8px;
-    height: 8px;
-    margin: -4px 0 0 -4px;
-    border: 2px solid var(--foreground);
-    border-radius: 50%;
-    animation: pulse 1.2s ease-out infinite;
 }
