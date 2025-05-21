@@ -9,6 +9,7 @@ export default function PettingZoo() {
                 <h1>Petting Zoo</h1>
             </div>
             <div className="body basic">
+                <a className="button" href="/map?x=39.38343412023281&y=-78.04263671453262">Find on the Map</a>
                 <AndImage src="https://images.unsplash.com/photo-1603980640727-9bbc2a1fb110?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                     <h2>George the Llama</h2>
                     <p>I like to sniff people</p>

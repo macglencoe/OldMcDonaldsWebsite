@@ -22,6 +22,8 @@ function getDistanceMiles(lat1, lon1, lat2, lon2) {
 }
 
 
+
+
 // -- Custom Icons -- //
 
 const entranceIcon = new L.DivIcon({
@@ -110,6 +112,25 @@ const footballIcon = new L.DivIcon({
     iconSize: [24, 24],
     iconAnchor: [12, 12],
     popupAnchor: [0, -12]
+})
+
+const flowerIcon = new L.DivIcon({
+    className: styles.marker,
+    html: `<div><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-600q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 240q-39 0-70.5-21.5T364-438q-5 0-9 .5t-9 .5q-52 0-89-37t-37-89q0-21 7-40.5t21-36.5q-13-17-20-36.5t-7-40.5q0-52 36.5-89t88.5-37q5 0 9 .5t9 .5q14-35 45.5-56.5T480-920q39 0 70.5 21.5T596-842q5 0 9-.5t9-.5q52 0 88.5 37t36.5 89q0 21-6.5 40.5T712-640q13 17 20 36.5t7 40.5q0 52-36.5 89T614-437q-5 0-9-.5t-9-.5q-14 35-45.5 56.5T480-360Zm0 280q0-74 28.5-139.5T586-334q49-49 114.5-77.5T840-440q0 74-28.5 139.5T734-186q-49 49-114.5 77.5T480-80Zm98-98q57-21 100-64t64-100q-57 21-100 64t-64 100Zm-98 98q0-74-28.5-139.5T374-334q-49-49-114.5-77.5T120-440q0 74 28.5 139.5T226-186q49 49 114.5 77.5T480-80Zm-98-98q-57-21-100-64t-64-100q57 21 100 64t64 100Zm196 0Zm-196 0Zm232-339q19 0 32.5-13.5T660-563q0-14-7.5-24.5T633-604l-35-17q-2 11-6 21.5t-9 19.5q-5 9-12 17t-15 15l32 23q5 4 11.5 6t14.5 2Zm-16-142 35-17q12-6 19-17t7-24q0-19-13-32.5T614-763q-8 0-14 2t-12 6l-33 23q8 7 15.5 15t12.5 17q5 9 9 19.5t6 21.5Zm-159-93q10-4 20-6t21-2q11 0 21 2t20 6l5-44q2-18-12.5-31T480-840q-19 0-33.5 13T434-796l5 44Zm41 312q19 0 33.5-13t12.5-31l-5-44q-10 4-20 6t-21 2q-11 0-21-2t-20-6l-5 44q-2 18 12.5 31t33.5 13ZM362-659q2-11 6-21.5t9-19.5q5-9 12-17t15-15l-32-23q-5-4-11.5-6t-14.5-2q-19 0-32.5 13.5T300-717q0 13 7.5 24t19.5 17l35 17Zm-16 141q8 0 14-1.5t12-6.5l33-22q-8-7-15.5-15T377-580q-5-9-9-19.5t-6-21.5l-35 17q-12 6-19 17t-7 24q1 19 13.5 32t31.5 13Zm237-62Zm0-120Zm-103-60Zm0 240ZM377-700Zm0 120Z"/></svg></div>`,
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+    popupAnchor: [0, -12]
+})
+
+const mazeIcon = new L.DivIcon({
+    className: styles.marker,
+    html: `<div><svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" viewBox="0 0 550.92 549.33">
+  <path d="m284.26,549.3c-48.67.66-91.99-8.45-132.6-29.52-27.57-14.31-52.78-31.91-74.37-54.32-31.71-32.92-54.38-71.23-66.89-115.3-5.45-19.21-8.53-38.83-9.81-58.81-3.25-50.79,6.99-98.87,29.63-144.13,16.41-32.8,39.81-60.3,68.16-83.66,27.22-22.43,57.4-39.3,90.94-50.2,16.64-5.41,33.65-9.01,51.03-11.17,19.71-2.45,39.46-2.84,59.17-1.13,55.59,4.8,105.33,24.61,148.99,59.4,30.71,24.47,56.28,53.28,73.86,88.71,12.77,25.73,21.21,52.88,25.44,81.22,3.31,22.14,3.87,44.49,2.21,66.84-3.69,49.66-20.03,94.93-48.97,135.29-35.94,50.12-82.85,85.9-142.12,104.55-16.8,5.29-33.98,8.91-51.56,10.41-8.73.74-17.47,1.39-23.11,1.84Zm6.04-481.77c1.41.29,2.55.53,3.7.75,12.2,2.37,24.59,4.03,36.58,7.22,43.98,11.69,80.09,36.01,108.33,71.35,25.57,31.99,39.92,68.84,43.15,109.88,2.25,28.62-.45,56.71-9.86,83.83-17.98,51.82-51.06,91.16-99.24,117.58-11.94,6.55-24.27,12.36-37.58,15.6-8.09,1.97-15.05-2.29-17.37-10.11-2.28-7.7,1.37-15.1,8.98-18.16,5.82-2.34,11.73-4.48,17.47-7.01,14.58-6.42,28.22-14.43,40.29-24.64-8.84-8.82-17.6-17.56-26.42-26.36-20.02,15.21-43.09,23.18-67.88,26.7v104.25c66.97-4.84,123.72-31.56,167.86-81.15,49.77-55.9,69.47-122.5,60.12-197.09-14.45-115.2-117.2-205.51-228.13-208.61v35.99Zm-29.75-36.7C116.52,41.3,35.06,157.79,31.32,260.62h102.76c4.41-33,16.38-62.23,40.98-85.29,24.12-22.6,52.01-37.43,85.49-40.47V30.83ZM98.2,289.84c3.66,43.14,20.11,79.79,51.11,109.37,31.1,29.68,67.51,48.37,111.24,51.39v-36.34c-.42-.13-.73-.28-1.05-.32-16.79-1.97-32.96-6.41-47.99-14.05-26.64-13.53-46.9-34.01-62.2-59.51-.98-1.63-1.52-3.71-1.65-5.62-.44-6.63,3.67-12.66,9.7-14.67,6.85-2.28,13.43.02,17.78,6.2,4.15,5.9,8.29,11.8,12.22,17.39,9.01-8.94,17.85-17.72,26.73-26.52-19.83-31.45-16.58-70.51,6.54-93.97,22.59-22.92,63.94-32.6,97.91-8.76,8.8-8.71,17.48-17.3,26.85-26.58-7.78-4.69-15.21-10.45-23.58-13.97-21.5-9.04-43.88-11.55-67.1-7.32-34.76,6.33-59.92,25.93-77.47,55.65-10.6,17.96-13.4,38.28-14.19,58.86-.26,6.75-2.23,8.73-8.93,8.74-17.32.03-34.64,0-51.97,0-1.15,0-2.3,0-3.95,0Zm192.14-155.28c55.68,7.95,96.26,36.76,116.57,88.85,20.26,51.96,11.07,100.64-26,143.44,8.52,8.43,17.23,17.05,25.93,25.67,45.71-45.5,59.99-127.69,29.62-192.67-31.61-67.63-97.93-97.8-146.13-101v35.71ZM31.27,290.01c-.24,35.15,16.83,101.03,65.38,150.94,44.82,46.08,98.72,73.5,163.75,77.24v-37.43c-51.81-2.84-95.43-23.24-131.91-59.46-36.5-36.23-56.36-80.17-60.3-131.29H31.27Zm334.99-80.22c-9.04,9.05-17.87,17.89-26.72,26.75,9.5,16.98,11.66,35.36,9.06,51.13-5.83,35.33-37.14,59.52-70.71,60.26-13.96.31-26.99-2.93-39.23-9.61-.85-.46-2.64-.53-3.22.03-8.61,8.25-17.1,16.63-25.68,25.04,42.19,30.93,102.09,27.36,142.48-9.69,39.68-36.4,46.67-99.84,14.03-143.92Zm-135.1,62.96c-1.15,22.27,17.41,45.37,43.92,45,23.91-.33,44.64-19.53,44.58-41.75-.06-25-19.84-44.9-44.62-44.66-28.49.28-44.81,21.35-43.89,41.41Z" />
+  <path d="m234.72,91.37c-.23,6.22-2.79,11-8.74,13.49-4.71,1.97-9.5,3.78-14.26,5.63-26.29,10.21-49.5,25.04-68.44,46.1-19.76,21.96-33.22,47.34-40.69,75.94-2.52,9.63-10.39,14.08-19.42,11.41-7-2.07-11.46-9.6-9.78-16.77,9.83-42.13,30.76-77.92,62.84-106.78,22.75-20.46,49.78-33.77,78.76-43.26,11.18-3.66,19.92,4.93,19.73,14.25Z" />
+</svg></div>`,
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+    popupAnchor: [0, -12],
 })
 
 
@@ -375,97 +396,115 @@ export function LocateControl() {
     const locationMarkerRef = useRef(null);
     const positionRef = useRef({ lat: null, lng: null });
     const buttonRef = useRef(null);
-  
+
     // SVGs for button states
     const normalSVG = `
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--foreground)">
         <path d="M440-42v-80q-125-14-214.5-103.5T122-440H42v-80h80q14-125 103.5-214.5T440-838v-80h80v80q125 14 214.5 103.5T838-520h80v80h-80q-14 125-103.5 214.5T520-122v80h-80Zm40-158q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-80q33 0 56.5-23.5T560-480q0-33-23.5-56.5T480-560q-33 0-56.5 23.5T400-480q0 33 23.5 56.5T480-400Zm0-80Z"/>
       </svg>`;
-  
+
     const loadingSVG = `
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
         <path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q56 0 105.5-17.5T676-227l-57-57q-29 21-64.5 32.5T480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 39-12 75t-33 65l57 57q32-41 50-91t18-106q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-160q22 0 42.5-5.5T561-342l-61-61q-5 2-10 2.5t-10 .5q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 6-.5 11.5T557-458l60 60q11-18 17-38.5t6-43.5q0-66-47-113t-113-47q-66 0-113 47t-47 113q0 66 47 113t113 47Z"/>
       </svg>`;
-  
-    useEffect(() => {
-      // Helper to clear loading state and show normal icon
-      const clearLoading = () => {
-        if (buttonRef.current) {
-          buttonRef.current.innerHTML = normalSVG;
-          buttonRef.current.classList.remove(styles.loading);
-          buttonRef.current.removeAttribute('disabled');
-        }
-      };
-  
-      // Update position + marker
-      const updatePosition = ({ latitude: lat, longitude: lng }) => {
-        positionRef.current = { lat, lng };
-        if (!locationMarkerRef.current) {
-          locationMarkerRef.current = L.marker([lat, lng], { icon: locationIcon }).addTo(map);
-        } else {
-          locationMarkerRef.current.setLatLng([lat, lng]);
-        }
-        clearLoading();
-      };
-  
-      let watchId;
-      if (navigator.geolocation) {
-        watchId = navigator.geolocation.watchPosition(
-          (pos) => updatePosition(pos.coords),
-          (err) => {
-            console.error(`Geolocation error (${err.code}): ${err.message}`);
-            clearLoading();
-          },
-          { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
-        );
-      } else {
-        console.error('Geolocation not supported by your browser');
-        clearLoading();
-      }
-  
-      // Create the "fly" control button
-      const control = L.control({ position: 'topright' });
-      control.onAdd = () => {
-        const btn = L.DomUtil.create('button', styles.locateButton);
-        buttonRef.current = btn;
-        btn.title = 'Center on Me';
-        Object.assign(btn.style, {
-          background: 'white',
-          border: 'none',
-          padding: '6px 10px',
-          cursor: 'pointer',
-          fontSize: '14px',
-        });
-        // show loading SVG until first fix
-        btn.innerHTML = loadingSVG;
-        btn.classList.add(styles.loading);
-        btn.setAttribute('disabled', '');
-        L.DomEvent.disableClickPropagation(btn);
-        L.DomEvent.disableScrollPropagation(btn);
-        btn.addEventListener('click', () => {
-          const { lat, lng } = positionRef.current;
-          if (lat != null && lng != null) {
-            map.flyTo([lat, lng], 18);
-          } else {
-            alert('Still locating…');
-          }
-        });
-        return btn;
-      };
-      control.addTo(map);
-  
-      // Cleanup on unmount
-      return () => {
-        if (watchId != null) navigator.geolocation.clearWatch(watchId);
-        control.remove();
-        if (locationMarkerRef.current) map.removeLayer(locationMarkerRef.current);
-      };
-    }, [map]);
-  
-    return null;
-  }
-  
 
+    useEffect(() => {
+        // Helper to clear loading state and show normal icon
+        const clearLoading = () => {
+            if (buttonRef.current) {
+                buttonRef.current.innerHTML = normalSVG;
+                buttonRef.current.classList.remove(styles.loading);
+                buttonRef.current.removeAttribute('disabled');
+            }
+        };
+
+        // Update position + marker
+        const updatePosition = ({ latitude: lat, longitude: lng }) => {
+            positionRef.current = { lat, lng };
+            if (!locationMarkerRef.current) {
+                locationMarkerRef.current = L.marker([lat, lng], { icon: locationIcon }).addTo(map);
+            } else {
+                locationMarkerRef.current.setLatLng([lat, lng]);
+            }
+            clearLoading();
+        };
+
+        let watchId;
+        if (navigator.geolocation) {
+            watchId = navigator.geolocation.watchPosition(
+                (pos) => updatePosition(pos.coords),
+                (err) => {
+                    console.error(`Geolocation error (${err.code}): ${err.message}`);
+                    clearLoading();
+                },
+                { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
+            );
+        } else {
+            console.error('Geolocation not supported by your browser');
+            clearLoading();
+        }
+
+        // Create the "fly" control button
+        const control = L.control({ position: 'topright' });
+        control.onAdd = () => {
+            const btn = L.DomUtil.create('button', styles.locateButton);
+            buttonRef.current = btn;
+            btn.title = 'Center on Me';
+            Object.assign(btn.style, {
+                background: 'white',
+                border: 'none',
+                padding: '6px 10px',
+                cursor: 'pointer',
+                fontSize: '14px',
+            });
+            // show loading SVG until first fix
+            btn.innerHTML = loadingSVG;
+            btn.classList.add(styles.loading);
+            btn.setAttribute('disabled', '');
+            L.DomEvent.disableClickPropagation(btn);
+            L.DomEvent.disableScrollPropagation(btn);
+            btn.addEventListener('click', () => {
+                const { lat, lng } = positionRef.current;
+                if (lat != null && lng != null) {
+                    map.flyTo([lat, lng], 18);
+                } else {
+                    alert('Still locating…');
+                }
+            });
+            return btn;
+        };
+        control.addTo(map);
+
+        // Cleanup on unmount
+        return () => {
+            if (watchId != null) navigator.geolocation.clearWatch(watchId);
+            control.remove();
+            if (locationMarkerRef.current) map.removeLayer(locationMarkerRef.current);
+        };
+    }, [map]);
+
+    return null;
+}
+
+function FlyToQuery() {
+    const map = useMap()
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search)
+        const x = params.get('x')
+        const y = params.get('y')
+
+        if (x && y) {
+            const lat = parseFloat(x)
+            const lng = parseFloat(y)
+            if (!isNaN(lat) && !isNaN(lng)) {
+                map.flyTo([lat, lng], 19)
+            }
+        }
+    }, [map])
+
+    return null
+}
 
 
 function ZoomLogger() { // This is for debugging
@@ -529,6 +568,7 @@ export default function PhotoOpsMapInner() {
                 <LocateControl />
                 <ZoomLogger />
                 <ZoomVisibilityController />
+                <FlyToQuery />
                 {/* -- Map Tile Layer -- */}
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -747,6 +787,22 @@ export default function PhotoOpsMapInner() {
                     icon={bathroomIcon}
                 >
                     <Popup>Portable Toilet</Popup>
+                </Marker>
+                <Marker
+                    position={[39.38163138370034, -78.04489454865366]}
+                    icon={flowerIcon}
+                >
+                    <Popup><a href='/activities/flower-fields'>See More</a></Popup>
+                    <Tooltip className={styles.pIconTooltip} permanent direction='center' offset={[0, 30]}>
+                        Flower Arrangement Wagon
+                    </Tooltip>
+
+                </Marker>
+                <Marker
+                    position={[39.38274219398928, -78.04343323508722]}
+                    icon={mazeIcon}
+                >
+                    <Popup>Corn Maze Entrance</Popup>
                 </Marker>
 
                 {/* -- Barriers -- */}

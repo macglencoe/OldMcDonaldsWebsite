@@ -21,6 +21,7 @@ export const CornMaze = () => {
                     <h2>10 acres of fun</h2>
                     <p>We have two corn mazes, each being 5 acres in area</p>
                     <p>In order to get to Maze #2, you must first traverse Maze #1 😱</p>
+                    <a className="button" href='/map?x=39.382729123233055&y=-78.04341793391379'>Find on the Map</a>
                 </AndImage>
                 <AndImage style="night" src="https://images.unsplash.com/photo-1603174378108-63103ad2f24b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                     <div className={styles.nightMaze}>

@@ -14,6 +14,7 @@ export const PumpkinPatch = () => {
                     <AndImage src="https://www.imperial-library.info/wp-content/uploads/image-2-1024x737.png">
                         <h2>Where is it?</h2>
                         <p>The two pumpkin patches can be found beyond the corn maze, just along the farm lane</p>
+                        <a className="button" href="/map?x=39.3825184665116&y=-78.04699996825022">Find on the Map</a>
                     </AndImage>
                     <AndImage src="https://images.unsplash.com/photo-1696629842172-1b71b45e8e07?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                         <h2>Pricing</h2>

@@ -24,6 +24,7 @@ export const HayRide = () => {
                     <h2>When to get on</h2>
                     <p>Each ticket has a <b>color</b> and a <b>time</b> written on the back</p>
                     <p>When your time comes, go to the hayride corral, which is across the creek</p>
+                    <a className='button' href='/map?x=39.382529281329774&y=-78.04355774914931'>Find on the Map</a>
                     <p>The drivers will direct you to the correct wagon, and take your ticket</p>
                 </AndImage>
                 <AndImage style="night" src="https://images.unsplash.com/photo-1707755939969-e9c1da71c5bb?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">

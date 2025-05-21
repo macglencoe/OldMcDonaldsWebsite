@@ -10,6 +10,7 @@ export const Vendors = () => {
                 <span>2025 Season</span>
             </div>
             <div className="body basic">
+                <a className='button' href='/map?x=39.38310990806668&y=-78.04274712816566'>Find on the Map</a>
                 <VendorProfile
                     name="Doggystyle"
                     subtitle="Hotdogs"

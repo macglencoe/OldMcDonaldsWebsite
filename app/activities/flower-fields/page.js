@@ -15,6 +15,8 @@ export default function FlowerFields() {
                     <h2>Sunflowers & Zinnias</h2>
                     <p>Take a stroll out to one of our 1-acre flower fields</p>
                     <p><a href="#cut-your-own">Cut your own</a>, take some pictures, or just enjoy</p>
+                    <a className="button" href="/map?x=39.38163138370034&y=-78.04489454865366">Find on the Map</a>
+
                 </AndImage>
                 <AndImage src="https://images.unsplash.com/photo-1588311082740-88c1b480d72d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                     <h2 id="cut-your-own">Cut your own</h2>
