@@ -651,7 +651,7 @@ export default function PhotoOpsMapInner() {
                         className={styles.imgPopup}
                     >
                         <img src='/gallery/0b2c98_f05cbe60cd6e4a5fb0fc1af18748eb20~mv2.avif'></img>
-                        Stocks Photo Op
+                        <span>Stocks Photo Op</span>
                     </Popup>
                 </Marker>
                 <Marker
@@ -665,8 +665,8 @@ export default function PhotoOpsMapInner() {
                     icon={photOpIcon}
                 >
                     <Popup className={styles.imgPopup}>
-                        <img src='/UNLICENSED_PLACEHOLDER_bigchair.jpg'></img>
-                        Big Chair Photo Op
+                        <span>Photo Op: Big Chair</span>
+                        <img src='/placeholder.png'></img>
                     </Popup>
                 </Marker>
                 <Marker

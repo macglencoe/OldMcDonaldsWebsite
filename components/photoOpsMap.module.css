@@ -14,6 +14,8 @@
     box-shadow: none;
 }
 
+
+
 .marker {
     background-color: var(--background);
     border-radius: 50%;
@@ -38,20 +40,30 @@
     fill: var(--foreground);
 }
 
+
+
 .imgPopup>div:first-child {
     width: 200px;
     position: relative;
 }
 
-.imgPopup>div>div {
+.imgPopup>div:first-child>div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 5px;
+    margin: 1em;
+}
+
+.imgPopup span {
+    font-weight: 600;
+    font-size: 1.2em;
 }
 
 .imgPopup img {
-    width: 200px
+    width: 200px;
+    border-radius: 10px;
 }
 
 .locateButton {
