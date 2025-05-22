@@ -27,26 +27,53 @@
 }
 
 .socials {
+}
+
+.socials > div {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 1em;
+    
 }
 
 .socials .tag {
     display: flex;
     flex-direction: row;
-    gap: 1em;
     align-items: center;
-    background-color: var(--accent);
     border-radius: 15px;
     overflow: hidden;
+    background-image: linear-gradient(to top right, var(--accent) -10%, transparent 120%);
     color: var(--background);
     font-weight: 600;
+    width: fit-content;
+    position: relative;
+    flex: 1 1 230px;
 }
 .socials .tag svg {
-    width: 3em;
-    height: 3em;
-    fill: var(--background);
+    height: 100%;
+    fill: var(--accent);
+    position: absolute;
+    z-index: 1;
+    scale: 1.5;
+    left: -10px;
+    transition: scale 0.3s ease;
+}
+.socials .tag:hover svg {
+    scale: 1.7;
+}
+.socials .tag.tiktok svg {
+    left: 10px;
+}
+.socials .tag span {
+    display: flex;
+    align-items: center;
+    color: var(--background);
+    padding: 1em 1em;
+    padding-left: 1.5em;
+    font-size: 1.4em;
+    word-break: normal;
+    z-index: 2;
 }
 
 @media screen and (max-width: 768px) {
@@ -56,4 +83,5 @@
         max-height: 150px;
         min-height: 150px;
     }
+    
 }
