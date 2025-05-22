@@ -1,0 +1,18 @@
+{
+    "2025-code-1": {
+        "name": "Helianthus",
+        "img": "/helianthus.png"
+    },
+    "2025-code-2": {
+        "name": "Anemone Coronaria",
+        "img": "/anemone.jpg"
+    },
+    "2025-code-3": {
+        "name": "Hibiscus Sabdariffa",
+        "img": "/hibiscus.jpeg"
+    },
+    "2025-code-4": {
+        "name": "Cyclamen Libanoticum",
+        "img": "/cyclamen.jpg"
+    }
+}
