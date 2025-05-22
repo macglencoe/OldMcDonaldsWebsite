@@ -11,7 +11,7 @@ export default function FlowerFields() {
                 <p>Frolicking skipping yippity hooray!!!</p>
             </div>
             <div className="body basic">
-                <AndImage src="https://images.unsplash.com/photo-1610558316028-efee14358b76?q=80&w=1926&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <AndImage src="/sunflower.jpg">
                     <h2>Sunflowers & Zinnias</h2>
                     <p>Take a stroll out to one of our 1-acre flower fields</p>
                     <p><a href="#cut-your-own">Cut your own</a>, take some pictures, or just enjoy</p>

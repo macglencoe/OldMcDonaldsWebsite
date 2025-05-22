@@ -77,7 +77,7 @@ export default async function Home() {
           {(summerHeroGate || (!fallHeroGate && !winterHeroGate && !summerHeroGate)) && // or default
             <>
               <Image
-                src="https://images.unsplash.com/photo-1564085007988-8566e9f276cc?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src="/summer.jpg"
                 width={1500}
                 height={1000}
                 alt="Old McDonald's"

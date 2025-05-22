@@ -34,9 +34,10 @@
     color: var(--foreground);
 }
 .andImage > img {
+    flex: 1;
     height: 20em;
-    min-width: 200px;
-    width: 50%;
+    min-width: 230px;
+    width: max-content;
     object-fit: cover;
     z-index: 0;
 }
@@ -46,6 +47,7 @@
     z-index: 2;
     height: fit-content;
     translate: 0 1em;
+    flex: 2;
 }
 .andImage:nth-child(even) .backdrop {
     translate: 0 -1em;
