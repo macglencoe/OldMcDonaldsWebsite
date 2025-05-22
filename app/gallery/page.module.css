@@ -26,6 +26,29 @@
     height: 100%;
 }
 
+.socials {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.socials .tag {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    align-items: center;
+    background-color: var(--accent);
+    border-radius: 15px;
+    overflow: hidden;
+    color: var(--background);
+    font-weight: 600;
+}
+.socials .tag svg {
+    width: 3em;
+    height: 3em;
+    fill: var(--background);
+}
+
 @media screen and (max-width: 768px) {
     .gallery .item {
         flex: 1 150px;
