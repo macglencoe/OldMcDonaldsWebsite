@@ -4,6 +4,7 @@ import Layout from "@/components/layout";
 import Calendar from "@/components/calendar";
 import { createFeatureGate } from "@/flags";
 import YearProgressBar from "@/components/yearProgress";
+import OldMcDonutsAd from "@/components/oldMcDonutsAd";
 
 
 export default async function Home() {
@@ -264,6 +265,7 @@ export default async function Home() {
           <p>*Age 3 and under are free</p>
 
         </section>
+        <OldMcDonutsAd />
         <section className={styles.about} id="about">
           <h1>About Us</h1>
           <div className={styles.infoTop}>
