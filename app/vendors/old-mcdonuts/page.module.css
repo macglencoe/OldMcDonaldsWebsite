@@ -1,0 +1,21 @@
+.menu h3 {
+    border-bottom: 3px solid var(--accent);
+    font-family: Inter;
+}
+
+.images img {
+    object-fit: cover;
+    align-self: flex-end;
+    width: 100%;
+    max-width: 100%;
+    object-position: center;
+}
+@media screen and (max-width: 768px) {
+    .images img {
+        width: 50%;
+        max-width: 50%;
+    }
+    .menu h3 {
+        font-size: 1.5em !important;
+    }
+}
