@@ -75,7 +75,11 @@ export default function MazeGame() {
                 <span>2025 Season</span>
             </div>
             <div className="body basic">
-                <div className="grid grid-cols-2 border border-black w-full max-w-3xl mx-auto">
+                <p className='big'><b>Find the QR codes</b></p>
+                <p>There are <b>4 QR codes</b> hidden throughout the maze.</p>
+                <p>Scan each of them with your phone camera. Your progress will be tracked here.</p>
+                <p>Once you find them all, you can enter in a drawing for a <b>large pumpkin</b>.</p>
+                <div className="grid grid-cols-2 border border-black w-full max-w-3xl mx-auto mb-4">
                     {Object.entries(mazeData).map(([code, { name, img }]) => (
                         <div
                             key={code}

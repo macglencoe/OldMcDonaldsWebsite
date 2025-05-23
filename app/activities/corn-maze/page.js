@@ -34,9 +34,9 @@ export const CornMaze = () => {
                 </AndImage>
                 <AndImage src="https://images.unsplash.com/photo-1530194031436-911753a437bf?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                     <h2>Maze Game</h2>
-                    <p>There are <b>4 stamps</b> hidden throughout the maze</p>
-                    <p><b>Grab a stamp sheet</b> at the maze entrance, and find all four</p>
-                    <p>If you succeed, you can enter your sheet in a drawing for a <b>large pumpkin</b></p>
+                    <p>Go on a fun scavenger hunt through the corn maze!</p>
+                    <p>Find the <b>4 QR codes</b> hidden throughout the maze</p>
+                    <a href='/maze-game' className="button">See More</a>
                 </AndImage>
                 <div className={styles.rules}>
                     <h2>Rules</h2>
