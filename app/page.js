@@ -5,6 +5,7 @@ import Calendar from "@/components/calendar";
 import { createFeatureGate } from "@/flags";
 import YearProgressBar from "@/components/yearProgress";
 import OldMcDonutsAd from "@/components/oldMcDonutsAd";
+import TestimonialCarousel from "@/components/testimonials";
 
 
 export default async function Home() {
@@ -267,6 +268,7 @@ export default async function Home() {
           <p>*Age 3 and under are free</p>
 
         </section>
+
         <OldMcDonutsAd
           title="Old McDonuts"
           description="Coffee, Apple Cider Donuts, and Slushies, right on the farm"
@@ -281,6 +283,8 @@ export default async function Home() {
           buttonText="See More"
           src="https://images.unsplash.com/photo-1620589125156-fd5028c5e05b?q=80&w=1774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         />
+        <TestimonialCarousel/>
+
         <section className={styles.about} id="about">
           <h1>About Us</h1>
           <div className={styles.infoTop}>
