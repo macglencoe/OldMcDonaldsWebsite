@@ -114,13 +114,13 @@ body {
   text-align: left;
 }
 
-.body.basic a {
+.basic a {
   color: var(--accent);
   text-decoration: none;
   word-break: break-all;
 }
 
-.body.basic a:hover {
+.basic a:hover {
   text-decoration: underline;
 }
 
@@ -134,7 +134,7 @@ body {
   text-align: center;
 }
 
-.body.basic a.button {
+.basic a.button {
   width: fit-content;
   gap: 1em;
   padding: 0.5em 1em;

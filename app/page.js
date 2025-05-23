@@ -191,7 +191,7 @@ export default async function Home() {
           </div>
         </section>
         <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
-        <section className={styles.rates}>
+        <section className={styles.rates + " basic"}>
           <Image
             src="https://images.unsplash.com/photo-1720084562445-1a10783fbe5c?q=80&w=1294&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             width={1500}
@@ -202,18 +202,18 @@ export default async function Home() {
           <h1>Rates</h1>
           <ul>
             <li>
-              <h2>General Admission</h2>
+              <h2>Admission</h2>
               <div className={styles.rateInfo}>
                 <h3>Includes:</h3>
                 <ul>
-                  <li>Corn Maze</li>
-                  <li>Nature Trails</li>
+                  <li><a href="/activities/corn-maze">Corn Maze</a></li>
+                  <li><a href="/activities/nature-trails">Nature Trails</a></li>
                   <li>Photo Opportunities</li>
                   <li>Various Games</li>
-                  <li>Sunflower Fields</li>
-                  <li>Petting Zoo</li>
+                  <li><a href="/activities/flower-fields">Sunflower Fields</a></li>
+                  <li><a href="/activities/petting-zoo">Petting Zoo</a></li>
                   <li>Playground</li>
-                  <li>Picnic Area</li>
+                  <li><a href="/vendors">Picnic Area</a></li>
                 </ul>
               </div>
               <div className={styles.price}>
@@ -228,6 +228,7 @@ export default async function Home() {
                 <p>Take a tour of the farm on a hayride, featuring scenic views</p>
                 <p>Rules apply</p>
               </div>
+              <a className="button" href="/activities/hayrides">Learn More</a>
               <div className={styles.price}>
                 <b>$4</b>
                 <span>/ person*</span>
@@ -239,8 +240,8 @@ export default async function Home() {
               <div className={styles.rateInfo}>
                 <p>Pick your own pumpkins and enjoy a scenic walk</p>
                 <p>Carts for hauling pumpkins are available, but may be limited on busy days</p>
-                <p>Please be prepared to brawl for pumpkins</p>
               </div>
+              <a className="button" href="/activities/pumpkin-patch">Learn More</a>
               <div className={styles.price}>
                 <b>¢50</b>
                 <span>/ pound</span>
@@ -255,6 +256,7 @@ export default async function Home() {
                 <p>Cutters and cups are available at the arrangement wagon, near the flower fields</p>
                 <p>Vases are also available for sale at the arrangement wagon, priced individually</p>
               </div>
+              <a className="button" href="/activities/flower-fields">Learn More</a>
               <div className={styles.price}>
                 <b>$7</b>
                 <span>/ cup</span>
