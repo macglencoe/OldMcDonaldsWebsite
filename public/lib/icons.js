@@ -26,7 +26,7 @@ export function makeIcon({ svg, className = styles.marker, size = 24, anchor = s
 }
 
 export const icons = {
-    entrance: makeIcon({ svg: entrance, className: styles.marker + ' ' + styles.t, size: 30 }),
+    entrance: makeIcon({ svg: entrance}),
     photoOp: makeIcon({ svg: photoOp }),
     tractor: makeIcon({ svg: tractor }),
     animal: makeIcon({ svg: animal }),
