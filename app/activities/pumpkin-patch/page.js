@@ -23,12 +23,12 @@ export const PumpkinPatch = () => {
                         <p>Pay at the weighing station, near the entrance to the corn maze.</p>
                         <p>Cash and cards accepted</p>
                     </AndImage>
-                    <AndImage src="https://images.unsplash.com/photo-1740578266454-eee1d51fe7ff?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                    <AndImage fromUnsplash src="https://images.unsplash.com/photo-1740578266454-eee1d51fe7ff?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                         <h2>Transportation</h2>
                         <p>If you want to pick multiple pumpkins, you may want to use a wagon</p>
                         <p>You can <b>grab a wagon</b> from the entrance, or bring your own. Don't be afraid to share wagons!</p>
                     </AndImage>
-                    <AndImage src="https://images.unsplash.com/photo-1507919181268-0a42063f9704?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                    <AndImage fromUnsplash src="https://images.unsplash.com/photo-1507919181268-0a42063f9704?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                         <h2>Variety</h2>
                         <p>We grow a diverse range of pumpkins, including (but not limited to):</p>
                         <ul>

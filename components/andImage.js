@@ -1,7 +1,7 @@
 
 import styles from './andImge.module.css'
 
-export const AndImage = ({ src, children, style }) => {
+export const AndImage = ({ src, children, style, fromUnsplash }) => {
     return (
         <div className={styles.andImage + " " + (
             style == "night" ? styles.night : ""
@@ -12,7 +12,13 @@ export const AndImage = ({ src, children, style }) => {
                     {children}
                 </div>
             </div>
-            <img src={src}></img>
+            <div className={styles.image}>
+                <img src={src}></img>
+                {fromUnsplash && 
+                    <div className={styles.overlay}>
+                        <a href='/attribution'>Attribution</a>
+                    </div>}
+            </div>
         </div>
     )
 }
