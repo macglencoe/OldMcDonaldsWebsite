@@ -10,11 +10,11 @@ export const NatureTrails = () => {
                 <span>2025 Season</span>
             </div>
             <div className='body basic'>
-                <AndImage fromUnsplash src="https://images.unsplash.com/photo-1668044143825-ee9f0e534cda?q=80&w=1746&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <AndImage src="/walnutbottom.jpg">
                     <h2>Take a hike!</h2>
                     <p>Our lush forest has many trails just for visitors!</p>
                 </AndImage>
-                <AndImage fromUnsplash src="https://images.unsplash.com/photo-1695602283999-5ef6d2c5dba7?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <AndImage src="/forestlane.jpg">
                     <h2>How do I get there?</h2>
                     <p>The forest is in the back corner of the farm</p>
                     <p>Go all the way out the lane, <b>almost</b> until you reach the pond</p>

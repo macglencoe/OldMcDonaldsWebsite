@@ -13,11 +13,6 @@ const artists = [
         credit: `Photo by <a href="https://unsplash.com/@rthiemann?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Robert Thiemann</a> on <a href="https://unsplash.com/photos/cabin-in-forest-with-snow-reab2UyAnxo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>`
     },
     {
-        usage: "Home: Rates section backdrop",
-        image: "",
-        credit: `Photo by <a href="https://unsplash.com/@anniespratt?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Annie Spratt</a> on <a href="https://unsplash.com/photos/a-field-of-tall-grass-with-trees-in-the-background-05DqzjHDeD8?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>`
-    },
-    {
         usage: "Vendors: Old McDonuts Placeholder",
         image: "",
         credit: `Photo by <a href="https://unsplash.com/@kylenieber?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Kyle Nieber</a> on <a href="https://unsplash.com/photos/a-group-of-people-standing-around-a-food-truck-iaE9xiao7wc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
@@ -27,11 +22,6 @@ const artists = [
         usage: "Vendors: Doggystyle Placeholder",
         image: "",
         credit: `Photo by <a href="https://unsplash.com/@joana_g?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Joana Godinho</a> on <a href="https://unsplash.com/photos/woman-in-brown-coat-standing-in-front-of-food-stall-Gwv-t9VQiPM?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-      `
-    },
-    {
-        usage: "Corn Maze: Maze Placeholder",
-        credit: `Photo by <a href="https://unsplash.com/@hdbernd?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Bernd 📷 Dittrich</a> on <a href="https://unsplash.com/photos/an-aerial-view-of-a-field-with-a-house-in-the-middle-of-it-QWtyUsmV9Pg?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
       `
     },
     {
@@ -45,23 +35,8 @@ const artists = [
       `
     },
     {
-        usage: "Flowers: Cut your own",
-        credit: `Photo by <a href="https://unsplash.com/@markusspiske?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Markus Spiske</a> on <a href="https://unsplash.com/photos/blue-and-silver-pliers-on-black-and-gray-surface-eKmwptiw_3o?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-      `
-    },
-    {
         usage: "Flowers: Grab a vase too!",
         credit: `Photo by <a href="https://unsplash.com/@lilybubbletea?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Lily Morello</a> on <a href="https://unsplash.com/photos/a-vase-with-yellow-flowers-NsyOJJO_i8A?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-      `
-    },
-    {
-        usage: "Hayrides: A tour of the farm",
-        credit: `Photo by <a href="https://unsplash.com/@slotosch?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Andreas Slotosch</a> on <a href="https://unsplash.com/photos/a-green-hillside-with-houses-and-trees-in-the-distance-YsIPml6_jno?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-      `
-    },
-    {
-        usage: "Hayrides: Pricing",
-        credit: `Photo by <a href="https://unsplash.com/@chamomileboi?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Grant L</a> on <a href="https://unsplash.com/photos/brown-wooden-house-on-green-grass-field-during-daytime-h_mXQ1abmoo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
       `
     },
     {
@@ -72,16 +47,6 @@ const artists = [
     {
         usage: "Hayrides: Hayrides at night",
         credit: `Photo by <a href="https://unsplash.com/@abalashevsky?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Artem Balashevsky</a> on <a href="https://unsplash.com/photos/the-night-sky-with-stars-and-trees-in-the-foreground-lkVKA9VpQ1o?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-      `
-    },
-    {
-        usage: "Nature Trails: Take a hike!",
-        credit: `Photo by <a href="https://unsplash.com/@loomydoons?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Myles Bloomfield</a> on <a href="https://unsplash.com/photos/a-dirt-path-through-a-forest-xeTAoNgmVEE?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-      `
-    },
-    {
-        usage: "Nature Trails: How do I get there?",
-        credit: `Photo by <a href="https://unsplash.com/@nimamot?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Nima Motaghian Nejad</a> on <a href="https://unsplash.com/photos/a-group-of-trees-sitting-on-top-of-a-lush-green-hillside-8773cr-8Nek?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
       `
     },
     {

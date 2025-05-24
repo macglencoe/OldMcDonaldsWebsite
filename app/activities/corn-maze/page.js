@@ -11,11 +11,11 @@ export const CornMaze = () => {
             </div>
             <div className='body basic'>
                 <div className={styles.cornMaze}>
-                    <img src='https://images.unsplash.com/photo-1725433807195-2298020b1dc6?q=80&w=1658&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'>
+                    <img src='/charleswmcdonaldmaze.jpg'>
                     </img>
-                    <h2>As you can see</h2>
-                    <p>This year's corn maze is about</p>
-                    <p>uh... ummmmm</p>
+                    <h2>2024 - Rest In Peace</h2>
+                    <p>Last year's maze was in memory of my father, Charles W. McDonald, and my grandfather, Charles W. McDonald</p>
+                    <p><b>We're still working on the maze for 2025. Stay tuned!</b></p>
                 </div>
                 <AndImage fromUnsplash={true} src="https://images.unsplash.com/photo-1603643205616-5e029797b7c2?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                     <h2>10 acres of fun</h2>

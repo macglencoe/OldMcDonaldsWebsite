@@ -18,7 +18,7 @@ export default function FlowerFields() {
                     <a className="button" href="/map?x=39.38163138370034&y=-78.04489454865366">Find on the Map</a>
 
                 </AndImage>
-                <AndImage fromUnsplash src="https://images.unsplash.com/photo-1588311082740-88c1b480d72d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <AndImage src="/flowerbar.jpg">
                     <h2 id="cut-your-own">Cut your own</h2>
                     <p>We have an arrangement station near the flower fields, where you will find cutters and cups</p>
                     <p>Flowers are priced by type:</p>
