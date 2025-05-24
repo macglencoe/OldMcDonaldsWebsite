@@ -1,0 +1,23 @@
+.body ul {
+    margin: 0;
+    padding-left: 0 !important;
+}
+.body ul li {
+    list-style-type: none;
+    margin: 0.2em;
+    padding: 0.5em 1em;
+    border-left: 3px solid var(--accent);
+}
+.body ul li:nth-child(odd) {
+    background-image: linear-gradient(to right, var(--accent) -500%, transparent 100%);
+    border-left: 3px solid var(--foreground);
+}
+.body a {
+    word-break: normal;
+}
+.body {
+    gap: 1em;
+}
+.body p {
+    text-align: center;
+}
