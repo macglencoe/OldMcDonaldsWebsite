@@ -39,6 +39,7 @@ export const Footer = () => {
             </div>
             <div className={styles.bottom}>
                 <a href='/privacy-policy'>Privacy Policy</a>
+                <a href='/attribution'>Attribution</a>
                 <span>© 2025 Old McDonalds Pumpkin Patch LLC. All Rights Reserved</span>
             </div>
         </div>
