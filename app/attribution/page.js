@@ -140,11 +140,6 @@ const artists = [
       `
     },
     {
-        usage: "Pumpkin Patch: Pricing",
-        credit: `Photo by <a href="https://unsplash.com/@rscupramedia?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Rhys S</a> on <a href="https://unsplash.com/photos/a-field-full-of-oranges-with-a-tree-in-the-background-uRGOxpj2CBw?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-      `
-    },
-    {
         usage: "Pumpkin Patch: Transportation",
         credit: `Photo by <a href="https://unsplash.com/@abushihabmarey?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Mohamed Marey</a> on <a href="https://unsplash.com/photos/a-green-wagon-sitting-on-top-of-a-dirt-field-Qwi-aqCJrzI?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
       `
