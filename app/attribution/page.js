@@ -155,15 +155,19 @@ export default function Attribution() {
     return (
         <Layout>
             <div className="px-6 pt-12 pb-8 text-center border-b border-gray-200" style={{
-                backgroundImage: "linear-gradient(to top, var(--accent) -200%, transparent 20%)",
+                backgroundImage: "linear-gradient(to top, var(--foreground) -200%, transparent 20%)",
             }}>
                 <h1 className="font-[Satisfy] text-6xl font-extrabold text-gray-900 tracking-tight">Attribution</h1>
                 <span className="text-lg text-gray-500 mt-2 block">Credit where credit is due</span>
             </div>
 
-            <div className={`max-w-3xl mx-auto px-6 py-12 prose prose-lg prose-neutral` + " " + styles.body}>
-                <p>
-                    Throughout our website, we use stock and placeholder images provided by talented contributors on{" "}
+            <div className={`max-w-3xl mx-auto px-6 py-12 ` + " " + styles.body}>
+              <p className="text-2xl mb-6">
+                We're still working on procuring in-season photographs of the farm.
+              </p>
+              <p className="mb-6">This website is new, and we haven't had the chance to photograph the festival in full swing yet.</p >
+                <p className="text-2xl mb-6">
+                    So, until then, we use stock and placeholder images provided by talented contributors on{" "}
                     <a href="https://unsplash.com/" target="_blank" rel="noopener noreferrer">
                         Unsplash
                     </a>.
