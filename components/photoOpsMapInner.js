@@ -192,9 +192,9 @@ function ZoomVisibilityController() {
 
 const photoOps = [
     {
-        label: 'Door',
+        label: 'Harvest Royalty',
         pos: [39.3843654, -78.0429576],
-        imgSrc: null
+        imgSrc: '/harvestRoyaltyPhotoOp.jpg'
     },
     {
         label: 'Stocks',
@@ -213,6 +213,7 @@ const photoOps = [
     {
         label: '"Love"',
         pos: [39.38272287986978, -78.0436764211604],
+        imgSrc: '/lovePhotoOp.jpg'
     },
     {
         label: 'Swing',

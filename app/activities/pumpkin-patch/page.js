@@ -11,7 +11,7 @@ export const PumpkinPatch = () => {
             </div>
             <div className="body basic">
                 <div className={styles.body}>
-                    <AndImage src="/bigtreelane.jpg">
+                    <AndImage src="/pumpkinlanes.jpg">
                         <h2>Where is it?</h2>
                         <p>The two pumpkin patches can be found beyond the corn maze, just along the farm lane</p>
                         <a className="button" href="/map?x=39.3825184665116&y=-78.04699996825022">Find on the Map</a>
@@ -28,7 +28,7 @@ export const PumpkinPatch = () => {
                         <p>If you want to pick multiple pumpkins, you may want to use a wagon</p>
                         <p>You can <b>grab a wagon</b> from the entrance, or bring your own. Don't be afraid to share wagons!</p>
                     </AndImage>
-                    <AndImage fromUnsplash src="https://images.unsplash.com/photo-1507919181268-0a42063f9704?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                    <AndImage src="/smallPumpkins.jpg">
                         <h2>Variety</h2>
                         <p>We grow a diverse range of pumpkins, including (but not limited to):</p>
                         <ul>
@@ -38,7 +38,7 @@ export const PumpkinPatch = () => {
                             <li>Ornamental varieties</li>
                         </ul>
                     </AndImage>
-                    <AndImage src="https://preview.redd.it/oimju2x5eax41.jpg?width=640&crop=smart&auto=webp&s=81616ac7a07b76ced24a06968dc9dc6475a3fb05">
+                    <AndImage src="/pumpkinsCloseUp.jpg">
                         <h2>Do's and Don'ts</h2>
                         <p>Don't:</p>
                         <ul>

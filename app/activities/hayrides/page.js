@@ -20,7 +20,7 @@ export const HayRide = () => {
                     <p className='big'>$4</p>
                     <p>Must be paid at the admission booth</p>
                 </AndImage>
-                <AndImage fromUnsplash src='https://images.unsplash.com/photo-1526410393023-6aace519592a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'>
+                <AndImage src='/hayrideGroupPhoto.jpg'>
                     <h2>When to get on</h2>
                     <p>Each ticket has a <b>color</b> and a <b>time</b> written on the back</p>
                     <p>When your time comes, go to the hayride corral, which is across the creek</p>
