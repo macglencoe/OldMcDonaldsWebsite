@@ -47,7 +47,7 @@
     background-color: var(--foreground);
 }
 
-.website {
+.button {
     padding: 0.3em 0.6em;
     border-radius: 10px;
     border: 2px solid var(--accent);
@@ -55,6 +55,21 @@
 
     font-size: 1.2em;
 }
-.website:hover {
+.button:hover {
     font-weight: 600;
+}
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.interactionPanel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1em;
+    padding: 1em 0;
+    flex-wrap: wrap;
 }

@@ -12,22 +12,24 @@ export const Vendors = () => {
             <div className="body basic">
                 <a className='button' href='/map?x=39.38310990806668&y=-78.04274712816566'>Find on the Map</a>
                 <VendorProfile
-                    name="Doggystyle"
-                    subtitle="Hotdogs"
-                    imgSrc="/doggystyle.jpg"
-                    website="https://example.com"
+                    name="Old McDonuts"
+                    subtitle="Donuts, Coffee, and Slushies"
+                    imgSrc="/oldMcDonuts.jpg"
+                    description="Classic fall flavors, always fresh and delicious"
+                    menu="/vendors/old-mcdonuts"
                 />
                 <VendorProfile
                     name="Twisted Taters"
                     subtitle="Butterfly Potatoes & more"
+                    description="Crispy and delicious butterfly potatoes, and much more"
                     imgSrc="/twistedTaters.jpg"
-                    website="https://example.com"
                 />
                 <VendorProfile
-                    name="Old McDonuts"
-                    subtitle="Donuts, Coffee, and Slushies"
-                    imgSrc="/oldMcDonuts.jpg"
-                    website="/vendors/old-mcdonuts"
+                    name="Doggystyle"
+                    subtitle="Hotdogs"
+                    imgSrc="/doggystyle.jpg"
+                    description="Veteran owned and operated, all beef hotdogs with lots of toppings"
+                    website="https://www.facebook.com/doggystylewv/"
                 />
             </div>
         </Layout>
