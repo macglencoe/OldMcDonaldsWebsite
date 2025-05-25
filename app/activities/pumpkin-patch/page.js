@@ -5,11 +5,11 @@ import { AndImage } from "@/components/andImage"
 export const PumpkinPatch = () => {
     return (
         <Layout>
+            <div className="header">
+                <h1>Pumpkin Patch</h1>
+                <span>2025 Season</span>
+            </div>
             <div className="body basic">
-                <div className={styles.header}>
-                    <h1>Pumpkin Patch</h1>
-                    <span>2025 Season</span>
-                </div>
                 <div className={styles.body}>
                     <AndImage src="/bigtreelane.jpg">
                         <h2>Where is it?</h2>
