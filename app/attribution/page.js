@@ -13,6 +13,11 @@ const artists = [
         credit: `Photo by <a href="https://unsplash.com/@rthiemann?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Robert Thiemann</a> on <a href="https://unsplash.com/photos/cabin-in-forest-with-snow-reab2UyAnxo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>`
     },
     {
+      usage: "Home: Socials Backdrop",
+      credit: `Photo by <a href="https://unsplash.com/@timothyhalesbennett?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Timothy Hales Bennett</a> on <a href="https://unsplash.com/photos/iphone-x-beside-macbook-OwvRB-M3GwE?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+      `
+    },
+    {
         usage: "Vendors: Old McDonuts Placeholder",
         image: "",
         credit: `Photo by <a href="https://unsplash.com/@kylenieber?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Kyle Nieber</a> on <a href="https://unsplash.com/photos/a-group-of-people-standing-around-a-food-truck-iaE9xiao7wc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>

@@ -35,7 +35,7 @@ export default function TestimonialCarousel() {
         setCurrent(current === last ? 0 : current + 1);
 
     return (
-        <div className={`relative mx-auto md:p-6 bg-foreground ` + styles.container}>
+        <div className={`relative mx-auto py-6 md:p-6 bg-foreground ` + styles.container}>
             {/* SLIDES */}
             <div className='
                 relative
