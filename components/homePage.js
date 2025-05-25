@@ -273,14 +273,14 @@ export default function HomePage( { summerHeroGate, fallHeroGate, winterHeroGate
           description="Coffee, Apple Cider Donuts, and Slushies, right on the farm"
           href="/vendors/old-mcdonuts"
           buttonText="Menu"
-          src="https://images.unsplash.com/photo-1683508860120-04c80c721095?q=80&w=1615&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src="/oldMcDonuts.jpg"
         />
         <OldMcDonutsAd
-          title="Doggystyle"
-          description="The best dern hotdogs you'll ever have"
+          title="Twisted Taters"
+          description="Butterfly Potatoes, Burgers, & more!"
           href="/vendors"
           buttonText="See More"
-          src="https://images.unsplash.com/photo-1620589125156-fd5028c5e05b?q=80&w=1774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src="/twistedTaters.jpg"
         />
         <TestimonialCarousel/>
         <FacebookFeed/>
