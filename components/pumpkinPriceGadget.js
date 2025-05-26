@@ -19,77 +19,61 @@ export default function PumpkinPriceGadget() {
         { min: 36, max: 45, message: "5 gallons of water"},
         { min: 46, max: 55, message: "A grown goat"},
         { min: 56, max: 65, message: "A wet bale of hay"},
-        { min: 66, max: 70, message: "A newborn calf"},
+        { min: 66, max: 70, message: "A large bag of concrete"},
     ]
 
     const comparisonMessage =
-        funFacts.find(({ min, max }) => weight >= min && weight <= max)?.message ?? ''
+    funFacts.find(({ min, max }) => weight >= min && weight <= max)?.message ?? ''
 
-    useEffect(() => {
-        if (sliderRef.current) {
-            const { offsetWidth } = sliderRef.current
-            const percent = (weight - 1) / (70 - 1)
-            const thumbSize = 16
-            setHandleX(percent * (offsetWidth - thumbSize))
-        }
-    }, [weight])
+useEffect(() => {
+    if (sliderRef.current) {
+        const { offsetWidth } = sliderRef.current
+        const percent = (weight - 1) / (70 - 1)
+        const thumbSize = 16
+        setHandleX(percent * (offsetWidth - thumbSize))
+    }
+}, [weight])
 
-    const markers = [1, 70]
 
-    return (
-        <section className="w-full flex flex-col justify-center items-center bg-background text-foreground p-6">
-            <div className="text-center mb-8">
+return (
+    <section className="w-full flex flex-col items-center bg-background text-foreground  max-w-4xl mx-auto">
+
+        <div className="relative w-full px-6 mb-10">
+            {/* Floating label */}
+            <div
+                className="absolute -top-8 transform -translate-x-1/2 bg-accent text-background text-sm font-semibold px-3 py-1 rounded-xl shadow"
+                style={{ left: `${handleX}px` }}
+            >
+                {weight} lb
             </div>
 
-            <div className="relative w-full max-w-3xl">
-                {/* Floating label above slider handle */}
+            {/* Slider input */}
+            <input
+                ref={sliderRef}
+                type="range"
+                min="1"
+                max="70"
+                value={weight}
+                onChange={(e) => setWeight(Number(e.target.value))}
+                className="w-full appearance-none h-3 rounded-full bg-accent/20 accent-accent transition-all duration-300"
+            />
+        </div>
+
+        {comparisonMessage && (
+            <p className="text-accent text-center max-w-md italic mb-6">{comparisonMessage}</p>
+        )}
+
+        <div className="flex flex-col md:flex-row justify-center items-center gap-6">
+            <div className='w-full md:w-[340px] h-[280px] flex items-center justify-center'>
                 <div
-                    className="absolute -top-8 transform -translate-x-1/2 bg-accent text-background text-sm font-semibold px-2 py-1 rounded shadow whitespace-nowrap"
-                    style={{ left: `${handleX}px` }}
-                >
-                    {weight} lb
-                </div>
-
-                {/* Slider */}
-                <input
-                    ref={sliderRef}
-                    type="range"
-                    min="1"
-                    max="70"
-                    value={weight}
-                    onChange={(e) => setWeight(Number(e.target.value))}
-                    className="w-full appearance-none bg-accent h-2 rounded-lg cursor-pointer"
-                />
-
-                {/* Tick markers */}
-                <div className="absolute top-4 left-0 right-0 flex justify-between text-sm text-accent px-[2px]">
-                    {markers.map((m) => (
-                        <div key={m} className="flex flex-col items-center w-0">
-                            <div className="h-4 w-px bg-accent" />
-                            <span className="mt-1">{m}lb</span>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            <div className='mt-5'>
-                {comparisonMessage && (
-                    <p className="text-accent mt-2 text-center max-w-sm italic">{comparisonMessage}</p>
-                )}
-            </div>
-
-
-            <div className="flex flex-col md:flex-row justify-center items-center gap-0 md:gap-4">
-                <div
-                    className="transition-fontSize duration-300"
-                    style={{ fontSize: `${scale * 7}rem` }}
+                    className=" tritems-center justify-center text-center"
+                    style={{ fontSize: `${scale * 5}rem`, transform: `scale(${scale})` }}
                 >
                     🎃
                 </div>
-                <div className="text-xl font-semibold">
-                    ${price}
-                </div>
             </div>
-        </section>
-    )
+            <div className="text-3xl font-bold text-accent">${price}</div>
+        </div>
+    </section>
+)
 }

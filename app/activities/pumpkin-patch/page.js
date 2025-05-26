@@ -17,7 +17,7 @@ export const PumpkinPatch = () => {
                         <p>The two pumpkin patches can be found beyond the corn maze, just along the farm lane</p>
                         <a className="button" href="/map?x=39.3825184665116&y=-78.04699996825022">Find on the Map</a>
                     </AndImage>
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-3 shadow-lg rounded-2xl p-6 border border-accent/20">
                         <h2 className="text-center border-b-3">Pricing</h2>
                         <p className="text-center">Pumpkins from the patch are priced at:</p>
                         <p className={styles.big + " text-center"}>$0.50 / pound</p>
