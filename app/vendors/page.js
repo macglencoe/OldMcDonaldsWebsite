@@ -9,7 +9,7 @@ export const Vendors = () => {
                 <h1>Vendors</h1>
                 <span>2025 Season</span>
             </div>
-            <div className="body basic">
+            <div className="body basic !pb-6">
                 <a className='button' href='/map?x=39.38310990806668&y=-78.04274712816566'>Find on the Map</a>
                 <VendorProfile
                     name="Old McDonuts"
