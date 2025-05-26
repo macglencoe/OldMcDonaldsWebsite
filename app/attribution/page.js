@@ -42,13 +42,6 @@ const artists = [
       `
   },
   {
-    usage: "Activities: Basketball Wagon",
-    image: "https://images.unsplash.com/photo-1683688520618-35a12caa059f?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    credit: `Photo by <a href="https://unsplash.com/@gibblesmash139?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">gibblesmash asdf</a> on <a href="https://unsplash.com/photos/a-basketball-sitting-on-top-of-a-lush-green-field-hev1csJPszA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-      `,
-    mustBeReplaced: true
-  },
-  {
     usage: "Activities: Football Nets",
     image: "https://images.unsplash.com/photo-1566579090262-51cde5ebe92e?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     credit: `Photo by <a href="https://unsplash.com/@aussiedave?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Dave Adamson</a> on <a href="https://unsplash.com/photos/brown-wilson-american-football-on-grass-XXqNsborcjU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
