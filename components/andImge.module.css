@@ -1,122 +1,20 @@
-.andImage {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 1em;
-    padding: 1em;
-    margin: auto;
-}
 .andImage:nth-child(even) {
-    flex-direction: row-reverse;
-}
-.andImage .content {
-    padding: 1em;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: var(--background);
-    height: fit-content;
-    translate: 3em -1em;
-    border-left: 5px solid var(--foreground);
+    flex-direction: row-reverse !important;
 }
 .andImage:nth-child(even) .content {
-    border-left: none;
-    border-right: 5px solid var(--foreground);
-    translate: -3em 1em;
     text-align: right;
-    
 }
 .andImage:nth-child(even) .content {
     text-align: left;
 }
-.andImage .content > * {
-    color: var(--foreground);
-}
-.andImage .image {
-    flex: 1;
-    position: relative;
-    z-index: 0;
-    max-width: fit-content;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.andImage .image > img {
-    height: 20em;
-    min-width: 230px;
-    width: max-content;
-    object-fit: cover;
-}
-.andImage .image > .overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    padding: 0.5em 1em;
-    font-size: 0.5em;
-    font-weight: 600;
-    background-image: linear-gradient(to right, var(--foreground) 0%, transparent 100%);
-    padding-right: 2rem;
-}
-.andImage:nth-child(odd) .image > .overlay {
-    left: unset;
-    right: 0;
-    background-image: linear-gradient(to left, var(--foreground) 0%, transparent 100%);
-    padding-left: 2rem;
-    padding-right: 1em;
-}
-.andImage .image > .overlay * {
-    color: var(--background);
-}
-
-.andImage .backdrop {
-    background-color: var(--accent);
-    z-index: 2;
-    height: fit-content;
-    translate: 0 1em;
-    flex: 2;
-}
-.andImage:nth-child(even) .backdrop {
-    translate: 0 -1em;
-}
 
 
-.andImage.night .content {
-    background-color: var(--nightMazeBackground);
-    border-color: var(--nightMazeForeground);
-}
 .andImage.night .backdrop {
     background-color: var(--nightMazeAccent);
 }
 
 @media screen and (max-width: 768px) {
-    .andImage {
-        flex-direction: column;
-        align-items: stretch;
-    }
     .andImage:nth-child(even) {
-        flex-direction: column;
-    }
-    .andImage .backdrop {
-        translate: 0.6em -0.3em;
-    }
-    .andImage:nth-child(even) > .backdrop {
-        translate: -0.6em 0.3em;
-    }
-    .andImage .content {
-        translate: -0.6em 0.3em;
-        border-right: none;
-        border-left: none;
-    }
-    .andImage:nth-child(even) .content {
-        translate: 0.6em 0.3em;
-        border-right: none;
-        border-left: none;
-    }
-    .andImage .image > img {
-        width: 100%;
-    }
-    .andImage .image {
-        max-width: none;
+        flex-direction: column !important;
     }
 }
