@@ -31,7 +31,7 @@ export default function Activities() {
                         <h2 className={styles.light}>Tube Slides</h2>
                     </div>
                     <div className={styles.smallActivity}>
-                        <img className={styles.backdrop} src="https://images.unsplash.com/photo-1683688520618-35a12caa059f?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></img>
+                        <img className={styles.backdrop} src="/basketballWagon.jpg"></img>
                         <h2 className={styles.light}>Basketball Wagon</h2>
                     </div>
                     <div className={styles.smallActivity}>
