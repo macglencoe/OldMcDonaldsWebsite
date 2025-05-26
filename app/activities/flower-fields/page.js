@@ -28,7 +28,7 @@ export default function FlowerFields() {
                     </ul>
                     <b>PLEASE RETURN CUTTERS TO ARRANGEMENT STATION</b>
                 </AndImage>
-                <AndImage fromUnsplash src="https://images.unsplash.com/photo-1659480637106-11a47a59bfd7?q=80&w=1822&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <AndImage src="/flowerbarInterior.jpg">
                     <h2>Grab a vase too!</h2>
                     <p>We have a limited selection of glass vases available at the arrangement station</p>
                     <p>Each vase is priced individually</p>
