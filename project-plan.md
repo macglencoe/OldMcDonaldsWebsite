@@ -12,6 +12,8 @@
 - Promote events and special attractions
 - Improve user experience with responsive, accessible design
 - Enable simple updates for recurring seasonal content
+- Engage visitors with interactive elements like games and tools
+- Provide reliable visitor communication through contact forms
 
 # Scope
 ## Included
@@ -22,10 +24,12 @@
 - Directions page (embedded Google Map)
 - About page
 - Map page (Leaflet)
-- Contact form
+- Contact form (SMTP via SendGrid)
 - Photo Gallery
 - Reservation info & links to related forms
 - FAQ
+- Maze Game with stamp collection and prize submission form
+- Attribution page for Unsplash photography
 
 ## Excluded
 - E-commerce or online ticket sales
@@ -39,6 +43,7 @@
 - **Framework:** Next.js
 - **Styling:** Tailwind CSS
 - **Hosting:** Vercel
+- **Email:** SendGrid (SMTP integration for contact and submission forms)
 - **Analytics:** Vercel Analytics
 - **Maps:**
    - **Directions:** Google Maps Embed
@@ -56,10 +61,12 @@
 | Risk                              | Mitigation                                      |
 | --------------------------------- | ----------------------------------------------- |
 | Delayed content from stakeholders | Deadlines for content delivery     |
-| Weather-dependent events change   | > Not yet planned        |
 | Scope creep                       | Lock scope and schedule future phases as needed |
+| SMPT setup issues (must be done post-launch) | > Not yet planned |
 
 # Success Criteria
 - Site is live before fall season
 - Visitors can find key information (pricing, hours, directions, etc.)
+- Contact form and maze game submission work reliably
 - No major bugs across mobile and desktop browsers
+- Attribution is clearly provided for visual assets
