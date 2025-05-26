@@ -8,6 +8,7 @@ import OldMcDonutsAd from "@/components/oldMcDonutsAd";
 import TestimonialCarousel from "@/components/testimonials";
 import { ArrowLeft, ArrowSquareOut } from "phosphor-react";
 import FacebookFeed from "./facebookFeed";
+import WeekendWeather from "./weekendWeather";
 
 
 
@@ -152,6 +153,7 @@ export default function HomePage( { summerHeroGate, fallHeroGate, winterHeroGate
           }
         </section>
         <section className={styles.season}>
+          <WeekendWeather/>
           <h1>2025 Season</h1>
           <div className={styles.times}>
             <ul>
@@ -191,6 +193,7 @@ export default function HomePage( { summerHeroGate, fallHeroGate, winterHeroGate
           </div>
         </section>
         <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
+
         <section className={styles.rates + " basic"}>
           <Image
             src="/willow.jpg"

@@ -14,7 +14,7 @@ section.hero {
     flex-direction: column;
     gap: 5vmax
 }
-section.hero img {
+section.hero > img {
     position: absolute;
     object-fit: cover;
     left: 50%;
