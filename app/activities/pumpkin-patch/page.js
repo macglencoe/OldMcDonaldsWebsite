@@ -1,6 +1,7 @@
 import Layout from "@/components/layout"
 import styles from "./page.module.css"
 import { AndImage } from "@/components/andImage"
+import PumpkinPriceGadget from "@/components/pumpkinPriceGadget"
 
 export const PumpkinPatch = () => {
     return (
@@ -16,13 +17,14 @@ export const PumpkinPatch = () => {
                         <p>The two pumpkin patches can be found beyond the corn maze, just along the farm lane</p>
                         <a className="button" href="/map?x=39.3825184665116&y=-78.04699996825022">Find on the Map</a>
                     </AndImage>
-                    <AndImage src="/brookbridge.jpg">
-                        <h2>Pricing</h2>
-                        <p>Pumpkins from the patch are priced at:</p>
-                        <p className={styles.big}><u>$0.50 / pound</u></p>
-                        <p>Pay at the weighing station, near the entrance to the corn maze.</p>
-                        <p>Cash and cards accepted</p>
-                    </AndImage>
+                    <div className="flex flex-col gap-3">
+                        <h2 className="text-center border-b-3">Pricing</h2>
+                        <p className="text-center">Pumpkins from the patch are priced at:</p>
+                        <p className={styles.big + " text-center"}>$0.50 / pound</p>
+                        <PumpkinPriceGadget/>
+                        <p className="text-center">Pay at the weighing station, on your way back from the patch</p>
+                        <p className="text-center">Cash and cards accepted</p>
+                    </div>
                     <AndImage fromUnsplash src="https://images.unsplash.com/photo-1740578266454-eee1d51fe7ff?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                         <h2>Transportation</h2>
                         <p>If you want to pick multiple pumpkins, you may want to use a wagon</p>
