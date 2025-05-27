@@ -7,7 +7,7 @@ import mapIcon from '@/public/icons/map.svg?raw'
 export const Navbar = () => {
     const items = [
         { title: "Activities", path: '/activities' },
-        { title: "About", path: '/#about' },
+        { title: "About", path: '/about' },
         { title: "Reservations", path: '/reservations' },
         { title: "FAQ", path: '/faq' },
         { title: "Gallery", path: '/gallery' },

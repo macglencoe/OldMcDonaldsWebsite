@@ -284,22 +284,6 @@ export default function HomePage( { summerHeroGate, fallHeroGate, winterHeroGate
         />
         <TestimonialCarousel/>
         <FacebookFeed/>
-
-        <section className={styles.about} id="about">
-          <h1>About Us</h1>
-          <div className={styles.infoTop}>
-            <p>Take a break from the hustle and bustle of everyday and visit us on our family farm.<br></br>Glencoe Farm is located along Middle Creek, the stream runs through our park-like setting where you and your family can relax and enjoy the peaceful countryside. We are only open 6 weeks each Fall. This is a family effort to get the farm ready to open up to the community. All the work is done by our immediate family. It is a labor of love to be able to bring a farm experience to you and your family. We feel blessed to be able to share our home place with you!</p>
-          </div>
-          <div className={styles.infoBottom}>
-            <Image src="/mcdonaldporch.jpg" width={1500} height={1000} alt="McDonald Family on Porch" />
-            <div>
-              <h2>We've got history!</h2>
-              <p>The McDonald family has lived here on Glencoe farm for seven generations. Since the late 1700s, our farm has been in operation continously. Recently, we received a sestercentennial award - that means 250 years!</p>
-              <p>Currently, the farm consists of 175 acres. Over the years, the farm has had many uses including an orchard, dairy & beef farm.  Currently the fields are used for hay, corn, and pumpkins.    Glencoe Farm is located along Middle Creek, the stream runs through our park-like setting where you and your family can relax and enjoy the peaceful countryside.</p>
-              <p>In 2007, Glencoe was accepted into the Berkeley County Farm Preservation.  It is a great feeling knowing it will remain a green space and will be forever protected.</p>
-            </div>
-          </div>
-        </section>
       </div>
     </Layout>
   )
