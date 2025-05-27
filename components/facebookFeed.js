@@ -1,3 +1,4 @@
+"use client"
 import { FacebookLogo, InstagramLogo, TiktokLogo } from 'phosphor-react'
 import styles from './facebookFeed.module.css'
 export default function FacebookFeed() {
