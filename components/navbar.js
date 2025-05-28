@@ -3,6 +3,7 @@ import { useState } from "react"
 import styles from "./navbar.module.css"
 import { usePathname, useRouter } from "next/navigation"
 import mapIcon from '@/public/icons/map.svg?raw'
+import Link from "next/link"
 
 export const Navbar = () => {
     const items = [
@@ -26,9 +27,9 @@ export const Navbar = () => {
                         </li>
                     ))}
                     <li key="map" className={pathname === "/map" ? styles.active : null}>
-                        <a href="/map">
+                        <Link href="/map">
                             <span dangerouslySetInnerHTML={{ __html: mapIcon }} />
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </nav>
@@ -37,9 +38,9 @@ export const Navbar = () => {
                 <a href="/visit">Visit</a>
             </div>
             <div className={styles.mobileNav}>
-                <a className={styles.mobileMap + (pathname === "/map" ? " " + styles.active : "")} href="/map">
+                <Link className={styles.mobileMap + (pathname === "/map" ? " " + styles.active : "")} href="/map">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m600-120-240-84-186 72q-20 8-37-4.5T120-170v-560q0-13 7.5-23t20.5-15l212-72 240 84 186-72q20-8 37 4.5t17 33.5v560q0 13-7.5 23T812-192l-212 72Zm-40-98v-468l-160-56v468l160 56Zm80 0 120-40v-474l-120 46v468Zm-440-10 120-46v-468l-120 40v474Zm440-458v468-468Zm-320-56v468-468Z" /></svg>
-                </a>
+                </Link>
                 <button
                     onClick={() => setIsOpen(!isOpen)} className={styles.hamburger + (isOpen ? " " + styles.open : "")}
                 >
