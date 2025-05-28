@@ -65,8 +65,7 @@ export default async function Home() {
         <OldMcDonutsAd
           title="Old McDonuts"
           description="Coffee, Apple Cider Donuts, and Slushies, right on the farm"
-          href="/vendors/old-mcdonuts"
-          buttonText="Menu"
+          menu="/vendors/old-mcdonuts"
           src="/oldMcDonuts.jpg"
         />
         <OldMcDonutsAd
