@@ -142,3 +142,17 @@ section.hero .cta .buttons a:last-child {
 section.hero .cta .buttons a:hover {
     border-bottom: 3px solid var(--background);
 }
+
+@media screen and (max-width: 768px) {
+    section.hero .top {
+        padding: 2em;
+        padding-top: 3em;
+    }
+    section.hero .tagline {
+        font-size: 2.5em;
+    }
+    section.hero .cta .buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
