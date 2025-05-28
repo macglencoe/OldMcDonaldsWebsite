@@ -149,6 +149,18 @@ body {
   margin: 1em auto;
 }
 
+/* -- Fullcalendar -- */
+.fc .fc-daygrid-event {
+  font-size: 0.75rem;
+  padding: 2px 4px;
+  border-radius: 0.375rem;
+}
+.fc-view-harness, .fc-daygrid, .fc-scrollgrid, .fc-scrollgrid-section, .fc-scroller-harness, .fc-scroller, .fc-daygrid-body, .fc-scrollgrid-sync-table, .fc-toolbar  {
+  width: 100% !important;
+  
+  min-width: 500px !important;
+}
+
 
 @media screen and (max-width: 768px) {
   .body.basic {
@@ -162,4 +174,5 @@ body {
   .body.basic p {
     font-size: 1em;
   }
+
 }

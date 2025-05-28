@@ -1,5 +1,12 @@
 "use client"
+import dynamic from "next/dynamic";
 import { ArrowRight } from "phosphor-react";
+
+// dynamic import
+const FestivalCalendar = dynamic(() => import("@/components/calendar"), {
+    ssr: false,
+    loading: () => <p>Loading...</p>,
+});
 
 export default function Season() {
     return (
@@ -42,6 +49,7 @@ export default function Season() {
               <span>October 26</span>
             </div>
           </div>
+          <FestivalCalendar/>
         </section>
     )
 }
