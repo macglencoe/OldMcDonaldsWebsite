@@ -28,7 +28,7 @@ export default function HeroSummer() {
                         <ArrowLeft size={24} weight="bold" />
                         Book Your Event
                       </a>
-                      <a href="https://example.com">
+                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdNLOwNjhKnsI4QT18MCGOrEvxXP164zfLpXQOZSSBcJQxo3A/viewform?usp=header" target="_blank">
                         Vendor Application
                         <ArrowSquareOut size={24} weight="bold" />
                       </a>
