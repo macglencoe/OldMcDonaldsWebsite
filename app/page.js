@@ -11,6 +11,7 @@ import HeroWinter from "@/components/home/heroWinter";
 import Season from "@/components/home/season";
 import FacebookFeed from "@/components/facebookFeed";
 import Rates from "@/components/home/rates";
+import ContactForm from "@/components/contactForm";
 
 
 
@@ -77,6 +78,7 @@ export default async function Home() {
         />
         <TestimonialCarousel />
         <FacebookFeed />
+        <div className="flex justify-center bg-foreground"><ContactForm theme="onDark" /></div>
       </div>
     </Layout>
   )
