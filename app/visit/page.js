@@ -2,6 +2,7 @@
 import Layout from "@/components/layout"
 import styles from "./page.module.css"
 import Locator from "@/components/locator";
+import Hours from "@/components/hours";
 
 export const Visit = () => {
 
@@ -31,8 +32,7 @@ export const Visit = () => {
                             <p>Our parking lot is in the field north of the big white barn</p>
                             <p>Please look for parking attendants</p>
                             <p><b>Hours:</b></p>
-                            <p>...</p>
-                            <p>...</p>
+                            <Hours/>
                         </div>
                     </div>
                 </div>
