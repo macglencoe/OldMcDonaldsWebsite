@@ -1,6 +1,7 @@
 import Layout from '@/components/layout'
 import styles from './page.module.css'
 import { AndImage } from '@/components/andImage';
+import { BodyBlock } from '@/components/bodyBlock';
 
 export const CornMaze = () => {
     return (
@@ -17,38 +18,39 @@ export const CornMaze = () => {
                     <p>Last year's maze was in memory of my father, Charles W. McDonald, and my grandfather, Charles W. McDonald</p>
                     <p><b>We're still working on the maze for 2025. Stay tuned!</b></p>
                 </div>
-                <AndImage src="/cornMazeEntrance.jpg">
+                <BodyBlock src="/cornMazeEntrance.jpg">
                     <h2>10 acres of fun</h2>
-                    <p>We have two corn mazes, each being 5 acres in area</p>
-                    <p>In order to get to Maze #2, you must first traverse Maze #1 😱</p>
+                    <p>Lose yourself in one of our two 5-acre corn mazes!</p>
+                    <p>Our corn mazes are carefully designed each year to be both challenging and fun, all while having an over-arching theme.</p>
+                    <p>(On average, our mazes take 20 minutes to complete)</p>
                     <a className="button" href='/map?x=39.382729123233055&y=-78.04341793391379'>Find on the Map</a>
-                </AndImage>
-                <AndImage fromUnsplash style="night" src="https://images.unsplash.com/photo-1603174378108-63103ad2f24b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                </BodyBlock>
+                <BodyBlock fromUnsplash style="night" src="https://images.unsplash.com/photo-1603174378108-63103ad2f24b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                     <div className={styles.nightMaze}>
                         <h2>Night Maze</h2>
-                        <p>Starting on October nth, we will have the maze open from 7pm to 10:30pm</p>
-                        <p>Bring your flashlight and your friends for a spooky night on the farm</p>
+                        <p>After the sun sets, the corn maze becomes a new, spooky challenge</p>
+                        <p>Starting October 10th, come back after dark and find your way through the maze without the help of daylight</p>
                         <a href='/activities/night-maze' className={styles.button}>See More</a>
                     </div>
 
-                </AndImage>
-                <AndImage src="/cornMazeLane.jpg">
+                </BodyBlock>
+                <BodyBlock src="/cornMazeLane.jpg">
                     <h2>Maze Game</h2>
-                    <p>Go on a fun scavenger hunt through the corn maze!</p>
-                    <p>Find the <b>4 QR codes</b> hidden throughout the maze</p>
+                    <p>Hidden throughout the maze are stations with <b>QR Codes</b> to scan.</p>
+                    <p>Think you can find all four?</p>
                     <a href='/maze-game' className="button">See More</a>
-                </AndImage>
-                <div className={styles.rules}>
+                </BodyBlock>
+                <BodyBlock>
                     <h2>Rules</h2>
                     <p>In order to preserve the corn for harvest, and to ensure all visitors can have a fun experience, we ask that you respect these rules:</p>
                     <ol>
-                        <li><b>Leave No Trace:</b> Do not leave any trash or personal items in the corn maze. Anything you leave in the maze will be plowed into the soil next summer, and reclaimed by the dark embrace of mother earth.</li>
-                        <li>Do not break corn stalks, or blaze your own paths. The corn maze should remain a maze, and its form should remain unmolested by the impatient.</li>
-                        <li>Refrain from eating the corn. You are human. This corn is meant for animals. Is it your wish to be an animal?</li>
-                        <li>If you insist on running, do so mindful of the fact that there are roots, rocks, and foliage abound in the lanes. Corn is an excellent sound insulator, and if you fall, nobody will hear you.</li>
-                        <li>Consider the weather conditions before entering, and your apparel's suitability for the task.</li>
+                        <li><b>Leave No Trace:</b> Do not leave any trash or personal items in the corn maze. Anything you leave in the maze will be tilled into the soil next summer, never to be seen again except by mother Earth herself.</li>
+                        <li><b>Don't pick, snap, or stomp the corn.</b> It took months to grow and weeks to design. Let's keep it pretty for other visitors to enjoy!</li>
+                        <li><b>Refrain from eating the corn</b>. You are human. This corn is meant for animals.</li>
+                        <li><b>Running is highly discouraged!</b> The maze is full of roots and rocks, and corn muffles sound surprisingly well.</li>
+                        <li><b>Consider the weather conditions</b>: It is liable to be muddy. Dress for the farm, not the runway.</li>
                     </ol>
-                </div>
+                </BodyBlock>
             </div>
             <div className={styles.pastMazes + ' body basic'}>
                 <h2>Past Maze Designs</h2>
