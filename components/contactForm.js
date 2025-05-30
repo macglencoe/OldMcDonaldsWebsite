@@ -15,27 +15,27 @@ export default function ContactForm({ theme }) {
         return errors;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
         } else {
-            const response = fetch('/api/contact', {
+            const response = await fetch('/api/email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log(data);
-                    setSubmitted(true);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+                body: JSON.stringify(
+                    {
+                        to: "mcpaul1694@gmail.com", // TODO
+                        subject: 'Contact Form Submission',
+                        text: `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`,
+                        html: `<p>Name: ${formData.name}</p><p>Email: ${formData.email}</p><p>${formData.message}</p>`,
+                    }
+                ),
+            });
+            console.log(await response.json());
             setErrors({});
         }
     };
