@@ -28,13 +28,6 @@ const artists = [
     mustBeReplaced: true
   },
   {
-    usage: "Activities: Playground",
-    image: "https://images.unsplash.com/photo-1637062771078-eca465634238?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    credit: `Photo by <a href="https://unsplash.com/@mauricemaaktfotos?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Maurice DT</a> on <a href="https://unsplash.com/photos/a-park-with-a-swing-set-and-a-playground-in-the-background-Tb1NnBJv8b0?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-      `,
-    mustBeReplaced: true
-  },
-  {
     usage: "Activities: Corn Hole",
     image: "https://images.unsplash.com/photo-1636483022717-3eeaa9ff1a4f?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     credit: `Photo by <a href="https://unsplash.com/@stevelieman?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Steve Lieman</a> on <a href="https://unsplash.com/photos/two-women-playing-a-game-of-bean-bag-toss-2fH5WKaIg1k?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>

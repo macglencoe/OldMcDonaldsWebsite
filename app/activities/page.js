@@ -33,7 +33,7 @@ const activities = [
     { size: "large", title: "Pumpkin Patch", image: "/pumpkinlanes.jpg", href: "activities/pumpkin-patch" },
     { size: "medium", title: "Flower Fields", image: "/sunflowerBike.jpg", href: "activities/flower-fields" },
     { size: "large", title: "Corn Maze", image: "/cornMazeLane.jpg", href: "activities/corn-maze" },
-    { size: "medium", title: "Playground", image: "https://images.unsplash.com/photo-1637062771078-eca465634238?q=80..." },
+    { size: "medium", title: "Playground", image: "/playset.jpg" },
     { size: "small", title: "Tube Slides", image: "/tubeSlides.jpg" },
     { size: "small", title: "Basketball Wagon", image: "/basketballWagon.jpg" },
     { size: "small", title: "Football Nets", image: "https://images.unsplash.com/photo-1566579090262-51cde5ebe92e?q=80..." },
