@@ -12,6 +12,9 @@
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
+.top > * {
+    flex: 1;
+}
 
 .brand {
     padding: 1em;
@@ -41,7 +44,20 @@
     margin: 1em 0;
     padding: 0 1em;
 }
+.list > ul {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(4, auto);
+    gap: 0.5em 1.5em;
+    max-height: 150px;
+    padding: 0 0.5em;
+}
 .list h2 {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 0.5em;
+    align-items: center;
     font-size: 1.2em;
     font-weight: 600;
     margin: 0;
@@ -50,12 +66,13 @@
     border-bottom: 3px solid var(--accent);
     opacity: 0.7;
 }
-.list a {
+.list li {
+    list-style: none;
     text-decoration: none;
     color: var(--background);
     opacity: 0.7;
 }
-.list a:hover {
+.list li:hover {
     opacity: 1;
 }
 .list:hover h2 {
@@ -64,11 +81,30 @@
 
 .contactSec {
     display: flex;
+    flex-direction: column;
     padding: 2em;
     justify-content: center;
     align-items: center;
 }
+.contactSec h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+.contactSec:hover h2 {
+    opacity: 1;
+}
 .contactSec a {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    text-decoration: none;
+    color: var(--background);
     padding: 0.5em 1em;
     border: 3px solid var(--background);
     height: fit-content;
@@ -85,8 +121,15 @@
     flex-direction: row;
     border-top: 1px solid var(--accent);
     padding: 0.5em 1em;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 1em;
     flex-wrap: wrap;
     align-items: center;
+}
+.bottom a {
+    color: var(--background);
+    opacity: 0.7;
+}
+.bottom a:hover {
+    opacity: 1;
 }

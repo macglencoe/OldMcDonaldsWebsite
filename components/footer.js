@@ -1,49 +1,110 @@
-import styles from './footer.module.css'
+'use client';
+import { Compass, FacebookLogo, InstagramLogo, Phone } from 'phosphor-react';
+import Link from 'next/link';
 
-export const Footer = () => {
-    return (
-        <div className={styles.wrapper}>
-            <div className={styles.top}>
-                <div className={styles.brand}>
-                    <h1>Logo here</h1>
-                    <div className={styles.socials}>
-                        <a href='https://www.facebook.com'>
-                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
-                                <path d="M25,3C12.85,3,3,12.85,3,25c0,11.03,8.125,20.137,18.712,21.728V30.831h-5.443v-5.783h5.443v-3.848 c0-6.371,3.104-9.168,8.399-9.168c2.536,0,3.877,0.188,4.512,0.274v5.048h-3.612c-2.248,0-3.033,2.131-3.033,4.533v3.161h6.588 l-0.894,5.783h-5.694v15.944C38.716,45.318,47,36.137,47,25C47,12.85,37.15,3,25,3z"></path>
-                            </svg>
-                        </a>
-                        <a href='https://www.instagram.com'>
-                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24">
-                                <path d="M 8 3 C 5.243 3 3 5.243 3 8 L 3 16 C 3 18.757 5.243 21 8 21 L 16 21 C 18.757 21 21 18.757 21 16 L 21 8 C 21 5.243 18.757 3 16 3 L 8 3 z M 8 5 L 16 5 C 17.654 5 19 6.346 19 8 L 19 16 C 19 17.654 17.654 19 16 19 L 8 19 C 6.346 19 5 17.654 5 16 L 5 8 C 5 6.346 6.346 5 8 5 z M 17 6 A 1 1 0 0 0 16 7 A 1 1 0 0 0 17 8 A 1 1 0 0 0 18 7 A 1 1 0 0 0 17 6 z M 12 7 C 9.243 7 7 9.243 7 12 C 7 14.757 9.243 17 12 17 C 14.757 17 17 14.757 17 12 C 17 9.243 14.757 7 12 7 z M 12 9 C 13.654 9 15 10.346 15 12 C 15 13.654 13.654 15 12 15 C 10.346 15 9 13.654 9 12 C 9 10.346 10.346 9 12 9 z"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div className={styles.list}>
-                    <h2>Quick Links</h2>
-                    <a href='/visit'>Visit</a>
-                    <a href='/#about'>About</a>
-                    <a href='/activities'>Activities</a>
-                    <a href='/faq'>FAQ</a>
-                </div>
-                <div className={styles.list}>
-                    <h2>Activities</h2>
-                    <a href='/activities/pumpkin-patch'>Pumpkin Patch</a>
-                    <a href='/activities/corn-maze'>Corn Maze</a>
-                    <a href='/activities/hayrides'>Hayrides</a>
-                    <a href='/activities/nature-trails'>Nature Trails</a>
-                </div>
-                <div className={styles.contactSec}>
-                    <a href='tel:304-839-2330'>(304) 839-2330</a>
-                </div>
-            </div>
-            <div className={styles.bottom}>
-                <a href='/privacy-policy'>Privacy Policy</a>
-                <a href='/attribution'>Attribution</a>
-                <span>© 2025 Old McDonalds Pumpkin Patch LLC. All Rights Reserved</span>
-            </div>
+const socialLinks = [
+  { href: 'https://www.facebook.com', icon: <FacebookLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
+  { href: 'https://www.instagram.com', icon: <InstagramLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
+];
+
+const quickLinks = [
+  { href: '/visit', text: 'Visit' },
+  { href: '/about', text: 'About' },
+  { href: '/activities', text: 'Activities' },
+  { href: '/faq', text: 'FAQ' },
+  { href: '/reservations', text: 'Reservations' },
+  { href: '/gallery', text: 'Gallery' },
+  { href: '/vendors', text: 'Vendors' },
+  { href: '/map', text: 'Map' },
+];
+
+const activities = [
+  { href: '/activities/pumpkin-patch', text: 'Pumpkin Patch' },
+  { href: '/activities/corn-maze', text: 'Corn Maze' },
+  { href: '/night-maze', text: 'Night Maze' },
+  { href: '/maze-game', text: 'Maze Game' },
+  { href: '/activities/hayrides', text: 'Hayrides' },
+  { href: '/activities/nature-trails', text: 'Nature Trails' },
+  { href: '/activities/flower-fields', text: 'Flower Fields' },
+  { href: '/activities/petting-zoo', text: 'Petting Zoo' },
+];
+
+// === Reusable Components ===
+
+const FooterLinkList = ({ title, icon, links }) => (
+  <nav className="flex flex-1 flex-col gap-2 my-4 px-4 hover:[&>h2]:opacity-100">
+    <h2 className="flex items-center gap-2 text-lg font-semibold uppercase border-b-4 border-[var(--accent)] opacity-70">
+      {icon} {title}
+    </h2>
+    <ul className="grid grid-flow-col grid-rows-4 gap-y-2 gap-x-6 px-2">
+      {links.map(({ href, text }) => (
+        <li key={href} className="list-none min-w-max text-[var(--background)] opacity-70 hover:opacity-100">
+          <Link href={href}>{text}</Link>
+        </li>
+      ))}
+    </ul>
+  </nav>
+);
+
+const Footer = () => {
+  return (
+    <div className="flex flex-col pt-2 bg-[var(--foreground)] text-[var(--background)]">
+      <div className="flex flex-wrap justify-evenly">
+        {/* Brand & Socials */}
+        <div className="flex flex-col items-center justify-evenly text-center gap-4 p-4 flex-1">
+          <img src="/logo.png" alt="Old McDonalds Logo" />
+          <div className="flex gap-4">
+            {socialLinks.map(link => (
+              <a key={link.href} href={link.href}>
+                {link.icon}
+              </a>
+            ))}
+          </div>
         </div>
-    )
-}
 
-export default Footer
+        {/* Quick Links */}
+        <FooterLinkList
+          title="Waypoints"
+          icon={<Compass size={32} style={{ color: 'var(--accent)' }} weight="duotone" />}
+          links={quickLinks}
+        />
+
+        {/* Activities */}
+        <FooterLinkList
+          title="Things to Do"
+          icon={
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--accent)" viewBox="0 0 256 256">
+              <path d="M224,160H160L192,32Z" opacity="0.2" />
+              <path d="M232,192H200V168h24a8,8,0,0,0,7.76-9.94l-32-128a8,8,0,0,0-15.52,0l-32,128A8,8,0,0,0,160,168h24v24H120V176h8a8,8,0,0,0,0-16h-8V144h8a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16h8v16H40a8,8,0,0,0,0,16h8v16H24a8,8,0,0,0,0,16H232a8,8,0,0,0,0-16ZM192,65l21.75,87h-43.5ZM64,144h40v16H64Zm0,32h40v16H64Zm52-80A28,28,0,1,0,88,68,28,28,0,0,0,116,96Zm0-40a12,12,0,1,1-12,12A12,12,0,0,1,116,56Z" />
+            </svg>
+          }
+          links={activities}
+        />
+
+        {/* Contact */}
+        <div className="flex flex-col items-center justify-center p-8 flex-1">
+          <h2 className="text-xl font-semibold uppercase opacity-70 hover:opacity-100">Call Us</h2>
+          <a
+            href="tel:304-839-2330"
+            className="flex items-center gap-2 text-[var(--background)] font-semibold border-4 border-[var(--background)] px-4 py-2 mt-2 opacity-70 hover:opacity-100 whitespace-nowrap"
+          >
+            <Phone size={32} style={{ color: 'var(--background)' }} weight="duotone" /> (304) 839-2330
+          </a>
+        </div>
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="flex flex-wrap justify-end items-center gap-4 border-t border-[var(--accent)] py-2 px-4">
+        <a href="/privacy-policy" className="text-[var(--background)] opacity-70 hover:opacity-100">
+          Privacy Policy
+        </a>
+        <a href="/attribution" className="text-[var(--background)] opacity-70 hover:opacity-100">
+          Attribution
+        </a>
+        <span className="text-[var(--background)] opacity-70">© 2025 Old McDonalds Pumpkin Patch LLC. All Rights Reserved</span>
+      </div>
+    </div>
+  );
+};
+
+export default Footer;
