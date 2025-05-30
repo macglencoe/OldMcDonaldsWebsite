@@ -5,27 +5,6 @@ import Link from "next/link";
 
 const artists = [
   {
-    usage: "Reservations: Pricing",
-    credit: `Photo by <a href="https://unsplash.com/@nardly?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Daniel Bernard</a> on <a href="https://unsplash.com/photos/man-in-black-jacket-sitting-on-brown-wooden-bench-near-green-and-brown-temple-during-daytime-MJNjyXXFl58?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-    `,
-    mustBeReplaced: true,
-    image: 'https://images.unsplash.com/photo-1613738496373-45893782a5b2?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-  },
-  {
-    usage: "Reservations: What's included",
-    credit: `Photo by <a href="https://unsplash.com/@hansjuergen?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Hans-Jürgen Weinhardt</a> on <a href="https://unsplash.com/photos/a-large-circular-structure-with-columns-and-a-circular-arch-cl2hhh7gwyQ?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-    `,
-    mustBeReplaced: true,
-    image: "https://images.unsplash.com/photo-1663843913976-17a60f949a08?q=80&w=1836&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  },
-  {
-    usage: "Reservations: General Admission",
-    credit: `Photo by <a href="https://unsplash.com/@hdbernd?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Bernd 📷 Dittrich</a> on <a href="https://unsplash.com/photos/the-united-nations-emblem-is-on-display-in-front-of-a-window-WVXJSJmA0Zc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-    `,
-    mustBeReplaced: true,
-    image: "https://images.unsplash.com/photo-1673296630925-a16a5592cc14?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  },
-  {
     usage: "Home: Fall Hero Banner",
     image: "https://images.unsplash.com/photo-1572978385565-b4c1c4b9ce17?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     credit: `Photo by <a href="https://unsplash.com/@partyintheshire?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Erica Marsland Huynh</a> on <a href="https://unsplash.com/photos/orange-pumpkins-hGeHVKkHJP0?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>`
