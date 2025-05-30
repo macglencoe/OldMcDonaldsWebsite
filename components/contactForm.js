@@ -5,6 +5,7 @@ export default function ContactForm({ theme }) {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [errors, setErrors] = useState({});
     const [submitted, setSubmitted] = useState(false);
+    const [responseMessage, setResponseMessage] = useState(null);
 
     const validate = () => {
         const errors = {};
@@ -20,24 +21,37 @@ export default function ContactForm({ theme }) {
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-        } else {
+            return;
+        }
+
+        try {
             const response = await fetch('/api/email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(
-                    {
-                        to: "mcpaul1694@gmail.com", // TODO
-                        subject: 'Contact Form Submission',
-                        text: `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`,
-                        html: `<p>Name: ${formData.name}</p><p>Email: ${formData.email}</p><p>${formData.message}</p>`,
-                    }
-                ),
+                body: JSON.stringify({
+                    to: "mcpaul1694@gmail.com", // TODO
+                    subject: 'Contact Form Submission',
+                    text: `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`,
+                    html: `<p>Name: ${formData.name}</p><p>Email: ${formData.email}</p><p>${formData.message}</p>`,
+                }),
             });
-            console.log(await response.json());
-            setErrors({});
+
+            const data = await response.json();
+            if (response.ok) {
+                setSubmitted(true);
+                setResponseMessage("Thanks for your message! We'll receive an email soon.");
+                setFormData({ name: '', email: '', message: '' });
+            } else {
+                setResponseMessage(`Submission failed: ${data.error || 'Unknown error'}`);
+            }
+        } catch (error) {
+            console.error('Submission error:', error);
+            setResponseMessage('An unexpected error occurred. Please try again later.');
         }
+
+        setErrors({});
     };
 
     const handleChange = (e) => {
@@ -93,8 +107,9 @@ export default function ContactForm({ theme }) {
                     </button>
                 </form>
             )}
-            {submitted && <p className="text-center text-2xl text-background">Thanks for your message! We'll receive an email soon.</p>}
+            {responseMessage && (
+                <p className="mt-6 text-center text-lg text-background">{responseMessage}</p>
+            )}
         </div>
     );
 }
-
