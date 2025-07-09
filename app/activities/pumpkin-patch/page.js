@@ -32,12 +32,16 @@ export const PumpkinPatch = () => {
                     </AndImage>
                     <AndImage src="/smallPumpkins.jpg">
                         <h2>Variety</h2>
-                        <p>We grow a diverse range of pumpkins, including (but not limited to):</p>
+                        <p>We grow a diverse range of pumpkins, including:</p>
                         <ul>
-                            <li>Traditional carving pumpkins</li>
-                            <li>Decorative gourds</li>
-                            <li>Winter squash</li>
-                            <li>Ornamental varieties</li>
+                            <li>Traditional carving pumpkins (Cronus, Adonis, etc.)</li>
+                            <li>Blue Hubbards</li>
+                            <li>Acorn Squash</li>
+                            <li>White Pumpkins (Casper)</li>
+                            <li>Batwing Gourds</li>
+                            <li>Apple Gourds</li>
+                            <li>Gooseneck Gourds</li>
+                            <li>And More!</li>
                         </ul>
                     </AndImage>
                     <AndImage src="/pumpkinsCloseUp.jpg">
