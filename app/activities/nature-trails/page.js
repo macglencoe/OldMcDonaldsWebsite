@@ -25,11 +25,8 @@ export const NatureTrails = () => {
                     <h2>Things to keep in mind</h2>
                     <ul>
                         <li>Consider the weather conditons. It is liable to be muddy</li>
-                        <li>Do not feed the egregore</li>
-                        <li>...</li>
-                        <li>wood chuck</li>
-                        <li>so mote it be</li>
-                        <li>Mahabone...</li>
+                        <li>Stay in the mowed paths</li>
+                        <li>Watch out for thorns</li>
                     </ul>
                 </AndImage>
             </div>
