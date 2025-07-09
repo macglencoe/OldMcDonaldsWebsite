@@ -32,9 +32,9 @@ export default function About() {
                 <BodyBlock>
                     <h2>Throughout the years,</h2>
                     <p>Our farm has been home to many different ventures over the decades.</p>
-                    <p>From the [YEAR]s to the [YEAR]s, we played a role in <a href="https://www.journal-news.net/journal-news/long-and-short-of-it-berkeley-countys-apple-industry-discussion-to-be-held/article_34739292-a1ba-5b92-a050-0757d0ce868e.html" target="_blank" className="!break-normal">Berkeley County's thriving Apple Industry</a>.<br/>
+                    <p>From the late 1800s to the 1950s, we played a role in <a href="https://www.journal-news.net/journal-news/long-and-short-of-it-berkeley-countys-apple-industry-discussion-to-be-held/article_34739292-a1ba-5b92-a050-0757d0ce868e.html" target="_blank" className="!break-normal">Berkeley County's thriving Apple Industry</a>.<br/>
                     Our great-grandfather, Ernest Faulkner McDonald, was one of the original 18 guarantors of the C.H. Musselman Company Apple Plant in Inwood.</p>
-                    <p>In [YEAR], our grandfather, Charles "Bub" Francis Wall McDonald founded McDonald Farm Machinery - West Virginia's first John Deere dealership - and operated it until [YEAR].</p>
+                    <p>In the 1950s, our grandfather, Charles "Bub" Francis Wall McDonald founded McDonald Farm Machinery - West Virginia's first John Deere dealership - and operated it until 1985.</p>
                     <p>In 2001, our father, Charles "Charlie Bill" William McDonald, together with his wife Stephanie, planted corn and pumpkins on the farm for the first time, and established Old McDonald's Pumpkin Patch.</p>
                 </BodyBlock>
                 <div className={styles.gallery}>
@@ -44,7 +44,7 @@ export default function About() {
                     </div>
                     <div>
                         <img src="/bubAndPeggy.jpg"></img>
-                        <span>Peggy (left) and Charles "Bub" McDonald (right), circa [YEAR]</span>
+                        <span>Peggy (left) and Charles "Bub" McDonald (right), circa 1931</span>
                     </div>
                 </div>
                 <BodyBlock src="protectedForever.jpg">
