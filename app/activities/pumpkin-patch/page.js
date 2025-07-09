@@ -54,9 +54,9 @@ export const PumpkinPatch = () => {
                         </ul>
                         <p>Do:</p>
                         <ul>
-                            <li>Smoke Skooma</li>
-                            <li>Smoke Skooma</li>
-                            <li>Smoke Skooma</li>
+                            <li>Pick ripe pumpkins</li>
+                            <li>Haul pumpkins in a cart (or carry them)</li>
+                            <li>Take and share photos</li>
                         </ul>
                     </AndImage>
                 </div>
