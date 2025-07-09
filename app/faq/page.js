@@ -20,7 +20,7 @@ export const FAQ = () => {
                     There are portable restrooms and hand sanitizer available.
                 </FAQDrop>
                 <FAQDrop q="What types of payment do you accept?">
-                    We accept cash, credit and we will accept checks for large groups/schools.
+                    We accept cash, card and we will accept checks for large groups/schools.
                 </FAQDrop>
                 <FAQDrop q="Are pets allowed at the farm?">
                     We are sorry, but pets must be left at home
