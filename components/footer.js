@@ -25,8 +25,7 @@ const activities = [
   { href: '/maze-game', text: 'Maze Game' },
   { href: '/activities/hayrides', text: 'Hayrides' },
   { href: '/activities/nature-trails', text: 'Nature Trails' },
-  { href: '/activities/flower-fields', text: 'Flower Fields' },
-  { href: '/activities/petting-zoo', text: 'Petting Zoo' },
+  { href: '/activities/flower-fields', text: 'Flower Fields' }
 ];
 
 // === Reusable Components ===

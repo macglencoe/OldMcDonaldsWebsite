@@ -38,7 +38,7 @@ const activities = [
     { size: "small", title: "Basketball Wagon", image: "/basketballWagon.jpg" },
     { size: "small", title: "Football Nets", image: "https://images.unsplash.com/photo-1566579090262-51cde5ebe92e?q=80..." },
     { size: "small", title: "Corn Hole", image: "https://images.unsplash.com/photo-1636483022717-3eeaa9ff1a4f?q=80..." },
-    { size: "medium", title: "Petting Zoo", image: "/pettingZooGoatAndGirl.jpg", href: "activities/petting-zoo" },
+    { size: "medium", title: "Petting Zoo", image: "/pettingZooGoatAndGirl.jpg"},
     { size: "large", title: "Hayrides", image: "/tractorSunset.jpg", href: "activities/hayrides" },
     { size: "medium", title: "Food Vendors & Picnic Tables", image: "/picnicTable.jpg", href: "../vendors" },
     { size: "large", title: "Nature Trails", image: "/natureMazePath.jpg", href: "activities/nature-trails" },

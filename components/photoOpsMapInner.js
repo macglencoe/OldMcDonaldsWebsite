@@ -434,7 +434,6 @@ export default function PhotoOpsMapInner() {
                     position={[39.38348206851645, -78.04264639224952]}
                     icon={icons.animal}
                 >
-                    <Popup><a href='/activities/petting-zoo'>See More</a></Popup>
                     <Tooltip className={styles.pIconTooltip} permanent direction='center' offset={[0, 30]}>
                         Petting Zoo
                     </Tooltip>
