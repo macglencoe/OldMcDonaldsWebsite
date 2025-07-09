@@ -46,6 +46,10 @@ export default function About() {
                         <img src="/bubAndPeggy.jpg"></img>
                         <span>Peggy (left) and Charles "Bub" McDonald (right), circa 1931</span>
                     </div>
+                    <div>
+                        <img src="/mfm-moline.png"></img>
+                        <span>Charles "Bub" McDonald (right) receiving a tractor for McDonald Farm Machinery, circa 1950</span>
+                    </div>
                 </div>
                 <BodyBlock src="protectedForever.jpg">
                     <h2>Protected Forever</h2>
