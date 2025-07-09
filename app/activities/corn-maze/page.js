@@ -57,7 +57,7 @@ export const CornMaze = () => {
                 <ul>
                     <li>
                         <img src='/2024maze.avif'></img>
-                        <span>2024</span>
+                        <span>2023</span>
                     </li>
                     <li>
                         <img src='/2021maze.avif'></img>
@@ -69,27 +69,27 @@ export const CornMaze = () => {
                     </li>
                     <li>
                         <img src='/americaMaze.avif'></img>
-                        <span>idk</span>
-                    </li>
-                    <li>
-                        <img src='/eatLocalMaze.avif'></img>
-                        <span>idk</span>
+                        <span>2012</span>
                     </li>
                     <li>
                         <img src='/looseLipsMaze.avif'></img>
-                        <span>idk</span>
-                    </li>
-                    <li>
-                        <img src='/mountaineersMaze.avif'></img>
-                        <span>idk</span>
+                        <span>2016</span>
                     </li>
                     <li>
                         <img src='/noahsArkMaze.avif'></img>
-                        <span>idk</span>
+                        <span>2015</span>
+                    </li>
+                    <li>
+                        <img src='/mountaineersMaze.avif'></img>
+                        <span>2014</span>
+                    </li>
+                    <li>
+                        <img src='/eatLocalMaze.avif'></img>
+                        <span>2011</span>
                     </li>
                     <li>
                         <img src='/protectedMaze.avif'></img>
-                        <span>idk</span>
+                        <span>2008</span>
                     </li>
 
                 </ul>
