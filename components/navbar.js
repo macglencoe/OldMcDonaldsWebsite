@@ -7,11 +7,6 @@ import Link from "next/link"
 
 export const Navbar = () => {
     const items = [
-        { title: "Activities", path: '/activities' },
-        { title: "About", path: '/about' },
-        { title: "Reservations", path: '/reservations' },
-        { title: "FAQ", path: '/faq' },
-        { title: "Gallery", path: '/gallery' },
     ]
     const [isOpen, setIsOpen] = useState(false)
     const pathname = usePathname();
@@ -26,11 +21,6 @@ export const Navbar = () => {
                             <a href={item.path}>{item.title}</a>
                         </li>
                     ))}
-                    <li key="map" className={pathname === "/map" ? styles.active : null}>
-                        <Link href="/map">
-                            <span dangerouslySetInnerHTML={{ __html: mapIcon }} />
-                        </Link>
-                    </li>
                 </ul>
             </nav>
             <div className={styles.buttons}>

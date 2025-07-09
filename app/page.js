@@ -61,24 +61,7 @@ export default async function Home() {
 
 
         <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
-        <Rates/>
-
-        <OldMcDonutsAd
-          title="Old McDonuts"
-          description="Coffee, Apple Cider Donuts, and Slushies, right on the farm"
-          menu="/vendors/old-mcdonuts"
-          src="/oldMcDonuts.jpg"
-        />
-        <OldMcDonutsAd
-          title="Twisted Taters"
-          description="Butterfly Potatoes, Burgers, & more!"
-          href="/vendors"
-          buttonText="See More"
-          src="/twistedTaters.jpg"
-        />
-        <TestimonialCarousel />
         <FacebookFeed />
-        <div className="flex justify-center bg-foreground"><ContactForm theme="onDark" /></div>
       </div>
     </Layout>
   )

@@ -8,25 +8,9 @@ const socialLinks = [
 ];
 
 const quickLinks = [
-  { href: '/visit', text: 'Visit' },
-  { href: '/about', text: 'About' },
-  { href: '/activities', text: 'Activities' },
-  { href: '/faq', text: 'FAQ' },
-  { href: '/reservations', text: 'Reservations' },
-  { href: '/gallery', text: 'Gallery' },
-  { href: '/vendors', text: 'Vendors' },
-  { href: '/map', text: 'Map' },
 ];
 
 const activities = [
-  { href: '/activities/pumpkin-patch', text: 'Pumpkin Patch' },
-  { href: '/activities/corn-maze', text: 'Corn Maze' },
-  { href: '/night-maze', text: 'Night Maze' },
-  { href: '/maze-game', text: 'Maze Game' },
-  { href: '/activities/hayrides', text: 'Hayrides' },
-  { href: '/activities/nature-trails', text: 'Nature Trails' },
-  { href: '/activities/flower-fields', text: 'Flower Fields' },
-  { href: '/activities/petting-zoo', text: 'Petting Zoo' },
 ];
 
 // === Reusable Components ===
@@ -62,25 +46,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Quick Links */}
-        <FooterLinkList
-          title="Waypoints"
-          icon={<Compass size={32} style={{ color: 'var(--accent)' }} weight="duotone" />}
-          links={quickLinks}
-        />
-
-        {/* Activities */}
-        <FooterLinkList
-          title="Things to Do"
-          icon={
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--accent)" viewBox="0 0 256 256">
-              <path d="M224,160H160L192,32Z" opacity="0.2" />
-              <path d="M232,192H200V168h24a8,8,0,0,0,7.76-9.94l-32-128a8,8,0,0,0-15.52,0l-32,128A8,8,0,0,0,160,168h24v24H120V176h8a8,8,0,0,0,0-16h-8V144h8a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16h8v16H40a8,8,0,0,0,0,16h8v16H24a8,8,0,0,0,0,16H232a8,8,0,0,0,0-16ZM192,65l21.75,87h-43.5ZM64,144h40v16H64Zm0,32h40v16H64Zm52-80A28,28,0,1,0,88,68,28,28,0,0,0,116,96Zm0-40a12,12,0,1,1-12,12A12,12,0,0,1,116,56Z" />
-            </svg>
-          }
-          links={activities}
-        />
-
         {/* Contact */}
         <div className="flex flex-col items-center justify-center p-8 flex-1">
           <h2 className="text-xl font-semibold uppercase opacity-70 hover:opacity-100">Call Us</h2>
@@ -97,9 +62,6 @@ const Footer = () => {
       <div className="flex flex-wrap justify-end items-center gap-4 border-t border-[var(--accent)] py-2 px-4">
         <a href="/privacy-policy" className="text-[var(--background)] opacity-70 hover:opacity-100">
           Privacy Policy
-        </a>
-        <a href="/attribution" className="text-[var(--background)] opacity-70 hover:opacity-100">
-          Attribution
         </a>
         <span className="text-[var(--background)] opacity-70">© 2025 Old McDonalds Pumpkin Patch LLC. All Rights Reserved</span>
       </div>
