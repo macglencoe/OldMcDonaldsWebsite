@@ -1,7 +1,7 @@
 const hours = [
     {
         day: 'Fridays',
-        open: '1:00 AM',
+        open: '1:00 PM',
         close: '6:00 PM',
     },
     {
