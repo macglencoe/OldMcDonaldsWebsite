@@ -77,12 +77,17 @@ function ActivityCard({ size, title, image, href }) {
     const sizeClass = sizeStyle[size];
 
     const content = (
-        <motion.div
+        <motion.a
             whileHover={{ scale: 1.05 }}
+            whileFocus={{ scale: 1.05 }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: Math.random() * 0.3 }}
             className={`relative rounded-xl overflow-hidden shadow-xl border-4 border-background ${sizeClass} group cursor-pointer`}
+            aria-label={title + (href ? " -  Learn more" : "")}
+            tabIndex={0}
+            href={href || undefined}
+
         >
             <Image
                 src={image}
@@ -104,7 +109,7 @@ function ActivityCard({ size, title, image, href }) {
                     </span>
                 )}
             </div>
-        </motion.div>
+        </motion.a>
     );
 
     return href ? (
