@@ -3,8 +3,8 @@ import { Compass, FacebookLogo, InstagramLogo, Phone } from 'phosphor-react';
 import Link from 'next/link';
 
 const socialLinks = [
-  { href: 'https://www.facebook.com', icon: <FacebookLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
-  { href: 'https://www.instagram.com', icon: <InstagramLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
+  { href: 'https://www.facebook.com/oldmcdonaldspumpkinpatchandcornmaze', icon: <FacebookLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
+  { href: 'https://www.instagram.com/oldmcdonaldspumpkin/', icon: <InstagramLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
 ];
 
 const quickLinks = [
