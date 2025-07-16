@@ -16,7 +16,7 @@ export async function POST(req) {
     try {
         await sendgrid.send({
             to,
-            from: { email: "mcpaul1694@gmail.com", name: "Old McDonald's Pumpkin Patch" },
+            from: { email: "no-reply@oldmcdonaldspumpkinpatchwv.com", name: "Old McDonald's Pumpkin Patch" },
             subject,
             text,
             html,
