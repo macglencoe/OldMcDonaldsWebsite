@@ -24,7 +24,7 @@ export default function sitemap() {
             url: 'https://oldmcdonaldspumpkinpatchwv.com/about',
             lastModified: new Date(),
             changeFrequency: 'monthly',
-            priority: 5.0,
+            priority: 0.5,
         },
         {
             url: 'https://oldmcdonaldspumpkinpatchwv.com/faq',
