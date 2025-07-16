@@ -31,7 +31,7 @@ export default function ContactForm({ theme }) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    to: "mcpaul1694@gmail.com", // TODO
+                    to: ['mcpaul1694@gmail.com', 'sgmcdonald2@gmail.com'], // TODO
                     subject: 'Contact Form Submission',
                     text: `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`,
                     html: `<p>Name: ${formData.name}</p><p>Email: ${formData.email}</p><p>${formData.message}</p>`,
