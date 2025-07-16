@@ -113,7 +113,7 @@ function ActivityCard({ size, title, image, href }) {
     );
 
     return href ? (
-        <Link href={href} className="contents">
+        <Link legacyBehavior href={href} className="contents">
             {content}
         </Link>
     ) : (
