@@ -1,20 +1,5 @@
-const hours = [
-    {
-        day: 'Fridays',
-        open: '1:00 PM',
-        close: '6:00 PM',
-    },
-    {
-        day: 'Saturdays',
-        open: '11:00 AM',
-        close: '6:00 PM',
-    },
-    {
-        day: 'Sundays',
-        open: '12:00 PM',
-        close: '6:00 PM',
-    },
-]
+
+import hours from '@/public/data/hours.json';
 
 export default function Hours() {
     return (
