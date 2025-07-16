@@ -47,25 +47,46 @@ export default function MazeGame() {
         Object.keys(mazeData).length > 0 &&
         Object.keys(mazeData).every(code => foundCodes.includes(code))
 
-    const handleEntrySubmit = ({ name, phone }) => {
-        // record submission in localStorage
-        const raw = localStorage.getItem('submissions')
-        let subs = []
+    const handleEntrySubmit = async ({ name, phone }) => {
         try {
-            subs = raw ? JSON.parse(raw) : []
-        } catch {
-            subs = []
-        }
-        if (!subs.includes(currentYear)) {
-            subs.push(currentYear)
-            localStorage.setItem('submissions', JSON.stringify(subs))
-        }
+            const response = await fetch('/api/email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    to: ['oldmcdonaldsglencoefarm@gmail.com', 'mcpaul1694@gmail.com'],
+                    subject: 'Maze Game Entry',
+                    text: `Name: ${name}\nPhone Number: ${phone}`,
+                    html: `<p>Name: ${name}</p><p>Phone Number: ${phone}</p>`,
+                }),
+            });
 
-        // TODO -- send email
-        console.log('Entry submitted:', { name, phone })
-        alert(`Thanks for playing, ${name}! If you win, we'll contact ${phone}.`)
+            const data = await response.json();
+            if (response.ok) {
+                // record submission in localStorage
+                const raw = localStorage.getItem('submissions')
+                let subs = []
+                try {
+                    subs = raw ? JSON.parse(raw) : []
+                } catch {
+                    subs = []
+                }
+                if (!subs.includes(currentYear)) {
+                    subs.push(currentYear)
+                    localStorage.setItem('submissions', JSON.stringify(subs))
+                }
+                setHasSubmitted(true);
 
-        setHasSubmitted(true)
+                // Show success message
+                alert(`Thanks for playing, ${name}! Your entry for ${currentYear} has been recorded. If you win the drawing, we will contact you at ${phone}.`);
+            } else {
+                alert(`Submission failed: ${data.error || 'Unknown error'}`);
+            }
+        } catch (error) {
+            console.error('Submission error:', error);
+            alert('An unexpected error occurred. Please try again later.');
+        }
     }
 
     return (
