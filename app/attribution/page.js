@@ -25,7 +25,7 @@ const artists = [
     image: "https://images.unsplash.com/photo-1566579090262-51cde5ebe92e?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     credit: `Photo by <a href="https://unsplash.com/@aussiedave?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Dave Adamson</a> on <a href="https://unsplash.com/photos/brown-wilson-american-football-on-grass-XXqNsborcjU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
       `,
-    mustBeReplaced: true
+    
   },
   {
     usage: "Activities: Corn Hole",
@@ -38,7 +38,7 @@ const artists = [
     image: "https://images.unsplash.com/photo-1603174378108-63103ad2f24b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     credit: `Photo by <a href="https://unsplash.com/@eysteve?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Steven Aguilar</a> on <a href="https://unsplash.com/photos/brown-wooden-house-with-string-lights-during-night-time-cxV3TgLi7AA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
       `,
-    mustBeReplaced: true
+    
   },
   {
     usage: "Hayrides: Hayrides at night",
@@ -69,7 +69,7 @@ const artists = [
     image: "https://images.unsplash.com/photo-1650119097921-53bb715fea34?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     credit: `Photo by <a href="https://unsplash.com/@upnorth52?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">James Ertl</a> on <a href="https://unsplash.com/photos/a-couple-of-turkeys-standing-next-to-each-other-HnQhbL8WdK4?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
       `,
-      mustBeReplaced: true
+      
   },
   {
     usage: "Pumpkin Patch: Transportation",
