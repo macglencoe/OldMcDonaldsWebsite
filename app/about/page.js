@@ -40,7 +40,7 @@ export default function About() {
                 <div className={styles.gallery}>
                     <div>
                         <img src="/mcdonaldporch.jpg"></img>
-                        <span>McDonald Family gathered on the side porch at Glencoe Farm, circa 1929.</span>
+                        <span>McDonald Family gathered on the side porch at Glencoe Farm, circa 1929. Ernest Faulkner McDonald is pictured on the left</span>
                     </div>
                     <div>
                         <img src="/bubAndPeggy.jpg"></img>
@@ -48,7 +48,7 @@ export default function About() {
                     </div>
                     <div>
                         <img src="/mfm-moline.png"></img>
-                        <span>Charles "Bub" McDonald (right) receiving a tractor for McDonald Farm Machinery, circa 1950</span>
+                        <span>Charles "Bub" McDonald (middle) receiving a tractor for McDonald Farm Machinery, circa 1950</span>
                     </div>
                 </div>
                 <BodyBlock src="protectedForever.jpg">
