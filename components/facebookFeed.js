@@ -1,6 +1,7 @@
 "use client"
 import { FacebookLogo, InstagramLogo, TiktokLogo } from 'phosphor-react'
 import styles from './facebookFeed.module.css'
+import { track } from '@vercel/analytics'
 export default function FacebookFeed() {
     return (
         <div className="relative">
@@ -11,9 +12,24 @@ export default function FacebookFeed() {
                     <h2 className="text-background text-4xl md:text-6xl font-bold font-[Satisfy]">Stay Updated</h2>
                     <p className='text-background text-2xl'>Follow us on our socials</p>
                     <div className="flex flex-row gap-4">
-                        <a href='https://www.facebook.com/oldmcdonaldspumpkinpatchandcornmaze' target="_blank"><FacebookLogo size={32} color="var(--background)" weight="fill" /></a>
-                        <a href='https://www.instagram.com/oldmcdonaldspumpkin/' target="_blank"><InstagramLogo size={32} color="var(--background)" weight="fill" /></a>
-                        <a href='https://www.tiktok.com/@glencoefarmwv' target="_blank"><TiktokLogo size={32} color="var(--background)" weight="fill" /></a>
+                        <a href='https://www.facebook.com/oldmcdonaldspumpkinpatchandcornmaze' target="_blank"><FacebookLogo size={32} color="var(--background)" weight="fill" onClick={() => {
+                            track(
+                                'Social Link Click',
+                                { location: 'Socials Section (Home)', platform: 'facebook' }
+                            )
+                        }}/></a>
+                        <a href='https://www.instagram.com/oldmcdonaldspumpkin/' target="_blank"><InstagramLogo size={32} color="var(--background)" weight="fill" onClick={() => {
+                            track(
+                                'Social Link Click',
+                                { location: 'Socials Section (Home)', platform: 'instagram' }
+                            )
+                        }}/></a>
+                        <a href='https://www.tiktok.com/@glencoefarmwv' target="_blank"><TiktokLogo size={32} color="var(--background)" weight="fill" onClick={() => {
+                            track(
+                                'Social Link Click',
+                                { location: 'Socials Section (Home)', platform: 'tiktok' }
+                            )
+                        }}/></a>
                     </div>
                 </div>
                 <iframe className="z-2" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Foldmcdonaldspumpkinpatchandcornmaze&tabs=timeline&width=340&height=500&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false&appId" width="320" height="500" style={{ border: "none", overflow: "hidden" }} scrolling="no" frameBorder="0" allowFullScreen={true} allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>

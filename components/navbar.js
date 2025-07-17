@@ -4,6 +4,7 @@ import styles from "./navbar.module.css"
 import { usePathname, useRouter } from "next/navigation"
 import mapIcon from '@/public/icons/map.svg?raw'
 import Link from "next/link"
+import { track } from "@vercel/analytics"
 
 export const Navbar = () => {
     const items = [
@@ -35,7 +36,9 @@ export const Navbar = () => {
                 </ul>
             </nav>
             <div className={styles.buttons}>
-                <a href="tel:304-839-2330">Call</a>
+                <a href="tel:304-839-2330" onClick={() => {
+                    track('Call Button', { location: 'Navbar' })
+                }}>Call</a>
                 <a href="/visit">Visit</a>
             </div>
             <div className={styles.mobileNav}>
@@ -60,7 +63,9 @@ export const Navbar = () => {
                     </ul>
                 </nav>
                 <div className={styles.buttons + ' ' + styles.mobile}>
-                    <a href="tel:304-839-2330">Call</a>
+                    <a href="tel:304-839-2330" onClick={() => {
+                        track('Call Button', { location: 'Navbar' })
+                    }}>Call</a>
                     <a href="/visit">Visit</a>
                 </div>
             </div>

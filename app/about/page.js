@@ -23,7 +23,7 @@ export default function About() {
                     <h2 className="md:!text-5xl">Yes, we're really <u>McDonalds</u></h2>
                     <p>Or <b><i>Mac</i>Donalds</b>, originally.</p>
                     <p>In the early 1700s, a man named <b>Andrew MacDonald</b> immigrated from <b>Glencoe, Scotland</b> to <b>Arden, Virginia (now West Virginia)</b>.</p>
-                    <p>Seven generations later, we carry on the traditions of <a href="https://en.wikipedia.org/wiki/Clan_MacDonald_of_Glencoe" className="!break-normal"><b>Clan MacDonald of Glencoe (Clann Iain Abrach)</b></a>. Take that, King William!</p>
+                    <p>Seven generations later, we carry on the traditions of <a href="https://en.wikipedia.org/wiki/Clan_MacDonald_of_Glencoe" className="!break-normal" target="_blank"><b>Clan MacDonald of Glencoe (Clann Iain Abrach)</b></a>. Take that, King William!</p>
                 </BodyBlock>
                 <BodyBlock src="westwing.jpg">
                     <h2>And yes, we're really <u>old</u></h2>

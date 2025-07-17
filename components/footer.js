@@ -1,10 +1,11 @@
 'use client';
 import { Compass, FacebookLogo, InstagramLogo, Phone } from 'phosphor-react';
 import Link from 'next/link';
+import { track } from '@vercel/analytics';
 
 const socialLinks = [
-  { href: 'https://www.facebook.com/oldmcdonaldspumpkinpatchandcornmaze', icon: <FacebookLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
-  { href: 'https://www.instagram.com/oldmcdonaldspumpkin/', icon: <InstagramLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
+  { platform: 'facebook', href: 'https://www.facebook.com/oldmcdonaldspumpkinpatchandcornmaze', icon: <FacebookLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
+  { platform: 'instagram', href: 'https://www.instagram.com/oldmcdonaldspumpkin/', icon: <InstagramLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
 ];
 
 const quickLinks = [
@@ -54,7 +55,9 @@ const Footer = () => {
           <img src="/logo.png" alt="Old McDonalds Logo" />
           <div className="flex gap-4">
             {socialLinks.map(link => (
-              <a key={link.href} href={link.href}>
+              <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" onClick={() => {
+                track('Social Link Click', { location: 'Footer', platform: link.platform || 'unknown' });
+              }}>
                 {link.icon}
               </a>
             ))}
@@ -86,6 +89,9 @@ const Footer = () => {
           <a
             href="tel:304-839-2330"
             className="flex items-center gap-2 text-[var(--background)] font-semibold border-4 border-[var(--background)] px-4 py-2 mt-2 opacity-70 hover:opacity-100 whitespace-nowrap"
+            onClick={() => {
+              track('Call Button', { location: 'Footer' });
+            }}
           >
             <Phone size={32} style={{ color: 'var(--background)' }} weight="duotone" /> (304) 839-2330
           </a>

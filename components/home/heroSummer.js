@@ -3,6 +3,7 @@
 import Image from "next/image";
 import styles from "./hero.module.css";
 import { ArrowLeft, ArrowSquareOut } from "phosphor-react";
+import { track } from "@vercel/analytics";
 
 export default function HeroSummer() {
     return (
@@ -24,11 +25,21 @@ export default function HeroSummer() {
                   <div className={styles.cta}>
                     <p>Available through August 20</p>
                     <div className={styles.buttons}>
-                      <a href="/reservations">
+                      <a href="/reservations" onClick={() => 
+                        track(
+                          'Reservations',
+                          { location: 'Hero Summer' }
+                        )
+                      }>
                         <ArrowLeft size={24} weight="bold" />
                         Book Your Event
                       </a>
-                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdNLOwNjhKnsI4QT18MCGOrEvxXP164zfLpXQOZSSBcJQxo3A/viewform?usp=header" target="_blank">
+                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdNLOwNjhKnsI4QT18MCGOrEvxXP164zfLpXQOZSSBcJQxo3A/viewform?usp=header" target="_blank" onClick={() => {
+                        track(
+                          'Vendor Application',
+                          { location: 'Hero Summer' }
+                        )
+                      }}>
                         Vendor Application
                         <ArrowSquareOut size={24} weight="bold" />
                       </a>

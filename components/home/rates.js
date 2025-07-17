@@ -9,6 +9,7 @@ import {
   Flower,
 } from "phosphor-react";
 import { motion } from "framer-motion";
+import { track } from "@vercel/analytics";
 
 // Mapping Phosphor icons
 const ICON_MAP = {
@@ -138,6 +139,12 @@ function RateCard({ title, details, price, cta }) {
         <Link
           href={cta.href}
           className="mx-6 mb-4 py-2 text-center text-white bg-accent rounded-full font-semibold hover:bg-accent/90 transition"
+          onClick={() => {
+            track(
+              'Rate Card CTA',
+              { title }
+            )
+          }}
         >
           {cta.label}
         </Link>

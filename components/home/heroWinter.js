@@ -1,6 +1,7 @@
 
 import Image from "next/image";
 import styles from "./hero.module.css";
+import { track } from "@vercel/analytics";
 
 export default function HeroWinter() {
     return (
@@ -22,7 +23,12 @@ export default function HeroWinter() {
                   <div className={styles.cta}>
                     <p>Want to reminisce?</p>
                     <div className={styles.buttons}>
-                      <a href="/gallery">
+                      <a href="/gallery" onClick={() => {
+                        track(
+                          'Gallery',
+                          { location: 'Hero Winter' }
+                        )
+                      }}>
                         <ArrowLeft size={24} weight="bold" />
                         Gallery
                       </a>

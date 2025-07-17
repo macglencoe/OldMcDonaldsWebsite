@@ -2,6 +2,7 @@
 import Image from "next/image";
 import styles from "./hero.module.css";
 import { ArrowLeft } from "phosphor-react";
+import { track } from "@vercel/analytics";
 
 export default function HeroFall() {
     return (
@@ -23,10 +24,20 @@ export default function HeroFall() {
                   <div className={styles.cta}>
                     <p>See what we're all about</p>
                     <div className={styles.buttons}>
-                      <a href="/visit">
+                      <a href="/visit" onClick={() => {
+                        track(
+                          'Visit',
+                          { location: 'Hero Fall' }
+                        )
+                      }}>
                         Visit
                       </a>
-                      <a href="/activities">
+                      <a href="/activities" onClick={() => {
+                        track(
+                          'Activities',
+                          { location: 'Hero Fall' }
+                        )
+                      }}>
                         Activities
                         <ArrowLeft size={24} weight="bold" />
                       </a>
