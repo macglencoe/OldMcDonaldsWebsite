@@ -2,7 +2,62 @@ import Layout from "@/components/layout";
 import styles from "./page.module.css";
 import { BodyBlock } from "@/components/bodyBlock";
 
+import rentalSlots from "@/public/data/gazeboRentalSlots.json";
+import { useMemo } from "react";
+
+/**
+ * Renders the gazebo-rental availability table from
+ * `@/public/data/gazeboRentalSlots.json`.
+ *
+ * The JSON schema:
+ * [
+ *   { "day": "Fridays", "slots": [ { "start": "1:00 PM", "end": "3:00 PM" }, … ] },
+ *   …
+ * ]
+ */
+function GazeboRentalTable() {
+  const maxCols = useMemo(
+    () => Math.max(...rentalSlots.map(({ slots }) => slots.length)),
+    [],
+  );
+
+  return (
+    <table className="w-full border-collapse text-left">
+      <thead>
+        <tr className="border-b">
+          <th className="py-2 pr-4">Day</th>
+          <th colSpan={maxCols} className="py-2">
+            Time Slots
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {rentalSlots.map(({ day, slots }) => (
+          <tr key={day} className="border-b last:border-0">
+            <td className="py-2 pr-4 font-medium">{day}</td>
+
+            {/* one <td> per slot */}
+            {slots.map(({ start, end }) => (
+              <td key={`${start}-${end}`} className="py-2 px-3">
+                {start} – {end}
+              </td>
+            ))}
+
+            {/* pad with empty cells if this day has fewer slots than maxCols */}
+            {Array.from({ length: maxCols - slots.length }).map((_, idx) => (
+              <td key={`pad-${idx}`} />
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+
 export const Reservations = () => {
+
     return (
         <Layout>
             <div className="header">
@@ -19,31 +74,7 @@ export const Reservations = () => {
                 </BodyBlock>
                 <BodyBlock>
                     <div className={styles.timeSlots + " font-[Inter]"}>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Day</th>
-                                    <th colSpan={2}>Time Slots</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Fridays</td>
-                                    <td>1:00pm - 3:00pm</td>
-                                    <td>4:00pm - 6:00pm</td>
-                                </tr>
-                                <tr>
-                                    <td>Saturdays</td>
-                                    <td>1:00pm - 3:00pm</td>
-                                    <td>4:00pm - 6:00pm</td>
-                                </tr>
-                                <tr>
-                                    <td>Sundays</td>
-                                    <td>1:00pm - 3:00pm</td>
-                                    <td>4:00pm - 6:00pm</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <GazeboRentalTable />
                     </div>
                 </BodyBlock>
                 <BodyBlock>
