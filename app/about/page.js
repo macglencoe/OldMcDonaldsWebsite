@@ -38,6 +38,76 @@ export default function About() {
                     <p>In 2001, our father, Charles "Charlie Bill" William McDonald, together with his wife Stephanie, planted corn and pumpkins on the farm for the first time, and established Old McDonald's Pumpkin Patch.</p>
                 </BodyBlock>
 
+                <BodyBlock>
+                    <h2>Old McDonald Geneology</h2>
+                    <div className={styles.geneology}>
+                        <h3>Young McDonalds</h3>
+                        <ul>
+                            <li>Liam 'Paul' McDonald <div><span>2003</span></div></li>
+                            <li>Reece McDonald <div><span>2002</span></div></li>
+                            <li>Alaina McDonald <div><span>1996</span></div></li>
+                            <li>Theodore McDonald <div><span>1993</span></div></li>
+                        </ul>
+                        <h3>Middle-Age McDonald</h3>
+                        <ul>
+                            <li>Charles 'Charlie Bill' McDonald <div><span>1964 - 2024</span></div></li>
+                            <li>Stephanie McDonald <div><span>1974</span></div></li>
+                        </ul>
+                        <h3>Old McDonald</h3>
+                        <ul>
+                            <li>Charles 'Bub' Francis Wall McDonald <div><span>1927 - 2024</span></div></li>
+                            <li>Willa Jean Hammersla McDonald <div><span>1929 - 1998</span></div></li>
+                        </ul>
+                        <h3>Old Old McDonald</h3>
+                        <ul>
+                            <li>Theodore Roosevelt McDonald <div><span>1902 - 1973</span></div></li>
+                            <li>Elizabeth Wall McDonald <div><span>1900 - 1929</span></div></li>
+                        </ul>
+                        <h3>Old Old Old McDonald</h3>
+                        <ul>
+                            <li>Ernest Faulkner McDonald <div><span>1874 - 1947</span></div></li>
+                            <li>Lily Margaret 'Grandma Mag' Borum McDonald <div><span>1874 - 1962</span></div></li>
+                        </ul>
+                        <h3>Old Old Old Old McDonald</h3>
+                        <ul>
+                            <li>James William McDonald <div><span>1837 - 1911</span></div></li>
+                            <li>Alice Mae Stewart McDonald <div><span>1855 - 1926</span></div></li>
+                        </ul>
+                        <h3>Old Old Old Old Old McDonald</h3>
+                        <ul>
+                            <li>William McDonald <div><span>1790 - 1856</span></div></li>
+                            <li>Margaret Evans Van Metre McDonald <div><span>1798 - 1874</span></div></li>
+                        </ul>
+                        <h3>Old Old Old Old Old Old McDonald</h3>
+                        <ul>
+                            <li>James McDonald <div><span>1752 - 1830</span></div></li>
+                            <li>Isabella Burns McDonald <div><span>1766 - 1840</span></div></li>
+                        </ul>
+                        <h3>Old Old Old Old Old Old Old McDonald</h3>
+                        <ul>
+                            <li>Andrew MacDonald 
+                                <div><span>1724 - 1799</span></div>
+                            </li>
+                            <li>Hester McDonald <div><span>1730 - 1808</span></div></li>
+                        </ul>
+                        <h3>Eldest McDonald</h3>
+                        <ul>
+                            <li>
+                                <span><b>Somairle mac Gilla Brigte</b></span>
+                                <span>King of the Isles</span>
+                                <div><span>unknown - 1164 AD</span></div>
+                            </li>
+                            <li>
+                                <span><b>Ragnhildr Óláfsdóttir</b></span>
+                                <span>Queen of the Isles</span>
+                                <span>Princess of Man</span>
+                                <div><span>est. 1115 AD - unknown</span></div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </BodyBlock>
+
 
                 <h2>Five+ Generations Ago</h2>
                 <div className={styles.gallery}>
