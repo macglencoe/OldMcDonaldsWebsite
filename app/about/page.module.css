@@ -77,3 +77,12 @@
     align-items: center;
     justify-content: center;
 }
+
+@media screen and (max-width: 740px) {
+    .gallery > div:hover > p {
+        opacity: 1;
+    }
+    .gallery > div > p:hover {
+        opacity: 0;
+    }
+}
