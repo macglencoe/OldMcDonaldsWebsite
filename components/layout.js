@@ -9,7 +9,7 @@ const Layout = (props) => {
         <div>
             <Navbar />
             <Analytics />
-            {props.children}
+            <div className="overflow-x-scroll">{props.children}</div>
             <Footer />
         </div>
     )
