@@ -39,17 +39,54 @@ export default function About() {
                 </BodyBlock>
                 <div className={styles.gallery}>
                     <div>
+                        <img src="/deed.jpg"></img>
+                        <p>18th century survey plat for the tract of land purchased by William McDonald, intended to be used as a homeplace for his mother. This parcel is now known as Glencoe Farm</p>
+                    </div>
+                    <div>
+                        <img src="/ernest-young.png"></img>
+                        <p>Young Ernest Faulkner McDonald</p>
+                    </div>
+                    <div>
                         <img src="/mcdonaldporch.jpg"></img>
-                        <span>McDonald Family gathered on the side porch at Glencoe Farm, circa 1929. Ernest Faulkner McDonald is pictured on the left</span>
+                        <p>McDonald Family gathered on the side porch at Glencoe Farm in 1929. Ernest Faulkner McDonald is pictured on the left</p>
+                    </div>
+                    <div>
+                        <img src="/barnunknown.png"></img>
+                        <img src="/barnunknown2.png"></img>
+                        <p>Unknown folks pictured in front of the big white barn at Glencoe Farm, circa 1900</p>
+                    </div>
+                    <div>
+                        <img src="/ernest-cherry.png"></img>
+                        <p>Ernest Faulkner McDonald pictured with a cherry tree on the "hill field" at Glencoe Farm</p>
                     </div>
                     <div>
                         <img src="/bubAndPeggy.jpg"></img>
-                        <span>Peggy (left) and Charles "Bub" McDonald (right), circa 1931</span>
+                        <img src="/bubAndPeggy2.png"></img>
+                        <p>Peggy (left) and Charles "Bub" McDonald (right),  1929-1931</p>
+                    </div>
+                    <div>
+                        <img src="/mag-bub-and-peggy.png"></img>
+                        <p>"Grandma Mag" (right) with grandchildren Charles "Bub" McDonald (left) and Peggy McDonald (center)</p>
+                    </div>
+                    <div>
+                        <img src="/bub-willa-gail-kathy.png"></img>
+                        <p>
+                            Charles "Bub" McDonald (right) and<br/>
+                            Willa Jean Hammersla McDonald (left)<br/> with
+                            daughters Gail McDonald Fidelman (right) and<br/>
+                            Kathy (left), circa 1950s
+
+                        </p>
                     </div>
                     <div>
                         <img src="/mfm-moline.png"></img>
-                        <span>Charles "Bub" McDonald (middle) receiving a tractor for McDonald Farm Machinery, circa 1950</span>
+                        <p>Charles "Bub" McDonald (middle) receiving a tractor for McDonald Farm Machinery, 1950</p>
                     </div>
+                    <div>
+                        <img src="/charliebill1.png"></img>
+                        <p>Charles "Charlie Bill" McDonald, circa 1967</p>
+                    </div>
+                    
                 </div>
                 <BodyBlock src="protectedForever.jpg">
                     <h2>Protected Forever</h2>
