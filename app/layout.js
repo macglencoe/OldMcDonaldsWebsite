@@ -14,6 +14,9 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Old McDonald's",
   description: "The official website for Old McDonald's Pumpkin Patch and Corn Maze in Inwood, WV",
+  icons: {
+    icon: '/favicon-tammy.ico'
+  }
 };
 
 export default function RootLayout({ children }) {
