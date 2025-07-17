@@ -100,25 +100,25 @@ export const Reservations = () => {
                     <p className="big">$6 per person*</p>
                     <p>* Over the age of 3</p>
                 </BodyBlock>
-                <div class="max-w-xl mx-auto my-12 p-8 bg-accent/20 text-foreground rounded-3xl shadow-2xl transform hover:scale-[1.02] transition duration-500">
-                    <h3 class="text-3xl font-bold text-center mb-6 tracking-wide drop-shadow-md">Ready to book?</h3>
+                <div className="max-w-xl mx-auto my-12 p-8 bg-accent/20 text-foreground rounded-3xl shadow-2xl transform hover:scale-[1.02] transition duration-500">
+                    <h3 className="text-3xl font-bold text-center mb-6 tracking-wide drop-shadow-md">Ready to book?</h3>
 
-                    <div class="flex flex-col items-center space-y-6">
-                        <p class="text-lg font-medium">
+                    <div className="flex flex-col items-center space-y-6">
+                        <p className="text-lg font-medium">
                             Call us:
-                            <a href="tel:304-839-2330" class="ml-2 inline-block bg-white font-bold px-5 py-2 rounded-full shadow-lg  transition">
+                            <a href="tel:304-839-2330" className="ml-2 inline-block bg-white font-bold px-5 py-2 rounded-full shadow-lg  transition">
                                 304-839-2330
                             </a>
                         </p>
 
-                        <div class="relative w-full flex items-center justify-center">
-                            <span class="text-sm uppercase tracking-widest font-semibold">OR</span>
-                            <span class="absolute left-0 right-0 h-px bg-foreground/20 top-1/2 -z-10"></span>
+                        <div className="relative w-full flex items-center justify-center">
+                            <span className="text-sm uppercase tracking-widest font-semibold">OR</span>
+                            <span className="absolute left-0 right-0 h-px bg-foreground/20 top-1/2 -z-10"></span>
                         </div>
 
                         <a href="https://docs.google.com/forms/d/e/1FAIpQLSfUPYvXsF4qcMsmtgOuidB06WPJkKKwlSLmo3uPnNDWgziPsw/viewform?usp=sharing&ouid=100113173059112922558"
                             target="_blank"
-                            class="bg-white font-bold text-lg px-6 py-3 rounded-full shadow-lg hover:scale-105  transition duration-300">
+                            className="bg-white font-bold text-lg px-6 py-3 rounded-full shadow-lg hover:scale-105  transition duration-300">
                             Fill Out Form
                         </a>
                     </div>
