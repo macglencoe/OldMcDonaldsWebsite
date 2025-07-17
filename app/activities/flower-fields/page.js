@@ -1,6 +1,6 @@
 import { AndImage } from "@/components/andImage";
 import Layout from "@/components/layout";
-
+import pricing from "@/public/data/pricing";
 
 export default function FlowerFields() {
     return (
@@ -23,8 +23,8 @@ export default function FlowerFields() {
                     <p>We have an arrangement station near the flower fields, where you will find cutters and cups</p>
                     <p>Flowers are priced by type:</p>
                     <ul>
-                        <li>For <b>one cup</b> of <b>Zinnias</b>:<br></br><p className="big">$7.00</p></li>
-                        <li>For <b>one Sunflower stem</b>:<br></br><p className="big">$1.00</p></li>
+                        <li>For <b>one cup</b> of <b>Zinnias</b>:<br></br><p className="big">${pricing["flower-cup"].amount.toFixed(2)}</p></li>
+                        <li>For <b>one Sunflower stem</b>:<br></br><p className="big">${pricing["sunflower"].amount.toFixed(2)}</p></li>
                     </ul>
                     <b>PLEASE RETURN CUTTERS TO ARRANGEMENT STATION</b>
                 </AndImage>

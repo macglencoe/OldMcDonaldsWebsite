@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react';
+import pricing from "@/public/data/pricing";
 
 export default function PumpkinPriceGadget() {
     const [weight, setWeight] = useState(20)
-    const price = (weight * 0.5).toFixed(2)
+    const price = (weight * pricing["pumpkin-patch"].amount).toFixed(2)
     const scale = 0.5 + (weight / 70) * 1.5
     const sliderRef = useRef(null)
     const [handleX, setHandleX] = useState(0)

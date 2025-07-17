@@ -1,6 +1,7 @@
 import Layout from '@/components/layout'
 import styles from './page.module.css'
 import { AndImage } from '@/components/andImage'
+import pricing from '@/public/data/pricing'
 
 export const HayRide = () => {
     return (
@@ -17,7 +18,7 @@ export const HayRide = () => {
                 <AndImage src='/pondeastdock.jpg'>
                     <h2>Pricing</h2>
                     <p>For one person, above 3 years of age:</p>
-                    <p className='big'>$4</p>
+                    <p className='big'>${pricing.hayride.amount}</p>
                     <p>Must be paid at the admission booth</p>
                 </AndImage>
                 <AndImage src='/hayrideGroupPhoto.jpg'>

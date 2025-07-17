@@ -10,6 +10,7 @@ import {
 } from "phosphor-react";
 import { motion } from "framer-motion";
 import { track } from "@vercel/analytics";
+import pricing from "@/public/data/pricing";
 
 // Mapping Phosphor icons
 const ICON_MAP = {
@@ -33,7 +34,7 @@ export default function Rates() {
         "Playground",
         "Picnic Area",
       ],
-      price: { amount: "$6", unit: "/ person*", notes: ["Paid at the admission booth"] },
+      price: pricing.admission,
     },
     {
       title: "Hayride",
@@ -42,7 +43,7 @@ export default function Rates() {
         "Family-friendly, rules apply",
       ],
       cta: { href: "/activities/hayrides", label: "Learn More" },
-      price: { amount: "$4", unit: "/ person*", notes: ["Paid at the admission booth"] },
+      price: pricing.hayride
     },
     {
       title: "U-Pick Pumpkins",
@@ -51,7 +52,7 @@ export default function Rates() {
         "Carts available (limited on busy days)",
       ],
       cta: { href: "/activities/pumpkin-patch", label: "Learn More" },
-      price: { amount: "¢50", unit: "/ pound", notes: ["Paid at weighing station"] },
+      price: pricing["pumpkin-patch"],
     },
     {
       title: "U-Pick Flowers",
@@ -61,7 +62,7 @@ export default function Rates() {
         "Vases sold at the arrangement wagon",
       ],
       cta: { href: "/activities/flower-fields", label: "Learn More" },
-      price: { amount: "$7", unit: "/ cup", notes: ["Paid at weighing station"] },
+      price: pricing["flower-cup"]
     },
   ];
 
@@ -152,8 +153,10 @@ function RateCard({ title, details, price, cta }) {
 
       {/* Price Tag */}
       <div className="bg-foreground/90 text-center p-4">
-        <p className="text-4xl font-bold text-background">{price.amount}</p>
-        <p className="text-sm text-background/80 -mt-2">{price.unit}</p>
+        <p className="text-4xl font-bold text-background">
+          {price.amount >= 1.0 ? `$${price.amount}` : `¢${(price.amount * 100).toFixed(0)}`}
+        </p>
+        {price.per && <p className="text-sm text-background/80 -mt-2">/ {price.per}</p>}
         {price.notes.map((note) => (
           <p key={note} className="text-xs text-background/60 mt-1">
             {note}

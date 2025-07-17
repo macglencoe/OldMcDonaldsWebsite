@@ -4,6 +4,7 @@ import { BodyBlock } from "@/components/bodyBlock";
 
 import rentalSlots from "@/public/data/gazeboRentalSlots.json";
 import { useMemo } from "react";
+import pricing from "@/public/data/pricing"
 
 /**
  * Renders the gazebo-rental availability table from
@@ -69,7 +70,7 @@ export const Reservations = () => {
                 <BodyBlock src="/rentalgazebo.jpg">
                     <h3>Pricing</h3>
                     <p>For 2 hours:</p>
-                    <p className="big">$75.00</p>
+                    <p className="big">${pricing["gazebo-rental"].amount.toFixed(2)}</p>
                     <p>You will recieve an <b>email invoice</b> for your rental after booking</p>
                 </BodyBlock>
                 <BodyBlock>

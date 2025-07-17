@@ -2,6 +2,7 @@ import Layout from "@/components/layout"
 import styles from "./page.module.css"
 import { AndImage } from "@/components/andImage"
 import PumpkinPriceGadget from "@/components/pumpkinPriceGadget"
+import pricing from "@/public/data/pricing"
 
 export const PumpkinPatch = () => {
     return (
@@ -20,7 +21,7 @@ export const PumpkinPatch = () => {
                     <div className="flex flex-col gap-3 shadow-lg rounded-2xl p-6 border border-accent/20">
                         <h2 className="text-center border-b-3">Pricing</h2>
                         <p className="text-center">Pumpkins from the patch are priced at:</p>
-                        <p className={styles.big + " text-center"}>$0.50 / pound</p>
+                        <p className={styles.big + " text-center"}>${pricing["pumpkin-patch"].amount.toFixed(2)} / {pricing["pumpkin-patch"].per}</p>
                         <PumpkinPriceGadget/>
                         <p className="text-center">Pay at the weighing station, on your way back from the patch</p>
                         <p className="text-center">Cash and cards accepted</p>
