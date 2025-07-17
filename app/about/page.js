@@ -37,11 +37,25 @@ export default function About() {
                     <p>In the 1950s, our grandfather, Charles "Bub" Francis Wall McDonald founded McDonald Farm Machinery - West Virginia's first John Deere dealership - and operated it until 1985.</p>
                     <p>In 2001, our father, Charles "Charlie Bill" William McDonald, together with his wife Stephanie, planted corn and pumpkins on the farm for the first time, and established Old McDonald's Pumpkin Patch.</p>
                 </BodyBlock>
+
+
+                <h2>Five+ Generations Ago</h2>
                 <div className={styles.gallery}>
                     <div>
                         <img src="/deed.jpg"></img>
                         <p>18th century survey plat for the tract of land purchased by William McDonald, intended to be used as a homeplace for his mother. This parcel is now known as Glencoe Farm</p>
                     </div>
+                    <div>
+                        <img src="/james-w-mcdonald-choral-society.jpg"></img>
+                        <p>The Choral Society, with James William McDonald pictured as tallest (center-right, back)</p>
+                    </div>
+                    <div>
+                        <img src="/alice-stewart-mcdonald.jpg"></img>
+                        <p>Alice Stewart McDonald, wife of James William McDonald</p>
+                    </div>
+                </div>
+                <h2>Four Generations Ago</h2>
+                <div className={styles.gallery}>
                     <div>
                         <img src="/ernest-young.png"></img>
                         <p>Young Ernest Faulkner McDonald</p>
@@ -51,14 +65,35 @@ export default function About() {
                         <p>McDonald Family gathered on the side porch at Glencoe Farm in 1929. Ernest Faulkner McDonald is pictured on the left</p>
                     </div>
                     <div>
-                        <img src="/barnunknown.png"></img>
-                        <img src="/barnunknown2.png"></img>
-                        <p>Unknown folks pictured in front of the big white barn at Glencoe Farm, circa 1900</p>
+                        <img src="/ernest-mag-porch.jpg"></img>
+                        <p>"Grandma Mag" (center), Elizabeth (center left) holding daughter Peggy, and Ernest Faulkner McDonald (center right)<br/>on the porch at Glencoe Farm in 1926 </p>
                     </div>
                     <div>
                         <img src="/ernest-cherry.png"></img>
                         <p>Ernest Faulkner McDonald pictured with a cherry tree on the "hill field" at Glencoe Farm</p>
                     </div>
+                    
+                    <div>
+                        <img src="/barnunknown.png"></img>
+                        <img src="/barnunknown2.png"></img>
+                        <p>Unknown folks pictured in front of the big white barn at Glencoe Farm, circa 1900</p>
+                    </div>
+                    <div>
+                        <img src="/hay-stack.jpg"></img>
+                        <p>Straw stack in the barnyard at Glencoe Farm</p>
+                    </div>
+                    <div>
+                        <img src="/mag-late-years.jpg"></img>
+                        <p>Margaret "Grandma Mag" Borum McDonald in her late years</p>
+                    </div>
+                </div>
+                <h2>Two and Three Generations Ago</h2>
+                <div className={styles.gallery}>
+                    <div>
+                        <img src="/richard-mcdonald-glencoe.jpg"></img>
+                        <p>Richard Clyde McDonald pictured in front of the workshop at Glencoe Farm</p>
+                    </div>
+                    
                     <div>
                         <img src="/bubAndPeggy.jpg"></img>
                         <img src="/bubAndPeggy2.png"></img>
@@ -68,6 +103,23 @@ export default function About() {
                         <img src="/mag-bub-and-peggy.png"></img>
                         <p>"Grandma Mag" (right) with grandchildren Charles "Bub" McDonald (left) and Peggy McDonald (center)</p>
                     </div>
+                    <div>
+                        <img src="/peg-mag-ernest-wedding.jpg"></img>
+                        <p>Wedding of Peggy McDonald Turner (left) with grandparents: <br/>
+                            Margaret "Grandma Mag" Borum McDonald (center left) and<br/>
+                            Ernest Faulkner McDonald (center right) <br/>
+                            at the Glencoe Farmhouse
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <img src="/willa-jean-child.jpg"></img>
+                        <p>Willa Jean Hammersla, circa 1930s</p>
+                    </div>
+                </div>
+                <h2>One Generation Ago</h2>
+                <div className={styles.gallery}>
+                    
                     <div>
                         <img src="/bub-willa-gail-kathy.png"></img>
                         <p>
@@ -85,6 +137,21 @@ export default function About() {
                     <div>
                         <img src="/charliebill1.png"></img>
                         <p>Charles "Charlie Bill" McDonald, circa 1967</p>
+                    </div>
+                    <div>
+                        <img src="/limousin1.jpg"></img>
+                        <img src="/limousin2.jpg"></img>
+                        <p>Limousin Cattle at Glencoe Farm</p>
+                    </div>
+                    <div>
+                        <img src="/reunion1.jpg"></img>
+                        <img src="/reunion2.jpg"></img>
+                        <img src="/reunion3.jpg"></img>
+                        <p>Annual McDonald Family Reunion at Glencoe Farm</p>
+                    </div>
+                    <div>
+                        <img src="/liam-zoey-porch.jpg"></img>
+                        <p>Liam McDonald and dog Zoey on the porch at Glencoe Farm, 2003</p>
                     </div>
                     
                 </div>
