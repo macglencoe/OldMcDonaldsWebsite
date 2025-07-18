@@ -53,7 +53,7 @@ export function isFeatureEnabled(key, context = {}) {
 
   const { default: defaultValue = false, operator = 'AND', conditions = [] } = flag;
 
-  if (!conditions.length) return defaultValue;
+  if (!conditions.length || conditions.length === 0) return defaultValue;
 
   const results = conditions.map((condition) => evaluateCondition(condition, context));
 

@@ -13,6 +13,7 @@ import FacebookFeed from "@/components/facebookFeed";
 import Rates from "@/components/home/rates";
 import ContactForm from "@/components/contactForm";
 import Hero from "@/components/home/hero";
+import { isFeatureEnabled } from "@/public/lib/featureEvaluator";
 
 
 
@@ -48,19 +49,24 @@ export default async function Home() {
         <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
         <Rates/>
 
-        <OldMcDonutsAd
-          title="Old McDonuts"
-          description="Coffee, Apple Cider Donuts, and Slushies, right on the farm"
-          menu="/vendors/old-mcdonuts"
-          src="/oldMcDonuts.jpg"
-        />
-        <OldMcDonutsAd
-          title="Twisted Taters"
-          description="Butterfly Potatoes, Burgers, & more!"
-          href="/vendors"
-          buttonText="See More"
-          src="/twistedTaters.jpg"
-        />
+        { isFeatureEnabled("show_vendor_promos") && (
+          <>
+            <OldMcDonutsAd
+            title="Old McDonuts"
+            description="Coffee, Apple Cider Donuts, and Slushies, right on the farm"
+            menu="/vendors/old-mcdonuts"
+            src="/oldMcDonuts.jpg"
+          />
+          <OldMcDonutsAd
+            title="Twisted Taters"
+            description="Butterfly Potatoes, Burgers, & more!"
+            href="/vendors"
+            buttonText="See More"
+            src="/twistedTaters.jpg"
+          />
+          </>
+        )
+        }
         <TestimonialCarousel />
         <FacebookFeed />
         <div className="flex justify-center bg-foreground"><ContactForm theme="onDark" /></div>
