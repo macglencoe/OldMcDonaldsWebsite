@@ -16,8 +16,8 @@ const quickLinks = [
   { href: '/faq', text: 'FAQ' },
   { href: '/reservations', text: 'Reservations' },
   { href: '/gallery', text: 'Gallery' },
-  { href: '/vendors', text: 'Vendors' },
   { href: '/map', text: 'Map' },
+  ...(isFeatureEnabled('show_vendors') ? [{ href: '/vendors', text: 'Vendors' }] : []),
 ];
 
 const activities = [

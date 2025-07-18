@@ -77,7 +77,9 @@ export default async function Home() {
         }
         <TestimonialCarousel />
         <FacebookFeed />
-        <div className="flex justify-center bg-foreground"><ContactForm theme="onDark" /></div>
+        { isFeatureEnabled("show_contact_form") &&
+          <div className="flex justify-center bg-foreground"><ContactForm theme="onDark" /></div>
+        }
       </div>
     </Layout>
   )

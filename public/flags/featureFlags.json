@@ -32,7 +32,11 @@
         ]
     },
     "show_vendor_promos": {
-        "default": true,
+        "default": false,
+        "conditions": []
+    },
+    "show_vendors": {
+        "default": false,
         "conditions": []
     },
     "maze_game_enabled": {
@@ -54,5 +58,14 @@
                 "value": "2025-10-26T23:59:59-07:00"
             }
         ]
+    },
+    "show_contact_form": {
+        "default": true,
+        "conditions": []
+    },
+    "show_facebook_feed": {
+        "default": true,
+        "conditions": []
     }
+    
 }
