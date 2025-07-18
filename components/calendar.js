@@ -104,7 +104,6 @@ export default function FestivalCalendar() {
         dayCellContent={(arg) => {
           const day = arg.date.toISOString().split('T')[0]
           const weather = weatherByDate[day]
-          console.log(day, weather)
           if(!weather) return arg.dayNumberText
 
           const el = document.createElement('div');

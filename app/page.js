@@ -12,6 +12,7 @@ import Season from "@/components/home/season";
 import FacebookFeed from "@/components/facebookFeed";
 import Rates from "@/components/home/rates";
 import ContactForm from "@/components/contactForm";
+import Hero from "@/components/home/hero";
 
 
 
@@ -30,12 +31,6 @@ export default async function Home() {
   ];
 
 
-  const summerHeroGate = await createFeatureGate("summer_hero")();
-  const fallHeroGate = await createFeatureGate("fall_hero")();
-  const winterHeroGate = await createFeatureGate("winter_hero")();
-
-
-
 
 
 
@@ -44,17 +39,7 @@ export default async function Home() {
     <Layout>
       <div className={styles.wrapper}>
         <section className={styles.hero}>
-          {fallHeroGate && // Fall Hero
-            <HeroFall />
-          }
-
-          {(summerHeroGate || (!fallHeroGate && !winterHeroGate && !summerHeroGate)) && // or default
-            <HeroSummer />
-          }
-
-          {winterHeroGate && // Winter Hero
-            <HeroWinter />
-          }
+          <Hero />
         </section>
         <Season/>
 
