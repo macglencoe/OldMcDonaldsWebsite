@@ -2,6 +2,7 @@
 import { Compass, FacebookLogo, InstagramLogo, Phone } from 'phosphor-react';
 import Link from 'next/link';
 import { track } from '@vercel/analytics';
+import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
 
 const socialLinks = [
   { platform: 'facebook', href: 'https://www.facebook.com/oldmcdonaldspumpkinpatchandcornmaze', icon: <FacebookLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
@@ -23,10 +24,10 @@ const activities = [
   { href: '/activities/pumpkin-patch', text: 'Pumpkin Patch' },
   { href: '/activities/corn-maze', text: 'Corn Maze' },
   { href: '/night-maze', text: 'Night Maze' },
-  { href: '/maze-game', text: 'Maze Game' },
   { href: '/activities/hayrides', text: 'Hayrides' },
   { href: '/activities/nature-trails', text: 'Nature Trails' },
-  { href: '/activities/flower-fields', text: 'Flower Fields' }
+  { href: '/activities/flower-fields', text: 'Flower Fields' },
+  ...(isFeatureEnabled('maze_game_enabled') ? [{ href: '/maze-game', text: 'Maze Game' }] : [])
 ];
 
 // === Reusable Components ===

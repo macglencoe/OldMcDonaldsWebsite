@@ -2,8 +2,12 @@
 import { useState, useEffect } from 'react'
 import Layout from '@/components/layout'
 import EntryForm from '@/components/mazeGameEntryForm'
+import { isFeatureEnabled } from '@/public/lib/featureEvaluator'
 
 export default function MazeGame() {
+
+    if (isFeatureEnabled('maze_game_enabled') == false) return null
+
     const [mazeData, setMazeData] = useState({})
     const [foundCodes, setFoundCodes] = useState([])
     const [hasSubmitted, setHasSubmitted] = useState(false)

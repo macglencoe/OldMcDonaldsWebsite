@@ -2,6 +2,7 @@ import Layout from '@/components/layout'
 import styles from './page.module.css'
 import { AndImage } from '@/components/andImage';
 import { BodyBlock } from '@/components/bodyBlock';
+import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
 
 export const CornMaze = () => {
     return (
@@ -34,12 +35,14 @@ export const CornMaze = () => {
                     </div>
 
                 </BodyBlock>
-                <BodyBlock src="/cornMazeLane.jpg">
-                    <h2>Maze Game</h2>
-                    <p>Hidden throughout the maze are stations with <b>QR Codes</b> to scan.</p>
-                    <p>Think you can find all four?</p>
-                    <a href='/maze-game' className="button">See More</a>
-                </BodyBlock>
+                { isFeatureEnabled('maze_game_enabled') &&
+                    <BodyBlock src="/cornMazeLane.jpg">
+                        <h2>Maze Game</h2>
+                        <p>Hidden throughout the maze are stations with <b>QR Codes</b> to scan.</p>
+                        <p>Think you can find all four?</p>
+                        <a href='/maze-game' className="button">See More</a>
+                    </BodyBlock>
+                }
                 <BodyBlock>
                     <h2>Rules</h2>
                     <p>In order to preserve the corn for harvest, and to ensure all visitors can have a fun experience, we ask that you respect these rules:</p>
