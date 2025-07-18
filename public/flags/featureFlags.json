@@ -38,5 +38,21 @@
     "maze_game_enabled": {
         "default": true,
         "conditions": []
+    },
+    "show_night_maze_ad": {
+        "default": false,
+        "operator": "AND",
+        "conditions": [
+            {
+                "criteria": "time",
+                "operator": "after",
+                "value": "2025-10-04T00:00:00-07:00"
+            },
+            {
+                "criteria": "time",
+                "operator": "before",
+                "value": "2025-10-26T23:59:59-07:00"
+            }
+        ]
     }
 }

@@ -14,6 +14,7 @@ import Rates from "@/components/home/rates";
 import ContactForm from "@/components/contactForm";
 import Hero from "@/components/home/hero";
 import { isFeatureEnabled } from "@/public/lib/featureEvaluator";
+import NightMazeBanner from "@/components/home/nightMazeBanner";
 
 
 
@@ -39,6 +40,13 @@ export default async function Home() {
   return (
     <Layout>
       <div className={styles.wrapper}>
+        { isFeatureEnabled("show_night_maze_ad", {
+          now: new Date()
+        }) && (
+          <NightMazeBanner />
+        )
+
+        }
         <section className={styles.hero}>
           <Hero />
         </section>
