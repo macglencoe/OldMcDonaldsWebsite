@@ -15,6 +15,7 @@ import ContactForm from "@/components/contactForm";
 import Hero from "@/components/home/hero";
 import { isFeatureEnabled } from "@/public/lib/featureEvaluator";
 import NightMazeBanner from "@/components/home/nightMazeBanner";
+import FloodBanner from "@/components/home/floodBanner";
 
 
 
@@ -45,8 +46,12 @@ export default async function Home() {
         }) && (
           <NightMazeBanner />
         )
+      }
 
-        }
+        { isFeatureEnabled("show_flood_banner") && (
+          <FloodBanner />
+        )}
+
         <section className={styles.hero}>
           <Hero />
         </section>
