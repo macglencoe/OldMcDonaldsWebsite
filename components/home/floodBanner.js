@@ -1,12 +1,12 @@
 'use client'
 
-import { getFeatureParam } from '@/public/lib/featureParameters'
+import { getFeatureArg } from '@/public/lib/featureArguments'
 import { useEffect, useState } from 'react'
 
 
 
 export default function FloodBanner() {
-    const [dates, setDates] = useState(getFeatureParam('show_flood_banner', 'dates'))
+    const [dates, setDates] = useState(getFeatureArg('show_flood_banner', 'dates'))
 
     return (
         <div className="w-full bg-accent p-4 flex flex-row flex-wrap gap-4 justify-between items-center" style={{

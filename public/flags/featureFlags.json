@@ -78,9 +78,9 @@
         ]
     },
     "show_flood_banner": {
-        "default": false,
+        "default": true,
         "conditions": [],
-        "params": {
+        "args": {
             "dates": [
                 "2025-07-18",
                 "2025-07-19",

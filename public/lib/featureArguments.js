@@ -1,17 +1,17 @@
 import featureFlags from '@/public/flags/featureFlags.json'
 
 
-export function getFeatureParam(key, param) {
+export function getFeatureArg(key, param) {
     const flag = featureFlags[key];
     if (!flag) {
         console.warn(`Feature flag not found: ${key}`);
         return null;
     }
 
-    if (!flag.params) {
-        console.warn(`Feature params not found: ${key}`);
+    if (!flag.args) {
+        console.warn(`Feature param not found: ${key}`);
         return null;
     }
 
-    return flag.params[param];
+    return flag.args[param];
 }
