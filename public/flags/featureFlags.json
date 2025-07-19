@@ -36,7 +36,7 @@
     "conditions": []
   },
   "show_vendors": {
-    "default": true,
+    "default": false,
     "conditions": []
   },
   "maze_game_enabled": {
