@@ -1,5 +1,6 @@
 "use client";
 
+import CommitDialog from "@/components/commitDialog";
 import Layout from "@/components/layout";
 
 import featureFlags from "@/public/flags/featureFlags.json"
@@ -184,6 +185,7 @@ export default function Home() {
           )
         })
       }
+      <CommitDialog />
     </Layout>
   )
 }
