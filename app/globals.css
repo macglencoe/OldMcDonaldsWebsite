@@ -150,6 +150,17 @@ body {
 }
 
 
+/* -- CMS -- */
+
+select {
+  border-bottom: 2px solid var(--color-gray-200)
+}
+
+input {
+  border-bottom: 2px solid var(--color-gray-200)
+}
+
+
 /* -- Fullcalendar -- */
 .fc .fc-daygrid-event {
   font-size: 0.75rem;
