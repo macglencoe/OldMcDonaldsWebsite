@@ -78,12 +78,24 @@ export default function CommitDialog() {
                 for (const branch of branches) {
                     const flags = loadFlagsFromLocalStorage();
                     if (flags) {
-                        commitToGithub(flags, branch, 'Update feature flags');
+                        commitToGithub(flags, branch, `Update feature flags: ${new Date().toLocaleString()}`);
                     }
                 }
             }}
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3"
             >Commit</button>
+            <button onClick={() => {
+                const branches = ['testing'];
+                for (const branch of branches) {
+                    const flags = loadFlagsFromLocalStorage();
+                    if (flags) {
+                        commitToGithub(flags, branch, `Update feature flags: ${new Date().toLocaleString()}`);
+                    }
+                }
+            }}
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-3">
+                    Commit to Testing
+                </button>
             {responseConsole.length > 0 &&
                 <div className='m-3'>
                     <ul>
