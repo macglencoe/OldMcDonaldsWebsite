@@ -78,7 +78,7 @@
     ]
   },
   "show_flood_banner": {
-    "default": false,
+    "default": true,
     "conditions": [],
     "args": [
       {
