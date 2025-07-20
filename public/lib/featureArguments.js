@@ -9,9 +9,17 @@ export function getFeatureArg(key, param) {
     }
 
     if (!flag.args) {
-        console.warn(`Feature param not found: ${key}`);
+        console.warn(`Flag has no arguments: ${key}`);
         return null;
     }
 
-    return flag.args[param];
+    for (const arg of flag.args) {
+        if (arg.key === param) {
+            return arg;
+        }
+    }
+
+    console.warn(`Argument not found: ${param}`);
+    return null;
+
 }
