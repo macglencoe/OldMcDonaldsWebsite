@@ -38,12 +38,14 @@ function AdminDirectory() {
         {
             title: "Rental Availability",
             href: "/gazeboRentalSlots",
-            icon: PiCalendarCheckDuotone
+            icon: PiCalendarCheckDuotone,
+            notImplemented: true
         },
         {
             title: "Testimonials",
             href: "/testimonials",
-            icon: PiStarDuotone
+            icon: PiStarDuotone,
+            notImplemented: true
         },
         {
             title: "FAQ",
@@ -55,15 +57,28 @@ function AdminDirectory() {
         <div className="rounded-xl overflow-hidden">
             <h1 className="text-3xl py-2 px-4 w-full bg-accent/20 uppercase">Admin Directory</h1>
             <div className="flex flex-row flex-wrap gap-2">
-                {links.map(({title, href, icon}) => {
+                {links.map(({title, href, icon, notImplemented}) => {
                     const Icon = icon
 
-                    return (
-                        <a href={href} key={href} className="flex-1 min-w-fit flex flex-row items-center gap-2 py-2 px-4 hover:bg-accent/20 relative">
-                            <Icon size={38} color="var(--accent)"/>
-                            {title}
-                        </a>
-                    )
+                    if (href && !notImplemented) {
+                        return (
+                            <a href={href} key={href} className="flex-1 min-w-fit flex flex-row items-center gap-2 py-2 px-4 hover:bg-accent/20 relative">
+                                <Icon size={38} color="var(--accent)" />
+                                {title}
+                            </a>
+                        );
+                    }
+                    else {
+                        return (
+                            <div key={href} className="flex-1 min-w-fit flex flex-row items-center gap-2 py-2 px-4 hover:bg-accent/20 relative">
+                                <Icon size={38} color="var(--foreground)" />
+                                <div className="flex flex-col">
+                                    {title}
+                                    <p className="text-sm text-foreground/50">Not yet implemented</p>
+                                </div>
+                            </div>
+                        )
+                    }
                 })}
             </div>
         </div>
