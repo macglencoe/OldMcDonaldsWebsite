@@ -133,8 +133,39 @@ export default function MazeGame() {
                             )}
 
                             {foundCodes.includes(code) && (
-                                <span className="text-sm sm:text-base">Found</span>
+                                <>
+                                    <span className="text-sm sm:text-base">Found</span>
+
+                                    {(code === 'd793ff08f0ba1c801b4eb42e5ca1e992') &&
+                                        <div className='text-xs'>
+                                            <p>In 1877, before the wage cuts, most B&O laborers were paid only $1.50 a day. Adjusted for inflation, that would be ~$30 a day now, for up to 16 hour shifts, 7 days a week.</p>
+                                            <p>After the 10% wage cut, the average worker would make only $1.35 a day.</p>
+                                            <p>This was barely sufficient to afford meals on the road (which costed $0.30 each). </p>
+                                            <p>Many railroaders felt they <i>“might as well starve without work as starve and work”</i></p>
+                                        </div>
+                                    }
+                                    {(code === '8913e286fefb5a5534c640f93f174827') &&
+                                        <div className='text-xs'>
+                                            <p>Switch keys were issued to conductors, brakemen, and yardmasters who worked for B&O Railroad.</p>
+                                            <p>When the great strike of 1877 took place, these keys were symbolic of the workers' control over the railroad.</p>
+                                        </div>
+                                    }
+                                    {(code === 'e78b89431e05f7766fe36cca72f39f73') &&
+                                        <div className='text-xs'>
+                                            <p>Railroad spikes held the railroad together.</p>
+                                            <p>Section crews, or <i>"gandy dancers"</i> hammered the spikes into wooden sleepers for miles upon miles of track.</p>
+                                        </div>
+                                    }
+                                    {(code === 'b59d184bffc71e241b86015f8282ccf3') &&
+                                        <div className='text-xs'>
+                                            <p>Before tracks were laid down, hills and rocks were excavated to create the trackbed. With pickaxes and shovels, the crews dug through the earth.</p>
+                                            <p>Once the trackbed was ready, it was covered in gravel to create the <i>"ballast"</i>, the foundation of the railroad system, which enabled national commerce and industrial expansion.</p>
+                                        </div>
+                                    }
+                                </>
                             )}
+
+
                         </div>
                     ))}
                 </div>

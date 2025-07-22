@@ -1,18 +1,18 @@
 {
-    "2025-code-1": {
-        "name": "Helianthus",
-        "img": "/helianthus.png"
+    "b59d184bffc71e241b86015f8282ccf3": {
+        "name": "Pickaxe & Shovel",
+        "img": "/pickaxe-and-shovel.jpg"
     },
-    "2025-code-2": {
-        "name": "Anemone Coronaria",
-        "img": "/anemone.jpg"
+    "e78b89431e05f7766fe36cca72f39f73": {
+        "name": "Railroad Spike",
+        "img": "/railroad-spike.jpg"
     },
-    "2025-code-3": {
-        "name": "Hibiscus Sabdariffa",
-        "img": "/hibiscus.jpeg"
+    "8913e286fefb5a5534c640f93f174827": {
+        "name": "Switch key",
+        "img": "/switch-key.jpg"
     },
-    "2025-code-4": {
-        "name": "Cyclamen Libanoticum",
-        "img": "/cyclamen.jpg"
+    "d793ff08f0ba1c801b4eb42e5ca1e992": {
+        "name": "Dollar Bill",
+        "img": "/old-dollar-bill.jpg"
     }
 }
