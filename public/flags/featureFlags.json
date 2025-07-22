@@ -77,6 +77,10 @@
       }
     ]
   },
+  "show_cookie_notice": {
+    "default": true,
+    "conditions": []
+  },
   "show_flood_banner": {
     "default": false,
     "conditions": [],
