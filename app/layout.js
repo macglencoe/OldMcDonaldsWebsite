@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import CookieNotice from "@/components/cookieNotice";
+import { isFeatureEnabled } from "@/public/lib/featureEvaluator";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +27,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
-        <CookieNotice />
+        { isFeatureEnabled("show_cookie_notice") &&
+          <CookieNotice />
+        }
         {children}
       </body>
     </html>
