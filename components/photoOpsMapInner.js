@@ -251,7 +251,6 @@ export default function PhotoOpsMapInner() {
                 minZoom={16}
             >
                 <LocateControl />
-                <ZoomLogger />
                 <ZoomVisibilityController />
                 <FlyToQuery />
                 {/* -- Map Tile Layer -- */}
