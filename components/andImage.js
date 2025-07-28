@@ -1,6 +1,7 @@
+import Image from 'next/image'
 import styles from './andImge.module.css'
 
-export const AndImage = ({ src, children, style, fromUnsplash }) => {
+export const AndImage = ({ src, children, style, fromUnsplash, alt = '' }) => {
     return (
         <div className={`
             flex flex-col md:flex-row
@@ -39,9 +40,11 @@ export const AndImage = ({ src, children, style, fromUnsplash }) => {
                 group
                 ${styles.image}
             `}>
-                <img 
-                    src={src} 
-                    alt=""
+                <Image
+                    src={src}
+                    alt={alt}
+                    width={600}
+                    height={400}
                     className={`
                         h-[22em] md:h-[26em]
                         w-full md:w-auto

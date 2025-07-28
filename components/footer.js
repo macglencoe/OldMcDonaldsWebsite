@@ -1,5 +1,6 @@
 'use client';
 import { Compass, FacebookLogo, InstagramLogo, Phone } from 'phosphor-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { track } from '@vercel/analytics';
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
@@ -53,7 +54,7 @@ const Footer = () => {
       <div className="flex flex-wrap justify-evenly">
         {/* Brand & Socials */}
         <div className="flex flex-col items-center justify-evenly text-center gap-4 p-4 flex-1">
-          <img src="/logo.png" alt="Old McDonalds Logo" />
+          <Image src="/logo.png" alt="Old McDonalds Logo" width={300} height={150} />
           <div className="flex gap-4">
             {socialLinks.map(link => (
               <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" onClick={() => {

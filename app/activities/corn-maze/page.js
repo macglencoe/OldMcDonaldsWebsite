@@ -2,6 +2,7 @@ import Layout from '@/components/layout'
 import styles from './page.module.css'
 import { AndImage } from '@/components/andImage';
 import { BodyBlock } from '@/components/bodyBlock';
+import Image from 'next/image'
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
 
 export const CornMaze = () => {
@@ -13,8 +14,7 @@ export const CornMaze = () => {
             </div>
             <div className='body basic'>
                 <div className={styles.cornMaze}>
-                    <img src='/charleswmcdonaldmaze.jpg'>
-                    </img>
+                    <Image src='/charleswmcdonaldmaze.jpg' width={600} height={400} alt='Charles W McDonald Maze' />
                     <h2>2024 - Rest In Peace</h2>
                     <p>Last year's maze was in memory of my father, Charles W. McDonald, and my grandfather, Charles W. McDonald</p>
                     <p><b>We're still working on the maze for 2025. Stay tuned!</b></p>
@@ -59,39 +59,39 @@ export const CornMaze = () => {
                 <h2>Past Maze Designs</h2>
                 <ul>
                     <li>
-                        <img src='/2024maze.avif'></img>
+                        <Image src='/2024maze.avif' width={600} height={400} alt='2024 maze' />
                         <span>2023</span>
                     </li>
                     <li>
-                        <img src='/2021maze.avif'></img>
+                        <Image src='/2021maze.avif' width={600} height={400} alt='2021 maze' />
                         <span>2021</span>
                     </li>
                     <li>
-                        <img src='/2020maze.avif'></img>
+                        <Image src='/2020maze.avif' width={600} height={400} alt='2020 maze' />
                         <span>2020</span>
                     </li>
                     <li>
-                        <img src='/americaMaze.avif'></img>
+                        <Image src='/americaMaze.avif' width={600} height={400} alt='America maze' />
                         <span>2012</span>
                     </li>
                     <li>
-                        <img src='/looseLipsMaze.avif'></img>
+                        <Image src='/looseLipsMaze.avif' width={600} height={400} alt='Loose Lips maze' />
                         <span>2016</span>
                     </li>
                     <li>
-                        <img src='/noahsArkMaze.avif'></img>
+                        <Image src='/noahsArkMaze.avif' width={600} height={400} alt='Noahs Ark maze' />
                         <span>2015</span>
                     </li>
                     <li>
-                        <img src='/mountaineersMaze.avif'></img>
+                        <Image src='/mountaineersMaze.avif' width={600} height={400} alt='Mountaineers maze' />
                         <span>2014</span>
                     </li>
                     <li>
-                        <img src='/eatLocalMaze.avif'></img>
+                        <Image src='/eatLocalMaze.avif' width={600} height={400} alt='Eat Local maze' />
                         <span>2011</span>
                     </li>
                     <li>
-                        <img src='/protectedMaze.avif'></img>
+                        <Image src='/protectedMaze.avif' width={600} height={400} alt='Protected maze' />
                         <span>2008</span>
                     </li>
 

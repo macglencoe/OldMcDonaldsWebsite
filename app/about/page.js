@@ -1,6 +1,7 @@
 import { AndImage } from "@/components/andImage";
 import { BodyBlock } from "@/components/bodyBlock";
 import Layout from "@/components/layout";
+import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
 
@@ -126,69 +127,69 @@ export default function About() {
                 <h2>Five+ Generations Ago</h2>
                 <div className={styles.gallery}>
                     <div>
-                        <img src="/deed.jpg"></img>
+                        <Image src="/deed.jpg" width={600} height={400} alt="18th century survey plat" />
                         <p>18th century survey plat for the tract of land purchased by William McDonald, intended to be used as a homeplace for his mother. This parcel is now known as Glencoe Farm</p>
                     </div>
                     <div>
-                        <img src="/james-w-mcdonald-choral-society.jpg"></img>
+                        <Image src="/james-w-mcdonald-choral-society.jpg" width={600} height={400} alt="Choral Society group" />
                         <p>The Choral Society, with James William McDonald pictured as tallest (center-right, back)</p>
                     </div>
                     <div>
-                        <img src="/alice-stewart-mcdonald.jpg"></img>
+                        <Image src="/alice-stewart-mcdonald.jpg" width={600} height={400} alt="Alice Stewart McDonald" />
                         <p>Alice Stewart McDonald, wife of James William McDonald</p>
                     </div>
                 </div>
                 <h2>Four Generations Ago</h2>
                 <div className={styles.gallery}>
                     <div>
-                        <img src="/ernest-young.png"></img>
+                        <Image src="/ernest-young.png" width={600} height={400} alt="Young Ernest Faulkner McDonald" />
                         <p>Young Ernest Faulkner McDonald</p>
                     </div>
                     <div>
-                        <img src="/mcdonaldporch.jpg"></img>
+                        <Image src="/mcdonaldporch.jpg" width={600} height={400} alt="McDonald family on porch" />
                         <p>McDonald Family gathered on the side porch at Glencoe Farm in 1929. Ernest Faulkner McDonald is pictured on the left</p>
                     </div>
                     <div>
-                        <img src="/ernest-mag-porch.jpg"></img>
+                        <Image src="/ernest-mag-porch.jpg" width={600} height={400} alt="Family on porch 1926" />
                         <p>"Grandma Mag" (center), Elizabeth (center left) holding daughter Peggy, and Ernest Faulkner McDonald (center right)<br/>on the porch at Glencoe Farm in 1926 </p>
                     </div>
                     <div>
-                        <img src="/ernest-cherry.png"></img>
+                        <Image src="/ernest-cherry.png" width={600} height={400} alt="Ernest McDonald with cherry tree" />
                         <p>Ernest Faulkner McDonald pictured with a cherry tree on the "hill field" at Glencoe Farm</p>
                     </div>
                     
                     <div>
-                        <img src="/barnunknown.png"></img>
-                        <img src="/barnunknown2.png"></img>
+                        <Image src="/barnunknown.png" width={600} height={400} alt="Old barn photo" />
+                        <Image src="/barnunknown2.png" width={600} height={400} alt="Old barn photo 2" />
                         <p>Unknown folks pictured in front of the big white barn at Glencoe Farm, circa 1900</p>
                     </div>
                     <div>
-                        <img src="/hay-stack.jpg"></img>
+                        <Image src="/hay-stack.jpg" width={600} height={400} alt="Straw stack" />
                         <p>Straw stack in the barnyard at Glencoe Farm</p>
                     </div>
                     <div>
-                        <img src="/mag-late-years.jpg"></img>
+                        <Image src="/mag-late-years.jpg" width={600} height={400} alt="Grandma Mag in later years" />
                         <p>Margaret "Grandma Mag" Borum McDonald in her late years</p>
                     </div>
                 </div>
                 <h2>Two and Three Generations Ago</h2>
                 <div className={styles.gallery}>
                     <div>
-                        <img src="/richard-mcdonald-glencoe.jpg"></img>
+                        <Image src="/richard-mcdonald-glencoe.jpg" width={600} height={400} alt="Richard Clyde McDonald" />
                         <p>Richard Clyde McDonald pictured in front of the workshop at Glencoe Farm</p>
                     </div>
                     
                     <div>
-                        <img src="/bubAndPeggy.jpg"></img>
-                        <img src="/bubAndPeggy2.png"></img>
+                        <Image src="/bubAndPeggy.jpg" width={600} height={400} alt="Peggy and Bub" />
+                        <Image src="/bubAndPeggy2.png" width={600} height={400} alt="Peggy and Bub" />
                         <p>Peggy (left) and Charles "Bub" McDonald (right),  1929-1931</p>
                     </div>
                     <div>
-                        <img src="/mag-bub-and-peggy.png"></img>
+                        <Image src="/mag-bub-and-peggy.png" width={600} height={400} alt="Grandma Mag with grandchildren" />
                         <p>"Grandma Mag" (right) with grandchildren Charles "Bub" McDonald (left) and Peggy McDonald (center)</p>
                     </div>
                     <div>
-                        <img src="/peg-mag-ernest-wedding.jpg"></img>
+                        <Image src="/peg-mag-ernest-wedding.jpg" width={600} height={400} alt="Peggy McDonald wedding" />
                         <p>Wedding of Peggy McDonald Turner (left) with grandparents: <br/>
                             Margaret "Grandma Mag" Borum McDonald (center left) and<br/>
                             Ernest Faulkner McDonald (center right) <br/>
@@ -197,7 +198,7 @@ export default function About() {
                     </div>
                     
                     <div>
-                        <img src="/willa-jean-child.jpg"></img>
+                        <Image src="/willa-jean-child.jpg" width={600} height={400} alt="Willa Jean Hammersla" />
                         <p>Willa Jean Hammersla, circa 1930s</p>
                     </div>
                 </div>
@@ -205,7 +206,7 @@ export default function About() {
                 <div className={styles.gallery}>
                     
                     <div>
-                        <img src="/bub-willa-gail-kathy.png"></img>
+                        <Image src="/bub-willa-gail-kathy.png" width={600} height={400} alt="Bub and family" />
                         <p>
                             Charles "Bub" McDonald (right) and<br/>
                             Willa Jean Hammersla McDonald (left)<br/> with
@@ -215,26 +216,26 @@ export default function About() {
                         </p>
                     </div>
                     <div>
-                        <img src="/mfm-moline.png"></img>
+                        <Image src="/mfm-moline.png" width={600} height={400} alt="Receiving tractor" />
                         <p>Charles "Bub" McDonald (middle) receiving a tractor for McDonald Farm Machinery, 1950</p>
                     </div>
                     <div>
-                        <img src="/charliebill1.png"></img>
+                        <Image src="/charliebill1.png" width={600} height={400} alt="Charlie Bill McDonald" />
                         <p>Charles "Charlie Bill" McDonald, circa 1967</p>
                     </div>
                     <div>
-                        <img src="/limousin1.jpg"></img>
-                        <img src="/limousin2.jpg"></img>
+                        <Image src="/limousin1.jpg" width={600} height={400} alt="Limousin cattle" />
+                        <Image src="/limousin2.jpg" width={600} height={400} alt="Limousin cattle" />
                         <p>Limousin Cattle at Glencoe Farm</p>
                     </div>
                     <div>
-                        <img src="/reunion1.jpg"></img>
-                        <img src="/reunion2.jpg"></img>
-                        <img src="/reunion3.jpg"></img>
+                        <Image src="/reunion1.jpg" width={600} height={400} alt="Family reunion" />
+                        <Image src="/reunion2.jpg" width={600} height={400} alt="Family reunion" />
+                        <Image src="/reunion3.jpg" width={600} height={400} alt="Family reunion" />
                         <p>Annual McDonald Family Reunion at Glencoe Farm</p>
                     </div>
                     <div>
-                        <img src="/liam-zoey-porch.jpg"></img>
+                        <Image src="/liam-zoey-porch.jpg" width={600} height={400} alt="Liam McDonald and dog" />
                         <p>Liam McDonald and dog Zoey on the porch at Glencoe Farm, 2003</p>
                     </div>
                     

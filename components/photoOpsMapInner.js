@@ -1,5 +1,6 @@
 import { MapContainer, TileLayer, Marker, Popup, Polygon, Polyline, Tooltip, useMap } from 'react-leaflet'
 import L, { icon } from 'leaflet'
+import Image from 'next/image'
 import React, { useRef, useEffect } from 'react'
 import 'leaflet/dist/leaflet.css'
 import styles from './photoOpsMap.module.css'
@@ -386,7 +387,7 @@ export default function PhotoOpsMapInner() {
                         <Popup className={styles.imgPopup}>
                             <span>Photo Op: {label}</span>
                             {imgSrc &&
-                                <img src={imgSrc}/>
+                                <Image src={imgSrc} alt={label} width={600} height={400} />
                             }
                         </Popup>
                     </Marker>

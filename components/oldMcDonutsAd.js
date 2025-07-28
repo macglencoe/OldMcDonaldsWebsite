@@ -1,12 +1,13 @@
 "use client"
 import { BookOpen } from 'phosphor-react'
+import Image from 'next/image'
 import styles from './oldMcDonutsAd.module.css'
 import Link from 'next/link'
 
 export default function OldMcDonutsAd( { title, description, href, src, alt, buttonText, menu } ) {
     return (
         <div className={styles.container}>
-            <img className={styles.backdrop} src={src} alt={alt}></img>
+            <Image className={styles.backdrop} src={src} alt={alt} width={600} height={400}></Image>
             <div className={styles.content}>
                 <div className={styles.header}>
                     <h2>{title}</h2>

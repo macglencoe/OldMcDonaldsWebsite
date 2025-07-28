@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { track } from '@vercel/analytics';
 
@@ -79,9 +80,11 @@ export default function MazeCodePage() {
   return (
     <div className="flex flex-col items-center justify-center h-screen px-4 text-center">
       <h1 className="text-3xl font-bold mb-4">You found: {item.name}</h1>
-      <img
+      <Image
         src={item.img}
         alt={item.name}
+        width={300}
+        height={300}
         className="max-w-xs mb-6 rounded-lg shadow-lg"
       />
       <p className="text-lg mb-4">Great job finding the {item.name} code!</p>

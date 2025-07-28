@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Layout from '@/components/layout'
 import EntryForm from '@/components/mazeGameEntryForm'
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator'
@@ -119,9 +120,11 @@ export default function MazeGame() {
                             <span className="text-xl sm:text-2xl">{name}</span>
 
                             {foundCodes.includes(code) ? (
-                                <img
+                                <Image
                                     src={img}
                                     alt={name}
+                                    width={200}
+                                    height={200}
                                     className="
                                         object-cover rounded-lg
                                         w-[clamp(100px,40vw,200px)]

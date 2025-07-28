@@ -1,11 +1,15 @@
+import Image from 'next/image'
+
 export const VendorProfile = ({ name, subtitle, description, imgSrc, website, menu }) => {
     return (
         <div className="flex flex-col md:flex-row overflow-hidden rounded-2xl shadow-xl bg-white border border-gray-200 hover:shadow-2xl transition-shadow duration-300">
             {imgSrc && (
                 <div className="md:w-1/3 w-full max-h-[300px] overflow-hidden">
-                    <img
+                    <Image
                         src={imgSrc}
                         alt={name}
+                        width={600}
+                        height={400}
                         className="object-cover w-full h-full"
                     />
                 </div>
