@@ -54,7 +54,13 @@ function Generations() {
                     srcs: [
                         "/charliebill1.png"
                     ],
-                    caption: "Charles 'Charlie Bill' McDonald, circa 1967"
+                    caption: "Charles 'Charlie Bill' McDonald, 1967"
+                },
+                {
+                    srcs: [
+                        "/stephanie-baby.png"
+                    ],
+                    caption: "Stephanie Nesselrodt McDonald, 1975"
                 },
                 {
                     srcs: [
