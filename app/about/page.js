@@ -33,6 +33,18 @@ function Generations() {
                         "/liam-zoey-porch.jpg"
                     ],
                     caption: "Liam McDonald and dog Zoey on the porch at Glencoe Farm, 2003"
+                },
+                {
+                    srcs: [
+                        "/hillbilly-liam.jpg"
+                    ],
+                    caption: "Liam McDonald, 2024"
+                },
+                {
+                    srcs: [
+                        "/reece-baby.jpg",
+                    ],
+                    caption: "Reece McDonald, 2005"
                 }
             ]
         },
