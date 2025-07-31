@@ -50,7 +50,7 @@ export const CornMaze = () => {
                         <li><b>Leave No Trace:</b> Do not leave any trash or personal items in the corn maze. Anything you leave in the maze will be tilled into the soil next summer, never to be seen again except by mother Earth herself.</li>
                         <li><b>Don't pick, snap, or stomp the corn.</b> It took months to grow and weeks to design. Let's keep it pretty for other visitors to enjoy!</li>
                         <li><b>Refrain from eating the corn</b>. You are human. This corn is meant for animals.</li>
-                        <li><b>Running is highly discouraged!</b> The maze is full of roots and rocks, and corn muffles sound surprisingly well.</li>
+                        <li><b>Running is forbidden</b></li>
                         <li><b>Consider the weather conditions</b>: It is liable to be muddy. Dress for the farm, not the runway.</li>
                     </ol>
                 </BodyBlock>
