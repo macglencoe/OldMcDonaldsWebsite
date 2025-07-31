@@ -253,7 +253,7 @@ function Generations() {
                     srcs: [
                         "/deed.jpg"
                     ],
-                    caption: "18th century survey plat for the tract of land purchased by William McDonald, intended to be used as a homeplace for his mother. This parcel is now known as Glencoe Farm"
+                    caption: "18th century survey plat for the tract of land purchased by William McDonald. This parcel is now known as Glencoe Farm"
                 }
             ]
         },
