@@ -21,10 +21,8 @@ export default function FlowerFields() {
                 <AndImage src="/flowerbar.jpg">
                     <h2 id="cut-your-own">Cut your own</h2>
                     <p>We have an arrangement station near the flower fields, where you will find cutters and cups</p>
-                    <p>Flowers are priced by type:</p>
                     <ul>
-                        <li>For <b>one cup</b> of <b>Zinnias</b>:<br></br><p className="big">${pricing["flower-cup"].amount.toFixed(2)}</p></li>
-                        <li>For <b>one Sunflower stem</b>:<br></br><p className="big">${pricing["sunflower"].amount.toFixed(2)}</p></li>
+                        <li>For <b>one cup</b> of <b>Any Flower</b>:<br></br><p className="big">${pricing["flower-cup"].amount.toFixed(2)}</p></li>
                     </ul>
                     <b>PLEASE RETURN CUTTERS TO ARRANGEMENT STATION</b>
                 </AndImage>
