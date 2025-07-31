@@ -12,7 +12,7 @@ export const NightMaze = () => {
                 </div>
                 <div className={styles.body + " body basic"}>
                     <AndImage fromUnsplash style="night" src="https://images.unsplash.com/photo-1719254866686-43d6dfd08b5b?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
-                        <h2>October nth</h2>
+                        <h2>October 10th</h2>
                         <p>Starting in October, we will have the maze and hayrides open from 7pm to 10:30</p>
                     </AndImage>
                     <AndImage style="night" src="/bonfires.jpg">
