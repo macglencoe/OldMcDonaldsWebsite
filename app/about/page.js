@@ -45,6 +45,12 @@ function Generations() {
                         "/reece-baby.jpg",
                     ],
                     caption: "Reece McDonald, 2005"
+                },
+                {
+                    srcs: [
+                        "/reece.jpg",
+                    ],
+                    caption: "Reece McDonald, 2024"
                 }
             ]
         },
