@@ -20,6 +20,7 @@ export const HayRide = () => {
                     <p>For one person, above 3 years of age:</p>
                     <p className='big'>${pricing.hayride.amount}</p>
                     <p>Must be paid at the admission booth</p>
+                    <p>If you plan on bringing a large group, make sure your group is all together at the admission booth</p>
                 </AndImage>
                 <AndImage src='/hayrideGroupPhoto.jpg'>
                     <h2>When to get on</h2>
