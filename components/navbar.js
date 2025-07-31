@@ -19,7 +19,7 @@ export const Navbar = () => {
 
     return (
         <header className={styles.navbar + " relative"}>
-            <a href="#skip-navbar" className="absolute right-1/2 text-center underline bg-background py-3 px-4 opacity-0 focus:opacity-100 -translate-y-1/2 focus:translate-y-0 transition-all duration-200">Skip to main content</a>
+            <a href="#skip-navbar" className="absolute right-1/2 text-center underline bg-background py-3 px-4 opacity-0 focus:opacity-100 -translate-y-[150%] focus:translate-y-0 transition-all duration-200">Skip to main content</a>
             <a href="/" aria-label="Home"><h1>Old McDonald's</h1></a>
             <nav>
                 <ul>

@@ -94,6 +94,7 @@ export const Reservations = () => {
                 <BodyBlock src="https://images.unsplash.com/photo-1603321544554-f416a9a11fcf?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                     <h3>Weather Policy</h3>
                     <p>If we have to close due to weather, you will receive a full refund for your gazebo rental</p>
+                    <p>Keep this in mind and have a backup plan for your party!</p>
                 </BodyBlock>
                 <BodyBlock src="/entrance.jpg">
                     <h3>General Admission</h3>

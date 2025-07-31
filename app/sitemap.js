@@ -3,7 +3,7 @@
 export default function sitemap() {
     return [
         {
-            url: 'https://oldmcdonaldspumpkinpatchwv.com',
+            url: 'https://www.oldmcdonaldspumpkinpatchwv.com',
             lastModified: new Date(),
             changeFrequency: 'daily',
             priority: 1.0,

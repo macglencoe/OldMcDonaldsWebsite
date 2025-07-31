@@ -26,7 +26,6 @@ export const NatureTrails = () => {
                     <ul>
                         <li>Consider the weather conditons. It is liable to be muddy</li>
                         <li>Stay in the mowed paths</li>
-                        <li>Watch out for thorns</li>
                     </ul>
                 </AndImage>
             </div>

@@ -33,6 +33,24 @@ function Generations() {
                         "/liam-zoey-porch.jpg"
                     ],
                     caption: "Liam McDonald and dog Zoey on the porch at Glencoe Farm, 2003"
+                },
+                {
+                    srcs: [
+                        "/hillbilly-liam.jpg"
+                    ],
+                    caption: "Liam McDonald, 2024"
+                },
+                {
+                    srcs: [
+                        "/reece-baby.jpg",
+                    ],
+                    caption: "Reece McDonald, 2005"
+                },
+                {
+                    srcs: [
+                        "/reece.jpg",
+                    ],
+                    caption: "Reece McDonald, 2024"
                 }
             ]
         },
@@ -54,7 +72,13 @@ function Generations() {
                     srcs: [
                         "/charliebill1.png"
                     ],
-                    caption: "Charles 'Charlie Bill' McDonald, circa 1967"
+                    caption: "Charles 'Charlie Bill' McDonald, 1967"
+                },
+                {
+                    srcs: [
+                        "/stephanie-baby.png"
+                    ],
+                    caption: "Stephanie Nesselrodt McDonald, 1975"
                 },
                 {
                     srcs: [
@@ -253,7 +277,7 @@ function Generations() {
                     srcs: [
                         "/deed.jpg"
                     ],
-                    caption: "18th century survey plat for the tract of land purchased by William McDonald, intended to be used as a homeplace for his mother. This parcel is now known as Glencoe Farm"
+                    caption: "18th century survey plat for the tract of land purchased by William McDonald. This parcel is now known as Glencoe Farm"
                 }
             ]
         },
@@ -399,8 +423,8 @@ export default function About() {
                     <p>Our farm has been home to many different ventures over the decades.</p>
                     <p>From the late 1800s to the 1950s, we played a role in <a href="https://www.journal-news.net/journal-news/long-and-short-of-it-berkeley-countys-apple-industry-discussion-to-be-held/article_34739292-a1ba-5b92-a050-0757d0ce868e.html" target="_blank" className="!break-normal">Berkeley County's thriving Apple Industry</a>.<br/>
                     Our great-grandfather, Ernest Faulkner McDonald, was one of the original 18 guarantors of the C.H. Musselman Company Apple Plant in Inwood.</p>
-                    <p>In the 1950s, our grandfather, Charles "Bub" Francis Wall McDonald founded McDonald Farm Machinery - West Virginia's first John Deere dealership - and operated it until 1985.</p>
-                    <p>In 2001, our father, Charles "Charlie Bill" William McDonald, together with his wife Stephanie, planted corn and pumpkins on the farm for the first time, and established Old McDonald's Pumpkin Patch.</p>
+                    <p>In the 1950s, our grandfather, Charles "Bub" Francis Wall McDonald founded McDonald Farm Machinery and operated it until 1985.</p>
+                    <p>In 2006, our father, Charles "Charlie Bill" William McDonald, together with his wife Stephanie, planted corn and pumpkins on the farm for the first time, and established Old McDonald's Pumpkin Patch.</p>
                 </BodyBlock>
 
                 <Generations />

@@ -12,11 +12,6 @@ function evaluateCondition(condition, context) {
   switch (condition.criteria) {
     case 'time': {
       const target = new Date(condition.value);
-      console.log(`
-        operator: ${condition.operator}
-        now: ${now}
-        target: ${target}
-        `)
       if (condition.operator === 'before') return now < target;
       if (condition.operator === 'after') return now > target;
       break;
@@ -56,8 +51,6 @@ export function isFeatureEnabled(key, context = {}) {
   if (!conditions.length || conditions.length === 0) return defaultValue;
 
   const results = conditions.map((condition) => evaluateCondition(condition, context));
-
-  console.log(results);
 
   if (operator === 'AND') return results.every(Boolean);
   if (operator === 'OR') return results.some(Boolean);
