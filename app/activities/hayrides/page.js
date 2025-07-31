@@ -25,6 +25,7 @@ export const HayRide = () => {
                 <AndImage src='/hayrideGroupPhoto.jpg'>
                     <h2>When to get on</h2>
                     <p>Each ticket has a <b>color</b> and a <b>time</b> written on the back</p>
+                    <p>Arrive <b>before</b> the time on your ticket.</p>
                     <p>When your time comes, go to the hayride corral, which is across the creek</p>
                     <a className='button' href='/map?x=39.382529281329774&y=-78.04355774914931'>Find on the Map</a>
                     <p>The drivers will direct you to the correct wagon, and take your ticket</p>
