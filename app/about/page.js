@@ -51,6 +51,18 @@ function Generations() {
                         "/reece.jpg",
                     ],
                     caption: "Reece McDonald, 2024"
+                },
+                {
+                    srcs: [
+                        "/ted-alaina-lawnmower.jpg"
+                    ],
+                    caption: "Theodore and Alaina McDonald, circa 2001"
+                },
+                {
+                    srcs: [
+                        "/young-mcdonalds-backhoe.jpg"
+                    ],
+                    caption: "All four Young McDonalds with their grandfather driving the backhoe, circa 2008"
                 }
             ]
         },
