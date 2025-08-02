@@ -1,11 +1,16 @@
 
 .gallery {
-    column-count: 3;
-    column-gap: 25px;
-    column-width: 350px;
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .gallery > div {
+    flex: 1;
+    min-width: 230px;
+    max-width: 400px;
     width: 100%;
     display: inline-block;
     margin-bottom: 25px;
@@ -16,12 +21,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     box-shadow: 0 10px 30px -3px rgba(0, 0, 0, 0.3);
     position: relative;
+    
 }
 .gallery > div:hover {
     transform: scale(1.05);
+    flex: 3;
 }
 .gallery > div > p {
     position: absolute;
