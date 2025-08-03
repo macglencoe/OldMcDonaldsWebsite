@@ -1,3 +1,4 @@
+import BreadCrumbNavigation from "./breadcrumb"
 import Footer from "./footer"
 
 const { default: Navbar } = require("./navbar")
@@ -7,6 +8,7 @@ const Layout = (props) => {
     return (
         <div>
             <Navbar />
+            <BreadCrumbNavigation />
             <div className="overflow-x-scroll">{props.children}</div>
             <Footer />
         </div>
