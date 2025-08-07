@@ -1,8 +1,3 @@
-"use client"
-import Image from "next/image";
-import styles from "./hero.module.css";
-import { ArrowLeft, NavigationArrow } from "phosphor-react";
-import { track } from "@vercel/analytics";
 import AbstractHero from "./abstractHero";
 
 export default function HeroFall() {
@@ -15,33 +10,23 @@ export default function HeroFall() {
         description: "See what we're all about",
         buttons: [
           {
-            href: '/activities',
-            label: 'Activities',
-            onClick: () => {
-              track(
-                'Activities',
-                { location: 'Hero Fall' }
-              )
-            },
-            Icon: ArrowLeft
+            href: "/activities",
+            label: "Activities",
+            icon: "ArrowLeft",
+            trackEvent: { name: "Activities", props: { location: "Hero Fall" } },
           },
           {
-            href: '/visit',
-            label: 'Visit',
-            onClick: () => {
-              track(
-                'Visit',
-                { location: 'Hero Fall' }
-              )
-            },
-            Icon: NavigationArrow
-          }
-        ]
+            href: "/visit",
+            label: "Visit",
+            icon: "NavigationArrow",
+            trackEvent: { name: "Visit", props: { location: "Hero Fall" } },
+          },
+        ],
       }}
       seasonInfo={{
-        title: 'Open Now',
-        content: 'Come visit us on the weekend!'
+        title: "Open Now",
+        content: "Come visit us on the weekend!",
       }}
     />
-  )
+  );
 }

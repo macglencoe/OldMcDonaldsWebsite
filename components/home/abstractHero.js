@@ -1,6 +1,7 @@
 import Link from "next/link"
 import styles from "./hero.module.css"
 import Image from "next/image"
+import AbstractHeroClient from "./abstractHeroClient"
 
 /**
  * Renders a reusable hero section with a backdrop image, tagline, CTA buttons, and seasonal information.
@@ -50,53 +51,12 @@ export default function AbstractHero({
                     height={1500}
                 ></Image>
             }
-            <div className={styles.cover}>
-                <div className={styles.top}>
-                    <h1 className={styles.tagline}>{tagline}</h1>
-                    <div>
-                        <p className={styles.description}>{description}</p>
-                    </div>
-                </div>
-                <div className={styles.bottom}>
-                    {cta &&
-                        <div className={styles.cta}>
-                            {cta.description &&
-                                <p>{cta.description}</p>
-                            }
-                            {cta.buttons && Array.isArray(cta.buttons) &&
-                                <div className={styles.buttons}>
-                                    {cta.buttons.map((button, index) => {
-                                        const isExternal = typeof button.href === 'string' && button.href.startsWith('http');
-                                        return (
-                                            <Link
-                                                key={index}
-                                                href={button.href}
-                                                onClick={button.onClick}
-                                                target={
-                                                    isExternal ? '_blank' : undefined
-                                                }
-                                            >
-                                                {button.Icon &&
-                                                    <button.Icon size={24} weight="bold" />
-                                                }
-                                                {button.label}
-                                            </Link>
-                                        )
-                                    })}
-                                </div>
-                            }
-                        </div>
-                    }
-                    {seasonInfo &&
-                        <div className={styles.seasonInfo}>
-                            <div className={styles.card}>
-                                {seasonInfo.title && <h2>{seasonInfo.title}</h2>}
-                                {seasonInfo.content && <p>{seasonInfo.content}</p>}
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
+            <AbstractHeroClient
+                tagline={tagline}
+                description={description}
+                cta={cta}
+                seasonInfo={seasonInfo}
+            />
         </section>
     )
 }
