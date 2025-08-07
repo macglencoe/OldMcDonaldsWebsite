@@ -9,9 +9,12 @@ export default function HeroSummer() {
     return (
         <section className={styles.hero}>
               <Image
-                src="/summer.jpg"
+                src="/summer.webp"
                 width={1500}
                 height={1000}
+                priority
+                placeholder="blur"
+                blurDataURL="/summer-xs.webp"
                 alt="Old McDonald's"
               />
               <div className={styles.cover}>
