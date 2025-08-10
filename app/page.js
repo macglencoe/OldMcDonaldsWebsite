@@ -41,48 +41,48 @@ export default async function Home() {
   return (
     <Layout>
       <div className={styles.wrapper}>
-        { isFeatureEnabled("show_night_maze_ad", {
+        {isFeatureEnabled("show_night_maze_ad", {
           now: new Date()
         }) && (
-          <NightMazeBanner />
-        )
-      }
+            <NightMazeBanner />
+          )
+        }
 
-        { isFeatureEnabled("show_flood_banner") && (
+        {isFeatureEnabled("show_flood_banner") && (
           <FloodBanner />
         )}
 
         <section className={styles.hero}>
           <Hero />
         </section>
-        <Season/>
+        <Season />
 
 
 
         <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
-        <Rates/>
+        <Rates />
 
-        { isFeatureEnabled("show_vendor_promos") && (
+        {isFeatureEnabled("show_vendor_promos") && (
           <>
             <OldMcDonutsAd
-            title="Old McDonuts"
-            description="Coffee, Apple Cider Donuts, and Slushies, right on the farm"
-            menu="/vendors/old-mcdonuts"
-            src="/oldMcDonuts.jpg"
-          />
-          <OldMcDonutsAd
-            title="Twisted Taters"
-            description="Butterfly Potatoes, Burgers, & more!"
-            href="/vendors"
-            buttonText="See More"
-            src="/twistedTaters.jpg"
-          />
+              title="Old McDonuts"
+              description="Coffee, Apple Cider Donuts, and Slushies, right on the farm"
+              menu="/vendors/old-mcdonuts"
+              src="/oldMcDonuts.jpg"
+            />
+            <OldMcDonutsAd
+              title="Twisted Taters"
+              description="Butterfly Potatoes, Burgers, & more!"
+              href="/vendors"
+              buttonText="See More"
+              src="/twistedTaters.jpg"
+            />
           </>
         )
         }
         <TestimonialCarousel />
         <FacebookFeed />
-        { isFeatureEnabled("show_contact_form") &&
+        {isFeatureEnabled("show_contact_form") &&
           <div className="flex justify-center bg-foreground"><ContactForm theme="onDark" /></div>
         }
       </div>
