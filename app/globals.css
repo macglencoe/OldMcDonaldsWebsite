@@ -39,6 +39,10 @@ body {
   font-family: "Inter", Helvetica, sans-serif;
 }
 
+.font-satisfy{
+  font-family: 'Satisfy';
+}
+
 .header {
   display: flex;
   flex-direction: column;
