@@ -16,6 +16,7 @@ import Hero from "@/components/home/hero";
 import { isFeatureEnabled } from "@/public/lib/featureEvaluator";
 import NightMazeBanner from "@/components/home/nightMazeBanner";
 import FloodBanner from "@/components/home/floodBanner";
+import FarmSwapBanner from "@/components/home/farmSwapBanner";
 
 
 
@@ -52,10 +53,12 @@ export default async function Home() {
           <FloodBanner />
         )}
 
+
         <section className={styles.hero}>
           <Hero />
         </section>
-        <Season/>
+        <FarmSwapBanner />
+        <Season />
 
 
 
