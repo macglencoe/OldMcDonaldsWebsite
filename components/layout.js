@@ -1,3 +1,4 @@
+import AuxiliaryFAQ from "./auxiliaryFAQ"
 import Footer from "./footer"
 import { Analytics } from "@vercel/analytics/next"
 
@@ -9,7 +10,10 @@ const Layout = (props) => {
         <div>
             <Navbar />
             <Analytics />
-            <div className="overflow-x-scroll">{props.children}</div>
+            <div className="overflow-x-scroll">
+                {props.children}
+                <AuxiliaryFAQ />
+            </div>
             <Footer />
         </div>
     )
