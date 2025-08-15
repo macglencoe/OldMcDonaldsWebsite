@@ -5,7 +5,8 @@
   },
   {
     "question": "How long will it take me to go through the maze?",
-    "answer": "Approximately 30 mins per maze"
+    "answer": "Approximately 30 mins per maze",
+    "pages": ["/activities/corn-maze"]
   },
   {
     "question": "Do you have restrooms?",
@@ -33,15 +34,25 @@
   },
   {
     "question": "When the maze is open during the night time hours, do I need to bring a flashlight?",
-    "answer": "Yes, you need to bring a flashlight because the maze pathways are not lit up at night"
+    "answer": "Yes, you need to bring a flashlight because the maze pathways are not lit up at night",
+    "pages": [
+      "/activities/corn-maze",
+      "/activities/night-maze"
+    ]
   },
   {
     "question": "Will the maze be haunted?",
-    "answer": "No"
+    "answer": "No",
+    "pages": [
+      "/activities/night-maze"
+    ]
   },
   {
     "question": "Do you provide wagons or strollers for my children to be transported around the farm in?",
-    "answer": "No, our carts are for hauling pumpkins from the patches and market to your vehicle. We suggest you bring your own stroller/wagon to transport your child in safely."
+    "answer": "No, our carts are for hauling pumpkins from the patches and market to your vehicle. We suggest you bring your own stroller/wagon to transport your child in safely.",
+    "pages": [
+      "/activities/pumpkin-patch"
+    ]
   },
   {
     "question": "Can we bring in food and have a picnic?",
@@ -49,10 +60,16 @@
   },
   {
     "question": "Does the hayride take me to the patch?",
-    "answer": "No, the hayride is just a tour of the farm.\nYou have to walk out to the patch. Read [This Page](activities/pumpkin-patch)"
+    "answer": "No, the hayride is just a tour of the farm. You have to walk out to the patch",
+    "pages": [
+      "/activities/hayrides"
+    ]
   },
   {
     "question": "Does admission include a pumpkin?",
-    "answer": "No. U-pick pumpkins are .50 a lb and are not included in admission."
+    "answer": "No. U-pick pumpkins are .50 a lb and are not included in admission.",
+    "pages": [
+      "/activities/pumpkin-patch"
+    ]
   }
 ]

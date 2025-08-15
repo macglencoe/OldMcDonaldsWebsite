@@ -1,3 +1,4 @@
+import AuxiliaryFAQ from "./auxiliaryFAQ"
 import BreadCrumbNavigation from "./breadcrumb"
 import Footer from "./footer"
 
@@ -9,7 +10,10 @@ const Layout = (props) => {
         <div>
             <Navbar />
             <BreadCrumbNavigation />
-            <div className="overflow-x-scroll">{props.children}</div>
+            <div className="overflow-x-scroll">
+                {props.children}
+                <AuxiliaryFAQ />
+            </div>
             <Footer />
         </div>
     )
