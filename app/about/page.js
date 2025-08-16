@@ -3,6 +3,7 @@ import { BodyBlock } from "@/components/bodyBlock";
 import Layout from "@/components/layout";
 import styles from "./page.module.css";
 import Link from "next/link";
+import PageHeader from "@/components/pageHeader";
 
 function Generations() {
     const generations = [
@@ -408,10 +409,7 @@ export default function About() {
     
     return (
         <Layout>
-            <div className="header">
-                <h1>About Us</h1>
-                <span>The Story of Glencoe Farm</span>
-            </div>
+            <PageHeader subtitle="The Story of Glencoe Farm">About Us</PageHeader>
             <div className="body basic">
                 <BodyBlock src="localMap.png">
                     <h2>Our Farm</h2>

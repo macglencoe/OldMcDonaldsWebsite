@@ -3,14 +3,12 @@ import styles from './page.module.css'
 import { AndImage } from '@/components/andImage';
 import { BodyBlock } from '@/components/bodyBlock';
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
+import PageHeader from '@/components/pageHeader';
 
 export const CornMaze = () => {
     return (
         <Layout>
-            <div className='header'>
-                <h1>Corn Maze</h1>
-                <span>2025 Season</span>
-            </div>
+            <PageHeader subtitle="2025 Season">Corn Maze</PageHeader>
             <div className='body basic'>
                 <div className={styles.cornMaze}>
                     <img src='/charleswmcdonaldmaze.jpg'>

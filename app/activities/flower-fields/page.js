@@ -1,15 +1,12 @@
 import { AndImage } from "@/components/andImage";
 import Layout from "@/components/layout";
+import PageHeader from "@/components/pageHeader";
 import pricing from "@/public/data/pricing";
 
 export default function FlowerFields() {
     return (
         <Layout>
-            <div className="header">
-                <h1>Flower Fields</h1>
-                <span>2025 Season</span>
-                <p>Frolicking skipping yippity hooray!!!</p>
-            </div>
+            <PageHeader subtitle="2025 Season">Flower Fields</PageHeader>
             <div className="body basic">
                 <AndImage src="/sunflowerCloseUp.jpg">
                     <h2>Sunflowers, Cosmos, & Zinnias</h2>

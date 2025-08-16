@@ -1,14 +1,12 @@
 import { AndImage } from '@/components/andImage';
 import styles from './page.module.css'
 import Layout from '@/components/layout';
+import PageHeader from '@/components/pageHeader';
 
 export const NatureTrails = () => {
     return (
         <Layout>
-            <div className='header'>
-                <h1>Nature Trails</h1>
-                <span>2025 Season</span>
-            </div>
+            <PageHeader subtitle="2025 Season">Nature Trails</PageHeader>
             <div className='body basic'>
                 <AndImage src="/walnutbottom.jpg">
                     <h2>Take a hike!</h2>

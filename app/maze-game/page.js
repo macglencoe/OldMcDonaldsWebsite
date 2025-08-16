@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import Layout from '@/components/layout'
 import EntryForm from '@/components/mazeGameEntryForm'
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator'
+import PageHeader from '@/components/pageHeader'
 
 export default function MazeGame() {
 
@@ -95,10 +96,7 @@ export default function MazeGame() {
 
     return (
         <Layout>
-            <div className="header">
-                <h1>Maze Game</h1>
-                <span>2025 Season</span>
-            </div>
+            <PageHeader subtitle="2025 Season">Maze Game</PageHeader>
             <div className="body basic">
                 <p className='big'><b>Find the QR codes</b></p>
                 <p>There are <b>4 QR codes</b> hidden throughout the maze.</p>

@@ -1,14 +1,12 @@
 import Layout from "@/components/layout";
 import styles from "./page.module.css"
 import MenuItem from "@/components/menuItem";
+import PageHeader from "@/components/pageHeader";
 
 export default function OldMcDonuts() {
     return (
         <Layout>
-            <div className="header">
-                <h1>Old McDonuts</h1>
-                <span>Donuts & Coffee</span>
-            </div>
+            <PageHeader subtitle="Donuts & Coffee">Old McDonuts</PageHeader>
             <div className="body basic overflow-hidden">
                 <div className="flex flex-row gap-0 md:gap-4 relative md:justify-end">
                     <div className={`
