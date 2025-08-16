@@ -3,14 +3,12 @@ import styles from "./page.module.css"
 import { AndImage } from "@/components/andImage"
 import PumpkinPriceGadget from "@/components/pumpkinPriceGadget"
 import pricing from "@/public/data/pricing"
+import PageHeader from "@/components/pageHeader"
 
 export const PumpkinPatch = () => {
     return (
         <Layout>
-            <div className="header">
-                <h1>Pumpkin Patch</h1>
-                <span>2025 Season</span>
-            </div>
+            <PageHeader subtitle="2025 Season">Pumpkin Patch</PageHeader>
             <div className="body basic">
                 <div className={styles.body}>
                     <AndImage src="/pumpkinlanes.jpg">

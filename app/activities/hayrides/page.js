@@ -2,14 +2,12 @@ import Layout from '@/components/layout'
 import styles from './page.module.css'
 import { AndImage } from '@/components/andImage'
 import pricing from '@/public/data/pricing'
+import PageHeader from '@/components/pageHeader'
 
 export const HayRide = () => {
     return (
         <Layout>
-            <div className='header'>
-                <h1>Hay Rides</h1>
-                <span>2025 Season</span>
-            </div>
+            <PageHeader subtitle="2025 Season">Hay Rides</PageHeader>
             <div className='body basic'>
                 <AndImage src='/hillview.jpg'>
                     <h2>A tour of the farm</h2>

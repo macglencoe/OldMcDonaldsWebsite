@@ -5,6 +5,7 @@ import { BodyBlock } from "@/components/bodyBlock";
 import rentalSlots from "@/public/data/gazeboRentalSlots.json";
 import { useMemo } from "react";
 import pricing from "@/public/data/pricing"
+import PageHeader from "@/components/pageHeader";
 
 /**
  * Renders the gazebo-rental availability table from
@@ -61,9 +62,7 @@ export const Reservations = () => {
 
     return (
         <Layout>
-            <div className="header">
-                <h1>Reservations</h1>
-            </div>
+            <PageHeader subtitle="2025 Season">Reservations</PageHeader>
             <div className="body basic">
                 <h2>Party Gazebo</h2>
                 <p className="description">A private party gazebo can be booked for a 2-hour time slot during daytime hours</p>
