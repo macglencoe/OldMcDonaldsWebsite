@@ -1,5 +1,6 @@
 import AuxiliaryFAQ from "./auxiliaryFAQ"
 import BreadCrumbNavigation from "./breadcrumb"
+import FloatingNav from "./floatingNav"
 import Footer from "./footer"
 
 const { default: Navbar } = require("./navbar")
@@ -7,7 +8,8 @@ const { default: Navbar } = require("./navbar")
 
 const Layout = (props) => {
     return (
-        <div>
+        <div className="relative">
+            <FloatingNav />
             <Navbar />
             <BreadCrumbNavigation />
             <div className="overflow-x-scroll">
