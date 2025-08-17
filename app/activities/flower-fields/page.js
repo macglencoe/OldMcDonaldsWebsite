@@ -1,3 +1,4 @@
+import Action from "@/components/action";
 import { AndImage } from "@/components/andImage";
 import Layout from "@/components/layout";
 import PageHeader from "@/components/pageHeader";
@@ -12,7 +13,7 @@ export default function FlowerFields() {
                     <h2>Sunflowers, Cosmos, & Zinnias</h2>
                     <p>Take a stroll out to one of our 1-acre flower fields</p>
                     <p><a href="#cut-your-own">Cut your own</a>, take some pictures, or just enjoy</p>
-                    <a className="button" href="/map?x=39.38163138370034&y=-78.04489454865366">Find on the Map</a>
+                    <Action as="Link" className={'mx-auto'} href='/map?x=39.38163138370034&y=-78.04489454865366' variant="primary">Find on the Map</Action>
 
                 </AndImage>
                 <AndImage src="/flowerbar.jpg">
