@@ -1,3 +1,4 @@
+import Action from "@/components/action";
 import Layout from "@/components/layout";
 import PageHeader from "@/components/pageHeader";
 import PhotoOpsMap from "@/components/photoOpsMap";
@@ -9,9 +10,7 @@ export default function PhotoOps() {
             <PageHeader 
                 subtitle="Explore the farm"
                 content={(
-                    <div className="body basic">
-                        <a className="mt-5 mb-2" href="/visit">Click here for directions</a>
-                    </div>
+                    <Action as="a" href="/visit" className={'mx-auto'} variant="outline-secondary">Click here for directions</Action>
                 )}
             >
                 Map
