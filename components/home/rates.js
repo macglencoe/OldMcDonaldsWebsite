@@ -57,9 +57,9 @@ export default function Rates() {
     {
       title: "U-Pick Flowers",
       details: [
-        "Zinnia & Sunflower fields to pick from",
+        "Zinnia, Cosmos & Sunflower fields to pick from",
         "Cutters & cups available onsite",
-        "Vases sold at the arrangement wagon",
+        "Vases sold at the 'Flower Bar'",
       ],
       cta: { href: "/activities/flower-fields", label: "Learn More" },
       price: pricing["flower-cup"]
