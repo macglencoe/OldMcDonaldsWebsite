@@ -1,16 +1,15 @@
 import Layout from '@/components/layout'
 import styles from './page.module.css'
 import VendorProfile from '@/components/vendorProfile'
+import PageHeader from '@/components/pageHeader'
+import Action from '@/components/action'
 
 export const Vendors = () => {
     return (
         <Layout>
-            <div className='header'>
-                <h1>Vendors</h1>
-                <span>2025 Season</span>
-            </div>
+            <PageHeader subtitle="2025 Season">Vendors</PageHeader>
             <div className="body basic !pb-6">
-                <a className='button' href='/map?x=39.38310990806668&y=-78.04274712816566'>Find on the Map</a>
+                <Action as='a' variant='primary' className={'mx-auto'} href={'/map?x=39.38310990806668&y=-78.04274712816566'}>Find on the Map</Action>
                 <VendorProfile
                     name="Old McDonuts"
                     subtitle="Donuts, Coffee, and Slushies"

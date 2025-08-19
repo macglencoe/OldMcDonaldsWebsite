@@ -3,14 +3,13 @@ import styles from './page.module.css'
 import { AndImage } from '@/components/andImage';
 import { BodyBlock } from '@/components/bodyBlock';
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
+import PageHeader from '@/components/pageHeader';
+import Action from '@/components/action';
 
 export const CornMaze = () => {
     return (
         <Layout>
-            <div className='header'>
-                <h1>Corn Maze</h1>
-                <span>2025 Season</span>
-            </div>
+            <PageHeader subtitle="2025 Season">Corn Maze</PageHeader>
             <div className='body basic'>
                 <div className={styles.cornMaze}>
                     <img src='/charleswmcdonaldmaze.jpg'>
@@ -24,14 +23,14 @@ export const CornMaze = () => {
                     <p>Lose yourself in one of our two 5-acre corn mazes!</p>
                     <p>Our corn mazes are carefully designed each year to be both challenging and fun, all while having an over-arching theme.</p>
                     <p>(On average, our mazes take 20 minutes to complete)</p>
-                    <a className="button" href='/map?x=39.382729123233055&y=-78.04341793391379'>Find on the Map</a>
+                    <Action as='Link' href='/map?x=39.382729123233055&y=-78.04341793391379' variant='primary' className='mx-auto'>Find on the Map</Action>
                 </BodyBlock>
                 <BodyBlock fromUnsplash style="night" src="https://images.unsplash.com/photo-1603174378108-63103ad2f24b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                     <div className={styles.nightMaze}>
                         <h2>Night Maze</h2>
                         <p>After the sun sets, the corn maze becomes a new, spooky challenge</p>
                         <p>Starting October 17th, come back after dark and find your way through the maze without the help of daylight</p>
-                        <a href='/activities/night-maze' className={styles.button}>See More</a>
+                        <Action as='Link' href='/activities/night-maze' variant='secondary' className={'mx-auto'}>See More</Action>
                     </div>
 
                 </BodyBlock>
@@ -40,7 +39,7 @@ export const CornMaze = () => {
                         <h2>Maze Game</h2>
                         <p>Hidden throughout the maze are stations with <b>QR Codes</b> to scan.</p>
                         <p>Think you can find all four?</p>
-                        <a href='/maze-game' className="button">See More</a>
+                        <Action as='Link' href={'/maze-game'} variant='primary' className={'mx-auto'}>See More</Action>
                     </BodyBlock>
                 }
                 <BodyBlock>

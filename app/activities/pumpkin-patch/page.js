@@ -3,20 +3,19 @@ import styles from "./page.module.css"
 import { AndImage } from "@/components/andImage"
 import PumpkinPriceGadget from "@/components/pumpkinPriceGadget"
 import pricing from "@/public/data/pricing"
+import PageHeader from "@/components/pageHeader"
+import Action from "@/components/action"
 
 export const PumpkinPatch = () => {
     return (
         <Layout>
-            <div className="header">
-                <h1>Pumpkin Patch</h1>
-                <span>2025 Season</span>
-            </div>
+            <PageHeader subtitle="2025 Season">Pumpkin Patch</PageHeader>
             <div className="body basic">
                 <div className={styles.body}>
                     <AndImage src="/pumpkinlanes.jpg">
                         <h2>Where is it?</h2>
                         <p>The two pumpkin patches can be found beyond the corn maze, just along the farm lane</p>
-                        <a className="button" href="/map?x=39.3825184665116&y=-78.04699996825022">Find on the Map</a>
+                        <Action as="Link" className={'mx-auto'} variant="primary" href={'/map?x=39.3825184665116&y=-78.04699996825022'}>See More</Action>
                     </AndImage>
                     <div className="flex flex-col gap-3 shadow-lg rounded-2xl p-6 border border-accent/20">
                         <h2 className="text-center border-b-3">Pricing</h2>

@@ -2,14 +2,13 @@ import Layout from '@/components/layout'
 import styles from './page.module.css'
 import { AndImage } from '@/components/andImage'
 import pricing from '@/public/data/pricing'
+import PageHeader from '@/components/pageHeader'
+import Action from '@/components/action'
 
 export const HayRide = () => {
     return (
         <Layout>
-            <div className='header'>
-                <h1>Hay Rides</h1>
-                <span>2025 Season</span>
-            </div>
+            <PageHeader subtitle="2025 Season">Hay Rides</PageHeader>
             <div className='body basic'>
                 <AndImage src='/hillview.jpg'>
                     <h2>A tour of the farm</h2>
@@ -27,7 +26,7 @@ export const HayRide = () => {
                     <p>Each ticket has a <b>color</b> and a <b>time</b> written on the back</p>
                     <p>Arrive <b>before</b> the time on your ticket.</p>
                     <p>When your time comes, go to the hayride corral, which is across the creek</p>
-                    <a className='button' href='/map?x=39.382529281329774&y=-78.04355774914931'>Find on the Map</a>
+                    <Action as='Link' href='/map?x=39.382529281329774&y=-78.04355774914931' variant='primary' className={'mx-auto'}>Find on the Map</Action>
                     <p>The drivers will direct you to the correct wagon, and take your ticket</p>
                 </AndImage>
                 <AndImage fromUnsplash style="night" src="https://images.unsplash.com/photo-1707755939969-e9c1da71c5bb?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
@@ -35,7 +34,7 @@ export const HayRide = () => {
                         <h2>Hayrides at night</h2>
                         <p>Starting October 17th, we will have hayrides open from 7:30pm to 10pm</p>
                         <p>Bring your friends and some warm clothes for a spooky tour of the deep dark forest at night</p>
-                        <a href='/activities/night-maze' className={styles.button}>See More</a>
+                        <Action as='Link' href='/activities/night-maze' className={'mx-auto'} variant='secondary'>See More</Action>
                     </div>
                 </AndImage>
             </div>

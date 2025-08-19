@@ -5,6 +5,8 @@ import { BodyBlock } from "@/components/bodyBlock";
 import rentalSlots from "@/public/data/gazeboRentalSlots.json";
 import { useMemo } from "react";
 import pricing from "@/public/data/pricing"
+import PageHeader from "@/components/pageHeader";
+import Action from "@/components/action";
 
 /**
  * Renders the gazebo-rental availability table from
@@ -61,9 +63,7 @@ export const Reservations = () => {
 
     return (
         <Layout>
-            <div className="header">
-                <h1>Reservations</h1>
-            </div>
+            <PageHeader subtitle="2025 Season">Reservations</PageHeader>
             <div className="body basic">
                 <h2>Party Gazebo</h2>
                 <p className="description">A private party gazebo can be booked for a 2-hour time slot during daytime hours</p>
@@ -102,27 +102,20 @@ export const Reservations = () => {
                     <p className="big">$6 per person*</p>
                     <p>* Over the age of 3</p>
                 </BodyBlock>
-                <div className="max-w-xl mx-auto my-12 p-8 bg-accent/20 text-foreground rounded-3xl shadow-2xl transform hover:scale-[1.02] transition duration-500">
-                    <h3 className="text-3xl font-bold text-center mb-6 tracking-wide drop-shadow-md">Ready to book?</h3>
+                <div className="mx-auto my-12 p-8 text-foreground">
+                    <h3 className="!text-7xl text-center mb-10 tracking-wide">Ready to book?</h3>
 
-                    <div className="flex flex-col items-center space-y-6">
-                        <p className="text-lg font-medium">
+                    <div className="flex flex-col items-center space-y-6 !text-2xl">
+                        <p className="font-medium">
                             Call us:
-                            <a href="tel:304-839-2330" className="ml-2 inline-block bg-white font-bold px-5 py-2 rounded-full shadow-lg  transition">
-                                304-839-2330
-                            </a>
+                            <Action as="a" href='tel:304-839-2330' className={'mx-4'} variant="outline-secondary">304-839-2330</Action>
                         </p>
 
                         <div className="relative w-full flex items-center justify-center">
-                            <span className="text-sm uppercase tracking-widest font-semibold">OR</span>
+                            <span className="text-sm uppercase tracking-widest font-semibold bg-background p-2">OR</span>
                             <span className="absolute left-0 right-0 h-px bg-foreground/20 top-1/2 -z-10"></span>
                         </div>
-
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfUPYvXsF4qcMsmtgOuidB06WPJkKKwlSLmo3uPnNDWgziPsw/viewform?usp=sharing&ouid=100113173059112922558"
-                            target="_blank"
-                            className="bg-white font-bold text-lg px-6 py-3 rounded-full shadow-lg hover:scale-105  transition duration-300">
-                            Fill Out Form
-                        </a>
+                        <Action as="a" href={'https://docs.google.com/forms/d/e/1FAIpQLSfUPYvXsF4qcMsmtgOuidB06WPJkKKwlSLmo3uPnNDWgziPsw/viewform?usp=sharing&ouid=100113173059112922558'} variant="outline-secondary" className={'mx-4'}>Fill Out Form</Action>
                     </div>
                 </div>
 

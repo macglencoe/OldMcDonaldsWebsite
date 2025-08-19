@@ -3,6 +3,7 @@ import path from 'path'
 import Image from 'next/image'
 import Layout from '@/components/layout';
 import styles from './page.module.css'
+import PageHeader from '@/components/pageHeader';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,9 +27,7 @@ export default async function GalleryPage() {
 
     return (
         <Layout>
-            <div className='header'>
-                <h1>Gallery</h1>
-            </div>
+            <PageHeader>Gallery</PageHeader>
             <div className='body basic'>
                 <div className={styles.socials}>
                     <h2>Share your moments:</h2>
