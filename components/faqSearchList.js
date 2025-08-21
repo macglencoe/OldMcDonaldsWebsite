@@ -3,7 +3,7 @@
 import { useMemo, useState, useEffect, useRef } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { FAQDrop } from "@/components/faqDrop"
-import { track } from "@vercel/analytics/*"
+import { track } from "@vercel/analytics"
 
 function normalize(str = "") {
     return str
