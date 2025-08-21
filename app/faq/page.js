@@ -10,7 +10,7 @@ export const FAQ = () => {
             <PageHeader subtitle="Frequently Asked Questions">FAQ</PageHeader>
             <div className={'body basic' + ' ' + styles.body}>
                 {faq.map((faq, i) => (
-                    <FAQDrop key={i} q={faq.question}>
+                    <FAQDrop key={i} q={faq.question} ADA={faq.ADA}>
                         {faq.answer}
                     </FAQDrop>
                 ))}
