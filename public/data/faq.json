@@ -4,17 +4,64 @@
     "answer": "Don't ask questions you don't want the answer to"
   },
   {
+    "question": "What are your hours of operation?",
+    "answer": "We're open seasonally during the fall. See our [Visit Page](/visit) for current hours"
+  },
+  {
+    "question": "Does admission include a pumpkin?",
+    "answer": "Admission does not include pumpkins. U-pick pumpkins are priced by weight at $0.50 per pound.",
+    "pages": [
+      "/activities/pumpkin-patch"
+    ]
+  },
+  {
+    "question": "Do you have pre-picked pumpkins for sale?",
+    "answer": "Yes, we have a selection of pre-picked pumpkins at the farm market.",
+    "pages": [
+      "/activities/pumpkin-patch"
+    ]
+  },
+  {
+    "question": "Is the farm wheelchair or stroller accessible?",
+    "answer": "Most areas are accessible, but pathways are gravel or grass. We recommend rugged strollers and wheelchairs.",
+    "pages": [
+      "/visit"
+    ],
+    "ADA": true
+  },
+  {
+    "question": "Can I buy tickets online?",
+    "answer": "At this time, admission is paid at the gate. Online sales are not currently on our roadmap.",
+    "pages": [
+      "/visit"
+    ]
+  },
+  {
     "question": "How long will it take me to go through the maze?",
-    "answer": "Approximately 30 mins per maze",
+    "answer": "Most visitors finish in about 20 minutes, though it depends on how well you navigate!",
     "pages": ["/activities/corn-maze"]
   },
   {
+    "question": "Are strollers/wheelchairs allowed in the maze?",
+    "answer": "The paths are dirt and may be uneven. Strollers with large wheels may work, but wheelchairs may be difficult to maneuver.",
+    "pages": [
+      "/activities/corn-maze"
+    ],
+    "ADA": true
+  },
+  {
     "question": "Do you have restrooms?",
-    "answer": "There are portable restrooms and hand sanitizer available."
+    "answer": "There are portable restrooms and hand sanitizer available.",
+    "pages": [
+      "/visit"
+    ]
   },
   {
     "question": "What types of payment do you accept?",
-    "answer": "We accept cash, card and we will accept checks for large groups."
+    "answer": "We accept cash, card and we will accept checks for large groups.",
+    "pages": [
+      "/visit"
+    ]
   },
   {
     "question": "Are pets allowed at the farm?",
@@ -60,16 +107,17 @@
   },
   {
     "question": "Does the hayride take me to the patch?",
-    "answer": "No, the hayride is just a tour of the farm. You have to walk out to the patch",
+    "answer": "No, hayrides are scenic tours of the farm. The pumpkin patch is a separate walk.",
     "pages": [
       "/activities/hayrides"
     ]
   },
   {
-    "question": "Does admission include a pumpkin?",
-    "answer": "No. U-pick pumpkins are .50 a lb and are not included in admission.",
+    "question": "How long does the hayride take?",
+    "answer": "About 15-20 minutes",
     "pages": [
-      "/activities/pumpkin-patch"
+      "/activities/hayrides"
     ]
   }
+  
 ]
