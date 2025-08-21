@@ -42,22 +42,7 @@ export default function FaqSearchList({ items }) {
     const inputRef = useRef(null)
     const lastTracked = useRef(null)
 
-    // Analytics: track after debounce 
-    useEffect(() => {
-        const q = redactQuery(debouncedQ || "")
-        const ok = q.length >= 2
-        if (!ok) {
-            lastTracked.current = null
-            return
-        }
-        const signature = `${q}|${filtered.length}|${global}|${pathname}`
-        if (signature === lastTracked.current) return
-        lastTracked.current = signature
 
-        track("faq_search", {
-            q, // redacted, trimmed, max 60 chars
-        })
-    }, [debouncedQ, filtered.length, global, pathname])
 
     // Debounce q -> debouncedQ
     useEffect(() => {
@@ -86,6 +71,23 @@ export default function FaqSearchList({ items }) {
             return words.every(w => hay.includes(w))
         })
     }, [items, debouncedQ])
+
+    // Analytics: track after debounce 
+    useEffect(() => {
+        const q = redactQuery(debouncedQ || "")
+        const ok = q.length >= 2
+        if (!ok) {
+            lastTracked.current = null
+            return
+        }
+        const signature = `${q}|${filtered.length}|${global}|${pathname}`
+        if (signature === lastTracked.current) return
+        lastTracked.current = signature
+
+        track("faq_search", {
+            q, // redacted, trimmed, max 60 chars
+        })
+    }, [debouncedQ, filtered.length, global, pathname])
 
     const count = filtered.length
 
