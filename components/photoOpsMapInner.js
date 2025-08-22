@@ -5,6 +5,8 @@ import 'leaflet/dist/leaflet.css'
 import styles from './photoOpsMap.module.css'
 import icons from '@/public/lib/icons'
 import features from '@/public/data/map-features.json'
+import path from 'path'
+import Image from 'next/image'
 // -- Functons -- //
 
 function getDistanceMiles(lat1, lon1, lat2, lon2) {
@@ -199,16 +201,17 @@ const photoOps = [
     {
         label: 'Stocks',
         pos: [39.3835555, -78.0433421],
-        imgSrc: '/gallery/0b2c98_f05cbe60cd6e4a5fb0fc1af18748eb20~mv2.avif'
+        imgSrc: '../gallery/0b2c98_f05cbe60cd6e4a5fb0fc1af18748eb20~mv2.avif'
     },
     {
         label: 'Bench & Bridge',
         pos: [39.3836282, -78.0433265],   
+        imgSrc: '/bench-bridge.jpg'
     },
     {
         label: 'Big Chair',
         pos: [39.3833115, -78.0432332],
-        imgSrc: '/placeholder.png'
+        imgSrc: '/big-chair.jpg'
     },
     {
         label: '"Love"',
@@ -216,8 +219,9 @@ const photoOps = [
         imgSrc: '/lovePhotoOp.jpg'
     },
     {
-        label: 'Swing',
-        pos: [39.381654454401975, -78.04468704613781]
+        label: 'Sunflower Swing',
+        pos: [39.381654454401975, -78.04468704613781],
+        imgSrc: '/sunflower-swing.jpg'
     },
     {
         label: 'Kissing Booth & Tractor',
@@ -226,7 +230,48 @@ const photoOps = [
     {
         label: 'Ꮤ Bug',
         pos: [39.3829251383536, -78.04528277916505]
+    },
+    {
+        label: 'Tractor',
+        pos: [39.3827901, -78.0431228],
+        imgSrc: '/tractor-samantha-janes.jpg'
+    },
+    {
+        label: 'Butterfly Wings',
+        pos: [39.38126978738636, -78.04447740186025],
+        imgSrc: '/butterfly-wings.jpg'
+    },
+    {
+        label: '"High Five, We Got Out Alive"',
+        pos: [39.383983292218055, -78.04363042306413],
+        imgSrc: '/high-five-angela-stoneberger.jpg'
+    },
+    {
+        label: 'Forge Bridge',
+        pos: [39.38266991072899, -78.04322516039606],
+        imgSrc: '/forge-bridge-jenna-neff.jpg'
+    },
+    {
+        label: 'Iron Tub',
+        pos: [39.38142805208196, -78.04455630442247],
+        imgSrc: '/iron-tub.jpg'
+    },
+    {
+        label: 'Pumpkin Patch',
+        pos: [39.38234439737128, -78.04667080755625],
+        imgSrc: '/pumpkin-patch-hayley-briggs.jpg'
+    },
+    {
+        label: 'Pumpkin Stand',
+        pos: [39.3837545034998, -78.04283924663358],
+        imgSrc: '/pumpkin-stand-ashley-ford.jpg'
+    },
+    {
+        label: 'Saddle',
+        pos: [39.38361459396412, -78.04280495733691],
+        imgSrc: '/saddle-tara-painter.jpg'
     }
+    
 ]
 
 const bathrooms = [
@@ -385,7 +430,7 @@ export default function PhotoOpsMapInner() {
                         <Popup className={styles.imgPopup}>
                             <span>Photo Op: {label}</span>
                             {imgSrc &&
-                                <img src={imgSrc}/>
+                                <Image src={path.posix.join('/photo-ops', imgSrc)} alt={label} width={120} height={120} />
                             }
                         </Popup>
                     </Marker>
@@ -468,7 +513,10 @@ export default function PhotoOpsMapInner() {
                     position={[39.38274219398928, -78.04343323508722]}
                     icon={icons.maze}
                 >
-                    <Popup>Corn Maze Entrance</Popup>
+                    <Popup className={styles.imgPopup}>
+                        <label>Corn Maze Entrance</label>
+                        <Image src={'/photo-ops/corn-maze-entranc.jpg'} alt="Corn Maze Entrance" width={200} height={200} />
+                    </Popup>
                 </Marker>
                 <Marker
                     position={[39.38465031501388, -78.04952943171128]}

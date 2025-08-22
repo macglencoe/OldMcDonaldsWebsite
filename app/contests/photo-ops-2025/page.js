@@ -117,7 +117,7 @@ export default function PhotoOps2025() {
                             </p>
                         </div>
                         <Link href={path.join('/photo-ops', category.winner.src)}>
-                            <Image className='h-[40vw] w-[40vw] min-w-[40vw] md:min-w-[unset] md:h-[300px] md:w-[300px] object-cover rounded-xl hover:scale-110 transition-all' src={path.join('/photo-ops', category.winner.src)} width={300} height={300} alt={category.winner.name} />
+                            <Image className='h-[40vw] w-[40vw] min-w-[40vw] md:min-w-[unset] md:h-[300px] md:w-[300px] object-cover rounded-xl hover:scale-110 transition-all' src={path.posix.join('/photo-ops', category.winner.src)} width={300} height={300} alt={category.winner.name} />
 
                         </Link>
                     </div>
