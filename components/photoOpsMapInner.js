@@ -4,6 +4,7 @@ import React, { useRef, useEffect } from 'react'
 import 'leaflet/dist/leaflet.css'
 import styles from './photoOpsMap.module.css'
 import icons from '@/public/lib/icons'
+import { makePhotoOpIcon } from '@/public/lib/icons'
 import features from '@/public/data/map-features.json'
 import path from 'path'
 import Image from 'next/image'
@@ -424,7 +425,9 @@ export default function PhotoOpsMapInner() {
                     <Marker
                         key={i}
                         position={pos}
-                        icon={icons.photoOp}
+                        icon={
+                            imgSrc ? makePhotoOpIcon({ imgSrc: path.posix.join('/photo-ops', imgSrc) }) : icons.photoOp
+                        }
                         className={styles.marker}
                     >
                         <Popup className={styles.imgPopup}>
