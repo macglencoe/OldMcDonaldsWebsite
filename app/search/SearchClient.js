@@ -130,16 +130,42 @@ export default function SearchClient() {
   const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
+    // avoid double-logging in react strict mode dev
+    const loggedRef = {current: false};
     let cancelled = false;
+    const t0 = performance.now();
     fetch("/search-index.json", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : Promise.reject(r.statusText)))
       .then((data) => {
-        if (!cancelled) {
-          setIndex(Array.isArray(data?.pages) ? data.pages : []);
-          setLoadError(false);
+        if (cancelled) return;
+
+        const pages = Array.isArray(data?.pages) ? data.pages : [];
+        setIndex(pages);
+        setLoadError(false);
+
+        const latency = Math.round(performance.now() - t0);
+        if (!loggedRef.current) {
+          track('search_index_load', {
+            count: pages.length,
+            latency_ms: latency
+          });
+          loggedRef.current = true;
         }
       })
-      .catch(() => !cancelled && setLoadError(true));
+      .catch(err => {
+        if (cancelled) return;
+
+        setLoadError(true);
+
+        const latency = Math.round(performance.now() - t0);
+        if (!loggedRef.current) {
+          track('search_index_error', {
+            reason: (err?.message || 'fetch_failed').slice(0,64),
+            latency_ms: latency
+          });
+          loggedRef.current = true;
+        }
+      });
     return () => {
       cancelled = true;
     };
@@ -212,7 +238,7 @@ export default function SearchClient() {
     });
   }, [dq, count, hasQuery, fuse]);
 
-  const trackClick = ( query, url ) => {
+  const trackClick = (query, url) => {
     track('search_click', {
       query,
       url
