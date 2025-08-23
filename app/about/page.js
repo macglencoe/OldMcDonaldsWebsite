@@ -4,7 +4,6 @@ import Layout from "@/components/layout";
 import styles from "./page.module.css";
 import Link from "next/link";
 import PageHeader from "@/components/pageHeader";
-import { metadata } from "../layout";
 import Head from "next/head";
 
 function Generations() {
