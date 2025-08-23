@@ -96,7 +96,7 @@ export default function PhotoOps2025() {
     return (
         <Layout>
             <PageHeader subtitle="2025">Photo Ops Contest</PageHeader>
-            <div className='max-w-5xl mx-auto flex flex-col gap-2 md:gap-5'>
+            <div className='max-w-5xl mx-3 md:mx-auto flex flex-col gap-2 md:gap-5'>
                 <div className='body basic !my-25'>
                     <p>This contest was held on Facebook to gather the best in-season photographs of our photo ops</p>
                     <p>The winners of each of the following categories will be featured on the <Link href={"/map"}>Map</Link>!</p>
@@ -117,7 +117,7 @@ export default function PhotoOps2025() {
                             </p>
                         </div>
                         <Link href={path.join('/photo-ops', category.winner.src)}>
-                            <Image className='h-[40vw] w-[40vw] min-w-[40vw] md:min-w-[unset] md:h-[300px] md:w-[300px] object-cover rounded-xl hover:scale-110 transition-all' src={path.posix.join('/photo-ops', category.winner.src)} width={300} height={300} alt={category.winner.name} />
+                            <Image className='h-[40vw] w-[40vw] min-w-[40vw] md:min-w-[unset] md:h-[300px] md:w-[300px] object-cover rounded-2xl md:rounded-xl hover:scale-110 transition-all' src={path.posix.join('/photo-ops', category.winner.src)} width={300} height={300} alt={category.winner.name} />
 
                         </Link>
                     </div>
