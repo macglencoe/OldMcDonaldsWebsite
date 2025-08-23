@@ -31,7 +31,7 @@ function renderHighlighted(text, terms) {
   const parts = text.split(re);
   return parts.map((part, i) =>
     re.test(part) ? (
-      <mark key={i} className="rounded px-1">
+      <mark key={i} className="rounded px-1 bg-accent/20">
         {part}
       </mark>
     ) : (
@@ -130,7 +130,7 @@ export default function SearchClient() {
       <div className="relative">
         <input
           ref={inputRef}
-          className="w-full rounded-xl border bg-background px-4 py-3 outline-none ring-1 ring-foreground/10 focus:ring-2 focus:ring-foreground/30"
+          className="w-full rounded-full border border-accent bg-background px-4 py-3 outline-none ring-1 ring-accent focus:ring-3 focus:ring-accent/10"
           type="search"
           placeholder="Search… (press / to focus)"
           value={query}
@@ -150,9 +150,7 @@ export default function SearchClient() {
 
       {loadError && (
         <div className="rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800">
-          Could not load <code>/search-index.json</code>. Make sure you’ve run{" "}
-          <code>npm run build:search</code> and that{" "}
-          <code>public/search-index.json</code> exists.
+          Could not load <code>/search-index.json</code>. Please contact the developer.
         </div>
       )}
 
@@ -163,7 +161,7 @@ export default function SearchClient() {
             return (
               <li
                 key={doc.url}
-                className="rounded-xl border bg-background p-4 ring-1 ring-foreground/10 hover:ring-foreground/25 transition"
+                className="rounded-xl border border-foreground/20 bg-background/5 p-4 transition"
               >
                 <Link
                   href={doc.url}
