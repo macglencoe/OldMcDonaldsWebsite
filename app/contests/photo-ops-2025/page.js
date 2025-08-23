@@ -102,8 +102,8 @@ export default function PhotoOps2025() {
                     <p>The winners of each of the following categories will be featured on the <Link href={"/map"}>Map</Link>!</p>
                 </div>
                 {winners.map((category, i) => (
-                    <div className='bg-foreground/5 p-1 md:p-4 flex flex-row items-center justify-between rounded-3xl border border-foreground/10' id={category.winner.src}>
-                        <div className='m-3'>
+                    <div className='bg-foreground/5 flex flex-row items-center justify-between rounded-3xl border border-foreground/10 overflow-hidden' id={category.winner.src}>
+                        <div className='m-3 p-2 md:p-4'>
                             <h2 className='text-foreground'>
                                 <span className='opacity-50'>Photo Op:</span>
                                 <br />
@@ -117,7 +117,7 @@ export default function PhotoOps2025() {
                             </p>
                         </div>
                         <Link href={path.join('/photo-ops', category.winner.src)}>
-                            <Image className='h-[40vw] w-[40vw] min-w-[40vw] md:min-w-[unset] md:h-[300px] md:w-[300px] object-cover rounded-2xl md:rounded-xl hover:scale-110 transition-all' src={path.posix.join('/photo-ops', category.winner.src)} width={300} height={300} alt={category.winner.name} />
+                            <Image className='h-[40vw] w-[40vw] min-w-[40vw] md:min-w-[unset] md:h-[300px] md:w-[300px] object-cover rounded-xl md:rounded-none hover:scale-110 transition-all' src={path.posix.join('/photo-ops', category.winner.src)} width={300} height={300} alt={category.winner.name} />
 
                         </Link>
                     </div>
