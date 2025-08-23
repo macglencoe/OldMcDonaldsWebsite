@@ -199,6 +199,13 @@ export default function SearchClient() {
     // Guard very-short inputs
     if ((dq?.trim()?.length ?? 0) < 2) return;
 
+    if (count === 0) {
+      track('search_no_results', {
+        query: dq,
+      })
+      return
+    }
+
     track('search', {
       query: dq,
       result: count,
