@@ -57,9 +57,9 @@ export default async function Home() {
         <section className={styles.hero}>
           <Hero />
         </section>
-        <FarmSwapBanner />
         <Season />
 
+        <FarmSwapBanner />
 
 
         <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
