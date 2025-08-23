@@ -16,6 +16,7 @@ import Hero from "@/components/home/hero";
 import { isFeatureEnabled } from "@/public/lib/featureEvaluator";
 import NightMazeBanner from "@/components/home/nightMazeBanner";
 import FloodBanner from "@/components/home/floodBanner";
+import AuxSearch from "@/components/home/auxSearch";
 
 
 export const metadata = {
@@ -57,6 +58,9 @@ export default async function Home() {
         <section className={styles.hero}>
           <Hero />
         </section>
+
+        <AuxSearch />
+
         <Season/>
 
 
