@@ -17,22 +17,22 @@ export default function FarmSwapBanner() {
                 backgroundImage: "linear-gradient(var(--accent) -20%, transparent 30%, transparent 60%, var(--accent) 100%)"
             }}>
                 <div className="max-w-5xl mx-auto flex flex-col gap-5 items-center">
-                    <div className="flex flex-col md:flex-row w-full">
+                    <div className="flex flex-col md:flex-row w-full gap-5 md:gap-2">
                         <div className="flex flex-col gap-5 flex-1 items-center justify-center">
-                            <h2 className="font-satisfy text-7xl pb-4 border-b-2">Farm Swap</h2>
+                            <h2 className="font-satisfy text-5xl md:text-7xl pb-4 border-b-2">Farm Swap</h2>
                             <p className="text-background/80 text-2xl font-medium">{subtitle}</p>
                         </div>
-                        <div className="flex flex-col gap-5">
-                            <div className="bg-background/80 shadow-2xl rounded-full py-4 px-7 text-accent text-center">
+                        <div className="flex flex-col gap-5 w-fit mx-auto">
+                            <div className="bg-background/80 shadow-sm rounded-full py-2 px-3 md:py-4 md:px-7 text-accent text-center">
                                 <p><strong className="uppercase text-lg">Save the Date</strong></p>
                                 <p className="text-foreground/90 text-3xl font-bold">{date}</p>
                             </div>
-                            <Link href={eventURL} className="bg-blue-700 py-4 px-6 rounded-full text-xl font-bold flex flex-row items-center">
+                            <Link href={eventURL} className="bg-blue-700 shadow-sm py-2 px-3 md:py-4 md:px-6 rounded-full text-xl font-bold flex flex-row items-center">
                                 <FacebookLogo weight="bold" size={30} className="inline-block mr-3"/>View Facebook Event
                             </Link>
                         </div>
                     </div>
-                    <p className="text-3xl text-center text-background/80">Join us for a mini-fair with local artisans, craftsmen, and more. Discover unique treasures alongside our regular daytime activities</p>
+                    <p className="text-xl md:text-3xl text-center text-background/80">Join us for a mini-fair with local artisans, craftsmen, and more. Discover unique treasures alongside our regular daytime activities</p>
                 </div>
             </div>
         </div>
