@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Fuse from "fuse.js";
+import { track } from '@vercel/analytics';
 
 // ---- utilities
 
@@ -192,6 +193,25 @@ export default function SearchClient() {
 
   const count = results.length;
 
+  // Send analytics on search
+  useEffect(() => {
+    if (!fuse || !hasQuery) return;
+    // Guard very-short inputs
+    if ((dq?.trim()?.length ?? 0) < 2) return;
+
+    track('search', {
+      query: dq,
+      result: count,
+    });
+  }, [dq, count, hasQuery, fuse]);
+
+  const trackClick = ( query, url ) => {
+    track('search_click', {
+      query,
+      url
+    })
+  }
+
   return (
     <div className="space-y-6">
       <div className="relative">
@@ -228,7 +248,7 @@ export default function SearchClient() {
                 key={doc.url}
                 className="rounded-xl border border-foreground/20 bg-background/5 p-4 transition hover:bg-accent/5"
               >
-                <Link href={doc.url} className="text-lg font-medium underline-offset-4 hover:underline">
+                <Link href={doc.url} onClick={() => trackClick(dq, doc.url)} className="text-lg font-medium underline-offset-4 hover:underline">
                   {titleMatch
                     ? renderHighlightedByIndices(doc.title || doc.url, titleMatch.indices)
                     : renderHighlightedFallback(doc.title || doc.url, terms)}
