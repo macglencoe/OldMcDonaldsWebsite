@@ -59,7 +59,9 @@ export default async function Home() {
           <Hero />
         </section>
 
-        <AuxSearch />
+        { isFeatureEnabled("show_aux_search") &&
+          <AuxSearch />
+        }
 
         <Season/>
 
