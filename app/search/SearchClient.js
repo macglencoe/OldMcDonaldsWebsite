@@ -4,6 +4,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Fuse from "fuse.js";
+
+// ---- utilities
 
 function useDebouncedValue(value, delay = 250) {
   const [v, setV] = useState(value);
@@ -25,7 +28,42 @@ function tokenize(q) {
     .filter(Boolean);
 }
 
-function renderHighlighted(text, terms) {
+// fuse highlights use index ranges; merge and render them
+function mergeRanges(ranges) {
+  if (!ranges?.length) return [];
+  const sorted = [...ranges].sort((a, b) => a[0] - b[0]);
+  const out = [sorted[0]];
+  for (let i = 1; i < sorted.length; i++) {
+    const [s, e] = sorted[i];
+    const last = out[out.length - 1];
+    if (s <= last[1] + 1) last[1] = Math.max(last[1], e);
+    else out.push([s, e]);
+  }
+  return out;
+}
+
+function renderHighlightedByIndices(text, indices) {
+  if (!text) return null;
+  const merged = mergeRanges(indices);
+  if (merged.length === 0) return text;
+
+  const out = [];
+  let cursor = 0;
+  for (let i = 0; i < merged.length; i++) {
+    const [s, e] = merged[i];
+    if (cursor < s) out.push(<span key={`t-${i}-${cursor}`}>{text.slice(cursor, s)}</span>);
+    out.push(
+      <mark key={`m-${i}-${s}-${e}`} className="rounded px-1 bg-accent/20">
+        {text.slice(s, e + 1)}
+      </mark>
+    );
+    cursor = e + 1;
+  }
+  if (cursor < text.length) out.push(<span key={`t-end-${cursor}`}>{text.slice(cursor)}</span>);
+  return out;
+}
+
+function renderHighlightedFallback(text, terms) {
   if (!terms.length || !text) return text;
   const re = new RegExp(`(${terms.map(escapeRegExp).join("|")})`, "gi");
   const parts = text.split(re);
@@ -40,40 +78,53 @@ function renderHighlighted(text, terms) {
   );
 }
 
-function makeSnippet(content, terms, before = 60, after = 160) {
-  if (!content) return "";
-  if (!terms.length) return content.slice(0, 220);
-  const re = new RegExp(`(${terms.map(escapeRegExp).join("|")})`, "i");
-  const idx = content.toLowerCase().search(re);
-  const start = Math.max(0, idx === -1 ? 0 : idx - before);
-  const end = Math.min(content.length, idx === -1 ? 220 : idx + after);
-  const prefix = start > 0 ? "… " : "";
-  const suffix = end < content.length ? " …" : "";
-  return `${prefix}${content.slice(start, end)}${suffix}`;
+function makeSnippetFromMatches(doc, matches, before = 60, after = 160) {
+  const content = doc.content || "";
+  if (!content) return { snippet: "", indices: [] };
+
+  // Prefer a match in content; else try description; else fall back
+  const mContent = matches?.find((m) => m.key === "content");
+  const baseText = mContent ? content : doc.description || content;
+  const chosen = mContent || matches?.find((m) => m.key === "description");
+
+  if (!chosen || !chosen.indices?.length) {
+    // no indices; return a simple head slice
+    const raw = baseText.slice(0, 220);
+    return { snippet: raw, indices: [] };
+  }
+
+  const [hitStart, hitEnd] = chosen.indices[0];
+  const start = Math.max(0, hitStart - before);
+  const end = Math.min(baseText.length, hitEnd + after);
+
+  const snippet = `${start > 0 ? "… " : ""}${baseText.slice(start, end)}${end < baseText.length ? " …" : ""}`;
+
+  // shift/clip indices into snippet space
+  const shifted = mergeRanges(
+    chosen.indices
+      .map(([s, e]) => [s - start, e - start])
+      .filter(([s, e]) => e >= 0 && s <= snippet.length - 1)
+      .map(([s, e]) => [Math.max(0, s), Math.min(snippet.length - 1, e)])
+  );
+
+  return { snippet, indices: shifted };
 }
 
-function scoreDoc(doc, terms) {
-  if (!terms.length) return 0;
-  const re = new RegExp(terms.map(escapeRegExp).join("|"), "gi");
-  const count = (s, w = 1) => (s ? (s.match(re) || []).length * w : 0);
-  return (
-    count(doc.title, 3) + count(doc.description, 2) + count(doc.content, 1)
-  );
-}
+// ---- component
 
 export default function SearchClient() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
   const inputRef = useRef(null);
 
   const initialQ = searchParams.get("q") || "";
   const [query, setQuery] = useState(initialQ);
   const dq = useDebouncedValue(query, 250);
   const terms = useMemo(() => tokenize(dq), [dq]);
+  const hasQuery = dq.trim().length > 0;
 
-  // Fetch index
+  // Load index
   const [index, setIndex] = useState([]);
   const [loadError, setLoadError] = useState(false);
 
@@ -92,6 +143,25 @@ export default function SearchClient() {
       cancelled = true;
     };
   }, []);
+
+  // Build Fuse index when data changes
+  const fuse = useMemo(() => {
+    if (!index.length) return null;
+    return new Fuse(index, {
+      includeScore: true,
+      includeMatches: true,
+      shouldSort: true,
+      threshold: 0.3,        // 0.0 = exact, 1.0 = very fuzzy
+      ignoreLocation: true,  // good for long strings
+      minMatchCharLength: 2,
+      keys: [
+        { name: "title", weight: 0.5 },
+        { name: "description", weight: 0.3 },
+        { name: "content", weight: 0.2 },
+        { name: "url", weight: 0.1 },
+      ],
+    });
+  }, [index]);
 
   // Keep URL in sync (replace, not push)
   useEffect(() => {
@@ -114,14 +184,11 @@ export default function SearchClient() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // Run search
   const results = useMemo(() => {
-    if (!terms.length) return [];
-    const filtered = index
-      .map((doc) => ({ ...doc, _score: scoreDoc(doc, terms) }))
-      .filter((d) => d._score > 0);
-    filtered.sort((a, b) => b._score - a._score);
-    return filtered.slice(0, 100); // safety cap
-  }, [index, terms]);
+    if (!fuse || !hasQuery) return [];
+    return fuse.search(dq).slice(0, 100); // [{ item, score, matches }]
+  }, [fuse, dq, hasQuery]);
 
   const count = results.length;
 
@@ -130,7 +197,7 @@ export default function SearchClient() {
       <div className="relative">
         <input
           ref={inputRef}
-          className="w-full rounded-full border border-accent bg-background px-4 py-3 outline-none ring-1 ring-accent focus:ring-3 focus:ring-accent/10"
+          className="w-full rounded-full border border-accent bg-background px-4 py-3 outline-none ring-1 ring-accent focus:ring-2 focus:ring-accent/20"
           type="search"
           placeholder="Search… (press / to focus)"
           value={query}
@@ -138,13 +205,8 @@ export default function SearchClient() {
           autoFocus={Boolean(initialQ)}
           aria-label="Search the site"
         />
-        <div
-          aria-live="polite"
-          className="mt-2 text-sm text-foreground/70 min-h-5"
-        >
-          {terms.length
-            ? `${count} result${count === 1 ? "" : "s"}`
-            : "Type to search the site"}
+        <div aria-live="polite" className="mt-2 min-h-5 text-sm text-foreground/70">
+          {hasQuery ? `${count} result${count === 1 ? "" : "s"}` : "Type to search the site"}
         </div>
       </div>
 
@@ -154,31 +216,37 @@ export default function SearchClient() {
         </div>
       )}
 
-      {terms.length > 0 && (
-        <ol className="space-y-4">
-          {results.map((doc) => {
-            const snippet = makeSnippet(doc.content, terms);
+      {hasQuery && (
+        <ol className="space-y-4" aria-label="Search results">
+          {results.map(({ item: doc, matches }) => {
+            const titleMatch = matches?.find((m) => m.key === "title");
+            const descMatch = matches?.find((m) => m.key === "description");
+            const { snippet, indices } = makeSnippetFromMatches(doc, matches);
+
             return (
               <li
                 key={doc.url}
-                className="rounded-xl border border-foreground/20 bg-background/5 p-4 transition"
+                className="rounded-xl border border-foreground/20 bg-background/5 p-4 transition hover:bg-accent/5"
               >
-                <Link
-                  href={doc.url}
-                  className="text-lg font-medium underline-offset-4 hover:underline"
-                >
-                  {renderHighlighted(doc.title || doc.url, terms)}
+                <Link href={doc.url} className="text-lg font-medium underline-offset-4 hover:underline">
+                  {titleMatch
+                    ? renderHighlightedByIndices(doc.title || doc.url, titleMatch.indices)
+                    : renderHighlightedFallback(doc.title || doc.url, terms)}
                 </Link>
 
                 {doc.description ? (
                   <p className="mt-1 text-sm text-foreground/70">
-                    {renderHighlighted(doc.description, terms)}
+                    {descMatch
+                      ? renderHighlightedByIndices(doc.description, descMatch.indices)
+                      : renderHighlightedFallback(doc.description, terms)}
                   </p>
                 ) : null}
 
                 {snippet ? (
                   <p className="mt-2 text-sm leading-6 text-foreground/80 line-clamp-3">
-                    {renderHighlighted(snippet, terms)}
+                    {indices.length
+                      ? renderHighlightedByIndices(snippet, indices)
+                      : renderHighlightedFallback(snippet, terms)}
                   </p>
                 ) : null}
 
