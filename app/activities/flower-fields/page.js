@@ -4,6 +4,10 @@ import Layout from "@/components/layout";
 import PageHeader from "@/components/pageHeader";
 import pricing from "@/public/data/pricing";
 
+export const metadata = {
+    title: "Flower Fields"
+}
+
 export default function FlowerFields() {
     return (
         <Layout>

@@ -58,6 +58,10 @@ function GazeboRentalTable() {
   );
 }
 
+export const metadata = {
+  title: "Reservations"
+}
+
 
 export const Reservations = () => {
 

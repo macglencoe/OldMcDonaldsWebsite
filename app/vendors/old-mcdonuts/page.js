@@ -3,6 +3,10 @@ import styles from "./page.module.css"
 import MenuItem from "@/components/menuItem";
 import PageHeader from "@/components/pageHeader";
 
+export const metadata = {
+    title: "Vendor: Old McDonuts"
+}
+
 export default function OldMcDonuts() {
     return (
         <Layout>

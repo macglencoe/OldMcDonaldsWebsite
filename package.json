@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prebuild": "node scripts/buildSearchIndex.js"
   },
   "dependencies": {
     "@flags-sdk/statsig": "^0.2.2",
@@ -29,7 +30,10 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
+    "@babel/parser": "^7.28.3",
+    "@babel/traverse": "^7.28.3",
     "@tailwindcss/postcss": "^4",
+    "fast-glob": "^3.3.3",
     "tailwindcss": "^4"
   }
 }

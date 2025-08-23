@@ -5,6 +5,10 @@ import pricing from '@/public/data/pricing'
 import PageHeader from '@/components/pageHeader'
 import Action from '@/components/action'
 
+export const metadata = {
+    title: "Hay Rides"
+}
+
 export const HayRide = () => {
     return (
         <Layout>

@@ -52,8 +52,6 @@ const sizeStyle = {
     small: "col-span-1 row-span-1",
 };
 
-
-
 export default function Activities() {
     return (
         <Layout>

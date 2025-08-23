@@ -18,7 +18,9 @@ import NightMazeBanner from "@/components/home/nightMazeBanner";
 import FloodBanner from "@/components/home/floodBanner";
 
 
-
+export const metadata = {
+  title: "Home"
+}
 
 export default async function Home() {
 

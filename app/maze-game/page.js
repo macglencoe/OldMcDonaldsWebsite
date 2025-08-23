@@ -5,6 +5,10 @@ import EntryForm from '@/components/mazeGameEntryForm'
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator'
 import PageHeader from '@/components/pageHeader'
 
+export const metadata = {
+    title: "Maze Game"
+}
+
 export default function MazeGame() {
 
     if (isFeatureEnabled('maze_game_enabled') == false) return null
