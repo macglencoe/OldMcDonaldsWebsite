@@ -49,7 +49,7 @@ const FooterLinkList = ({ title, icon, links }) => (
 
 const Footer = () => {
   return (
-    <div className="flex flex-col pt-2 bg-[var(--foreground)] text-[var(--background)]">
+    <footer className="flex flex-col pt-2 bg-[var(--foreground)] text-[var(--background)]">
       <div className="flex flex-wrap justify-evenly">
         {/* Brand & Socials */}
         <div className="flex flex-col items-center justify-evenly text-center gap-4 p-4 flex-1">
@@ -109,7 +109,7 @@ const Footer = () => {
         </a>
         <span className="text-[var(--background)] opacity-70">© 2025 Old McDonalds Pumpkin Patch LLC. All Rights Reserved</span>
       </div>
-    </div>
+    </footer>
   );
 };
 

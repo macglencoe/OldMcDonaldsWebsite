@@ -287,7 +287,7 @@ export default function SearchClient() {
                     : renderHighlightedFallback(doc.title || doc.url, terms)}
                 </Link>
 
-                {doc.description ? (
+                {doc.description && (doc.description != "The official website for Old McDonald's Pumpkin Patch and Corn Maze in Inwood, WV") ? (
                   <p className="mt-1 text-sm text-foreground/70">
                     {descMatch
                       ? renderHighlightedByIndices(doc.description, descMatch.indices)
