@@ -27,7 +27,7 @@ export default function FarmSwapBanner() {
                                 <p><strong className="uppercase text-lg">Save the Date</strong></p>
                                 <p className="text-foreground/90 text-3xl font-bold">{date}</p>
                             </div>
-                            <Link href={eventURL} className="bg-blue-700 shadow-sm py-2 px-3 md:py-4 md:px-6 rounded-full text-xl font-bold flex flex-row items-center">
+                            <Link href={eventURL} className="bg-blue-700 shadow-sm py-2 px-3 md:py-4 md:px-6 rounded-full text-xl font-bold flex flex-row items-center hover:bg-blue-600">
                                 <FacebookLogo weight="bold" size={30} className="inline-block mr-3"/>View Facebook Event
                             </Link>
                         </div>
