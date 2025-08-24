@@ -4,6 +4,10 @@ import { FAQDrop } from '@/components/faqDrop';
 import faq from '@/public/data/faq.json';
 import PageHeader from '@/components/pageHeader';
 
+export const metadata = {
+    title: "FAQ"
+}
+
 export const FAQ = () => {
     return (
         <Layout>
