@@ -2,37 +2,55 @@
 import Link from "next/link"
 import { FacebookLogo } from "phosphor-react"
 
-
 export default function FarmSwapBanner() {
     const date = "October 4th"
     const eventURL = "https://facebook.com"
     const subtitle = "Crafts - Art - Produce"
+    
     return (
-        <div className="bg-foreground" style={{
+        <div className="relative overflow-hidden bg-foreground" style={{
             backgroundImage: "url(/picnicTable.jpg)",
             backgroundSize: "cover",
             backgroundPosition: "center"
         }}>
-            <div className="backdrop-blur-xs py-9 px-2 md:px-5 text-background bg-accent/80" style={{
-                backgroundImage: "linear-gradient(var(--accent) -20%, transparent 30%, transparent 60%, var(--accent) 100%)"
-            }}>
-                <div className="max-w-5xl mx-auto flex flex-col gap-5 items-center">
-                    <div className="flex flex-col md:flex-row w-full gap-5 md:gap-2">
-                        <div className="flex flex-col gap-5 flex-1 items-center justify-center">
-                            <h2 className="font-satisfy text-5xl md:text-7xl pb-4 border-b-2">Farm Swap</h2>
-                            <p className="text-background/80 text-2xl font-medium">{subtitle}</p>
-                        </div>
-                        <div className="flex flex-col gap-5 w-fit mx-auto">
-                            <div className="bg-background/80 shadow-sm rounded-full py-2 px-3 md:py-4 md:px-7 text-accent text-center">
-                                <p><strong className="uppercase text-lg">Save the Date</strong></p>
-                                <p className="text-foreground/90 text-3xl font-bold">{date}</p>
-                            </div>
-                            <Link href={eventURL} className="bg-blue-700 shadow-sm py-2 px-3 md:py-4 md:px-6 rounded-full text-xl font-bold flex flex-row items-center hover:bg-blue-600">
-                                <FacebookLogo weight="bold" size={30} className="inline-block mr-3"/>View Facebook Event
-                            </Link>
-                        </div>
+            {/* Improved overlay with better gradient */}
+            <div className="relative py-16 px-4 md:px-8 text-white bg-gradient-to-b from-black/70 via-black/50 to-black/70">
+                <div className="max-w-4xl mx-auto text-center space-y-8">
+                    
+                    {/* Main title section */}
+                    <div className="space-y-4">
+                        <h1 className="font-satisfy text-6xl md:text-8xl font-bold text-white drop-shadow-lg">
+                            Farm Swap
+                        </h1>
+                        <p className="text-xl md:text-2xl text-white/90 font-medium tracking-wide">
+                            {subtitle}
+                        </p>
                     </div>
-                    <p className="text-xl md:text-3xl text-center text-background/80">Join us for a mini-fair with local artisans, craftsmen, and more. Discover unique treasures alongside our regular daytime activities</p>
+
+                    {/* Date and CTA section */}
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
+                        <div className="bg-white/95 backdrop-blur-sm rounded-2xl py-4 px-8 shadow-xl border border-white/20">
+                            <p className="text-sm font-bold uppercase tracking-wider text-gray-600 mb-1">
+                                Save the Date
+                            </p>
+                            <p className="text-2xl md:text-3xl font-bold text-gray-900">
+                                {date}
+                            </p>
+                        </div>
+                        
+                        <Link 
+                            href={eventURL} 
+                            className="bg-blue-600 hover:bg-blue-700 transition-colors duration-200 shadow-xl py-4 px-8 rounded-2xl text-lg font-bold flex items-center gap-3 text-white border border-blue-500/20"
+                        >
+                            <FacebookLogo weight="bold" size={24} />
+                            View Event
+                        </Link>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed pt-4">
+                        Join us for a mini-fair with local artisans, craftsmen, and more. Discover unique treasures alongside our regular daytime activities.
+                    </p>
                 </div>
             </div>
         </div>
