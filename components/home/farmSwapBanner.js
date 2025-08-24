@@ -5,7 +5,7 @@ import { FacebookLogo } from "phosphor-react"
 export default function FarmSwapBanner() {
     const date = "October 4th"
     const eventURL = "https://facebook.com"
-    const subtitle = "Crafts - Art - Produce"
+    const subtitle = "Local Crafts • Fresh Produce • Handmade Art"
     
     return (
         <div className="relative overflow-hidden bg-foreground" style={{
@@ -49,7 +49,7 @@ export default function FarmSwapBanner() {
 
                     {/* Description */}
                     <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed pt-4">
-                        Join us for a mini-fair with local artisans, craftsmen, and more. Discover unique treasures alongside our regular daytime activities.
+                        <b>Dont miss out!</b> Join us for a mini-fair with local artisans, craftsmen, and more. Discover unique treasures alongside our regular daytime activities.
                     </p>
                 </div>
             </div>
