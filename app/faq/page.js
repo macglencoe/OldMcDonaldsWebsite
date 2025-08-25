@@ -6,6 +6,10 @@ import PageHeader from '@/components/pageHeader';
 import FaqSearchList from '@/components/faqSearchList';
 import { Suspense } from 'react';
 
+export const metadata = {
+    title: "FAQ"
+}
+
 export const FAQ = () => {
     return (
         <Layout>

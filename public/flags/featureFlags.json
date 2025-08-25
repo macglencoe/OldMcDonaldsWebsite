@@ -95,5 +95,9 @@
         ]
       }
     ]
+  },
+  "show_aux_search": {
+    "default": true,
+    "conditions": []
   }
 }

@@ -4,6 +4,10 @@ import VendorProfile from '@/components/vendorProfile'
 import PageHeader from '@/components/pageHeader'
 import Action from '@/components/action'
 
+export const metadata = {
+    title: "Vendors"
+}
+
 export const Vendors = () => {
     return (
         <Layout>

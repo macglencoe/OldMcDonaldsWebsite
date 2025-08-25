@@ -7,6 +7,10 @@ import PageHeader from '@/components/pageHeader';
 
 export const dynamic = 'force-dynamic';
 
+export const metadata = {
+    title: "Gallery"
+}
+
 export default async function GalleryPage() {
 
     const galleryDir = path.join(process.cwd(), 'public', 'gallery');

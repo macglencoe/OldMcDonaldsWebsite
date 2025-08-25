@@ -6,6 +6,10 @@ import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
 import PageHeader from '@/components/pageHeader';
 import Action from '@/components/action';
 
+export const metadata = {
+    title: "Corn Maze"
+}
+
 export const CornMaze = () => {
     return (
         <Layout>

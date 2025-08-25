@@ -6,6 +6,10 @@ import pricing from "@/public/data/pricing"
 import PageHeader from "@/components/pageHeader"
 import Action from "@/components/action"
 
+export const metadata = {
+    title: "Pumpkin Patch"
+}
+
 export const PumpkinPatch = () => {
     return (
         <Layout>

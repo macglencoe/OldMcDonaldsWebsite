@@ -4,6 +4,10 @@ import PageHeader from "@/components/pageHeader";
 import PhotoOpsMap from "@/components/photoOpsMap";
 import PhotoOpsMapClient from "@/components/photoOpsMapClient";
 
+export const metadata = {
+    title: "Map"
+}
+
 export default function PhotoOps() {
     return (
         <Layout>
