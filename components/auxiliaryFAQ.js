@@ -36,7 +36,7 @@ export default function AuxiliaryFAQ() {
                 {items.map((qa, i) => {
                     return (
                         <li key={i} className='py-2'>
-                            <FAQDrop q={qa.question}>
+                            <FAQDrop q={qa.question} ADA={qa.ADA}>
                                 {qa.answer}
                             </FAQDrop>
                         </li>
