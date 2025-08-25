@@ -8,6 +8,7 @@ import photoOps from '@/public/data/photoOps.json'
 import { FileImage, Upload } from 'phosphor-react';
 import PhotoOpsListClient from './photoOpsListClient';
 import UploadSectionClient from './uploadSectionClient';
+import CostumeContestClient from './costumeContestClient';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,6 +38,7 @@ export default async function GalleryPage() {
         <Layout>
             <PageHeader>Gallery</PageHeader>
             <div className='body basic'>
+                <CostumeContestClient />
                 <div className={styles.socials}>
                     <h2>Share your moments:</h2>
                     <div>

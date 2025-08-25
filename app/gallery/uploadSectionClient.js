@@ -5,7 +5,7 @@ import { ArrowRight, UploadSimple } from "phosphor-react"
 export default function UploadSectionClient({ uploadUrl, title, subtitle, id }) {
     return (
         <section id={id} className='mt-8 p-4 border border-accent/50 rounded shadow-lg bg-foreground/10 flex'>
-            <div className='flex-1 space-y-2 flex justify-center flex-col'>
+            <div className='flex-1 space-y-2 flex justify-center flex-col mr-4'>
                 <h3 className='text-2xl text-accent font-bold !font-[Inter]'>{title}</h3>
                 <p className='text-foreground/70 !text-xl'>{subtitle} <ArrowRight size={23} color='var(--accent)' weight='bold' className="inline"/></p>
             </div>
