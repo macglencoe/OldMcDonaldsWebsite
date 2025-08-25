@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postbuild": "node scripts/crawlHtmlIndex.js"
   },
   "dependencies": {
     "@flags-sdk/statsig": "^0.2.2",
@@ -19,6 +20,7 @@
     "clsx": "^2.1.1",
     "flags": "^4.0.0",
     "framer-motion": "^12.15.0",
+    "fuse.js": "^7.1.0",
     "js-cookie": "^3.0.5",
     "leaflet": "^1.9.4",
     "next": "15.2.4",
@@ -26,10 +28,15 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-leaflet": "^5.0.0",
+    "react-markdown": "^10.1.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
+    "@babel/parser": "^7.28.3",
+    "@babel/traverse": "^7.28.3",
     "@tailwindcss/postcss": "^4",
+    "cheerio": "^1.1.2",
+    "fast-glob": "^3.3.3",
     "tailwindcss": "^4"
   }
 }

@@ -4,6 +4,7 @@ import Layout from "@/components/layout";
 import styles from "./page.module.css";
 import Link from "next/link";
 import PageHeader from "@/components/pageHeader";
+import Head from "next/head";
 
 function Generations() {
     const generations = [
@@ -404,6 +405,9 @@ function Generations() {
     )
 }
 
+export const metadata = {
+    title: "About The Farm"
+}
 
 export default function About() {
     

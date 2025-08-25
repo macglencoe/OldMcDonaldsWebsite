@@ -4,6 +4,10 @@ import Layout from '@/components/layout';
 import PageHeader from '@/components/pageHeader';
 import Action from '@/components/action';
 
+export const metadata = {
+    title: "Nature Trails"
+}
+
 export const NatureTrails = () => {
     return (
         <Layout>

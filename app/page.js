@@ -16,9 +16,13 @@ import Hero from "@/components/home/hero";
 import { isFeatureEnabled } from "@/public/lib/featureEvaluator";
 import NightMazeBanner from "@/components/home/nightMazeBanner";
 import FloodBanner from "@/components/home/floodBanner";
+import AuxSearch from "@/components/home/auxSearch";
+import FarmSwapBanner from "@/components/home/farmSwapBanner";
 
 
-
+export const metadata = {
+  title: "Home"
+}
 
 export default async function Home() {
 
@@ -52,11 +56,18 @@ export default async function Home() {
           <FloodBanner />
         )}
 
+
         <section className={styles.hero}>
           <Hero />
         </section>
+
+        { isFeatureEnabled("show_aux_search") &&
+          <AuxSearch />
+        }
+
         <Season/>
 
+        <FarmSwapBanner />
 
 
         <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />

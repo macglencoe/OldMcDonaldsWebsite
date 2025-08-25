@@ -2,6 +2,10 @@ import Layout from "@/components/layout";
 import styles from "./page.module.css";
 import { AndImage } from "@/components/andImage";
 
+export const metadata = {
+    title: "Night Maze"
+}
+
 export const NightMaze = () => {
     return (
         <div className={styles.wrapper}>
