@@ -5,8 +5,9 @@ import Layout from '@/components/layout';
 import styles from './page.module.css'
 import PageHeader from '@/components/pageHeader';
 import photoOps from '@/public/data/photoOps.json'
-import { FileImage } from 'phosphor-react';
+import { FileImage, Upload } from 'phosphor-react';
 import PhotoOpsListClient from './photoOpsListClient';
+import UploadSectionClient from './uploadSectionClient';
 
 export const dynamic = 'force-dynamic';
 
@@ -52,6 +53,7 @@ export default async function GalleryPage() {
                             <span>Tag our page on TikTok</span>
                         </a>
                     </div>
+                    <UploadSectionClient uploadUrl={""} title={"Want your photo featured?"} subtitle={"Upload a photo!"} id={"upload"}/>
                 </div>
 
                 <PhotoOpsListClient photoOps={photoOps} />
