@@ -8,6 +8,7 @@ import { makePhotoOpIcon } from '@/public/lib/icons'
 import features from '@/public/data/map-features.json'
 import path from 'path'
 import Image from 'next/image'
+import photoOps from '@/public/data/photoOps.json'
 // -- Functons -- //
 
 function getDistanceMiles(lat1, lon1, lat2, lon2) {
@@ -192,88 +193,6 @@ function ZoomVisibilityController() {
 
 
 // -- Markers -- //
-
-const photoOps = [
-    {
-        label: 'Harvest Royalty',
-        pos: [39.3843654, -78.0429576],
-        imgSrc: '/harvestRoyaltyPhotoOp.jpg'
-    },
-    {
-        label: 'Stocks',
-        pos: [39.3835555, -78.0433421],
-        imgSrc: '../gallery/0b2c98_f05cbe60cd6e4a5fb0fc1af18748eb20~mv2.avif'
-    },
-    {
-        label: 'Bench & Bridge',
-        pos: [39.3836282, -78.0433265],   
-        imgSrc: '/bench-bridge.jpg'
-    },
-    {
-        label: 'Big Chair',
-        pos: [39.3833115, -78.0432332],
-        imgSrc: '/big-chair.jpg'
-    },
-    {
-        label: '"Love"',
-        pos: [39.38272287986978, -78.0436764211604],
-        imgSrc: '/lovePhotoOp.jpg'
-    },
-    {
-        label: 'Sunflower Swing',
-        pos: [39.381654454401975, -78.04468704613781],
-        imgSrc: '/sunflower-swing.jpg'
-    },
-    {
-        label: 'Kissing Booth & Tractor',
-        pos: [39.38242472380304, -78.04515311653932]
-    },
-    {
-        label: 'Ꮤ Bug',
-        pos: [39.3829251383536, -78.04528277916505]
-    },
-    {
-        label: 'Tractor',
-        pos: [39.3827901, -78.0431228],
-        imgSrc: '/tractor-samantha-janes.jpg'
-    },
-    {
-        label: 'Butterfly Wings',
-        pos: [39.38126978738636, -78.04447740186025],
-        imgSrc: '/butterfly-wings.jpg'
-    },
-    {
-        label: '"High Five, We Got Out Alive"',
-        pos: [39.383983292218055, -78.04363042306413],
-        imgSrc: '/high-five-angela-stoneberger.jpg'
-    },
-    {
-        label: 'Forge Bridge',
-        pos: [39.38266991072899, -78.04322516039606],
-        imgSrc: '/forge-bridge-jenna-neff.jpg'
-    },
-    {
-        label: 'Iron Tub',
-        pos: [39.38142805208196, -78.04455630442247],
-        imgSrc: '/iron-tub.jpg'
-    },
-    {
-        label: 'Pumpkin Patch',
-        pos: [39.38234439737128, -78.04667080755625],
-        imgSrc: '/pumpkin-patch-hayley-briggs.jpg'
-    },
-    {
-        label: 'Pumpkin Stand',
-        pos: [39.3837545034998, -78.04283924663358],
-        imgSrc: '/pumpkin-stand-ashley-ford.jpg'
-    },
-    {
-        label: 'Saddle',
-        pos: [39.38361459396412, -78.04280495733691],
-        imgSrc: '/saddle-tara-painter.jpg'
-    }
-    
-]
 
 const bathrooms = [
     {
