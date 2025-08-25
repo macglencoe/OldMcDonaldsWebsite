@@ -4,7 +4,7 @@ import { FacebookLogo, Storefront } from "phosphor-react"
 
 export default function FarmSwapBanner() {
     const date = "October 4th"
-    const eventURL = "https://www.facebook.com"
+    const eventURL = "https://www.facebook.com/events/1650791195855259/"
     const appliURL = "https://forms.gle/hDoQxEMpP7tru8Yr5"
     const subtitle = "Local Crafts • Homemade treats • Handcrafted Art" 
     
@@ -31,7 +31,7 @@ export default function FarmSwapBanner() {
                     {/* Date and CTA section */}
                     <div className="w-full mx-auto flex flex-col flex-wrap sm:flex-row items-center justify-evenly gap-6 pt-4">
                         <Link 
-                            href={appliURL} 
+                            href={eventURL} target="_blank"
                             className="whitespace-nowrap bg-blue-700 hover:bg-blue-600 transition-colors duration-200 shadow-xl py-4 px-8 rounded-2xl text-lg font-bold flex items-center gap-3 text-white border border-blue-500/20"
                         >
                             <FacebookLogo weight="bold" size={24} />
@@ -47,7 +47,7 @@ export default function FarmSwapBanner() {
                             <p className="text-sm uppercase tracking-wider text-gray-600">11am - 4pm</p>
                         </div>
                         <Link 
-                            href={appliURL} 
+                            href={appliURL} target="_blank"
                             className="whitespace-nowrap bg-accent/80 hover:bg-accent transition-colors duration-200 shadow-xl py-4 px-8 rounded-2xl text-lg font-bold flex items-center gap-3 text-white border border-blue-500/20"
                         >
                             <Storefront weight="bold" size={24} />
