@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link"
 import { FacebookLogo, Storefront } from "phosphor-react"
+import { track } from "@vercel/analytics"
 
 export default function FarmSwapBanner() {
     const date = "October 4th"
@@ -49,6 +50,9 @@ export default function FarmSwapBanner() {
                         <Link 
                             href={appliURL} target="_blank"
                             className="whitespace-nowrap bg-accent/80 hover:bg-accent transition-colors duration-200 shadow-xl py-4 px-8 rounded-2xl text-lg font-bold flex items-center gap-3 text-white border border-blue-500/20"
+                            onClick={() => {
+                                track("Farm Swap Application Click")
+                            }}
                         >
                             <Storefront weight="bold" size={24} />
                             Reserve your spot
