@@ -1,8 +1,12 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
+import { Calendar, Clock, MapPin } from "phosphor-react";
 
 
 export default function OneLaneRoadBanner() {
+    const date = "Sunday, October 29th, 2025";
+    const time = "3PM - 5PM";
     return (
         <div className="bg-foreground py-10 px-2">
             <div className="max-w-5xl mx-auto bg-background/10 rounded-2xl overflow-hidden">
@@ -17,9 +21,20 @@ export default function OneLaneRoadBanner() {
                     </div>
                     <div className="flex flex-col flex-1 gap-3">
                         <h3 className="text-3xl text-background font-semibold">Live at Old McDonald's</h3>
-                        <p className="w-full bg-background/20 text-background p-4 rounded-xl">Someday, Someber Nth, 2025</p>
-                        <p className="w-full bg-background/20 text-background p-4 rounded-xl">N:00AM - N:00PM</p>
-                        <p className="w-full bg-background/20 text-background p-4 rounded-xl"><Link href="/visit" className="text-accent underline">Glencoe Farm</Link></p>
+                        <p className="w-full bg-background/20 text-background p-4 rounded-xl">
+                            <Calendar weight="bold" size={24} className="inline mr-2" aria-label="Date"/>
+                            {date}
+                        </p>
+                        <p className="w-full bg-background/20 text-background p-4 rounded-xl">
+                            <Clock weight="bold" size={24} className="inline mr-2" aria-label="Time"/>
+                            {time}
+                        </p>
+                        <p className="w-full bg-background/20 text-background p-4 rounded-xl">
+                            <MapPin weight="bold" size={24} className="inline mr-2" aria-label="Location"/>
+                            <Link href="/visit" className="text-accent underline">
+                                Glencoe Farm
+                            </Link>
+                        </p>
 
 
                     </div>
