@@ -99,6 +99,9 @@ export default function FestivalCalendar() {
           } else if (cat === 'night-maze') {
             info.el.style.backgroundColor = 'var(--nightMazeBackground)';
             info.el.style.color = 'white';
+          } else if (cat == 'event') {
+            info.el.style.backgroundColor = 'var(--accent)';
+            info.el.style.color = 'white'
           }
         }}
         dayCellContent={(arg) => {
