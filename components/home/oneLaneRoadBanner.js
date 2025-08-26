@@ -5,7 +5,7 @@ import { Calendar, Clock, MapPin } from "phosphor-react";
 
 
 export default function OneLaneRoadBanner() {
-    const date = "Sunday, October 29th, 2025";
+    const date = "Sunday, October 26th, 2025";
     const time = "3PM - 5PM";
     return (
         <div className="bg-foreground py-10 px-2">
