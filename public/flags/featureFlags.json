@@ -99,5 +99,9 @@
   "show_aux_search": {
     "default": true,
     "conditions": []
+  },
+  "show_olr_banner": {
+    "default": true,
+    "conditions": []
   }
 }

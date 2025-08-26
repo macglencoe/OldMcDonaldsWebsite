@@ -18,6 +18,7 @@ import NightMazeBanner from "@/components/home/nightMazeBanner";
 import FloodBanner from "@/components/home/floodBanner";
 import AuxSearch from "@/components/home/auxSearch";
 import FarmSwapBanner from "@/components/home/farmSwapBanner";
+import OneLaneRoadBanner from "@/components/home/oneLaneRoadBanner";
 
 
 export const metadata = {
@@ -68,6 +69,10 @@ export default async function Home() {
         <Season/>
 
         <FarmSwapBanner />
+
+        { isFeatureEnabled("show_olr_banner") &&
+          <OneLaneRoadBanner />
+        }
 
 
         <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
