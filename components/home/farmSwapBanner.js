@@ -16,7 +16,7 @@ export default function FarmSwapBanner() {
             backgroundPosition: "center"
         }}>
             {/* Improved overlay with better gradient */}
-            <div className="relative py-16 px-4 md:px-8 text-white bg-gradient-to-b from-black/70 via-black/50 to-black/70">
+            <div className="relative py-16 px-4 md:px-8 text-white standard-backdrop">
                 <div className="max-w-4xl mx-auto text-center space-y-8">
                     
                     {/* Main title section */}
