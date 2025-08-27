@@ -75,7 +75,7 @@ export default function Rates() {
         fill
         className="object-cover object-center -z-10"
       />
-      <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-black/30 to-transparent -z-10" />
+      <div className="absolute inset-0 standard-backdrop -z-10" />
 
       {/* Header */}
       <motion.h1
