@@ -8,8 +8,13 @@ export default function OneLaneRoadBanner() {
     const date = "Sunday, October 26th, 2025";
     const time = "3PM - 5PM";
     return (
-        <div className="bg-foreground py-10 px-2">
-            <div className="max-w-5xl mx-auto bg-background/10 rounded-2xl overflow-hidden">
+        <div className="py-10 px-2 relative z-0" style={{
+            backgroundImage: 'url(/hillview.jpg)',
+            backgroundSize: "cover",
+            backgroundPosition: "center"
+        }}>
+            <div className="absolute inset-0 -z-10 standard-backdrop" />
+            <div className="max-w-5xl mx-auto bg-foreground/80 rounded-2xl overflow-hidden z-20">
                 <div className="w-full flex flex-col items-center gap-4 py-5 bg-accent/20">
                     <span className="bg-accent uppercase rounded-full text-foreground py-2 px-3 font-bold text-center mx-auto">Live Performance</span>
                     <h2 className="text-background font-satisfy text-center text-5xl md:text-7xl">One Lane Road</h2>
