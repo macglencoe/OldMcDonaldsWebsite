@@ -1,12 +1,14 @@
 "use client"
 import Image from "next/image";
 import Link from "next/link";
-import { Calendar, Clock, MapPin } from "phosphor-react";
+import { Calendar, Clock, FacebookLogo, MapPin } from "phosphor-react";
+import Action from "@/components/action"
 
 
 export default function OneLaneRoadBanner() {
     const date = "Sunday, October 26th, 2025";
     const time = "3PM - 5PM";
+    const eventUrl = "https://www.facebook.com"
     return (
         <div className="py-10 px-2 relative z-0" style={{
             backgroundImage: 'url(/hillview.jpg)',
@@ -20,9 +22,9 @@ export default function OneLaneRoadBanner() {
                     <h2 className="text-background font-satisfy text-center text-5xl md:text-7xl">One Lane Road</h2>
                     <p className="text-accent/80 text-2xl font-semibold">Authentic Bluegrass</p>
                 </div>
-                <div className="flex flex-col md:flex-row gap-6 p-3 md:p-6">
+                <div className="flex flex-col md:flex-row gap-6 p-3 md:p-6 items-center">
                     <div className="border-4 border-x-transparent border-y-background flex-1">
-                        <Image src={'/olr-graphic.PNG'} width={1400} height={1400} className="p-2"/>
+                        <Image src={'/olr-graphic.PNG'} width={1400} height={1400} className="p-2" alt={"One Lane Road"}/>
                     </div>
                     <div className="flex flex-col flex-1 gap-3">
                         <h3 className="text-3xl text-background font-semibold">Live at Old McDonald's</h3>
@@ -40,6 +42,7 @@ export default function OneLaneRoadBanner() {
                                 Glencoe Farm
                             </Link>
                         </p>
+                        <Action as="a" href={eventUrl} className={"bg-blue-700 hover:bg-blue-600"}><FacebookLogo size={24} weight="bold"  className="inline mr-3"/>See more</Action>
 
 
                     </div>
