@@ -8,6 +8,19 @@ July 29, 2025 - August 28, 2025
 
 **Average**: 722 / 30 = **24 / day**
 
+# Goals
+
+- Determine visitor needs from search analytics
+- Determine the web traffic peaks during the season
+
+# KPIs & Metrics
+
+- Searchbar interactions
+- Visitors
+
+
+---
+
 # Event Taxonomy
 
 ## `reservations`
@@ -112,7 +125,4 @@ The user queries a search on the FAQ searchbar
 
 ### Props:
 - `q`: The full query that the user entered in the FAQ searchbar
-
-
-
 
