@@ -55,7 +55,7 @@ export default async function GalleryPage() {
                             <span>Tag our page on TikTok</span>
                         </a>
                     </div>
-                    <UploadSectionClient uploadUrl={""} title={"Want your photo featured?"} subtitle={"Upload a photo!"} id={"upload"}/>
+                    <UploadSectionClient uploadUrl={"https://docs.google.com/forms/d/e/1FAIpQLSfdYBDpAJ0jIF3Qg1AgYKx3aTT-assp9eAPFGg-m5Z9dx-xyA/viewform?usp=header"} title={"Want your photo featured?"} subtitle={"Upload a photo!"} id={"upload"}/>
                 </div>
 
                 <PhotoOpsListClient photoOps={photoOps} />
