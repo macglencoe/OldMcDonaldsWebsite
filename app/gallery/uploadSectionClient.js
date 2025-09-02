@@ -10,7 +10,7 @@ export default function UploadSectionClient({ uploadUrl, title, subtitle, id }) 
                 <p className='text-foreground/70 !text-xl'>{subtitle} <ArrowRight size={23} color='var(--accent)' weight='bold' className="inline"/></p>
             </div>
             <div className="flex items-center justify-center">
-                <a href={uploadUrl} className="group flex items-center gap-3 text-accent font-bold !font-[Inter] border border-accent/50 rounded px-4 py-2 hover:bg-accent/10 transition-colors whitespace-nowrap">
+                <a href={uploadUrl} target='_blank' className="group flex items-center gap-3 text-accent font-bold !font-[Inter] border border-accent/50 rounded px-4 py-2 hover:bg-accent/10 transition-colors whitespace-nowrap">
                     <UploadSimple size={32} color='var(--accent)' weight='bold' className='group-hover:scale-110 transition-transform'/>
                     Upload
                 </a>
