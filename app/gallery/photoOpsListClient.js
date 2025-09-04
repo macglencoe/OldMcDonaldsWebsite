@@ -34,7 +34,7 @@ function Photo({ src, alt, pos }) {
                     <br />
                     <em>Doesn't have a photo yet!</em>
                     <br />
-                    <a href='#upload'>Be the first to upload one!</a>
+                    <a className="!break-normal" href='#upload'>Be the first to upload one!</a>
                 </p>
             }
             { pos &&
