@@ -32,18 +32,6 @@ export default function Page() {
             serviceName: "Dev.to",
             href: "https://dev.to/macglencoe/series/31726",
             icon: PiDevToLogoDuotone
-        },
-        {
-            title: "Vendor Applications",
-            serviceName: "Google Forms",
-            href: "https://docs.google.com/forms/d/1T1RuEWKEGxdTbREg_LHOzOxuGCuX1AVlAjQU7Bzo6UQ/edit#response=ACYDBNg2s9ipAgpbz9JYbpEz-Wy0kV4kcFFBBaWArriHUAt3Mn9pqoMCrKiHWGJLJCnPCoc",
-            icon: PiArticleDuotone
-        },
-        {
-            title: "Rental Applications",
-            serviceName: "Google Forms",
-            href: "https://docs.google.com/forms/d/1YsA54-3DO8T43Yy6wylSlFj8neIIbMYViYJ-qyYcTEM/edit#response=ACYDBNjfI4699RNaVczP8v3JVD6-YY7OrIiYUQAx1Pg-NfE8MDmewrU1cJlipD5SZ3YNDFY",
-            icon: PiArticleDuotone
         }
     ]
     const Admininks = [
