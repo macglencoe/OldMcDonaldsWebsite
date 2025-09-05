@@ -1,3 +1,3 @@
 {
-    "/": ["entry fee", "admission", "ticket price"]
+    "/pricing": ["entry fee", "admission", "ticket price", "pricing", "how much"]
 }
