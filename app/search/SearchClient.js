@@ -201,6 +201,7 @@ export default function SearchClient() {
         { name: "title", weight: 0.5 },
         { name: "description", weight: 0.3 },
         { name: "content", weight: 0.2 },
+        { name: "keywords", weight: 0.6 },
         { name: "url", weight: 0.1 },
       ],
     });
@@ -291,6 +292,9 @@ export default function SearchClient() {
             const titleMatch = matches?.find((m) => m.key === "title");
             const descMatch = matches?.find((m) => m.key === "description");
             const { snippet, indices } = makeSnippetFromMatches(doc, matches);
+            const kwMatch = matches?.find((m) => m.key === "keywords");
+
+
 
             return (
               <li
@@ -318,6 +322,13 @@ export default function SearchClient() {
                       : renderHighlightedFallback(snippet, terms)}
                   </p>
                 ) : null}
+
+                {kwMatch && (
+                  <p className="mt-1 text-xs text-accent">
+                    Matched keyword: {kwMatch.value}
+                  </p>
+                )}
+
 
                 <p className="mt-1 text-xs text-foreground/50">{doc.url}</p>
               </li>
