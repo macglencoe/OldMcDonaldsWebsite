@@ -43,41 +43,57 @@ function mergeRanges(ranges) {
   return out;
 }
 
+function isWordChar(ch) {
+  return /[A-Za-z0-9]/.test(ch);
+}
+function isWholeWord(text, s, e) {
+  const before = s - 1 >= 0 ? text[s - 1] : " ";
+  const after  = e + 1 < text.length ? text[e + 1] : " ";
+  return !isWordChar(before) && !isWordChar(after);
+}
+
 function renderHighlightedByIndices(text, indices) {
   if (!text) return null;
-  const merged = mergeRanges(indices);
+  const merged = mergeRanges(indices)
+    // drop very short highlights
+    .filter(([s, e]) => e - s + 1 >= 3)
+    // keep only whole words
+    .filter(([s, e]) => isWholeWord(text, s, e));
+
   if (merged.length === 0) return text;
 
   const out = [];
   let cursor = 0;
   for (let i = 0; i < merged.length; i++) {
     const [s, e] = merged[i];
-    if (cursor < s) out.push(<span key={`t-${i}-${cursor}`}>{text.slice(cursor, s)}</span>);
-    out.push(
-      <mark key={`m-${i}-${s}-${e}`} className="rounded px-1 bg-accent/20">
-        {text.slice(s, e + 1)}
-      </mark>
-    );
+    if (cursor < s) out.push(<span key={`t-${cursor}`}>{text.slice(cursor, s)}</span>);
+    out.push(<mark key={`m-${i}-${s}-${e}`} className="rounded px-1 bg-accent/20">{text.slice(s, e + 1)}</mark>);
     cursor = e + 1;
   }
   if (cursor < text.length) out.push(<span key={`t-end-${cursor}`}>{text.slice(cursor)}</span>);
   return out;
 }
 
+
 function renderHighlightedFallback(text, terms) {
-  if (!terms.length || !text) return text;
-  const re = new RegExp(`(${terms.map(escapeRegExp).join("|")})`, "gi");
+  if (!text || !terms.length) return text;
+
+  // filter out very short tokens to prevent noisy highlighting
+  const safe = terms.filter(t => t.length >= 2);
+  if (!safe.length) return text;
+
+  // capture group ensures matches appear as odd indices in parts
+  const re = new RegExp(`\\b(${safe.map(escapeRegExp).join("|")})\\b`, "gi");
+
   const parts = text.split(re);
+
   return parts.map((part, i) =>
-    re.test(part) ? (
-      <mark key={i} className="rounded px-1 bg-accent/20">
-        {part}
-      </mark>
-    ) : (
-      <span key={i}>{part}</span>
-    )
+    i % 2 === 1
+      ? <mark key={i} className="rounded px-1 bg-accent/20">{part}</mark>
+      : <span key={i}>{part}</span>
   );
 }
+
 
 function makeSnippetFromMatches(doc, matches, before = 60, after = 160) {
   const content = doc.content || "";
@@ -131,7 +147,7 @@ export default function SearchClient() {
 
   useEffect(() => {
     // avoid double-logging in react strict mode dev
-    const loggedRef = {current: false};
+    const loggedRef = { current: false };
     let cancelled = false;
     const t0 = performance.now();
     fetch("/search-index.json", { cache: "no-store" })
@@ -160,7 +176,7 @@ export default function SearchClient() {
         const latency = Math.round(performance.now() - t0);
         if (!loggedRef.current) {
           track('search_index_error', {
-            reason: (err?.message || 'fetch_failed').slice(0,64),
+            reason: (err?.message || 'fetch_failed').slice(0, 64),
             latency_ms: latency
           });
           loggedRef.current = true;
@@ -178,13 +194,14 @@ export default function SearchClient() {
       includeScore: true,
       includeMatches: true,
       shouldSort: true,
-      threshold: 0.3,        // 0.0 = exact, 1.0 = very fuzzy
-      ignoreLocation: true,  // good for long strings
-      minMatchCharLength: 2,
+      threshold: 0.2,       
+      ignoreLocation: true, 
+      minMatchCharLength: 3,
       keys: [
         { name: "title", weight: 0.5 },
         { name: "description", weight: 0.3 },
         { name: "content", weight: 0.2 },
+        { name: "keywords", weight: 0.6 },
         { name: "url", weight: 0.1 },
       ],
     });
@@ -275,6 +292,9 @@ export default function SearchClient() {
             const titleMatch = matches?.find((m) => m.key === "title");
             const descMatch = matches?.find((m) => m.key === "description");
             const { snippet, indices } = makeSnippetFromMatches(doc, matches);
+            const kwMatch = matches?.find((m) => m.key === "keywords");
+
+
 
             return (
               <li
@@ -302,6 +322,13 @@ export default function SearchClient() {
                       : renderHighlightedFallback(snippet, terms)}
                   </p>
                 ) : null}
+
+                {kwMatch && (
+                  <p className="mt-1 text-xs text-accent">
+                    Matched keyword: {kwMatch.value}
+                  </p>
+                )}
+
 
                 <p className="mt-1 text-xs text-foreground/50">{doc.url}</p>
               </li>

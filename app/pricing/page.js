@@ -2,6 +2,9 @@ import Action from "@/components/action";
 import Rates from "@/components/home/rates";
 import Layout from "@/components/layout";
 
+export const metadata = {
+    title: "Pricing",
+}
 
 export default function Pricing() {
     return (
