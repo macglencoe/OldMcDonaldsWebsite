@@ -40,21 +40,41 @@ export default async function Home() {
   ];
 
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "Old McDonald's Pumpkin Patch",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "1597 Arden Nollville Rd",
+      addressLocality: "Inwood",
+      addressRegion: "WV",
+      postalCode: "25428",
+      addressCountry: "US"
+    },
+    telephone: "+1-304-839-2330",
+    openingHours: ["Fr 13:00-18:00", "Sa 11:00-18:00", "Su 12:00-18:00"],
+    url: "https://oldmcdonaldspumpkinpatch.com"
+  };
 
 
 
 
   return (
     <Layout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className={styles.wrapper}>
-        { isFeatureEnabled("show_night_maze_ad", {
+        {isFeatureEnabled("show_night_maze_ad", {
           now: new Date()
         }) && (
-          <NightMazeBanner />
-        )
-      }
+            <NightMazeBanner />
+          )
+        }
 
-        { isFeatureEnabled("show_flood_banner") && (
+        {isFeatureEnabled("show_flood_banner") && (
           <FloodBanner />
         )}
 
@@ -63,43 +83,43 @@ export default async function Home() {
           <Hero />
         </section>
 
-        { isFeatureEnabled("show_aux_search") &&
+        {isFeatureEnabled("show_aux_search") &&
           <AuxSearch />
         }
 
-        <Season/>
+        <Season />
 
         <FarmSwapBanner />
 
-        { isFeatureEnabled("show_olr_banner") &&
+        {isFeatureEnabled("show_olr_banner") &&
           <OneLaneRoadBanner />
         }
 
 
         <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
-        <Rates/>
+        <Rates />
 
-        { isFeatureEnabled("show_vendor_promos") && (
+        {isFeatureEnabled("show_vendor_promos") && (
           <>
             <OldMcDonutsAd
-            title="Old McDonuts"
-            description="Coffee, Apple Cider Donuts, and Slushies, right on the farm"
-            menu="/vendors/old-mcdonuts"
-            src="/oldMcDonuts.jpg"
-          />
-          <OldMcDonutsAd
-            title="Twisted Taters"
-            description="Butterfly Potatoes, Burgers, & more!"
-            href="/vendors"
-            buttonText="See More"
-            src="/twistedTaters.jpg"
-          />
+              title="Old McDonuts"
+              description="Coffee, Apple Cider Donuts, and Slushies, right on the farm"
+              menu="/vendors/old-mcdonuts"
+              src="/oldMcDonuts.jpg"
+            />
+            <OldMcDonutsAd
+              title="Twisted Taters"
+              description="Butterfly Potatoes, Burgers, & more!"
+              href="/vendors"
+              buttonText="See More"
+              src="/twistedTaters.jpg"
+            />
           </>
         )
         }
         <TestimonialCarousel />
         <FacebookFeed />
-        { isFeatureEnabled("show_contact_form") &&
+        {isFeatureEnabled("show_contact_form") &&
           <div className="flex justify-center bg-foreground"><ContactForm theme="onDark" /></div>
         }
       </div>
