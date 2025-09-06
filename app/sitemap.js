@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const baseUrl = 'https://oldmcdonaldspumpkinpatchwv.com';
+const baseUrl = 'https://www.oldmcdonaldspumpkinpatchwv.com';
 
 // File names that define a routable page in App Router
 const PAGE_BASENAMES = new Set(['page.js', 'page.jsx', 'page.ts', 'page.tsx']);
