@@ -3,7 +3,8 @@ import styles from "./page.module.css";
 import { AndImage } from "@/components/andImage";
 
 export const metadata = {
-    title: "Night Maze"
+    title: "Night Maze",
+    description: "Brave the spooky Night Maze at Old McDonald’s Pumpkin Patch. Explore the corn maze after dark with hayrides, campfires, vendors, and fall night fun."
 }
 
 export const NightMaze = () => {

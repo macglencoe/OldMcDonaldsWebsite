@@ -22,7 +22,8 @@ import OneLaneRoadBanner from "@/components/home/oneLaneRoadBanner";
 
 
 export const metadata = {
-  title: "Home"
+  title: "Real Farm Fun - Old McDonald's Pumpkin Patch",
+  description: "Celebrate fall in Berkeley County, WV at Old McDonald’s Pumpkin Patch. Enjoy hayrides, a corn maze, petting zoo, flower fields, and family-friendly farm fun all season long."
 }
 
 export default async function Home() {

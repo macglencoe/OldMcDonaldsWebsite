@@ -7,7 +7,8 @@ import PageHeader from '@/components/pageHeader';
 import Action from '@/components/action';
 
 export const metadata = {
-    title: "Corn Maze"
+    title: "Corn Maze",
+    description: "Get lost in Old McDonald’s 10-acre corn maze in Inwood, WV. Try daytime and spooky night mazes, complete challenges, and enjoy fall family fun."
 }
 
 export const CornMaze = () => {
