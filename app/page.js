@@ -54,7 +54,7 @@ export default async function Home() {
     },
     telephone: "+1-304-839-2330",
     openingHours: ["Fr 13:00-18:00", "Sa 11:00-18:00", "Su 12:00-18:00"],
-    url: "https://oldmcdonaldspumpkinpatch.com"
+    url: "https://www.oldmcdonaldspumpkinpatch.com"
   };
 
 
