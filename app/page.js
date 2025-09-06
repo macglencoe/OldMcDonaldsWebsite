@@ -40,22 +40,78 @@ export default async function Home() {
   ];
 
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: "Old McDonald's Pumpkin Patch",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "1597 Arden Nollville Rd",
-      addressLocality: "Inwood",
-      addressRegion: "WV",
-      postalCode: "25428",
-      addressCountry: "US"
+  const canonicalBase = "https://www.oldmcdonaldspumpkinpatchwv.com";
+
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      name: "Old McDonald's Pumpkin Patch",
+      alternateName: "Old McDonald's Pumpkin Patch & Corn Maze",
+      url: canonicalBase,
+      logo: `${canonicalBase}/logo.png`,
+      image: [
+        `${canonicalBase}/hillview.jpg`,
+        `${canonicalBase}/entrance.jpg`,
+        `${canonicalBase}/pumpkinsCloseUp.jpg`,
+        `${canonicalBase}/hayrideGroupPhoto.jpg`,
+        `${canonicalBase}/sunflower.jpg`,
+        `${canonicalBase}/localMap.png`
+      ],
+      telephone: "+1-304-839-2330",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "1597 Arden Nollville Rd",
+        addressLocality: "Inwood",
+        addressRegion: "WV",
+        postalCode: "25428",
+        addressCountry: "US"
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 39.38273,
+        longitude: -78.04342
+      },
+      hasMap: `${canonicalBase}/map`,
+      sameAs: [
+        "https://www.facebook.com/oldmcdonaldspumpkinpatchandcornmaze",
+        "https://www.instagram.com/oldmcdonaldspumpkin/",
+        "https://www.tiktok.com/@glencoefarmwv"
+      ],
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: "Friday",
+          opens: "13:00",
+          closes: "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: "Saturday",
+          opens: "11:00",
+          closes: "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: "Sunday",
+          opens: "12:00",
+          closes: "18:00"
+        }
+      ],
+      priceRange: "$"
     },
-    telephone: "+1-304-839-2330",
-    openingHours: ["Fr 13:00-18:00", "Sa 11:00-18:00", "Su 12:00-18:00"],
-    url: "https://www.oldmcdonaldspumpkinpatch.com"
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "Old McDonald's Pumpkin Patch",
+      url: canonicalBase,
+      potentialAction: {
+        "@type": "SearchAction",
+        target: `${canonicalBase}/search?q={search_term_string}`,
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ];
 
 
 
