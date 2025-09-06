@@ -22,7 +22,7 @@ export default function OneLaneRoadBanner() {
                 </div>
                 <div className="flex flex-col md:flex-row gap-6 p-3 md:p-6">
                     <div className="border-4 border-x-transparent border-y-background flex-1">
-                        <Image src={'/olr-graphic.PNG'} width={1400} height={1400} className="p-2"/>
+                        <Image src={'/olr-graphic.PNG'} width={1400} height={1400} className="p-2" alt="One Lane Road Promotional Graphic: Live music at Old McDonald's"/>
                     </div>
                     <div className="flex flex-col flex-1 gap-3">
                         <h3 className="text-3xl text-background font-semibold">Live at Old McDonald's</h3>
