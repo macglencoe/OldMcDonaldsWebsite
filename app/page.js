@@ -21,6 +21,7 @@ import FloodBanner from "@/components/home/floodBanner";
 import AuxSearch from "@/components/home/auxSearch";
 import FarmSwapBanner from "@/components/home/farmSwapBanner";
 import OneLaneRoadBanner from "@/components/home/oneLaneRoadBanner";
+import { PiArrowDownBold, PiCaretDownBold } from "react-icons/pi";
 
 
 export const metadata = {
@@ -125,13 +126,19 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="bg-foreground px-3 md:px-4 py-8">
-        <ClientDashboard
-          updates={events && Array.isArray(updates) ? updates : []}
-          variant="grid"
-          markdownRenderer={(md) => <ReactMarkdown>{md}</ReactMarkdown>}
-          className="max-w-5xl mx-auto"
-        />
+      <div className="bg-foreground px-3 md:px-4 py-8 flex flex-col gap-10">
+        <div>
+          <ClientDashboard
+            updates={events && Array.isArray(updates) ? updates : []}
+            variant="grid"
+            markdownRenderer={(md) => <ReactMarkdown>{md}</ReactMarkdown>}
+            className="max-w-5xl mx-auto"
+          />
+        </div>
+        <div className="text-background/80 flex flex-col items-center">
+          <p className="uppercase text-center">Currently staged version of the website</p>
+          <PiCaretDownBold size={24} />
+        </div>
       </div>
       <div className={styles.wrapper}>
         {isFeatureEnabled("show_night_maze_ad", {
