@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Layout from "@/components/layout";
+import ReactMarkdown from "react-markdown";
+import { ClientDashboard, FsContent } from "../modules/client-dashboard";
 import { createFeatureGate } from "@/flags";
 import YearProgressBar from "@/components/yearProgress";
 import OldMcDonutsAd from "@/components/oldMcDonutsAd";
@@ -115,6 +117,7 @@ export default async function Home() {
 
 
 
+  const updates = await FsContent.list({ contentDir: "content" });
 
   return (
     <Layout>
@@ -122,6 +125,14 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <div className="bg-foreground px-3 md:px-4 py-8">
+        <ClientDashboard
+          updates={events && Array.isArray(updates) ? updates : []}
+          variant="grid"
+          markdownRenderer={(md) => <ReactMarkdown>{md}</ReactMarkdown>}
+          className="max-w-5xl mx-auto"
+        />
+      </div>
       <div className={styles.wrapper}>
         {isFeatureEnabled("show_night_maze_ad", {
           now: new Date()
