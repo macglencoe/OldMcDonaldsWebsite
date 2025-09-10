@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Layout from "@/components/layout";
-import ReactMarkdown from "react-markdown";
-import { ClientDashboard, FsContent } from "../modules/client-dashboard";
+import { ClientDashboard, FsContent, styledMarkdownRenderer } from "../modules/client-dashboard";
 import { createFeatureGate } from "@/flags";
 import YearProgressBar from "@/components/yearProgress";
 import OldMcDonutsAd from "@/components/oldMcDonutsAd";
@@ -131,7 +130,7 @@ export default async function Home() {
           <ClientDashboard
             updates={events && Array.isArray(updates) ? updates : []}
             variant="grid"
-            markdownRenderer={(md) => <ReactMarkdown>{md}</ReactMarkdown>}
+            markdownRenderer={styledMarkdownRenderer}
             className="max-w-5xl mx-auto"
           />
         </div>

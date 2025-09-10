@@ -1,6 +1,6 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
-import { createUpdateDetailPage, createGenerateStaticParams, FsContent } from "../../../modules/client-dashboard";
+import { createUpdateDetailPage, createGenerateStaticParams, FsContent, styledMarkdownRenderer } from "../../../modules/client-dashboard";
+import Layout from '../../../components/layout'
 
 const adapter = {
   list: () => FsContent.list({ contentDir: "content" }),
@@ -8,10 +8,18 @@ const adapter = {
   getBySlug: (slug: string) => FsContent.getBySlug(slug, { contentDir: "content" }),
 };
 
-const Page = createUpdateDetailPage(adapter, {
-  markdownRenderer: (md) => <ReactMarkdown>{md}</ReactMarkdown>,
+const Body = createUpdateDetailPage(adapter, {
+  markdownRenderer: styledMarkdownRenderer,
   backHref: "/",
 });
+
+const Page = (props: { params: { slug: string } }) => {
+  return (
+    <Layout>
+      <Body {...props} />
+    </Layout>
+  );
+};
 
 export default Page;
 export const generateStaticParams = createGenerateStaticParams(adapter);
