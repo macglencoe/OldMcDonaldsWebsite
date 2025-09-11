@@ -2,7 +2,7 @@
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
 import { useEffect, useState } from 'react';
 
-export default function ContactForm({ theme, forceWebForm = false }) {
+export default function ContactForm({ theme }) {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [errors, setErrors] = useState({});
     const [submitted, setSubmitted] = useState(false);
@@ -87,8 +87,8 @@ export default function ContactForm({ theme, forceWebForm = false }) {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const usingGoogleForms = forceWebForm ? false : (forceGoogleFormsClient || isFeatureEnabled('use_google_forms'));
-    const showContactForm = forceWebForm ? true : isFeatureEnabled('show_contact_form');
+    const usingGoogleForms = isFeatureEnabled('use_google_forms');
+    const showContactForm = isFeatureEnabled('show_contact_form');
 
     if (usingGoogleForms) {
         const href = formLinks.contact || '#';
