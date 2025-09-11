@@ -3,6 +3,7 @@ import ContactForm from '@/components/contactForm'
 export const metadata = {
   title: 'Test Contact Form',
   description: 'Isolated page to test contact form email delivery',
+  robots: { index: false, follow: false },
 }
 
 export default function TestContactFormPage() {
@@ -14,4 +15,3 @@ export default function TestContactFormPage() {
     </div>
   )
 }
-

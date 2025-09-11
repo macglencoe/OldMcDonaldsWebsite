@@ -53,8 +53,7 @@ export default function ContactForm({ theme, forceWebForm = false }) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    to: ['mcpaul1694@gmail.com', 'sgmcdonald2@gmail.com', 'oldmcdonaldsglencoefarm@gmail.com'],
-                    subject: 'Contact Form Submission',
+                    kind: 'contact',
                     text: `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`,
                     html: `<p>Name: ${formData.name}</p><p>Email: ${formData.email}</p><p>${formData.message}</p>`,
                 }),
@@ -68,7 +67,7 @@ export default function ContactForm({ theme, forceWebForm = false }) {
             } else {
                 setResponseMessage(`Submission failed: ${data.error || 'Unknown error'}`);
                 // enable client-side fallback for 24h on limit errors
-                if (response.status === 429 || /limit|quota|rate|daily/i.test(String(data.error))) {
+                if (response.status === 429 || data?.code === 'LIMIT_EXCEEDED' || /limit|quota|rate|daily/i.test(String(data.error))) {
                     try {
                         const until = Date.now() + 24 * 60 * 60 * 1000; // 24h
                         localStorage.setItem('email_disabled_until', String(until));

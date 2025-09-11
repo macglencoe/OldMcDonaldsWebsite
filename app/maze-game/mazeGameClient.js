@@ -75,8 +75,7 @@ export default function MazeGameClient() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    to: ['oldmcdonaldsglencoefarm@gmail.com', 'mcpaul1694@gmail.com'],
-                    subject: 'Maze Game Entry',
+                    kind: 'maze',
                     text: `Name: ${name}\nPhone Number: ${phone}`,
                     html: `<p>Name: ${name}</p><p>Phone Number: ${phone}</p>`,
                 }),
@@ -103,7 +102,7 @@ export default function MazeGameClient() {
             } else {
                 alert(`Submission failed: ${data.error || 'Unknown error'}`);
                 // enable client-side fallback for 24h on limit errors
-                if (response.status === 429 || /limit|quota|rate|daily/i.test(String(data.error))) {
+                if (response.status === 429 || data?.code === 'LIMIT_EXCEEDED' || /limit|quota|rate|daily/i.test(String(data.error))) {
                     try {
                         const until = Date.now() + 24 * 60 * 60 * 1000 // 24h
                         localStorage.setItem('email_disabled_until', String(until))
