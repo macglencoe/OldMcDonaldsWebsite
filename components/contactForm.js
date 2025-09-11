@@ -1,12 +1,21 @@
 "use client"
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function ContactForm({ theme }) {
+export default function ContactForm({ theme, forceWebForm = false }) {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [errors, setErrors] = useState({});
     const [submitted, setSubmitted] = useState(false);
     const [responseMessage, setResponseMessage] = useState(null);
+    const [formLinks, setFormLinks] = useState({ contact: '' });
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        fetch('/data/form-links.json')
+            .then(res => res.json())
+            .then(setFormLinks)
+            .catch(() => setFormLinks({ contact: '' }));
+    }, []);
 
     const validate = () => {
         const errors = {};
@@ -59,8 +68,33 @@ export default function ContactForm({ theme }) {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    if(!isFeatureEnabled("show_contact_form")) {
-        return null
+    const usingGoogleForms = forceWebForm ? false : isFeatureEnabled('use_google_forms');
+    const showContactForm = forceWebForm ? true : isFeatureEnabled('show_contact_form');
+
+    if (usingGoogleForms) {
+        const href = formLinks.contact || '#';
+        const disabled = !formLinks.contact;
+        return (
+            <div className={`flex flex-col items-center py-6 px-12 m-6 rounded-2xl ` +
+                (theme === 'onDark' ? 'bg-background/10' : ' text-foreground')}>
+                <h2 className="text-4xl font-bold text-center text-background mb-4">Contact Us</h2>
+                <p className="text-background mb-4 text-center">
+                    Our web form is temporarily routed to Google Forms while we fix some things on our end.
+                </p>
+                <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`bg-accent hover:bg-background !text-background hover:!text-accent cursor-pointer font-semibold px-5 py-2 rounded-full transition-all duration-200 shadow-sm ${disabled ? 'pointer-events-none opacity-60' : ''}`}
+                >
+                    Open Contact Form
+                </a>
+            </div>
+        );
+    }
+
+    if (!showContactForm) {
+        return null;
     }
 
     return (

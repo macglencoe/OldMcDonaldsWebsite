@@ -60,7 +60,11 @@
     ]
   },
   "show_contact_form": {
-    "default": false,
+    "default": true,
+    "conditions": []
+  },
+  "use_google_forms": {
+    "default": true,
     "conditions": []
   },
   "show_facebook_feed": {
