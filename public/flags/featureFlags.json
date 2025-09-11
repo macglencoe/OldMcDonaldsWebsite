@@ -64,7 +64,7 @@
     "conditions": []
   },
   "use_google_forms": {
-    "default": true,
+    "default": false,
     "conditions": []
   },
   "show_facebook_feed": {
