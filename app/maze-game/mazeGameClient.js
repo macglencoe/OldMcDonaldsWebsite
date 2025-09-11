@@ -2,11 +2,13 @@
 
 import EntryForm from '@/components/mazeGameEntryForm'
 import { useState, useEffect } from 'react'
+import { isFeatureEnabled } from '@/public/lib/featureEvaluator'
 
 export default function MazeGameClient() {
     const [mazeData, setMazeData] = useState({})
     const [foundCodes, setFoundCodes] = useState([])
     const [hasSubmitted, setHasSubmitted] = useState(false)
+    const [formLinks, setFormLinks] = useState({ mazeEntry: '' })
     const currentYear = String(new Date().getFullYear())
 
     useEffect(() => {
@@ -17,6 +19,12 @@ export default function MazeGameClient() {
             .then(res => res.json())
             .then(setMazeData)
             .catch(err => console.error(err))
+
+        // load form links
+        fetch('/data/form-links.json')
+            .then(res => res.json())
+            .then(setFormLinks)
+            .catch(() => setFormLinks({ mazeEntry: '' }))
 
         // load found codes
         const stored = localStorage.getItem('maze-game')
@@ -138,12 +146,25 @@ export default function MazeGameClient() {
                         </p>
                         <p className="mt-2">Fill out the form below to enter the drawing:</p>
 
-                        {!hasSubmitted ? (
-                            <EntryForm onSubmit={handleEntrySubmit} />
+                        {isFeatureEnabled('use_google_forms') ? (
+                            <div className="mt-4">
+                                <a
+                                    href={formLinks.mazeEntry || '#'}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`inline-block bg-accent hover:bg-accent/70 !text-white font-semibold px-5 py-2 rounded ${!formLinks.mazeEntry ? 'pointer-events-none opacity-60' : ''}`}
+                                >
+                                    Open Maze Entry Form
+                                </a>
+                            </div>
                         ) : (
-                            <p className="mt-4 text-green-600">
-                                Thanks for entering! We’ve recorded your submission for {currentYear}.
-                            </p>
+                            !hasSubmitted ? (
+                                <EntryForm onSubmit={handleEntrySubmit} />
+                            ) : (
+                                <p className="mt-4 text-green-600">
+                                    Thanks for entering! We’ve recorded your submission for {currentYear}.
+                                </p>
+                            )
                         )}
                     </div>
                 )}
