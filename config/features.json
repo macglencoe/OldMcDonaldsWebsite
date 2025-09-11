@@ -1,3 +1,8 @@
 [
-    
+    {
+        "title": "Contact Page",
+        "description": "Adding a new page '/contact' for general contact information, including for business inquiries",
+        "prUrl": "https://github.com/macglencoe/OldMcDonaldsWebsite/pull/50",
+        "preview": "https://old-mcdonalds-website-git-feature-contact-page-old-mc-donald-s.vercel.app"
+    }
 ]
