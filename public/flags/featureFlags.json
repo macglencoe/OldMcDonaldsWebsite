@@ -60,7 +60,7 @@
     ]
   },
   "show_contact_form": {
-    "default": true,
+    "default": false,
     "conditions": []
   },
   "show_facebook_feed": {
