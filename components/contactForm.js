@@ -1,4 +1,5 @@
 "use client"
+import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
 import { useState } from 'react';
 
 export default function ContactForm({ theme }) {
@@ -57,6 +58,10 @@ export default function ContactForm({ theme }) {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
+    if(!isFeatureEnabled("show_contact_form")) {
+        return null
+    }
 
     return (
         <div className={`flex flex-col items-center py-6 px-12 m-6 rounded-2xl ` +
