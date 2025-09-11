@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
-import sendgrid from "@sendgrid/mail";
+import { Resend } from 'resend';
 
-sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req) {
     //return NextResponse.json({ error: "Not Implemented Yet" }, { status: 501 });
 
-    if (process.env.SENDGRID_API_KEY === undefined) {
-        return NextResponse.json({ error: "Missing SendGrid API key" }, { status: 500 });
+    if (!process.env.RESEND_API_KEY) {
+        return NextResponse.json({ error: "Missing RESEND_API_KEY" }, { status: 500 });
     }
 
     const body = await req.json();
@@ -18,17 +18,24 @@ export async function POST(req) {
     }
 
     try {
-        await sendgrid.send({
-            to,
-            from: { email: "no-reply@oldmcdonaldspumpkinpatchwv.com", name: "Old McDonald's Pumpkin Patch" },
+        const toList = Array.isArray(to) ? to : [to];
+
+        const { data, error } = await resend.emails.send({
+            from: "Old McDonald's Pumpkin Patch <no-reply@oldmcdonaldspumpkinpatchwv.com>",
+            to: toList,
             subject,
             text,
             html,
         });
 
-        return NextResponse.json({ success: true });
+        if (error) {
+            console.error('Resend error:', error);
+            return NextResponse.json({ error: `Failed to send email: ${error.message || error}` }, { status: 500 });
+        }
+
+        return NextResponse.json({ success: true, id: data?.id || null });
     } catch (error) {
-        console.error("SendGrid error:", error);
-        return NextResponse.json({ error: "Failed to send email: "+error }, { status: 500 });
+        console.error('Resend exception:', error);
+        return NextResponse.json({ error: `Failed to send email: ${error?.message || error}` }, { status: 500 });
     }
 }
