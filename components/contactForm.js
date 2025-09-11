@@ -8,6 +8,7 @@ export default function ContactForm({ theme, forceWebForm = false }) {
     const [submitted, setSubmitted] = useState(false);
     const [responseMessage, setResponseMessage] = useState(null);
     const [formLinks, setFormLinks] = useState({ contact: '' });
+    const [forceGoogleFormsClient, setForceGoogleFormsClient] = useState(false);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -15,6 +16,17 @@ export default function ContactForm({ theme, forceWebForm = false }) {
             .then(res => res.json())
             .then(setFormLinks)
             .catch(() => setFormLinks({ contact: '' }));
+
+        // check local fallback cooldown
+        try {
+            const untilRaw = localStorage.getItem('email_disabled_until');
+            if (untilRaw) {
+                const until = parseInt(untilRaw, 10);
+                if (!Number.isNaN(until) && Date.now() < until) {
+                    setForceGoogleFormsClient(true);
+                }
+            }
+        } catch {}
     }, []);
 
     const validate = () => {
@@ -55,6 +67,14 @@ export default function ContactForm({ theme, forceWebForm = false }) {
                 setFormData({ name: '', email: '', message: '' });
             } else {
                 setResponseMessage(`Submission failed: ${data.error || 'Unknown error'}`);
+                // enable client-side fallback for 24h on limit errors
+                if (response.status === 429 || /limit|quota|rate|daily/i.test(String(data.error))) {
+                    try {
+                        const until = Date.now() + 24 * 60 * 60 * 1000; // 24h
+                        localStorage.setItem('email_disabled_until', String(until));
+                        setForceGoogleFormsClient(true);
+                    } catch {}
+                }
             }
         } catch (error) {
             console.error('Submission error:', error);
@@ -68,7 +88,7 @@ export default function ContactForm({ theme, forceWebForm = false }) {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const usingGoogleForms = forceWebForm ? false : isFeatureEnabled('use_google_forms');
+    const usingGoogleForms = forceWebForm ? false : (forceGoogleFormsClient || isFeatureEnabled('use_google_forms'));
     const showContactForm = forceWebForm ? true : isFeatureEnabled('show_contact_form');
 
     if (usingGoogleForms) {
@@ -78,9 +98,15 @@ export default function ContactForm({ theme, forceWebForm = false }) {
             <div className={`flex flex-col items-center py-6 px-12 m-6 rounded-2xl ` +
                 (theme === 'onDark' ? 'bg-background/10' : ' text-foreground')}>
                 <h2 className="text-4xl font-bold text-center text-background mb-4">Contact Us</h2>
-                <p className="text-background mb-4 text-center">
-                    Our web form is temporarily routed to Google Forms while we fix some things on our end.
-                </p>
+                {forceGoogleFormsClient ? (
+                    <div className="w-full max-w-xl mb-4 p-3 rounded-md bg-accent/80 text-background border border-accent text-center">
+                        <strong>High traffic detected:</strong> we switched to our backup form to ensure your message gets through.
+                    </div>
+                ) : (
+                    <p className="text-background mb-4 text-center">
+                        Our web form is temporarily routed to Google Forms while we fix some things on our end.
+                    </p>
+                )}
                 <a
                     href={href}
                     target="_blank"

@@ -9,6 +9,7 @@ export default function MazeGameClient() {
     const [foundCodes, setFoundCodes] = useState([])
     const [hasSubmitted, setHasSubmitted] = useState(false)
     const [formLinks, setFormLinks] = useState({ mazeEntry: '' })
+    const [forceGoogleFormsClient, setForceGoogleFormsClient] = useState(false)
     const currentYear = String(new Date().getFullYear())
 
     useEffect(() => {
@@ -49,6 +50,17 @@ export default function MazeGameClient() {
                 console.error('Could not parse submissions', e)
             }
         }
+
+        // check local fallback cooldown shared with contact form
+        try {
+            const untilRaw = localStorage.getItem('email_disabled_until')
+            if (untilRaw) {
+                const until = parseInt(untilRaw, 10)
+                if (!Number.isNaN(until) && Date.now() < until) {
+                    setForceGoogleFormsClient(true)
+                }
+            }
+        } catch {}
     }, [currentYear])
 
     const allFound =
@@ -90,6 +102,14 @@ export default function MazeGameClient() {
                 alert(`Thanks for playing, ${name}! Your entry for ${currentYear} has been recorded. If you win the drawing, we will contact you at ${phone}.`);
             } else {
                 alert(`Submission failed: ${data.error || 'Unknown error'}`);
+                // enable client-side fallback for 24h on limit errors
+                if (response.status === 429 || /limit|quota|rate|daily/i.test(String(data.error))) {
+                    try {
+                        const until = Date.now() + 24 * 60 * 60 * 1000 // 24h
+                        localStorage.setItem('email_disabled_until', String(until))
+                        setForceGoogleFormsClient(true)
+                    } catch {}
+                }
             }
         } catch (error) {
             console.error('Submission error:', error);
@@ -146,8 +166,13 @@ export default function MazeGameClient() {
                         </p>
                         <p className="mt-2">Fill out the form below to enter the drawing:</p>
 
-                        {isFeatureEnabled('use_google_forms') ? (
+                        { (forceGoogleFormsClient || isFeatureEnabled('use_google_forms')) ? (
                             <div className="mt-4">
+                                {forceGoogleFormsClient && (
+                                    <div className="mb-3 p-3 rounded-md bg-accent/80 text-foreground border border-accent inline-block">
+                                        <strong>High traffic detected:</strong> using our backup form so your entry is recorded.
+                                    </div>
+                                )}
                                 <a
                                     href={formLinks.mazeEntry || '#'}
                                     target="_blank"
