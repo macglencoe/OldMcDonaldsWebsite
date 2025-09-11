@@ -2,7 +2,7 @@
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
 import { useEffect, useState } from 'react';
 
-export default function ContactForm({ theme, forceWebForm = false }) {
+export default function ContactForm({ theme }) {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [errors, setErrors] = useState({});
     const [submitted, setSubmitted] = useState(false);
