@@ -132,6 +132,8 @@ export default async function Home() {
         }
 
         <Season />
+        <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
+        <Rates />
 
         <FarmSwapBanner />
 
@@ -140,8 +142,6 @@ export default async function Home() {
         }
 
 
-        <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
-        <Rates />
 
         {isFeatureEnabled("show_vendor_promos") && (
           <>
