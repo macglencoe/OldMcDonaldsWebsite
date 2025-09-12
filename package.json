@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "cross-env TAILWIND_DISABLE_OXIDE=1 next build",
     "start": "next start",
     "lint": "next lint",
     "postbuild": "node scripts/crawlHtmlIndex.js"
@@ -35,8 +35,13 @@
     "@babel/parser": "^7.28.3",
     "@babel/traverse": "^7.28.3",
     "@tailwindcss/postcss": "^4",
+    "cross-env": "^7.0.3",
     "cheerio": "^1.1.2",
     "fast-glob": "^3.3.3",
     "tailwindcss": "^4"
+  },
+  "optionalDependencies": {
+    "@tailwindcss/oxide": "^4",
+    "@tailwindcss/oxide-linux-x64-gnu": "^4"
   }
 }
