@@ -163,7 +163,6 @@ export default function ContactForm({ theme }) {
             }
         >
             <h2 className={`text-3xl md:text-4xl font-bold text-center ${theme === 'onDark' ? 'text-background' : 'text-gray-900'} mb-2`}>Contact Us</h2>
-            <p className={`text-center mb-6 ${theme === 'onDark' ? 'text-background/80' : 'text-gray-600'}`}>We usually respond within one business day.</p>
             {!submitted && (
                 <form className="w-full max-w-2xl mx-auto" onSubmit={handleSubmit} aria-live="polite">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
