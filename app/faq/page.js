@@ -14,7 +14,7 @@ export default function FAQEditor() {
     const [faqState, setFaqState] = useState(faqData);
     return (
         <Layout>
-            <div className="flex flex-col gap-5">
+            <div className="stack">
                 {
                     faqState.map((item, index) => {
                         return (
@@ -48,19 +48,20 @@ export default function FAQEditor() {
 
 function FAQInput({ questionValue, answerValue, onChange, onDelete, onAddBelow }) {
     return (
-        <div className="flex flex-col gap-2 border border-foreground/20 m-3 p-3 rounded-2xl">
-            <div>
-                <label className="mr-2">Question:</label>
-                <input className="w-full" name="question" type="text" value={questionValue} onChange={onChange} />
-            </div>
-           
-            <div className="justify-stretch">
-                <label className="mr-2">Answer:</label>
-                <input className="w-full" name="answer" type="text" value={answerValue} onChange={onChange} />
-            </div>
-            <div className="flex flex-row justify-between">
-                <button className="px-2 py-1 bg-foreground text-background w-fit cursor-pointer" onClick={onDelete}>Delete</button>
-                <button className="px-2 py-1 bg-foreground text-background w-fit cursor-pointer" onClick={onAddBelow}>Add Question Below</button>
+        <div className="card">
+            <div className="card-body stack">
+                <div className="field">
+                    <label className="label">Question</label>
+                    <input className="input" name="question" type="text" value={questionValue} onChange={onChange} />
+                </div>
+                <div className="field">
+                    <label className="label">Answer</label>
+                    <textarea className="textarea" name="answer" value={answerValue} onChange={onChange} />
+                </div>
+                <div className="flex flex-row justify-between">
+                    <button className="btn btn-danger" onClick={onDelete}>Delete</button>
+                    <button className="btn" onClick={onAddBelow}>Add Question Below</button>
+                </div>
             </div>
         </div>
     );

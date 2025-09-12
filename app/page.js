@@ -95,7 +95,7 @@ export default function Page() {
     ]
     return (
         <Layout>
-            <div className="max-w-5xl mx-auto space-y-10 py-10">
+            <div className="space-y-8">
                 <Panel links={Admininks} title="Admin Directory" />
                 <Panel links={formsLinks} title="Forms" />
                 <Panel links={externalLinks} title="External Links" />
@@ -183,31 +183,35 @@ function AdminDirectory() {
 
 function Panel({ links, title }) {
     return (
-        <div className="rounded-xl overflow-hidden">
-            <h1 className="text-3xl py-2 px-4 w-full bg-accent/20 uppercase">{title}</h1>
-            <div className="flex flex-row flex-wrap gap-2">
+        <div className="card overflow-hidden">
+            <div className="card-header text-2xl uppercase">{title}</div>
+            <div className="k-grid p-3">
                 {links.map(({ title: linkTitle, serviceName, href, icon, notImplemented }) => {
                     const Icon = icon
 
                     if (href && !notImplemented) {
                         return (
-                            <a key={href} href={href} target="_blank" rel="noopener noreferrer" className="flex-1 min-w-fit flex flex-row items-center gap-2 py-2 px-4 hover:bg-accent/20 relative">
-                                <Icon size={38} color="var(--accent)" />
-                                <div>
-                                    <p className="font-bold">{linkTitle}</p>
-                                    <p className="text-sm">{serviceName}</p>
+                            <a key={href} href={href} target="_blank" rel="noopener noreferrer" className="card p-3 hover:shadow-md transition-shadow">
+                                <div className="row">
+                                    <Icon size={38} color="var(--accent)" />
+                                    <div>
+                                        <p className="font-bold">{linkTitle}</p>
+                                        <p className="text-sm opacity-75">{serviceName}</p>
+                                    </div>
                                 </div>
                             </a>
                         );
                     }
                     else {
                         return (
-                            <div key={href} className="flex-1 min-w-fit flex flex-row items-center gap-2 py-2 px-4 hover:bg-accent/20 relative">
-                                <Icon size={38} color="var(--foreground)" />
-                                <div className="flex flex-col">
-                                    <p className="font-bold">{linkTitle}</p>
-                                    <p className="text-sm text-foreground/50">{serviceName}</p>
-                                    <p className="text-sm text-foreground/50">Not yet implemented</p>
+                            <div key={href} className="card p-3">
+                                <div className="row">
+                                    <Icon size={38} color="var(--foreground)" />
+                                    <div className="flex flex-col">
+                                        <p className="font-bold">{linkTitle}</p>
+                                        <p className="text-sm text-foreground/50">{serviceName}</p>
+                                        <p className="text-sm text-foreground/50">Not yet implemented</p>
+                                    </div>
                                 </div>
                             </div>
                         )

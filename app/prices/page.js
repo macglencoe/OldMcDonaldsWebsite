@@ -10,25 +10,21 @@ export default function Prices() {
 
     return (
         <Layout>
-            {
-                Object.keys(priceState).map((key) => {
-                    return (
-                        <div key={key} className="p-4 flex flex-col gap-2">
-                            <PriceInput 
-                                key={key} 
-                                title={key}
-                                amountValue={priceState[key].amount} 
-                                perValue={priceState[key].per} 
-                                onChange={(e) => {
-                                    const newPrices = { ...priceState };
-                                    newPrices[key][e.target.name] = e.target.value;
-                                    setPriceState(newPrices);
-                                }}
-                            />
-                        </div>
-                    )
-                })
-            }
+            <div className="k-grid">
+                {Object.keys(priceState).map((key) => (
+                    <PriceInput
+                        key={key}
+                        title={key}
+                        amountValue={priceState[key].amount}
+                        perValue={priceState[key].per}
+                        onChange={(e) => {
+                            const newPrices = { ...priceState };
+                            newPrices[key][e.target.name] = e.target.value;
+                            setPriceState(newPrices);
+                        }}
+                    />
+                ))}
+            </div>
             <CommitPanel content={priceState} filePath="public/data/pricing.json" title="Update pricing" />
         </Layout>
     )
@@ -36,9 +32,9 @@ export default function Prices() {
 
 function PriceAmountInput( { value, onChange }) {
     return (
-        <div>
-            <label>Amount:</label>
-            <input value={value} name="amount" type="number" onChange={onChange}/>
+        <div className="field">
+            <label className="label">Amount</label>
+            <input className="input" value={value} name="amount" type="number" step="0.01" min="0" onChange={onChange}/>
         </div>
     )
 }
@@ -46,11 +42,15 @@ function PriceAmountInput( { value, onChange }) {
 
 function PriceInput( { title, amountValue, perValue, onChange}) {
     return (
-        <div className="p-3 border border-foreground/20 rounded-2xl">
-            <label>{title}</label>
-            <PriceAmountInput value={amountValue} onChange={onChange}/>
-            <label>Per:</label>
-            <input value={perValue} name="per" type="text" onChange={onChange}/>
+        <div className="card">
+            <div className="card-header capitalize">{title.replaceAll('-', ' ')}</div>
+            <div className="card-body stack">
+                <PriceAmountInput value={amountValue} onChange={onChange}/>
+                <div className="field">
+                    <label className="label">Per</label>
+                    <input className="input" value={perValue} name="per" type="text" onChange={onChange}/>
+                </div>
+            </div>
         </div>
     )
 }

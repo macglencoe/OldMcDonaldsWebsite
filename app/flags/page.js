@@ -73,13 +73,13 @@ export default function Home() {
       <div className="flex flex-row gap-2 px-4 pt-4">
         <button
           onClick={resetLocalFlags}
-          className="text-sm text-foreground font-bold tracking-wider uppercase py-1 px-2 w-fit border-[1px] border-foreground/20 rounded-lg cursor-pointer"
+          className="btn"
         >
           Reset Local Flags
         </button>
         <button
           onClick={clearAllLocalStorage}
-          className="text-sm text-foreground font-bold tracking-wider uppercase py-1 px-2 w-fit border-[1px] border-foreground/20 rounded-lg cursor-pointer"
+          className="btn"
         >
           Clear All LocalStorage
         </button>
@@ -87,8 +87,9 @@ export default function Home() {
       {
         Object.keys(featureFlagsState).map((key) => {
           return (
-            <div key={key} className="p-4 flex flex-col gap-2">
-              <h2>{key}</h2>
+            <div key={key} className="card">
+              <div className="card-header text-lg">{key}</div>
+              <div className="card-body flex flex-col gap-3">
               <TrueFalseSelector
                 label="Default"
                 value={String(featureFlagsState[key].default)}
@@ -98,8 +99,9 @@ export default function Home() {
                   setFeatureFlagsState(newFlags);
                 }}
               />
-              <div className="rounded-lg border-[1px] border-foreground/20 py-2 px-4">
-                <h3 className="mb-2 font-bold">Conditions</h3>
+              <div className="card">
+                <div className="card-header">Conditions</div>
+                <div className="card-body">
                 <div className="flex flex-row">
                   <label className="mr-2">Operator:</label>
                   <ConditionOperatorSelector
@@ -196,7 +198,7 @@ export default function Home() {
                             newFlags[key].conditions.splice(index, 1);
                             setFeatureFlagsState(newFlags);
                           }}
-                          className="text-sm text-foreground font-bold tracking-wider uppercase my-2 py-1 px-2 w-fit border-[1px] border-foreground/20 rounded-lg cursor-pointer"
+                          className="btn"
                         >
                           Remove Condition
                         </button>
@@ -212,14 +214,16 @@ export default function Home() {
                       newFlags[key].conditions.push({ criteria: "time", operator: "after", value: new Date().toISOString() });
                       setFeatureFlagsState(newFlags);
                     }}
-                    className="text-sm text-foreground font-bold tracking-wider uppercase my-2 py-1 px-2 w-fit border-[1px] border-foreground/20 rounded-lg cursor-pointer"
+                    className="btn"
                   >
                     Add Condition
                   </button>
                 </div>
+                </div>
               </div>
-              <div className="rounded-lg border-[1px] border-foreground/20 py-2 px-4 flex flex-col gap-2">
-                <h3 className="mb-2 font-bold">Arguments</h3>
+              <div className="card">
+                <div className="card-header">Arguments</div>
+                <div className="card-body flex flex-col gap-2">
                 {featureFlagsState[key].args && featureFlagsState[key].args.map((arg, index) => {
                   return (
                     <div key={index} className="flex flex-col border-l-[2px] border-foreground/20 pl-2">
@@ -302,9 +306,8 @@ export default function Home() {
                         const newFlags = { ...featureFlagsState };
                         newFlags[key].args.splice(index, 1);
                         setFeatureFlagsState(newFlags);
-                      }
-                      }
-                        className="text-sm text-foreground font-bold tracking-wider uppercase my-2 py-1 px-2 w-fit border-[1px] border-foreground/20 rounded-lg cursor-pointer"
+                      }}
+                        className="btn"
                       >
                         Remove Argument
                       </button>
@@ -313,7 +316,7 @@ export default function Home() {
                   )
                 })
                 }
-                <button className="text-sm text-foreground font-bold tracking-wider uppercase my-2 py-1 px-2 w-fit border-[1px] border-foreground/20 rounded-lg cursor-pointer"
+                <button className="btn"
                   onClick={() => {
                     const newFlags = { ...featureFlagsState };
                     if (!Array.isArray(newFlags[key].args)) newFlags[key].args = [];
@@ -322,6 +325,8 @@ export default function Home() {
                   }}
 
                 >Add Argument</button>
+                </div>
+              </div>
               </div>
             </div>
           )
@@ -358,9 +363,9 @@ function TimeArray({ values, onChange }) {
 
 function ParamTypeSelector({ value, onChange }) {
   return (
-    <div>
-      <label className="mr-2">Type:</label>
-      <select value={value} onChange={onChange}>
+    <div className="field">
+      <label className="label">Type</label>
+      <select className="select" value={value} onChange={onChange}>
         <option value="string">String</option>
         <option value="number">Number</option>
         <option value="boolean">Boolean</option>
@@ -372,16 +377,18 @@ function ParamTypeSelector({ value, onChange }) {
 
 function BasicTextInput({ value, onChange }) {
   return (
-    <div>
-      <input type="text" value={value} onChange={onChange} />
+    <div className="field">
+      <label className="label">Value</label>
+      <input className="input" type="text" value={value} onChange={onChange} />
     </div>
   );
 }
 
 function ConditionOperatorSelector({ value, onChange }) {
   return (
-    <div>
-      <select value={value} onChange={onChange}>
+    <div className="field">
+      <label className="label">Group Operator</label>
+      <select className="select" value={value} onChange={onChange}>
         <option value="AND">AND</option>
         <option value="OR">OR</option>
       </select>
@@ -391,8 +398,9 @@ function ConditionOperatorSelector({ value, onChange }) {
 
 function TimeOperatorSelector({ value, onChange }) {
   return (
-    <div>
-      <select value={value} onChange={onChange}>
+    <div className="field">
+      <label className="label">Time operator</label>
+      <select className="select" value={value} onChange={onChange}>
         <option value="after">After</option>
         <option value="before">Before</option>
       </select>
@@ -414,8 +422,9 @@ function TimeSelector({ value, onChange }) {
   const MM = pad(date.getMinutes());
   const localValue = `${yyyy}-${mm}-${dd}T${HH}:${MM}`;
   return (
-    <div>
-      <input type="datetime-local" value={localValue} onChange={onChange} />
+    <div className="field">
+      <label className="label">Time</label>
+      <input className="input" type="datetime-local" value={localValue} onChange={onChange} />
     </div>
   );
 }
@@ -429,15 +438,17 @@ function ConditionCriteriaSelector({ value, onChange }) {
   ]
 
   return (
-    <div className="flex flex-row">
-      <label>Criteria type:</label>
-      <select value={value} onChange={onChange}>
+    <div className="row items-end">
+      <div className="field">
+        <label className="label">Criteria type</label>
+        <select className="select" value={value} onChange={onChange}>
         {options.map((option) => (
           <option key={option} value={option}>
             {option}
           </option>
         ))}
-      </select>
+        </select>
+      </div>
     </div>
   );
 }
@@ -445,9 +456,9 @@ function ConditionCriteriaSelector({ value, onChange }) {
 
 function EnvOperatorSelector({ value, onChange }) {
   return (
-    <div>
-      <label className="mr-2">Env operator:</label>
-      <select value={value} onChange={onChange}>
+    <div className="field">
+      <label className="label">Env operator</label>
+      <select className="select" value={value} onChange={onChange}>
         <option value="equals">Equals</option>
         <option value="in">In List</option>
       </select>
@@ -458,9 +469,10 @@ function EnvOperatorSelector({ value, onChange }) {
 function CsvArrayInput({ label, values = [], onChange }) {
   const csv = Array.isArray(values) ? values.join(",") : "";
   return (
-    <div>
-      {label && <label className="mr-2">{label}:</label>}
+    <div className="field">
+      {label && <label className="label">{label}</label>}
       <input
+        className="input"
         type="text"
         value={csv}
         onChange={(e) => {
@@ -478,9 +490,9 @@ function CsvArrayInput({ label, values = [], onChange }) {
 
 function TrueFalseSelector({ label, value, onChange }) {
   return (
-    <div>
-      <label>{label}:</label>
-      <select value={value} onChange={onChange}>
+    <div className="field">
+      <label className="label">{label}</label>
+      <select className="select" value={value} onChange={onChange}>
         <option value="true">True</option>
         <option value="false">False</option>
       </select>

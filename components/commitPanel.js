@@ -146,69 +146,53 @@ export default function CommitPanel({ content, filePath, title = "Commit" }) {
 
   return (
     <div className="m-3 p-3 rounded-2xl border border-foreground/20">
-      <div className="flex flex-row gap-2">
-        <button
-          disabled={isCommitting}
-          onClick={() => prepareCommit(["cms", "main"], defaultMessage)}
-          className="bg-blue-500 hover:bg-blue-700 disabled:opacity-50 text-white font-bold py-2 px-4 rounded"
-        >
+      <div className="row">
+        <button disabled={isCommitting} onClick={() => prepareCommit(["cms", "main"], defaultMessage)} className="btn btn-primary">
           Commit to CMS + Main
         </button>
-        <button
-          disabled={isCommitting}
-          onClick={() => prepareCommit(["testing"], defaultMessage)}
-          className="bg-green-500 hover:bg-green-700 disabled:opacity-50 text-white font-bold py-2 px-4 rounded"
-        >
+        <button disabled={isCommitting} onClick={() => prepareCommit(["testing"], defaultMessage)} className="btn btn-success">
           Commit to Testing
         </button>
       </div>
 
       {showConfirm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-background text-foreground max-w-4xl w-[90%] max-h-[80vh] overflow-auto rounded-xl shadow-xl p-4">
-            <h2 className="text-xl font-bold mb-2">Confirm Commit</h2>
-            <p className="mb-3">Review changes below, then confirm to commit.</p>
-            <div className="space-y-4">
-              {diffs.map(({ branch, diffText }, idx) => (
-                <div key={idx} className="border border-foreground/20 rounded-lg">
-                  <div className="px-3 py-2 bg-foreground/10 font-bold">Branch: {branch}</div>
-                  <pre className="p-3 overflow-auto text-sm whitespace-pre-wrap">
+          <div className="card max-w-4xl w-[90%] max-h-[80vh] overflow-auto shadow-xl">
+            <div className="card-header">Confirm Commit</div>
+            <div className="card-body">
+              <h2 className="text-xl font-bold mb-2">Confirm Commit</h2>
+              <p className="mb-3">Review changes below, then confirm to commit.</p>
+              <div className="space-y-4">
+                {diffs.map(({ branch, diffText }, idx) => (
+                  <div key={idx} className="card">
+                    <div className="px-3 py-2 bg-foreground/10 font-bold rounded-t-lg">Branch: {branch}</div>
+                    <pre className="code diff">
 {diffText}
-                  </pre>
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 flex gap-2 justify-end">
-              <button
-                onClick={() => { setShowConfirm(false); setPending(null); setDiffs([]); }}
-                className="py-2 px-4 border border-foreground/20 rounded-lg"
-              >
-                Cancel
-              </button>
-              <button
-                disabled={isCommitting}
-                onClick={async () => {
+                    </pre>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 row justify-end">
+                <button onClick={() => { setShowConfirm(false); setPending(null); setDiffs([]); }} className="btn">Cancel</button>
+                <button disabled={isCommitting} onClick={async () => {
                   if (!pending) return;
                   setShowConfirm(false);
                   await commitToGithub(pending.branches, pending.message);
                   setPending(null);
                   setDiffs([]);
-                }}
-                className="py-2 px-4 rounded-lg bg-blue-600 text-white disabled:opacity-50"
-              >
-                Confirm Commit
-              </button>
+                }} className="btn btn-primary">Confirm Commit</button>
+              </div>
             </div>
           </div>
         </div>
       )}
 
       {responseConsole.length > 0 && (
-        <div className="mt-3">
-          <ul>
+        <div className="mt-3 stack">
+          <ul className="stack">
             {responseConsole.map((response, index) => (
-              <li key={index} className="m-3 bg-foreground/20 p-2 rounded-2xl">
-                <div className="flex flex-row justify-between gap-4">
+              <li key={index} className="card">
+                <div className="card-body flex flex-row justify-between gap-4">
                   <h1>
                     {response.branch ? `[${response.branch}] ` : ""}
                     {response.status ? response.status + ": " : ""}
@@ -216,9 +200,10 @@ export default function CommitPanel({ content, filePath, title = "Commit" }) {
                   </h1>
                   <p>{response.time ?? "Unknown"}</p>
                 </div>
-                <pre className="message-display">{response.message ?? "No message"}</pre>
+                <div className="card-body">
+                <pre className="code">{response.message ?? "No message"}</pre>
                 {response.status === 200 && (
-                  <div className="vercel-deployments">
+                  <div className="vercel-deployments mt-2">
                     <b>Go to the Vercel Dashboard to see the deployment status: </b>
                     <a
                       href="https://vercel.com/old-mc-donald-s/old-mcdonalds-website/deployments"
@@ -234,6 +219,7 @@ export default function CommitPanel({ content, filePath, title = "Commit" }) {
                   <summary>See full response</summary>
                   <pre>{JSON.stringify(response, null, 2)}</pre>
                 </details>
+                </div>
               </li>
             ))}
           </ul>

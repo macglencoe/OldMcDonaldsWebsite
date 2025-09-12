@@ -39,6 +39,68 @@ body {
   font-family: "Courier", Helvetica, sans-serif;
 }
 
+/* --- UI helpers --- */
+.card {
+  background: color-mix(in srgb, var(--background) 92%, var(--foreground) 8%);
+  border: 1px solid color-mix(in srgb, var(--foreground) 20%, transparent);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.card-header {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  padding: 0.5rem 0.75rem;
+  font-weight: 700;
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground) 14%, transparent);
+}
+.card-body { padding: 0.75rem; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  border: 1px solid color-mix(in srgb, var(--foreground) 20%, transparent);
+  background: color-mix(in srgb, var(--foreground) 5%, transparent);
+}
+.btn:hover { background: color-mix(in srgb, var(--foreground) 10%, transparent); }
+.btn-primary { background: var(--accent); color: var(--background); border-color: var(--accent); }
+.btn-primary:hover { filter: brightness(0.95); }
+.btn-success { background: #16a34a; color: #fff; border-color: #16a34a; }
+.btn-success:hover { filter: brightness(0.95); }
+.btn-danger { background: #dc2626; color: #fff; border-color: #dc2626; }
+.btn-danger:hover { filter: brightness(0.95); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.field { display: flex; flex-direction: column; gap: 0.25rem; }
+.label { font-weight: 600; opacity: 0.9; }
+.input, .select, .textarea {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--foreground) 20%, transparent);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--background) 96%, var(--foreground) 4%);
+}
+.textarea { min-height: 4.5rem; }
+
+.k-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; }
+.stack { display: flex; flex-direction: column; gap: 0.75rem; }
+.row { display: flex; flex-direction: row; gap: 0.5rem; align-items: center; }
+
+/* Code/diff */
+.code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.85rem;
+  background: color-mix(in srgb, var(--foreground) 5%, transparent);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  overflow: auto;
+}
+.diff pre { white-space: pre-wrap; }
+.diff pre { background: color-mix(in srgb, var(--foreground) 4%, transparent); }
+.diff pre .add { color: #16a34a; }
+.diff pre .del { color: #dc2626; }
+
 .header {
   display: flex;
   flex-direction: column;
