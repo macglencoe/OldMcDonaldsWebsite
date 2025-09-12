@@ -1,5 +1,5 @@
 import Layout from "@/components/layout";
-import { PiArticleDuotone, PiCalendarCheckDuotone, PiCalendarDotsDuotone, PiChartLineDuotone, PiClockCountdownDuotone, PiCurrencyCircleDollarDuotone, PiDevToLogoDuotone, PiFlagDuotone, PiGithubLogoDuotone, PiPaperPlaneTiltDuotone, PiSealQuestionDuotone, PiStarDuotone } from 'react-icons/pi'
+import { PiArticleDuotone, PiCalendarCheckDuotone, PiCalendarDotsDuotone, PiChartLineDuotone, PiClockCountdownDuotone, PiCurrencyCircleDollarDuotone, PiDevToLogoDuotone, PiFlagDuotone, PiGithubLogoDuotone, PiMapPin, PiPaperPlaneTiltDuotone, PiSealQuestionDuotone, PiStarDuotone } from 'react-icons/pi'
 
 export default function Page() {
     const externalLinks = [
@@ -23,9 +23,15 @@ export default function Page() {
         },
         {
             title: "Email Platform",
-            serviceName: "SendGrid",
-            href: "https://app.sendgrid.com",
+            serviceName: "Resend",
+            href: "https://resend.com/emails",
             icon: PiPaperPlaneTiltDuotone
+        },
+        {
+            title: "Google Maps Platform",
+            serviceName: "Gooogle",
+            href: "https://console.cloud.google.com/google/maps-apis/overview?project=linen-age-459505-d6",
+            icon: PiMapPin
         },
         {
             title: "Development Blog",
