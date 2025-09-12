@@ -117,7 +117,7 @@ export default async function Home() {
       <div className="bg-foreground px-3 md:px-4 py-8 flex flex-col gap-10">
         <div className="flex md:flex-row flex-col gap-5">
           <ClientDashboard
-            updates={events && Array.isArray(updates) ? updates : []}
+            updates={Array.isArray(updates) ? updates : []}
             variant="grid"
             markdownRenderer={styledMarkdownRenderer}
             className="max-w-5xl mx-auto"
