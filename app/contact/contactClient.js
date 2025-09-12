@@ -1,13 +1,40 @@
 "use client"
 import ContactForm from "@/components/contactForm";
-import { Envelope, PaperPlaneTilt, PhoneCall, Pinwheel } from "phosphor-react";
+import QuickCard from "@/components/quickCard";
+import { Envelope, PaperPlaneTilt, PhoneCall, Pinwheel, MapTrifold, MapPin, Ticket, Question, Clock } from "phosphor-react";
 
 export default function ContactClient() {
+    const address = "1597 Arden Nollville Rd. Inwood, WV 25428";
+    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
+
     return (
-        <div className="body basic">
+        <div className="mx-auto max-w-5xl">
+                {/* Quick Links */}
+                <section>
+                    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[160px] sm:auto-rows-[180px] ">
+                        <QuickCard
+                            title="Reservations"
+                            href="/reservations"
+                            image="/rentalgazebo.jpg"
+                            Icon={() => <Clock size={28} weight="duotone" />}
+                        />
+                        <QuickCard
+                            title="Pricing & Tickets"
+                            href="/pricing"
+                            image="/entrance.jpg"
+                            Icon={() => <Ticket size={28} weight="duotone" />}
+                        />
+                        <QuickCard
+                            title="FAQ"
+                            href="/faq"
+                            image="/natureMazePath.jpg"
+                            Icon={() => <Question size={28} weight="duotone" />}
+                        />
+                    </div>
+                </section>
                 <section>
                     <div className="grid gap-6 md:grid-cols-2 mt-8">
-                        <div className="rounded-xl border border-foreground/10 overflow-hidden">
+                        <div className="rounded-xl border border-foreground/10 overflow-hidden shadow hover:shadow-md transition">
                             <div
                                 className="p-6 bg-[url('/entrance.jpg')] bg-cover bg-center relative"
                                 aria-hidden
@@ -27,15 +54,15 @@ export default function ContactClient() {
                                     </p>
                                 </ContactInfoItem>
                                 <ContactInfoItem title="Phone" Icon={() => (<PhoneCall size={32} weight="bold" />)}>
-                                    <a href="tel:+13048392330">+1 304 839 2330</a>
+                                    <a className="hover:underline text-accent" href="tel:+13048392330">+1 304 839 2330</a>
                                 </ContactInfoItem>
                                 <ContactInfoItem title="Email (Business Inquiries)" Icon={() => <PaperPlaneTilt size={32} weight="bold" />}>
-                                    <a href="mailto:oldmcdonaldsglencoefarm@gmail.com">oldmcdonaldsglencoefarm@gmail.com</a>
+                                    <a className="hover:underline text-accent" href="mailto:oldmcdonaldsglencoefarm@gmail.com">oldmcdonaldsglencoefarm@gmail.com</a>
                                 </ContactInfoItem>
                             </div>
                         </div>
 
-                        <div className="rounded-xl border border-foreground/10 overflow-hidden min-h-64">
+                        <div className="rounded-xl border border-foreground/10 overflow-hidden min-h-64 shadow hover:shadow-md transition">
                             <iframe
                                 title="Map to Old McDonald’s Pumpkin Patch"
                                 className="w-full h-full min-h-64"
