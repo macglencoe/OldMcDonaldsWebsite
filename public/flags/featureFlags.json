@@ -63,6 +63,10 @@
     "default": true,
     "conditions": []
   },
+  "use_google_forms": {
+    "default": false,
+    "conditions": []
+  },
   "show_facebook_feed": {
     "default": true,
     "conditions": []
@@ -95,5 +99,13 @@
         ]
       }
     ]
+  },
+  "show_aux_search": {
+    "default": true,
+    "conditions": []
+  },
+  "show_olr_banner": {
+    "default": true,
+    "conditions": []
   }
 }
