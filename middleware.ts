@@ -3,12 +3,25 @@
 // valid credentials in the `Authorization: Basic ...` header.
 import { NextRequest, NextResponse } from "next/server";
 
+function getGitBranch(): string {
+  return (
+    process.env.VERCEL_GIT_COMMIT_REF ||
+    process.env.GIT_BRANCH ||
+    process.env.NEXT_PUBLIC_GIT_BRANCH ||
+    ""
+  );
+}
+
 // Helper: decide whether this request should require authentication
 function shouldProtect(req: NextRequest): boolean {
   // Activation toggle: protection is on only when the env var is "1"
   if (process.env.ENABLE_PREVIEW_PROTECTION !== "1") return false;
 
-  // With the toggle on, protect all hosts and paths
+  // Do not protect on the staging branch
+  const branch = getGitBranch().toLowerCase();
+  if (branch === "staging") return false;
+
+  // With the toggle on and not staging, protect all requests
   return true;
 }
 
