@@ -72,6 +72,35 @@ export function styledMarkdownRenderer(md: string): React.ReactNode {
         hr: ({ node, className, ...props }) => (
           <hr {...props} className={`my-8 border-gray-200 ${className || ""}`} />
         ),
+        // Tables (GFM)
+        table: ({ node, className, children, ...props }) => (
+          <div className="my-6 w-full overflow-x-auto">
+            <table
+              {...props}
+              className={`w-full border-collapse text-sm ${className || ""}`}
+            >
+              {children}
+            </table>
+          </div>
+        ),
+        thead: ({ node, className, ...props }) => (
+          <thead {...props} className={`bg-gray-50 ${className || ""}`} />
+        ),
+        tr: ({ node, className, ...props }) => (
+          <tr {...props} className={`border-b border-gray-200 even:bg-gray-50 ${className || ""}`} />
+        ),
+        th: ({ node, className, ...props }) => (
+          <th
+            {...props}
+            className={`text-left font-semibold px-3 py-2 align-middle text-gray-900 border-b border-gray-200 ${className || ""}`}
+          />
+        ),
+        td: ({ node, className, ...props }) => (
+          <td
+            {...props}
+            className={`px-3 py-2 align-top text-gray-800 border-b border-gray-100 ${className || ""}`}
+          />
+        ),
       }}
     >
       {md}
