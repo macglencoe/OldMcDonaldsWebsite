@@ -43,20 +43,17 @@ export default function Page() {
         {
             title: "Prices",
             href: "/prices",
-            icon: PiCurrencyCircleDollarDuotone,
-            notImplemented: true
+            icon: PiCurrencyCircleDollarDuotone
         },
         {
             title: "Hours",
             href: "/hours",
-            icon: PiClockCountdownDuotone,
-            notImplemented: true
+            icon: PiClockCountdownDuotone
         },
         {
             title: "Calendar",
             href: "/calendar",
-            icon: PiCalendarDotsDuotone,
-            notImplemented: true
+            icon: PiCalendarDotsDuotone
         },
         {
             title: "Rental Availability",
@@ -73,8 +70,7 @@ export default function Page() {
         {
             title: "FAQ",
             href: "/faq",
-            icon: PiSealQuestionDuotone,
-            notImplemented: true
+            icon: PiSealQuestionDuotone
         },
     ]
     const formsLinks = [

@@ -1,20 +1,36 @@
 "use client";
 
-import CommitDialog from "@/components/commitDialog";
+import CommitPanel from "@/components/commitPanel";
 import Layout from "@/components/layout";
 
 import featureFlags from "@/public/flags/featureFlags.json"
 import { useEffect, useState } from "react";
 
 function saveFlagsToLocalStorage(flags) {
-  localStorage.setItem('featureFlags', JSON.stringify(flags));
+  try {
+    localStorage.setItem('featureFlags', JSON.stringify(flags));
+  } catch {}
 }
 
-function loadFlagsFromLocalStorage() {
-  const savedFlags = localStorage.getItem('featureFlags');
-  if (savedFlags) {
-    setFeatureFlagsState(JSON.parse(savedFlags));
-  }
+function mergeFlags(base, saved) {
+  const result = {};
+  const keys = new Set([
+    ...Object.keys(base || {}),
+    ...Object.keys(saved || {}),
+  ]);
+  keys.forEach((k) => {
+    const b = (base && base[k]) || {};
+    const s = (saved && saved[k]) || {};
+    const merged = { ...b, ...s };
+    if (!Array.isArray(merged.conditions)) merged.conditions = b.conditions ?? [];
+    // Only carry args if they exist in either base or saved
+    if (!Array.isArray(merged.args)) {
+      if (Array.isArray(s.args)) merged.args = s.args;
+      else if (Array.isArray(b.args)) merged.args = b.args;
+    }
+    result[k] = merged;
+  });
+  return result;
 }
 
 
@@ -22,19 +38,60 @@ export default function Home() {
   const [featureFlagsState, setFeatureFlagsState] = useState(featureFlags);
 
   useEffect(() => {
+    // Load from localStorage on first mount
+    try {
+      const savedFlags = localStorage.getItem('featureFlags');
+      if (savedFlags) {
+        const parsed = JSON.parse(savedFlags);
+        const merged = mergeFlags(featureFlags, parsed);
+        setFeatureFlagsState(merged);
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
     saveFlagsToLocalStorage(featureFlagsState);
   }, [featureFlagsState]);
 
+  const resetLocalFlags = () => {
+    try {
+      localStorage.removeItem('featureFlags');
+    } catch {}
+    // Reset state back to bundled defaults (deep clone to avoid refs)
+    const fresh = JSON.parse(JSON.stringify(featureFlags));
+    setFeatureFlagsState(fresh);
+  };
+
+  const clearAllLocalStorage = () => {
+    try {
+      localStorage.clear();
+    } catch {}
+  };
+
   return (
     <Layout>
+      <div className="flex flex-row gap-2 px-4 pt-4">
+        <button
+          onClick={resetLocalFlags}
+          className="text-sm text-foreground font-bold tracking-wider uppercase py-1 px-2 w-fit border-[1px] border-foreground/20 rounded-lg cursor-pointer"
+        >
+          Reset Local Flags
+        </button>
+        <button
+          onClick={clearAllLocalStorage}
+          className="text-sm text-foreground font-bold tracking-wider uppercase py-1 px-2 w-fit border-[1px] border-foreground/20 rounded-lg cursor-pointer"
+        >
+          Clear All LocalStorage
+        </button>
+      </div>
       {
-        Object.keys(featureFlags).map((key) => {
+        Object.keys(featureFlagsState).map((key) => {
           return (
             <div key={key} className="p-4 flex flex-col gap-2">
               <h2>{key}</h2>
               <TrueFalseSelector
                 label="Default"
-                value={featureFlagsState[key].default}
+                value={String(featureFlagsState[key].default)}
                 onChange={(e) => {
                   const newFlags = { ...featureFlagsState };
                   newFlags[key].default = e.target.value === "true";
@@ -62,7 +119,15 @@ export default function Home() {
                           value={condition.criteria}
                           onChange={(e) => {
                             const newFlags = { ...featureFlagsState };
-                            newFlags[key].conditions[index].criteria = e.target.value;
+                            const next = e.target.value;
+                            newFlags[key].conditions[index].criteria = next;
+                            if (next === 'time') {
+                              newFlags[key].conditions[index].operator = 'after';
+                              newFlags[key].conditions[index].value = new Date().toISOString();
+                            } else if (next === 'env') {
+                              newFlags[key].conditions[index].operator = 'equals';
+                              newFlags[key].conditions[index].value = '';
+                            }
                             setFeatureFlagsState(newFlags);
                           }}
                         />
@@ -88,6 +153,41 @@ export default function Home() {
                           </>
                         )
                         }
+
+                        {condition.criteria === "env" && (
+                          <>
+                            <EnvOperatorSelector
+                              value={condition.operator}
+                              onChange={(e) => {
+                                const newFlags = { ...featureFlagsState };
+                                newFlags[key].conditions[index].operator = e.target.value;
+                                // Reset value when switching operator
+                                newFlags[key].conditions[index].value = e.target.value === 'in' ? [] : '';
+                                setFeatureFlagsState(newFlags);
+                              }}
+                            />
+                            {condition.operator === 'in' ? (
+                              <CsvArrayInput
+                                label="Environments (comma-separated)"
+                                values={Array.isArray(condition.value) ? condition.value : []}
+                                onChange={(arr) => {
+                                  const newFlags = { ...featureFlagsState };
+                                  newFlags[key].conditions[index].value = arr;
+                                  setFeatureFlagsState(newFlags);
+                                }}
+                              />
+                            ) : (
+                              <BasicTextInput
+                                value={typeof condition.value === 'string' ? condition.value : ''}
+                                onChange={(e) => {
+                                  const newFlags = { ...featureFlagsState };
+                                  newFlags[key].conditions[index].value = e.target.value;
+                                  setFeatureFlagsState(newFlags);
+                                }}
+                              />
+                            )}
+                          </>
+                        )}
 
 
                         <button
@@ -136,6 +236,14 @@ export default function Home() {
                         onChange={(e) => {
                           const newFlags = { ...featureFlagsState };
                           newFlags[key].args[index].type = e.target.value;
+                          // Reset value(s) based on type
+                          if (e.target.value === 'dates') {
+                            newFlags[key].args[index].values = [];
+                            delete newFlags[key].args[index].value;
+                          } else {
+                            newFlags[key].args[index].value = '';
+                            delete newFlags[key].args[index].values;
+                          }
                           setFeatureFlagsState(newFlags);
                         }}
                       />
@@ -152,10 +260,43 @@ export default function Home() {
                       )
                       }
 
-                      {featureFlagsState[key].args[index].type === "string" || featureFlagsState[key].args[index].type === "number" || featureFlagsState[key].args[index].type === "boolean" && (
-                        <p>not implemented</p>
-                      )
-                      }
+                      {featureFlagsState[key].args[index].type === "string" && (
+                        <BasicTextInput
+                          value={featureFlagsState[key].args[index].value ?? ''}
+                          onChange={(e) => {
+                            const newFlags = { ...featureFlagsState };
+                            newFlags[key].args[index].value = e.target.value;
+                            setFeatureFlagsState(newFlags);
+                          }}
+                        />
+                      )}
+
+                      {featureFlagsState[key].args[index].type === "number" && (
+                        <div>
+                          <input
+                            type="number"
+                            value={featureFlagsState[key].args[index].value ?? ''}
+                            onChange={(e) => {
+                              const newFlags = { ...featureFlagsState };
+                              const v = e.target.value;
+                              newFlags[key].args[index].value = v === '' ? '' : Number(v);
+                              setFeatureFlagsState(newFlags);
+                            }}
+                          />
+                        </div>
+                      )}
+
+                      {featureFlagsState[key].args[index].type === "boolean" && (
+                        <TrueFalseSelector
+                          label="Value"
+                          value={String(featureFlagsState[key].args[index].value ?? false)}
+                          onChange={(e) => {
+                            const newFlags = { ...featureFlagsState };
+                            newFlags[key].args[index].value = e.target.value === 'true';
+                            setFeatureFlagsState(newFlags);
+                          }}
+                        />
+                      )}
 
                       <button onClick={() => {
                         const newFlags = { ...featureFlagsState };
@@ -175,7 +316,8 @@ export default function Home() {
                 <button className="text-sm text-foreground font-bold tracking-wider uppercase my-2 py-1 px-2 w-fit border-[1px] border-foreground/20 rounded-lg cursor-pointer"
                   onClick={() => {
                     const newFlags = { ...featureFlagsState };
-                    newFlags[key].args.push({ key: "" });
+                    if (!Array.isArray(newFlags[key].args)) newFlags[key].args = [];
+                    newFlags[key].args.push({ key: "", type: "string", value: "" });
                     setFeatureFlagsState(newFlags);
                   }}
 
@@ -185,7 +327,7 @@ export default function Home() {
           )
         })
       }
-      <CommitDialog />
+      <CommitPanel content={featureFlagsState} filePath="public/flags/featureFlags.json" title="Update feature flags" />
     </Layout>
   )
 }
@@ -259,13 +401,21 @@ function TimeOperatorSelector({ value, onChange }) {
 }
 
 function TimeSelector({ value, onChange }) {
-
-  console.log(value)
-  const date = new Date(value);
-  const isoString = date.toISOString().split("Z")[0];
+  let date = new Date(value);
+  if (!(date instanceof Date) || isNaN(date.getTime())) {
+    date = new Date();
+  }
+  // Convert to local datetime-local format (YYYY-MM-DDTHH:MM)
+  const pad = (n) => String(n).padStart(2, '0');
+  const yyyy = date.getFullYear();
+  const mm = pad(date.getMonth() + 1);
+  const dd = pad(date.getDate());
+  const HH = pad(date.getHours());
+  const MM = pad(date.getMinutes());
+  const localValue = `${yyyy}-${mm}-${dd}T${HH}:${MM}`;
   return (
     <div>
-      <input type="datetime-local" value={isoString} onChange={onChange} />
+      <input type="datetime-local" value={localValue} onChange={onChange} />
     </div>
   );
 }
@@ -288,6 +438,39 @@ function ConditionCriteriaSelector({ value, onChange }) {
           </option>
         ))}
       </select>
+    </div>
+  );
+}
+
+
+function EnvOperatorSelector({ value, onChange }) {
+  return (
+    <div>
+      <label className="mr-2">Env operator:</label>
+      <select value={value} onChange={onChange}>
+        <option value="equals">Equals</option>
+        <option value="in">In List</option>
+      </select>
+    </div>
+  );
+}
+
+function CsvArrayInput({ label, values = [], onChange }) {
+  const csv = Array.isArray(values) ? values.join(",") : "";
+  return (
+    <div>
+      {label && <label className="mr-2">{label}:</label>}
+      <input
+        type="text"
+        value={csv}
+        onChange={(e) => {
+          const arr = e.target.value
+            .split(',')
+            .map((s) => s.trim())
+            .filter((s) => s.length > 0);
+          onChange(arr);
+        }}
+      />
     </div>
   );
 }

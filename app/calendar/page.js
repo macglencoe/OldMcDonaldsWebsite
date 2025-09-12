@@ -3,13 +3,14 @@ import { useState } from "react";
 
 import Layout from "@/components/layout";
 import calendarData from "@/public/data/schedule.json";
+import CommitPanel from "@/components/commitPanel";
 
 export default function CalendarEditor() {
     const [calendarState, setCalendarState] = useState(calendarData);
     return (
         <Layout>
             {
-                calendarData.map((event, index) => {
+                calendarState.map((event, index) => {
                     return (
                         <div key={index} className="p-4 flex flex-col gap-2">
                             <EventInput 
@@ -27,6 +28,7 @@ export default function CalendarEditor() {
                     )
                 })
             }
+            <CommitPanel content={calendarState} filePath="public/data/schedule.json" title="Update calendar" />
         </Layout>
     )
 }

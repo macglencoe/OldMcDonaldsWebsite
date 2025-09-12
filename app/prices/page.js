@@ -2,6 +2,7 @@
 import Layout from "@/components/layout";
 import priceData from "@/public/data/pricing.json"
 import { useState } from "react";
+import CommitPanel from "@/components/commitPanel";
 
 
 export default function Prices() {
@@ -28,6 +29,7 @@ export default function Prices() {
                     )
                 })
             }
+            <CommitPanel content={priceState} filePath="public/data/pricing.json" title="Update pricing" />
         </Layout>
     )
 }

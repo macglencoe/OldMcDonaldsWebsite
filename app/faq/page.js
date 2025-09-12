@@ -2,6 +2,7 @@
 import Layout from "@/components/layout"
 import { useState } from "react";
 import faqData from "@/public/data/faq.json"
+import CommitPanel from "@/components/commitPanel";
 
 function saveToLocalStorage(faq) {
     localStorage.setItem('faq', JSON.stringify(faq));
@@ -39,6 +40,7 @@ export default function FAQEditor() {
                         )
                     })
                 }
+                <CommitPanel content={faqState} filePath="public/data/faq.json" title="Update FAQ" />
             </div>
         </Layout>
     )

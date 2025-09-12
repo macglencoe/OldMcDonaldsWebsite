@@ -3,13 +3,14 @@
 import Layout from '@/components/layout'
 import hoursData from '@/public/data/hours.json'
 import { useState } from 'react';
+import CommitPanel from "@/components/commitPanel";
 
 export default function HoursPage() {
     const [hoursState, setHoursState] = useState(hoursData);
     return (
         <Layout>
             {
-                hoursData.map((hour, index) => {
+                hoursState.map((hour, index) => {
                     return (
                         <div key={index} className="p-4 flex flex-col gap-2">
                             <HoursInput 
@@ -28,6 +29,7 @@ export default function HoursPage() {
                     )
                 })
             }
+            <CommitPanel content={hoursState} filePath="public/data/hours.json" title="Update hours" />
         </Layout>
     )
 }
@@ -37,9 +39,9 @@ function HoursInput( { title, dayValue, openValue, closeValue, onChange}) {
         <div className="flex flex-row gap-2">
             <label className="mr-2">{title}:</label>
             <label className="mr-2">Open:</label>
-            <input className="w-1/3" name="open" type="time" value={openValue} onChange={onChange} />
+            <input className="w-1/3" name="open" type="text" value={openValue} onChange={onChange} />
             <label className="mr-2">Close:</label>
-            <input className="w-1/3" name="close" type="time" value={closeValue} onChange={onChange} />
+            <input className="w-1/3" name="close" type="text" value={closeValue} onChange={onChange} />
         </div>
     )
 }
