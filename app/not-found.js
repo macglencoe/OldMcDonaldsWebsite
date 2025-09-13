@@ -14,6 +14,7 @@ export default function NotFound() {
                         <h1 className="text-3xl font-bold text-white">Lost on the Farm</h1>
                         <p className="text-white">There's nothing to do out here</p>
                         <p><a href="/" className="text-background bg-accent/50 px-5 py-2 rounded-full hover:bg-accent">Go Home</a></p>
+                        <p><a href="/contact#dev" className="text-background bg-foreground/50 px-5 py-2 rounded-full hover:bg-foreground">Contact Dev</a></p>
                     </div>
                 </div>
             </div>
