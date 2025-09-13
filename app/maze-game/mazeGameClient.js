@@ -2,6 +2,7 @@
 
 import EntryForm from '@/components/mazeGameEntryForm'
 import { useState, useEffect } from 'react'
+import { track } from '@vercel/analytics'
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator'
 
 export default function MazeGameClient() {
@@ -66,6 +67,30 @@ export default function MazeGameClient() {
     const allFound =
         Object.keys(mazeData).length > 0 &&
         Object.keys(mazeData).every(code => foundCodes.includes(code))
+
+    // Fire one-time analytics when all codes found
+    useEffect(() => {
+        if (!allFound) return
+        try {
+            const currentYear = String(new Date().getFullYear())
+            const flagKey = `maze_allFound_${currentYear}`
+            if (localStorage.getItem(flagKey) === '1') return
+
+            const firstAtRaw = localStorage.getItem('first_found_at')
+            const firstAt = firstAtRaw ? parseInt(firstAtRaw, 10) : NaN
+            const elapsedMs = Number.isFinite(firstAt) ? Math.max(0, Date.now() - firstAt) : 0
+
+            let sequence = ''
+            try {
+                const seqArr = JSON.parse(localStorage.getItem('maze-game') || '[]')
+                if (Array.isArray(seqArr)) sequence = seqArr.join('>')
+            } catch {}
+
+            // analytics: All Codes Found (max 2 props)
+            track('All Codes Found', { elapsed_ms: elapsedMs, sequence })
+            localStorage.setItem(flagKey, '1')
+        } catch {}
+    }, [allFound])
 
     const handleEntrySubmit = async ({ name, phone }) => {
         try {

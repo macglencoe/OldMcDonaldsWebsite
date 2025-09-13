@@ -29,17 +29,37 @@ export default function MazeCodePage() {
               found.push(code);
               localStorage.setItem('maze-game', JSON.stringify(found));
             }
+            // stamp first-found time if missing
+            if (!localStorage.getItem('first_found_at')) {
+              try { localStorage.setItem('first_found_at', String(Date.now())); } catch {}
+            }
+            // analytics: Code Scan Valid (max 2 props)
+            try {
+              track('Code Scan Valid', { code, found_count: found.length });
+            } catch {}
           } catch {
             localStorage.setItem('maze-game', JSON.stringify([code]));
+            // if this is the first successful find, set timestamp and track
+            try { localStorage.setItem('first_found_at', String(Date.now())); } catch {}
+            try { track('Code Scan Valid', { code, found_count: 1 }); } catch {}
           }
           setItem(entry);
           setStatus('valid');
-          track('Found Maze Code', { code });
         } else {
+          // analytics: Code Scan Invalid (max 2 props)
+          try {
+            let foundCount = 0;
+            try {
+              const foundExisting = JSON.parse(localStorage.getItem('maze-game') || '[]');
+              if (Array.isArray(foundExisting)) foundCount = foundExisting.length;
+            } catch {}
+            track('Code Scan Invalid', { code, found_count: foundCount });
+          } catch {}
           setStatus('invalid');
         }
       })
       .catch(() => {
+        try { track('Code Scan Invalid', { code, found_count: 0 }); } catch {}
         setStatus('invalid');
       });
   }, [code]);
