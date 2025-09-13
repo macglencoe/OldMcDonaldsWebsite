@@ -60,6 +60,10 @@
     ]
   },
   "show_contact_form": {
+    "default": true,
+    "conditions": []
+  },
+  "use_google_forms": {
     "default": false,
     "conditions": []
   },

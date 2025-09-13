@@ -28,18 +28,6 @@ export const metadata = {
 
 export default async function Home() {
 
-
-  const events = [
-    { name: 'Event 1', date: '2025-10-12' },
-    { name: 'Event 2', date: '2025-10-15' },
-    { name: 'Event 3', date: '2025-10-20' },
-  ];
-
-  const octoberOpenDates = [
-    1, 2, 7, 8, 9, 14, 15, 16, 21, 22, 23, 28, 29, 30
-  ];
-
-
   const canonicalBase = "https://www.oldmcdonaldspumpkinpatchwv.com";
 
   const jsonLd = [
@@ -144,6 +132,8 @@ export default async function Home() {
         }
 
         <Season />
+        <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
+        <Rates />
 
         <FarmSwapBanner />
 
@@ -152,8 +142,6 @@ export default async function Home() {
         }
 
 
-        <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
-        <Rates />
 
         {isFeatureEnabled("show_vendor_promos") && (
           <>
