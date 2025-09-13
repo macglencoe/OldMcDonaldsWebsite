@@ -1,3 +1,218 @@
 {
-    "/pricing": ["entry fee", "admission", "ticket price", "pricing", "how much"]
+  "/": [
+    "pumpkin patch",
+    "corn maze",
+    "fall festival",
+    "family fun",
+    "things to do",
+    "Inwood",
+    "WV",
+    "Berkeley County",
+    "sunflower fields",
+    "hayrides"
+  ],
+  "/visit": [
+    "hours",
+    "open today",
+    "directions",
+    "address",
+    "parking",
+    "accessibility",
+    "ADA",
+    "wheelchair",
+    "stroller",
+    "payment",
+    "credit card",
+    "cash",
+    "apple pay",
+    "google pay",
+    "contact",
+    "phone"
+  ],
+  "/pricing": [
+    "entry fee",
+    "admission",
+    "ticket price",
+    "pricing",
+    "how much",
+    "rates",
+    "fees",
+    "cost",
+    "hayride price",
+    "pumpkin price",
+    "by the pound",
+    "flower prices"
+  ],
+  "/reservations": [
+    "birthday",
+    "party gazebo",
+    "gazebo rental",
+    "birthday party",
+    "book pavilion",
+    "reserve picnic area",
+    "private party",
+    "group booking",
+    "party reservation"
+  ],
+  "/activities": [
+    "things to do",
+    "attractions",
+    "what to do",
+    "kids activities",
+    "family activities",
+    "events",
+    "farm fun"
+  ],
+  "/activities/corn-maze": [
+    "maze",
+    "corn labyrinth",
+    "get lost",
+    "maze map",
+    "daytime maze",
+    "family friendly",
+    "maze rules",
+    "how long"
+  ],
+  "/activities/night-maze": [
+    "night maze",
+    "after dark",
+    "flashlight",
+    "spooky",
+    "not haunted",
+    "campfire",
+    "campfires",
+    "night hayride",
+    "open late"
+  ],
+  "/activities/hayrides": [
+    "hay ride",
+    "tractor ride",
+    "wagon ride",
+    "farm tour",
+    "ride times",
+    "ride tickets",
+    "scenic ride",
+    "night hayride"
+  ],
+  "/activities/flower-fields": [
+    "sunflower picking",
+    "u-pick flowers",
+    "cut your own",
+    "bouquet",
+    "flower bar",
+    "zinnias",
+    "cosmos",
+    "photo ops",
+    "pictures"
+  ],
+  "/activities/nature-trails": [
+    "hiking",
+    "walk",
+    "walking trails",
+    "woodland",
+    "forest trail",
+    "scenic walk",
+    "nature walk"
+  ],
+  "/activities/pumpkin-patch": [
+    "u-pick pumpkins",
+    "pumpkin prices",
+    "by the pound",
+    "weighing station",
+    "gourds",
+    "white pumpkins",
+    "carving pumpkins",
+    "pumpkin wagon",
+    "pumpkin varieties"
+  ],
+  "/faq": [
+    "questions",
+    "rules",
+    "policies",
+    "dogs allowed",
+    "alcohol",
+    "weather",
+    "restrooms",
+    "tickets"
+  ],
+  "/map": [
+    "farm map",
+    "site map",
+    "directions",
+    "where is",
+    "photo ops",
+    "find",
+    "location"
+  ],
+  "/gallery": [
+    "photos",
+    "pictures",
+    "image gallery",
+    "upload photo",
+    "share",
+    "instagram",
+    "facebook",
+    "tiktok"
+  ],
+  "/vendors": [
+    "food",
+    "food trucks",
+    "concessions",
+    "snacks",
+    "drinks",
+    "donuts",
+    "coffee",
+    "hot dogs",
+    "vendors list",
+    "menu"
+  ],
+  "/vendors/old-mcdonuts": [
+    "old mcdonuts",
+    "donuts",
+    "apple cider donuts",
+    "coffee",
+    "latte",
+    "pumpkin spice",
+    "cider slushies",
+    "menu",
+    "vendor"
+  ],
+  "/about": [
+    "about us",
+    "history",
+    "who we are",
+    "family farm",
+    "glencoe farm",
+    "heritage",
+    "owners",
+    "story",
+    "farm history"
+  ],
+  "/privacy-policy": [
+    "privacy",
+    "policy",
+    "cookies",
+    "data",
+    "tracking"
+  ],
+  "/contests/photo-ops-2025": [
+    "photo contest",
+    "photo ops",
+    "contest winners",
+    "categories",
+    "facebook contest"
+  ],
+  "/maze-game": [
+    "maze game",
+    "qr code",
+    "scavenger hunt",
+    "win prizes",
+    "contest",
+    "find stations"
+  ],
+  "/search": [
+    "site search",
+    "find pages",
+    "search"
+  ]
 }
