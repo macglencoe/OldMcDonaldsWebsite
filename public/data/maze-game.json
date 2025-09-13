@@ -1,18 +1,18 @@
 {
     "2025-code-1": {
-        "name": "Helianthus",
-        "img": "/helianthus.png"
+        "name": "Hammer",
+        "img": "/maze-game/hammer.png"
     },
     "2025-code-2": {
-        "name": "Anemone Coronaria",
-        "img": "/anemone.jpg"
+        "name": "Wrench",
+        "img": "/maze-game/wrench.png"
     },
     "2025-code-3": {
-        "name": "Hibiscus Sabdariffa",
-        "img": "/hibiscus.jpeg"
+        "name": "Lantern",
+        "img": "/maze-game/lamp.png"
     },
     "2025-code-4": {
-        "name": "Cyclamen Libanoticum",
-        "img": "/cyclamen.jpg"
+        "name": "Strike Placard",
+        "img": "/maze-game/placard.png"
     }
 }
