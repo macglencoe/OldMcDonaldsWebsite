@@ -25,7 +25,7 @@ export function styledMarkdownRenderer(md: string): React.ReactNode {
           <h3 {...props} className={`mt-6 text-xl md:text-2xl font-semibold tracking-tight text-gray-900 ${className || ""}`} />
         ),
         p: ({ node, className, ...props }) => (
-          <p {...props} className={`leading-7 text-gray-800 ${className || ""}`} />
+          <p {...props} className={`leading-7 text-gray-800 my-5 text-xl ${className || ""}`} />
         ),
         a: ({ node, className, ...props }) => (
           <a
@@ -67,7 +67,7 @@ export function styledMarkdownRenderer(md: string): React.ReactNode {
           />
         ),
         img: ({ node, className, ...props }) => (
-          <img {...props} className={`rounded-md shadow-sm ${className || ""}`} />
+          <img {...props} className={`rounded-md shadow-sm my-10 ${className || ""}`} />
         ),
         hr: ({ node, className, ...props }) => (
           <hr {...props} className={`my-8 border-gray-200 ${className || ""}`} />
