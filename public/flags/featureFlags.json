@@ -63,6 +63,10 @@
     "default": true,
     "conditions": []
   },
+  "use_google_forms": {
+    "default": false,
+    "conditions": []
+  },
   "show_facebook_feed": {
     "default": true,
     "conditions": []

@@ -5,7 +5,8 @@ import PageHeader from '@/components/pageHeader'
 import Action from '@/components/action'
 
 export const metadata = {
-    title: "Vendors"
+    title: "Vendors",
+    description: "Discover food and craft vendors at Old McDonald’s Pumpkin Patch. Enjoy fresh donuts, hotdogs, twisted taters, slushies, and local artisan treats."
 }
 
 export const Vendors = () => {

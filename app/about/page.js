@@ -406,7 +406,8 @@ function Generations() {
 }
 
 export const metadata = {
-    title: "About The Farm"
+    title: "About The Farm",
+    description: "Learn the history of Old McDonald’s Pumpkin Patch and Glencoe Farm in Inwood, WV. Discover our family legacy, farm traditions, and 250+ years of agricultural heritage."
 }
 
 export default function About() {

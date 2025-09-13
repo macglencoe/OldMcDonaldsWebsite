@@ -7,7 +7,8 @@ import PageHeader from "@/components/pageHeader"
 import Action from "@/components/action"
 
 export const metadata = {
-    title: "Pumpkin Patch"
+    title: "Pumpkin Patch",
+    description: "Pick your perfect pumpkin at Old McDonald’s Pumpkin Patch in Inwood, WV. Browse carving pumpkins, gourds, white pumpkins, and more by the pound."
 }
 
 export const PumpkinPatch = () => {

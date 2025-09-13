@@ -4,7 +4,8 @@ import MenuItem from "@/components/menuItem";
 import PageHeader from "@/components/pageHeader";
 
 export const metadata = {
-    title: "Vendor: Old McDonuts"
+    title: "Vendor: Old McDonuts",
+    description: "Try fresh donuts, hot coffee, and apple cider slushies at Old McDonuts, a featured vendor at Old McDonald’s Pumpkin Patch in Inwood, WV."
 }
 
 export default function OldMcDonuts() {
