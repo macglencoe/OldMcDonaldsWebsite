@@ -33,7 +33,7 @@ export default function MyStatsig({ children }) {
   }, [client]);
 
   return (
-    <StatsigProvider client={client} loadingComponent={<div>Loading...</div>}>
+    <StatsigProvider client={client}>
       {children}
     </StatsigProvider>
   );
