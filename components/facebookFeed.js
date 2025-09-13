@@ -1,7 +1,7 @@
 "use client"
 import { FacebookLogo, InstagramLogo, TiktokLogo } from 'phosphor-react'
 import styles from './facebookFeed.module.css'
-import { track } from '@vercel/analytics'
+import { track } from '@/utils/analytics'
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator'
 export default function FacebookFeed() {
     return (

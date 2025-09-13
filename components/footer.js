@@ -1,7 +1,7 @@
 'use client';
 import { Compass, FacebookLogo, InstagramLogo, Phone } from 'phosphor-react';
 import Link from 'next/link';
-import { track } from '@vercel/analytics';
+import { track } from '@/utils/analytics';
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
 
 const socialLinks = [

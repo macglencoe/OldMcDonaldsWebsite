@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { track } from '@vercel/analytics';
+import { track } from '@/utils/analytics';
 
 export default function MazeCodePage() {
   const { code } = useParams();

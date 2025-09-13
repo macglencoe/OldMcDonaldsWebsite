@@ -9,7 +9,7 @@ import {
   Flower,
 } from "phosphor-react";
 import { motion } from "framer-motion";
-import { track } from "@vercel/analytics";
+import { track } from "@/utils/analytics";
 import pricing from "@/public/data/pricing";
 
 // Mapping Phosphor icons

@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Fuse from "fuse.js";
-import { track } from '@vercel/analytics';
+import { track } from '@/utils/analytics';
 
 // ---- utilities
 

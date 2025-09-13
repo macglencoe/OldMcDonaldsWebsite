@@ -4,7 +4,7 @@ import styles from "./navbar.module.css"
 import { usePathname, useRouter } from "next/navigation"
 import mapIcon from '@/public/icons/map.svg?raw'
 import Link from "next/link"
-import { track } from "@vercel/analytics"
+import { track } from "@/utils/analytics"
 
 export const Navbar = () => {
     const items = [

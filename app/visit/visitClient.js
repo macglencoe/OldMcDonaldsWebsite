@@ -2,7 +2,7 @@
 import styles from "./page.module.css"
 import Locator from "@/components/locator";
 import Hours from "@/components/hours";
-import { track } from "@vercel/analytics";
+import { track } from "@/utils/analytics";
 
 export default function VisitClient() {
     const address = "1597 Arden Nollville Rd. Inwood, WV 25428"

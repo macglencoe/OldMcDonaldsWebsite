@@ -2,7 +2,7 @@
 
 import styles from "./hero.module.css";
 import Link from "next/link";
-import { track } from "@vercel/analytics";
+import { track } from "@/utils/analytics";
 import {
   ImageSquare,
   ArrowLeft,

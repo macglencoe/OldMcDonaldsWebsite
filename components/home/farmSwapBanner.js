@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
 import { FacebookLogo, Storefront } from "phosphor-react"
-import { track } from "@vercel/analytics"
+import { track } from "@/utils/analytics"
 
 export default function FarmSwapBanner() {
     const date = "October 4th"
