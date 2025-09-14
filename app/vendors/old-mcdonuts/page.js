@@ -2,6 +2,7 @@ import Layout from "@/components/layout";
 import styles from "./page.module.css"
 import MenuItem from "@/components/menuItem";
 import PageHeader from "@/components/pageHeader";
+import { isFeatureEnabled } from "@/public/lib/featureEvaluator";
 
 export const metadata = {
     title: "Vendor: Old McDonuts",
@@ -9,7 +10,10 @@ export const metadata = {
 }
 
 export default function OldMcDonuts() {
-    return (
+    const useOldMcDonutsMenu = isFeatureEnabled("use_donuts_menu");
+
+    if (!useOldMcDonutsMenu) return null
+    else return (
         <Layout>
             <PageHeader subtitle="Donuts & Coffee">Old McDonuts</PageHeader>
             <div className="body basic overflow-hidden">

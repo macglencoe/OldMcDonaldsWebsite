@@ -3,6 +3,7 @@ import styles from './page.module.css'
 import VendorProfile from '@/components/vendorProfile'
 import PageHeader from '@/components/pageHeader'
 import Action from '@/components/action'
+import { isFeatureEnabled } from '@/public/lib/featureEvaluator'
 
 export const metadata = {
     title: "Vendors",
@@ -10,6 +11,7 @@ export const metadata = {
 }
 
 export const Vendors = () => {
+    const useOldMcDonutsMenu = isFeatureEnabled("use_donuts_menu");
     return (
         <Layout>
             <PageHeader subtitle="2025 Season">Vendors</PageHeader>
@@ -20,7 +22,7 @@ export const Vendors = () => {
                     subtitle="Donuts, Coffee, and Slushies"
                     imgSrc="/oldMcDonuts.jpg"
                     description="Classic fall flavors, always fresh and delicious"
-                    menu="/vendors/old-mcdonuts"
+                    menu={useOldMcDonutsMenu ? '/vendors/old-mcdonuts' : undefined}
                 />
                 <VendorProfile
                     name="Twisted Taters"
