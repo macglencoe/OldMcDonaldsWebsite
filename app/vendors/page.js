@@ -12,6 +12,7 @@ export const metadata = {
 
 export const Vendors = () => {
     const useOldMcDonutsMenu = isFeatureEnabled("use_donuts_menu");
+    const useTwistedTatersMenu = isFeatureEnabled("use_taters_menu");
     return (
         <Layout>
             <PageHeader subtitle="2025 Season">Vendors</PageHeader>
@@ -29,6 +30,7 @@ export const Vendors = () => {
                     subtitle="Butterfly Potatoes & more"
                     description="Crispy and delicious butterfly potatoes, and much more"
                     imgSrc="/twistedTaters.jpg"
+                    menu={useTwistedTatersMenu ? '/vendors/twisted-taters' : undefined}
                 />
                 <VendorProfile
                     name="Doggystyle"

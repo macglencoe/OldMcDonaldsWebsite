@@ -109,7 +109,11 @@
     "conditions": []
   },
   "use_donuts_menu": {
-    "default": false,
+    "default": true,
+    "conditions": []
+  },
+  "use_taters_menu": {
+    "default": true,
     "conditions": []
   }
 }
