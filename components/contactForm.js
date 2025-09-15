@@ -2,6 +2,7 @@
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
 import { useEffect, useState } from 'react';
 import { User, EnvelopeSimple, SpinnerGap } from 'phosphor-react';
+import { track } from '@vercel/analytics';
 
 export default function ContactForm({ theme }) {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -76,12 +77,14 @@ export default function ContactForm({ theme }) {
                         const until = Date.now() + 24 * 60 * 60 * 1000; // 24h
                         localStorage.setItem('email_disabled_until', String(until));
                         setForceGoogleFormsClient(true);
+                        track("contact-form_rate-limited", {errorString: String(data.error) || "Unknown" })
                     } catch {}
                 }
             }
         } catch (error) {
             console.error('Submission error:', error);
             setResponseMessage('An unexpected error occurred. Please try again later.');
+            track("contact-form_submission-error", {errorString: String(error) || "Unknown"})
         } finally {
             setIsSubmitting(false);
         }
