@@ -17,6 +17,7 @@ const quickLinks = [
   { href: '/reservations', text: 'Reservations' },
   { href: '/gallery', text: 'Gallery' },
   { href: '/map', text: 'Map' },
+  { href: '/contact', text: 'Contact'},
   ...(isFeatureEnabled('show_vendors') ? [{ href: '/vendors', text: 'Vendors' }] : []),
 ];
 
