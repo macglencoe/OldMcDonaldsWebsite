@@ -31,6 +31,11 @@ export async function POST(req) {
     const body = await req.json();
     const { kind, text, html } = body || {};
 
+    // Accept optional reply-to hints from client
+    const bodyEmail = (body?.replyTo || body?.reply_to || body?.email || '').toString().trim();
+    const emailRegex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i;
+    const isValidEmail = (v) => emailRegex.test(String(v || ''));
+
     if (!kind || !text || !html) {
         return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
@@ -43,13 +48,31 @@ export async function POST(req) {
         const toList = RECIPIENTS[kind];
         const subject = SUBJECTS[kind];
 
-        const { data, error } = await resend.emails.send({
+        // Derive reply-to for contact messages
+        let replyToEmail = undefined;
+        if (kind === 'contact') {
+            if (isValidEmail(bodyEmail)) {
+                replyToEmail = bodyEmail;
+            } else {
+                // Fallback: try to find an email in the provided text
+                const fromText = (text && typeof text === 'string') ? text.match(emailRegex)?.[0] : undefined;
+                if (isValidEmail(fromText)) replyToEmail = fromText;
+            }
+        }
+
+        const sendPayload = {
             from: "Old McDonald's Pumpkin Patch <no-reply@oldmcdonaldspumpkinpatchwv.com>",
             to: toList,
             subject,
             text,
             html,
-        });
+        };
+        if (replyToEmail) {
+            // Resend Node SDK uses snake_case for reply-to
+            sendPayload.reply_to = replyToEmail;
+        }
+
+        const { data, error } = await resend.emails.send(sendPayload);
 
         if (error) {
             const msg = String(error.message || error || 'Unknown error');
