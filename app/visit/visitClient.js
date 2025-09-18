@@ -1,37 +1,76 @@
 'use client'
-import styles from "./page.module.css"
 import Locator from "@/components/locator";
 import Hours from "@/components/hours";
-import { track } from "@vercel/analytics";
+import QuickCard from "@/components/quickCard";
+import { FAQDrop } from "@/components/faqDrop";
+import { MapTrifold, Question, Ticket, MapPin } from "phosphor-react";
 
 export default function VisitClient() {
-    const address = "1597 Arden Nollville Rd. Inwood, WV 25428"
-    const copyAddress = () => navigator.clipboard.writeText(address)
+    const address = "1597 Arden Nollville Rd. Inwood, WV 25428";
+    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
+
     return (
-        <div className={styles.wrapper}>
-            <div className={styles.body}>
-                <div className={styles.location}>
-                    <div className={styles.mapContainer}><Locator /></div>
-                    <div className={styles.info}>
-                        <p>Our farm is located in Inwood, West Virginia, right off I-81</p>
-                        <div className={styles.address}>
-                            <p>1597 Arden Nollville Rd.</p>
-                            <p>Inwood, WV 25428</p>
-                            <button className={styles.copy} onClick={() => {
-                                copyAddress();
-                                alert("Copied address to clipboard!");
-                                track('Address Copied', { location: 'Visit Page' })
-                            }}>
-                                <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 -960 960 960"><path d="M371.31-230q-41.03 0-69.67-28.64T273-328.31v-463.38q0-41.03 28.64-69.67T371.31-890h343.38q41.03 0 69.67 28.64T813-791.69v463.38q0 41.03-28.64 69.67T714.69-230H371.31Zm0-86h343.38q4.62 0 8.46-3.85 3.85-3.84 3.85-8.46v-463.38q0-4.62-3.85-8.46-3.84-3.85-8.46-3.85H371.31q-4.62 0-8.46 3.85-3.85 3.84-3.85 8.46v463.38q0 4.62 3.85 8.46 3.84 3.85 8.46 3.85Zm-166 252q-41.03 0-69.67-28.64T107-162.31v-549.38h86v549.38q0 4.62 3.85 8.46 3.84 3.85 8.46 3.85h429.38v86H205.31ZM359-316v-488 488Z" /></svg>
-                            </button>
+        <div className="max-w-5xl mx-auto">
+            <section>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[160px] sm:auto-rows-[180px]">
+                    <QuickCard
+                        title="Get Directions"
+                        href={mapsUrl}
+                        image="/localMap.png"
+                        external
+                        Icon={() => <MapTrifold size={28} weight="duotone" />}
+                    />
+                    <QuickCard
+                        title="Activities"
+                        href="/activities"
+                        image="/tractorSunset.jpg"
+                        Icon={() => <MapPin size={28} weight="duotone" />}
+                    />
+                    <QuickCard
+                        title="Pricing & Tickets"
+                        href="/pricing"
+                        image="/entrance.jpg"
+                        Icon={() => <Ticket size={28} weight="duotone" />}
+                    />
+                    <QuickCard
+                        title="FAQ"
+                        href="/faq"
+                        image="/natureMazePath.jpg"
+                        Icon={() => <Question size={28} weight="duotone" />}
+                    />
+                </div>
+            </section>
+
+            <section>
+                <div className="grid gap-6 md:grid-cols-2 mt-8">
+                    <div className="rounded-xl border border-foreground/10 overflow-hidden min-h-64 shadow hover:shadow-md transition">
+                        <div className="w-full h-full min-h-64">
+                            <Locator />
                         </div>
-                        <p>Our parking lot is in the field north of the big white barn</p>
-                        <p>Please look for parking attendants</p>
-                        <p><b>Hours:</b></p>
-                        <Hours />
+                    </div>
+
+                    <div className="flex flex-col gap-5 text-xl">
+                        <h2 className="font-semibold text-5xl font-satisfy mt-3">Getting There</h2>
+                        <p>Our address is &nbsp;
+                            <span className="font-semibold text-accent hover:underline cursor-pointer group" onClick={() => navigator.clipboard.writeText(address).then(() => alert("Copied to clipboard"))}>
+                                1597 Arden Nollville Rd, Inwood, WV 25428
+                            </span>,<br/>
+                            right off of I-81, between Martinsburg and Inwood
+                        </p>
+                        <h2 className="font-semibold text-5xl font-satisfy mt-3">Parking</h2>
+                        <p>Our parking lot is in the field north of the big white barn, right on the side of the road.</p>
+                        <p><strong>Please look for parking attendants.</strong></p>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <section className="my-12 bg-foreground py-3 px-4 rounded-xl text-background shadow-lg">
+                <h2 className="text-center font-satisfy text-5xl mt-5">Hours</h2>
+                <p className="description text-center m-4">Seasonal hours - weather permitting</p>
+                <Hours />
+            </section>
         </div>
     )
 }
+
+ 

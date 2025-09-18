@@ -25,6 +25,7 @@ export default function ErrorPage({ error, reset, message }) {
                         </div>
                         }
                         <p><a href="/" className="text-background bg-accent/50 px-5 py-2 rounded-full hover:bg-accent">Go Home</a></p>
+                        <p><a href="/contact#dev" className="text-background bg-foreground/50 px-5 py-2 rounded-full hover:bg-foreground">Contact Dev</a></p>
                         <p><button className="text-background bg-foreground/50 px-5 py-2 rounded-full hover:bg-foreground cursor-pointer" onClick={() => reset()}>Try again</button></p>
                     </div>
                 </div>

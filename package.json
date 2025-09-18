@@ -20,6 +20,7 @@
     "flags": "^4.0.0",
     "framer-motion": "^12.15.0",
     "fuse.js": "^7.1.0",
+    "html-to-text": "^9.0.5",
     "js-cookie": "^3.0.5",
     "leaflet": "^1.9.4",
     "next": "15.2.4",
