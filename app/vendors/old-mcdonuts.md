@@ -9,7 +9,7 @@
 | Apple Cider Slushie | 4.00  |
 
 
-| Donuts  | Price |
-| ------- | ----- |
-| 6-pack  | 7.00  |
-| 12-pack | 12.00 |
+| Apple Cider Donuts | Price |
+| ------------------ | ----- |
+| 6-pack             | 7.00  |
+| 12-pack            | 12.00 |
