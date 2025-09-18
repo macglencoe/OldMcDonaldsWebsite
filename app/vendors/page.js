@@ -36,45 +36,9 @@ export const Vendors = () => {
                     description="Classic fall flavors, always fresh and delicious"
                 >
                     {donutsMarkdown && (
-                        <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
-                            components={{
-                                table: ({ children }) => (
-                                    <div className="overflow-x-auto">
-                                        <table className="min-w-full border-separate border-spacing-0 text-sm bg-white shadow-sm">
-                                            {children}
-                                        </table>
-                                    </div>
-                                ),
-                                thead: ({ children }) => (
-                                    <thead className="bg-accent/20 text-foreground/50 text-xl uppercase">
-                                        {children}
-                                    </thead>
-                                ),
-                                tr: ({ children }) => (
-                                    <tr className="even:bg-foreground/5 hover:bg-foreground/10 transition-colors">
-                                        {children}
-                                    </tr>
-                                ),
-                                th: ({ children }) => (
-                                    <th className="text-left font-semibold text-foreground px-3 py-2 border-b border-foreground/20">
-                                        {children}
-                                    </th>
-                                ),
-                                td: ({ children }) => (
-                                    <td className="px-3 py-2 border-b border-foreground/10 align-top">
-                                        {children}
-                                    </td>
-                                ),
-                                h1: ({ children }) => (
-                                    <h1 className='text-3xl font-semibold my-3'>
-                                        {children}
-                                    </h1>
-                                )
-                            }}
-                        >
+                        <Markdown>
                             {donutsMarkdown}
-                        </ReactMarkdown>
+                        </Markdown>
                     )}
                 </VendorProfile>
                 <VendorProfile
@@ -96,3 +60,45 @@ export const Vendors = () => {
 }
 
 export default Vendors
+
+function Markdown({ children }) {
+    return <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+            table: ({ children }) => (
+                <div className="overflow-x-auto">
+                    <table className="min-w-full my-3 rounded-xl overflow-hidden border-separate border-spacing-0 text-sm bg-white shadow-sm">
+                        {children}
+                    </table>
+                </div>
+            ),
+            thead: ({ children }) => (
+                <thead className="bg-accent/20 text-foreground/50 text-xl uppercase">
+                    {children}
+                </thead>
+            ),
+            tr: ({ children }) => (
+                <tr className="even:bg-foreground/5 hover:bg-foreground/10 transition-colors">
+                    {children}
+                </tr>
+            ),
+            th: ({ children }) => (
+                <th className="text-left font-semibold text-foreground px-3 py-2 border-b border-foreground/20">
+                    {children}
+                </th>
+            ),
+            td: ({ children }) => (
+                <td className="px-3 py-2 border-b border-foreground/10 align-top">
+                    {children}
+                </td>
+            ),
+            h1: ({ children }) => (
+                <h1 className='text-3xl font-semibold my-3'>
+                    {children}
+                </h1>
+            )
+        }}
+    >
+        {children}
+    </ReactMarkdown>
+}

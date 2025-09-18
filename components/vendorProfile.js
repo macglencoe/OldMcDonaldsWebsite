@@ -1,7 +1,7 @@
 export const VendorProfile = ({ name, subtitle, description, imgSrc, website, menu, children }) => {
     return (
         <div className="bg-accent/10 border border-accent/30 rounded-2xl overflow-hidden">
-            <div className="flex flex-col md:flex-row shadow-xl bg-white border border-gray-200 hover:shadow-2xl transition-shadow duration-300">
+            <div className="flex flex-col md:flex-row shadow-xl bg-white hover:shadow-2xl transition-shadow duration-300">
                 {imgSrc && (
                     <div className="md:w-1/3 w-full max-h-[300px] overflow-hidden">
                         <img
