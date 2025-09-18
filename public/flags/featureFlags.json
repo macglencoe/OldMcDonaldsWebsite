@@ -107,13 +107,5 @@
   "show_olr_banner": {
     "default": true,
     "conditions": []
-  },
-  "use_donuts_menu": {
-    "default": false,
-    "conditions": []
-  },
-  "use_taters_menu": {
-    "default": false,
-    "conditions": []
   }
 }
