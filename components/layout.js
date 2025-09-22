@@ -13,8 +13,8 @@ const Layout = (props) => {
         <div className="relative">
             <FloatingNav />
             <Navbar />
-            <Suspense fallback={null}><QrTracker /></Suspense>
             <Analytics />
+            <Suspense fallback={null}><QrTracker /></Suspense>
             <div className="overflow-x-scroll">
                 {props.children}
                 <AuxiliaryFAQ />
