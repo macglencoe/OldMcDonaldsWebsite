@@ -10,7 +10,7 @@ export default function VisitClient() {
     const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
 
     return (
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto px-3 md:px-0">
             <section>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[160px] sm:auto-rows-[180px]">
                     <QuickCard
