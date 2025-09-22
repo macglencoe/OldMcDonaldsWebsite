@@ -2,6 +2,7 @@ import AuxiliaryFAQ from "./auxiliaryFAQ"
 import FloatingNav from "./floatingNav"
 import Footer from "./footer"
 import { Analytics } from "@vercel/analytics/next"
+import QrTracker from "./qrTracker"
 
 const { default: Navbar } = require("./navbar")
 
@@ -11,6 +12,7 @@ const Layout = (props) => {
         <div className="relative">
             <FloatingNav />
             <Navbar />
+            <QrTracker />
             <Analytics />
             <div className="overflow-x-scroll">
                 {props.children}
