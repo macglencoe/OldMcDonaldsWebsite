@@ -19,7 +19,7 @@ export const CornMaze = () => {
             <div className='body basic'>
                 <div className={styles.cornMaze}>
                     <Image width={1000} height={1000} src='/maze2025.JPG' />
-                    <h2>2025 - Martinsburg 1877</h2>
+                    <h2 className='text-center my-3 !text-3xl md:my-6 md:!text-5xl'>2025 - Martinsburg 1877</h2>
                     <p className='text-center'>This year's maze features <strong>Martinsburg's historical roundhouse</strong>, where the very <strong>first <u>nationwide</u> labor movement</strong> began.</p>
                     <p className='text-center'>The Great Strike of 1877 began when the wages of railroad workers were cut by <i>10%</i>. Conductors, Engineers, Firemen, and Brakemen refused to move the trains until they received a fair wage.</p>
                     <br />
