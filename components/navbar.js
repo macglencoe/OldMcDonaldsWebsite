@@ -2,17 +2,9 @@
 import { useState } from "react"
 import styles from "./navbar.module.css"
 import { usePathname, useRouter } from "next/navigation"
-import mapIcon from '@/public/icons/map.svg?raw'
-import Link from "next/link"
-import { track } from "@vercel/analytics"
 
 export const Navbar = () => {
     const items = [
-        { title: "Activities", path: '/activities' },
-        { title: "About", path: '/about' },
-        { title: "Reservations", path: '/reservations' },
-        { title: "FAQ", path: '/faq' },
-        { title: "Gallery", path: '/gallery' },
     ]
     const [isOpen, setIsOpen] = useState(false)
     const pathname = usePathname();
@@ -20,7 +12,7 @@ export const Navbar = () => {
     return (
         <header className={styles.navbar + " relative"}>
             <a href="#skip-navbar" className="absolute right-1/2 text-center underline bg-background py-3 px-4 opacity-0 focus:opacity-100 -translate-y-[150%] focus:translate-y-0 transition-all duration-200">Skip to main content</a>
-            <a href="/" aria-label="Home"><h1>Old McDonald's</h1></a>
+            <a href="/" aria-label="Home"><h1>OMPP Hayrides</h1></a>
             <nav>
                 <ul>
                     {items.map((item) => (
@@ -28,23 +20,9 @@ export const Navbar = () => {
                             <a href={item.path}>{item.title}</a>
                         </li>
                     ))}
-                    <li key="map" className={pathname === "/map" ? styles.active : null}>
-                        <Link href="/map">
-                            <span dangerouslySetInnerHTML={{ __html: mapIcon }} />
-                        </Link>
-                    </li>
                 </ul>
             </nav>
-            <div className={styles.buttons}>
-                <a href="tel:304-839-2330" onClick={() => {
-                    track('Call Button', { location: 'Navbar' })
-                }}>Call</a>
-                <a href="/visit">Visit</a>
-            </div>
             <div className={styles.mobileNav}>
-                <Link className={styles.mobileMap + (pathname === "/map" ? " " + styles.active : "")} href="/map">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m600-120-240-84-186 72q-20 8-37-4.5T120-170v-560q0-13 7.5-23t20.5-15l212-72 240 84 186-72q20-8 37 4.5t17 33.5v560q0 13-7.5 23T812-192l-212 72Zm-40-98v-468l-160-56v468l160 56Zm80 0 120-40v-474l-120 46v468Zm-440-10 120-46v-468l-120 40v474Zm440-458v468-468Zm-320-56v468-468Z" /></svg>
-                </Link>
                 <button
                     onClick={() => setIsOpen(!isOpen)} className={styles.hamburger + (isOpen ? " " + styles.open : "")}
                 >
@@ -62,12 +40,6 @@ export const Navbar = () => {
                         ))}
                     </ul>
                 </nav>
-                <div className={styles.buttons + ' ' + styles.mobile}>
-                    <a href="tel:304-839-2330" onClick={() => {
-                        track('Call Button', { location: 'Navbar' })
-                    }}>Call</a>
-                    <a href="/visit">Visit</a>
-                </div>
             </div>
             <div id="skip-navbar" className="hidden"></div>
         </header>
