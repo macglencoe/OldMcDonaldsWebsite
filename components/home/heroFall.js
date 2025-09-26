@@ -24,7 +24,7 @@ export default function HeroFall() {
         ],
       }}
       seasonInfo={{
-        title: "Open Now",
+        title: "Open For The Season",
         content: "Come visit us on the weekend!",
       }}
     />
