@@ -1,9 +1,5 @@
-import Layout from "@/components/layout";
-import Image from "next/image";
-
 export default function NotFound() {
     return (
-        <Layout>
             <div className="p-4">
                 <div className="w-full h-[90vh] relative p-4 overflow-hidden" style={{
                     backgroundImage: "url('/hillview.jpg')",
@@ -18,6 +14,5 @@ export default function NotFound() {
                     </div>
                 </div>
             </div>
-        </Layout>
     );
 }
