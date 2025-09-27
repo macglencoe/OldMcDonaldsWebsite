@@ -1,11 +1,24 @@
-import HayrideCard from "@/components/hayrideCard";
+import Timeline from "@/components/timeline";
+import hayrideData from "@/data/hayrides.example.json";
 
-export default async function Home() {
+export default function Home() {
+  const slots = Array.isArray(hayrideData?.slots) ? hayrideData.slots : [];
+  const scheduleDate = hayrideData?.date;
+  const timezone = hayrideData?.timezone;
+
   return (
-    <div>
-      <h1>Home</h1>
-      <HayrideCard color="green" capacity={20} fill={15} />
-      <HayrideCard color="red" capacity={32} fill={20} />
-    </div>
-  )
+    <main className="mx-auto flex max-w-5xl flex-col gap-8 p-6">
+      <header className="space-y-2">
+        <h1 className="text-3xl font-bold text-gray-900">Hayride Schedule</h1>
+        {scheduleDate ? (
+          <p className="text-sm text-gray-600">
+            Date: {scheduleDate}
+            {timezone ? ` (${timezone})` : ""}
+          </p>
+        ) : null}
+      </header>
+
+      <Timeline slots={slots} />
+    </main>
+  );
 }

@@ -1,0 +1,59 @@
+{
+  "date": "2025-07-12",
+  "timezone": "America/Chicago",
+  "generatedAt": "2025-07-11T22:15:00-05:00",
+  "slots": [
+    {
+      "start": "2025-07-12T09:00:00-05:00",
+      "label": "09:00 AM",
+      "wagons": [
+        {
+          "id": "wagon-green",
+          "color": "green",
+          "capacity": 20,
+          "filled": 12,
+          "notes": "Scout troop"
+        },
+        {
+          "id": "wagon-white",
+          "color": "white",
+          "capacity": 18,
+          "filled": 18,
+          "notes": "Private party"
+        }
+      ]
+    },
+    {
+      "start": "2025-07-12T09:30:00-05:00",
+      "label": "09:30 AM",
+      "wagons": [
+        {
+          "id": "wagon-blue",
+          "color": "blue",
+          "capacity": 16,
+          "filled": 9
+        },
+        {
+          "id": "wagon-red",
+          "color": "red",
+          "capacity": 22,
+          "filled": 21,
+          "waitlist": 3
+        }
+      ]
+    },
+    {
+      "start": "2025-07-12T10:00:00-05:00",
+      "label": "10:00 AM",
+      "wagons": [
+        {
+          "id": "wagon-white",
+          "color": "white",
+          "capacity": 20,
+          "filled": 5,
+          "driver": "Jamie"
+        }
+      ]
+    }
+  ]
+}

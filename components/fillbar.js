@@ -1,6 +1,6 @@
 "use client"
 import clsx from "clsx";
-import { Minus, Plus, User } from "phosphor-react";
+import { Minus, Person, Plus, User } from "phosphor-react";
 
 const BAR_COLOR_CLASSES = {
   amber: "bg-amber-500",
@@ -74,7 +74,7 @@ export default function Fillbar({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex w-full gap-1">
+      <div className="flex w-full overflow-hidden rounded-md border border-gray-300">
         {Array.from({ length: totalSegments }).map((_, index) => {
           const isFilled = index < filledSegments;
           const isLastFilled = isEditable && isFilled && index === filledSegments - 1;
@@ -85,7 +85,7 @@ export default function Fillbar({
             filledSegments < totalSegments;
 
           const segmentClasses = clsx(
-            "flex-1 h-8 rounded-sm border border-gray-300 flex items-center justify-center text-xs font-semibold transition-colors",
+            "flex-1 basis-0 h-9 flex items-center justify-center text-xs font-semibold transition-colors border-l border-gray-200 first:border-l-0",
             isFilled ? clsx(fillClass, "text-white") : "bg-gray-100 text-gray-600"
           );
 
@@ -120,13 +120,13 @@ export default function Fillbar({
           return (
             <div key={index} className={segmentClasses}>
               {isFilled ? (
-                <User weight="fill" size={16} className="text-white" />
+                <Person weight="fill" size={16} className="hidden md:block text-white" />
               ) : null}
             </div>
           );
         })}
       </div>
-      <span className="text-sm font-medium text-gray-700">{`${displayAmount}/${displayMax}`}</span>
+      <span className="text-lg font-medium text-gray-700">{`${displayAmount}/${displayMax}`}</span>
     </div>
   );
 }
