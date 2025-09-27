@@ -1,24 +1,38 @@
-import Timeline from "@/components/timeline";
-import hayrideData from "@/data/hayrides.example.json";
+import HayrideScheduleView from "@/components/hayrideScheduleView";
+import { headers } from "next/headers";
 
-export default function Home() {
-  const slots = Array.isArray(hayrideData?.slots) ? hayrideData.slots : [];
-  const scheduleDate = hayrideData?.date;
-  const timezone = hayrideData?.timezone;
+async function fetchHayrideSchedule() {
+  const headerStore = headers();
+  const forwardedHost = headerStore.get("x-forwarded-host");
+  const host = forwardedHost ?? headerStore.get("host");
+  const protocol = headerStore.get("x-forwarded-proto") ??
+    (process.env.NODE_ENV === "production" ? "https" : "http");
 
-  return (
-    <main className="mx-auto flex max-w-5xl flex-col gap-8 p-6">
-      <header className="space-y-2">
-        <h1 className="text-3xl font-bold text-gray-900">Hayride Schedule</h1>
-        {scheduleDate ? (
-          <p className="text-sm text-gray-600">
-            Date: {scheduleDate}
-            {timezone ? ` (${timezone})` : ""}
-          </p>
-        ) : null}
-      </header>
+  const baseUrl = host ? `${protocol}://${host}` : process.env.NEXT_PUBLIC_SITE_URL;
 
-      <Timeline slots={slots} />
-    </main>
-  );
+  if (!baseUrl) {
+    return { data: null, error: "Missing base URL" };
+  }
+
+  try {
+    const response = await fetch(`${baseUrl}/api/hayrides`, {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      return { data: null, error: `Request failed with ${response.status}` };
+    }
+
+    const payload = await response.json();
+    return { data: payload?.data ?? null, meta: payload?.meta ?? null, error: null };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    return { data: null, error: message };
+  }
+}
+
+export default async function Home() {
+  const initial = await fetchHayrideSchedule();
+
+  return <HayrideScheduleView initialData={initial.data} initialMeta={initial.meta} initialError={initial.error} />;
 }
