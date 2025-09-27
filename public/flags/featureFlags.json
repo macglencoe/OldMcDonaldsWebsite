@@ -36,7 +36,7 @@
     "conditions": []
   },
   "show_vendors": {
-    "default": true,
+    "default": false,
     "conditions": []
   },
   "maze_game_enabled": {
@@ -86,16 +86,14 @@
     "conditions": []
   },
   "show_flood_banner": {
-    "default": false,
+    "default": true,
     "conditions": [],
     "args": [
       {
         "key": "dates",
         "type": "dates",
         "values": [
-          "2025-07-18",
-          "2025-07-19",
-          "2025-07-20"
+          "2025-09-27T17:00"
         ]
       }
     ]
