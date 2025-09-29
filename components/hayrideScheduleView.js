@@ -15,6 +15,7 @@ export default function HayrideScheduleView({
   initialMeta = null,
   initialError = null,
   pollInterval = DEFAULT_POLL_INTERVAL,
+  isEditable
 }) {
   const [data, setData] = useState(initialData);
   const [meta, setMeta] = useState(initialMeta);
@@ -95,7 +96,7 @@ export default function HayrideScheduleView({
         ) : null}
       </header>
 
-      <Timeline slots={slots} />
+      <Timeline slots={slots} isEditable={isEditable} />
     </main>
   );
 }

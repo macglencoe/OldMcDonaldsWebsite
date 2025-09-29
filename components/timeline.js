@@ -74,7 +74,7 @@ export default function Timeline({
                         capacity={wagon?.capacity}
                         filled={wagon?.filled}
                         fill={wagon?.fill}
-                        isEditable
+                        isEditable={isEditable}
                         onFilledChange={isEditable ? handleFilledChange : undefined}
                       />
                     );
