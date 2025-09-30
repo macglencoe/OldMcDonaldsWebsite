@@ -45,3 +45,4 @@ next-env.d.ts
 
 # other
 /public/search-index.json
+diff.diff
