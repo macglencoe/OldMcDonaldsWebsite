@@ -3,11 +3,74 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Timeline from "./timeline";
 import FetchedStatus from "./fetchedStatus";
+import { HAYRIDE_WAGONS, HAYRIDE_WAGON_LOOKUP, getWagonDefaults } from "@/lib/wagons";
 
 const DEFAULT_POLL_INTERVAL = 30000; // 30 seconds
 
-function extractSlots(data) {
-  return Array.isArray(data?.slots) ? data.slots : [];
+function clampFilled(value, capacity) {
+  const numericCapacity = Number.isFinite(capacity) ? Math.max(0, capacity) : 0;
+  const numericValue = Number(value);
+  if (!Number.isFinite(numericValue) || numericValue <= 0) {
+    return 0;
+  }
+  if (numericCapacity === 0) {
+    return Math.max(0, Math.round(numericValue));
+  }
+  return Math.max(0, Math.min(Math.round(numericValue), numericCapacity));
+}
+
+function mergeSlotWithRoster(slot) {
+  const existingWagons = Array.isArray(slot?.wagons) ? slot.wagons : [];
+  const existingMap = new Map(existingWagons.map((wagon) => [wagon?.id, wagon]));
+
+  const merged = HAYRIDE_WAGONS.map((rosterWagon) => {
+    const existing = existingMap.get(rosterWagon.id);
+    if (existing) {
+      const capacity = Number.isFinite(existing.capacity)
+        ? existing.capacity
+        : rosterWagon.capacity ?? 0;
+      const version = Number(existing.version);
+      const filledValue = existing.filled ?? existing.fill;
+      return {
+        ...rosterWagon,
+        ...existing,
+        capacity,
+        filled: clampFilled(filledValue, capacity),
+        fill: clampFilled(existing.fill ?? filledValue ?? 0, capacity),
+        version: Number.isFinite(version) && version > 0 ? Math.round(version) : 1,
+      };
+    }
+
+    return {
+      ...rosterWagon,
+      filled: 0,
+      fill: 0,
+      version: 1,
+    };
+  });
+
+  // Preserve any extra wagons not in the roster definition.
+  existingWagons.forEach((wagon) => {
+    if (!wagon?.id || HAYRIDE_WAGON_LOOKUP[wagon.id]) {
+      return;
+    }
+    const capacity = Number.isFinite(wagon.capacity) ? wagon.capacity : 0;
+    const filledValue = wagon.filled ?? wagon.fill;
+    const version = Number(wagon.version);
+    merged.push({
+      ...wagon,
+      filled: clampFilled(filledValue, capacity),
+      fill: clampFilled(wagon.fill ?? filledValue ?? 0, capacity),
+      version: Number.isFinite(version) && version > 0 ? Math.round(version) : 1,
+    });
+  });
+
+  return {
+    ...slot,
+    start: slot?.start ?? null,
+    label: slot?.label ?? null,
+    wagons: merged,
+  };
 }
 
 export default function HayrideScheduleView({
@@ -80,41 +143,61 @@ export default function HayrideScheduleView({
             return slot;
           }
 
-          if (!Array.isArray(slot?.wagons)) {
-            return slot;
+          const existingWagons = Array.isArray(slot?.wagons) ? [...slot.wagons] : [];
+          const targetIndex = existingWagons.findIndex((wagon) => wagon?.id === wagonId);
+          const numericFilled = Number.isFinite(filled) ? Math.max(0, Math.round(filled)) : null;
+          const numericVersion = Number.isFinite(version) ? Math.max(1, Math.round(version)) : null;
+
+          if (targetIndex === -1) {
+            const defaults = getWagonDefaults(wagonId);
+            const baseCapacity = Number.isFinite(defaults.capacity) ? defaults.capacity : 0;
+            const newWagon = {
+              ...defaults,
+              id: wagonId,
+              capacity: baseCapacity,
+              filled: numericFilled ?? 0,
+              fill: numericFilled ?? 0,
+              version: numericVersion ?? 1,
+            };
+            existingWagons.push(newWagon);
+            changed = true;
+            return {
+              ...slot,
+              wagons: existingWagons,
+            };
           }
 
-          let slotChanged = false;
-          const nextWagons = slot.wagons.map((wagon) => {
-            if (wagon?.id !== wagonId) {
+          const nextWagons = existingWagons.map((wagon, index) => {
+            if (index !== targetIndex) {
               return wagon;
             }
-
             const updated = { ...wagon };
-            if (Number.isFinite(filled)) {
-              updated.filled = filled;
-              updated.fill = filled;
+            if (numericFilled !== null) {
+              updated.filled = numericFilled;
+              updated.fill = numericFilled;
             }
-            if (Number.isFinite(version)) {
-              updated.version = Math.max(1, Math.round(version));
+            if (numericVersion !== null) {
+              updated.version = numericVersion;
             }
-            slotChanged = true;
             return updated;
           });
 
-          if (!slotChanged) {
-            return slot;
-          }
-
           changed = true;
-          return { ...slot, wagons: nextWagons };
+          return {
+            ...slot,
+            wagons: nextWagons,
+          };
         });
 
         if (!changed) {
           return previous;
         }
 
-        const patched = { ...previous, slots: nextSlots };
+        const patchedSlots = isEditable
+          ? nextSlots.map(mergeSlotWithRoster)
+          : nextSlots;
+
+        const patched = { ...previous, slots: patchedSlots };
         if (updateMeta?.lastUpdated) {
           patched.lastUpdated = updateMeta.lastUpdated;
         }
@@ -132,7 +215,13 @@ export default function HayrideScheduleView({
     []
   );
 
-  const slots = useMemo(() => extractSlots(data), [data]);
+  const slots = useMemo(() => {
+    const baseSlots = Array.isArray(data?.slots) ? data.slots : [];
+    if (!isEditable) {
+      return baseSlots;
+    }
+    return baseSlots.map(mergeSlotWithRoster);
+  }, [data, isEditable]);
   const scheduleDate = data?.date ?? null;
   const timezone = data?.timezone ?? null;
   const lastUpdated = data?.lastUpdated ?? null;

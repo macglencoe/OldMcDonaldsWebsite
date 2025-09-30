@@ -1,4 +1,5 @@
 import hayrideData from "@/data/hayrides.example.json";
+import { getWagonDefaults, HAYRIDE_WAGON_LOOKUP, HAYRIDE_WAGONS } from "@/lib/wagons";
 import { NextResponse } from "next/server";
 import crypto from "node:crypto";
 
@@ -67,22 +68,22 @@ function initializeScheduleState(source) {
             ? wagon.id
             : `wagon-${slotIndex}-${wagonIndex}`;
 
+          const defaults = getWagonDefaults(id);
+          const capacity = Number.isFinite(Number(wagon?.capacity))
+            ? Math.max(0, Number(wagon.capacity))
+            : defaults.capacity ?? 0;
           const filled = Number.isFinite(Number(wagon?.filled))
             ? Number(wagon?.filled)
             : Number.isFinite(Number(wagon?.fill))
               ? Number(wagon?.fill)
               : 0;
 
-          const capacity = Number.isFinite(Number(wagon?.capacity))
-            ? Math.max(0, Number(wagon.capacity))
-            : 0;
-
           return {
             id,
-            color: wagon?.color ?? null,
+            color: wagon?.color ?? defaults.color ?? null,
             capacity,
             filled: clampFilledValue(filled, capacity),
-            fill: wagon?.fill,
+            fill: clampFilledValue(wagon?.fill ?? filled ?? 0, capacity),
             version: 1,
           };
         }),
@@ -121,9 +122,20 @@ function normalizeWagon(wagon = {}) {
     }
     return acc;
   }, {});
-  if (normalized.fill === undefined && typeof normalized.filled === "number") {
-    normalized.fill = normalized.filled;
+  const defaults = getWagonDefaults(wagon?.id);
+  if (normalized.capacity === undefined && defaults.capacity !== undefined) {
+    normalized.capacity = defaults.capacity;
   }
+  if (normalized.color === undefined && defaults.color !== undefined) {
+    normalized.color = defaults.color;
+  }
+  const capacity = normalized.capacity ?? defaults.capacity ?? 0;
+  const filledValue = normalized.filled ?? normalized.fill ?? 0;
+  const clampedFilled = clampFilledValue(filledValue, capacity);
+  normalized.filled = clampedFilled;
+  normalized.fill = clampFilledValue(normalized.fill ?? clampedFilled, capacity);
+  const version = Number(normalized.version);
+  normalized.version = Number.isFinite(version) && version > 0 ? Math.round(version) : 1;
   return normalized;
 }
 
@@ -259,11 +271,16 @@ function createEtag(payload) {
 function findSlotAndWagon(slotStart, wagonId) {
   const slots = scheduleState?.slots ?? [];
   const normalizedStart = typeof slotStart === "string" && slotStart.length ? slotStart : null;
+  let fallbackSlotIndex = -1;
 
   for (let i = 0; i < slots.length; i += 1) {
     const slot = slots[i];
     if (normalizedStart && slot?.start !== normalizedStart) {
       continue;
+    }
+
+    if (!normalizedStart && fallbackSlotIndex === -1) {
+      fallbackSlotIndex = i;
     }
 
     const wagons = Array.isArray(slot?.wagons) ? slot.wagons : [];
@@ -279,8 +296,22 @@ function findSlotAndWagon(slotStart, wagonId) {
     }
 
     if (normalizedStart) {
-      break;
+      return {
+        slot,
+        wagon: null,
+        slotIndex: i,
+        wagonIndex: -1,
+      };
     }
+  }
+
+  if (fallbackSlotIndex !== -1) {
+    return {
+      slot: slots[fallbackSlotIndex],
+      wagon: null,
+      slotIndex: fallbackSlotIndex,
+      wagonIndex: -1,
+    };
   }
 
   return {
@@ -324,10 +355,47 @@ function adjustWagonWithRetry(payload) {
     : MAX_RETRIES;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-    const { slot, wagon } = findSlotAndWagon(payload.slotStart, payload.wagonId);
+    const lookup = findSlotAndWagon(payload.slotStart, payload.wagonId);
+    const slot = lookup.slot;
+    let wagon = lookup.wagon;
 
-    if (!slot || !wagon) {
-      throw new HttpError(404, "Wagon not found for the provided identifiers.");
+    if (!slot) {
+      throw new HttpError(404, "Slot not found for the provided identifiers.");
+    }
+
+    if (!Array.isArray(slot.wagons)) {
+      slot.wagons = [];
+    }
+
+    if (!wagon) {
+      const defaults = getWagonDefaults(payload.wagonId);
+      if (!defaults) {
+        throw new HttpError(404, "Unknown wagon identifier.");
+      }
+
+      const capacity = Number.isFinite(defaults.capacity) ? defaults.capacity : 0;
+      const baseWagon = {
+        id: payload.wagonId,
+        color: defaults.color ?? null,
+        capacity,
+        filled: 0,
+        fill: 0,
+        version: 1,
+      };
+
+      slot.wagons.push(baseWagon);
+      if (Array.isArray(slot.wagons)) {
+        const orderMap = new Map(HAYRIDE_WAGONS.map((item, index) => [item.id, index]));
+        slot.wagons.sort((a, b) => {
+          const orderA = orderMap.has(a.id) ? orderMap.get(a.id) : Number.MAX_SAFE_INTEGER;
+          const orderB = orderMap.has(b.id) ? orderMap.get(b.id) : Number.MAX_SAFE_INTEGER;
+          if (orderA !== orderB) {
+            return orderA - orderB;
+          }
+          return String(a.id ?? "").localeCompare(String(b.id ?? ""));
+        });
+      }
+      wagon = baseWagon;
     }
 
     const currentVersion = wagon.version ?? 1;
