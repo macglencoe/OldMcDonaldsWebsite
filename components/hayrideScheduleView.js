@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Timeline from "./timeline";
 import FetchedStatus from "./fetchedStatus";
 import { HAYRIDE_WAGONS, HAYRIDE_WAGON_LOOKUP, getWagonDefaults } from "@/lib/wagons";
+import { getSlotsForDate } from "@/lib/slots";
 
 const DEFAULT_POLL_INTERVAL = 30000; // 30 seconds
 
@@ -84,6 +85,10 @@ export default function HayrideScheduleView({
   const [meta, setMeta] = useState(initialMeta);
   const [error, setError] = useState(initialError);
   const [isFetching, setIsFetching] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(() => {
+    const today = new Date();
+    return today.toISOString().slice(0, 10);
+  });
 
   useEffect(() => {
     setData(initialData);
@@ -91,10 +96,11 @@ export default function HayrideScheduleView({
     setError(initialError);
   }, [initialData, initialMeta, initialError]);
 
-  const fetchSchedule = useCallback(async () => {
+  const fetchSchedule = useCallback(async (targetDate = selectedDate) => {
     try {
       setIsFetching(true);
-      const response = await fetch("/api/hayrides", { cache: "no-store" });
+      const query = targetDate ? `?date=${encodeURIComponent(targetDate)}` : "";
+      const response = await fetch(`/api/hayrides${query}`, { cache: "no-store" });
       if (!response.ok) {
         throw new Error(`Request failed with ${response.status}`);
       }
@@ -107,7 +113,7 @@ export default function HayrideScheduleView({
     } finally {
       setIsFetching(false);
     }
-  }, []);
+  }, [selectedDate]);
 
   useEffect(() => {
     if (!pollInterval || pollInterval <= 0) {
@@ -115,15 +121,19 @@ export default function HayrideScheduleView({
     }
 
     const interval = setInterval(() => {
-      fetchSchedule();
+      fetchSchedule(selectedDate);
     }, pollInterval);
 
     return () => clearInterval(interval);
-  }, [fetchSchedule, pollInterval]);
+  }, [fetchSchedule, pollInterval, selectedDate]);
+
+  useEffect(() => {
+    fetchSchedule(selectedDate);
+  }, [selectedDate, fetchSchedule]);
 
   const handleManualRefresh = useCallback(() => {
-    fetchSchedule();
-  }, [fetchSchedule]);
+    fetchSchedule(selectedDate);
+  }, [fetchSchedule, selectedDate]);
 
   const handleWagonFilledChange = useCallback(
     ({ slotStart, wagonId, filled, version, meta: updateMeta }) => {
@@ -217,12 +227,52 @@ export default function HayrideScheduleView({
 
   const slots = useMemo(() => {
     const baseSlots = Array.isArray(data?.slots) ? data.slots : [];
+
     if (!isEditable) {
       return baseSlots;
     }
-    return baseSlots.map(mergeSlotWithRoster);
-  }, [data, isEditable]);
-  const scheduleDate = data?.date ?? null;
+
+    const rosterSlots = getSlotsForDate(selectedDate).map((template) => ({
+      start: template.start,
+      label: template.label,
+      wagons: [],
+    }));
+
+    const slotKey = (slot) => {
+      if (!slot?.start) {
+        return `${selectedDate}|${slot?.label ?? ""}`;
+      }
+      const start = slot.start;
+      const keyDate = start.slice(0, 10) || selectedDate;
+      const timePart = start.slice(11, 16) || slot?.label || "";
+      return `${keyDate}|${timePart}`;
+    };
+
+    const fetchedMap = new Map();
+    baseSlots.forEach((slot) => {
+      fetchedMap.set(slotKey(slot), slot);
+    });
+
+    const mergedSlots = rosterSlots.map((slot) => {
+      const fetched = fetchedMap.get(slotKey(slot));
+      return isEditable ? mergeSlotWithRoster(fetched ?? slot) : fetched ?? slot;
+    });
+
+    baseSlots.forEach((slot) => {
+      const key = slotKey(slot);
+      if (!fetchedMap.has(key)) {
+        mergedSlots.push(isEditable ? mergeSlotWithRoster(slot) : slot);
+      }
+    });
+
+    return mergedSlots.sort((a, b) => {
+      const timeA = new Date(a?.start ?? 0).getTime();
+      const timeB = new Date(b?.start ?? 0).getTime();
+      return timeA - timeB;
+    });
+  }, [data, isEditable, selectedDate]);
+
+  const scheduleDate = isEditable ? selectedDate : data?.date ?? selectedDate;
   const timezone = data?.timezone ?? null;
   const lastUpdated = data?.lastUpdated ?? null;
   const fetchedAt = meta?.fetchedAt ?? null;
@@ -240,6 +290,26 @@ export default function HayrideScheduleView({
               </p>
             ) : null}
           </div>
+          {isEditable ? (
+            <div className="flex flex-col gap-2 text-sm">
+              <label className="font-medium text-gray-700" htmlFor="schedule-date">
+                Select date
+              </label>
+              <input
+                id="schedule-date"
+                type="date"
+                value={scheduleDate ?? ""}
+                onChange={(event) => {
+                  const value = event.target.value;
+                  if (!value) {
+                    return;
+                  }
+                  setSelectedDate(value);
+                }}
+                className="rounded-md border border-gray-300 px-2 py-1 text-sm text-gray-700 shadow-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+              />
+            </div>
+          ) : null}
           <button
             type="button"
             onClick={handleManualRefresh}
