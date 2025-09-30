@@ -15,7 +15,7 @@ export default function HayrideScheduleView({
   initialMeta = null,
   initialError = null,
   pollInterval = DEFAULT_POLL_INTERVAL,
-  isEditable
+  isEditable = false,
 }) {
   const [data, setData] = useState(initialData);
   const [meta, setMeta] = useState(initialMeta);
@@ -62,6 +62,76 @@ export default function HayrideScheduleView({
     fetchSchedule();
   }, [fetchSchedule]);
 
+  const handleWagonFilledChange = useCallback(
+    ({ slotStart, wagonId, filled, version, meta: updateMeta }) => {
+      if (!wagonId) {
+        return;
+      }
+
+      setData((previous) => {
+        if (!previous || !Array.isArray(previous.slots)) {
+          return previous;
+        }
+
+        let changed = false;
+
+        const nextSlots = previous.slots.map((slot) => {
+          if (slotStart && slot?.start !== slotStart) {
+            return slot;
+          }
+
+          if (!Array.isArray(slot?.wagons)) {
+            return slot;
+          }
+
+          let slotChanged = false;
+          const nextWagons = slot.wagons.map((wagon) => {
+            if (wagon?.id !== wagonId) {
+              return wagon;
+            }
+
+            const updated = { ...wagon };
+            if (Number.isFinite(filled)) {
+              updated.filled = filled;
+              updated.fill = filled;
+            }
+            if (Number.isFinite(version)) {
+              updated.version = Math.max(1, Math.round(version));
+            }
+            slotChanged = true;
+            return updated;
+          });
+
+          if (!slotChanged) {
+            return slot;
+          }
+
+          changed = true;
+          return { ...slot, wagons: nextWagons };
+        });
+
+        if (!changed) {
+          return previous;
+        }
+
+        const patched = { ...previous, slots: nextSlots };
+        if (updateMeta?.lastUpdated) {
+          patched.lastUpdated = updateMeta.lastUpdated;
+        }
+        return patched;
+      });
+
+      if (updateMeta) {
+        setMeta((previousMeta) => ({
+          ...(previousMeta ?? {}),
+          ...updateMeta,
+          fetchedAt: new Date().toISOString(),
+        }));
+      }
+    },
+    []
+  );
+
   const slots = useMemo(() => extractSlots(data), [data]);
   const scheduleDate = data?.date ?? null;
   const timezone = data?.timezone ?? null;
@@ -96,7 +166,11 @@ export default function HayrideScheduleView({
         ) : null}
       </header>
 
-      <Timeline slots={slots} isEditable={isEditable} />
+      <Timeline
+        slots={slots}
+        isEditable={isEditable}
+        onWagonFilledChange={isEditable ? handleWagonFilledChange : undefined}
+      />
     </main>
   );
 }

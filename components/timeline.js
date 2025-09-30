@@ -58,15 +58,21 @@ export default function Timeline({
                     const wagonKey = wagon?.id ?? `${slotKey}-wagon-${index}`;
                     const handleFilledChange =
                       typeof onWagonFilledChange === "function"
-                        ? (nextValue) =>
+                        ? (update) => {
+                            const payload =
+                              update && typeof update === "object"
+                                ? update
+                                : { filled: update };
+
                             onWagonFilledChange({
-                              slotStart: slot?.start ?? null,
+                              ...payload,
+                              slotStart: slot?.start ?? payload?.slotStart ?? null,
                               slotLabel: slot?.label ?? null,
-                              wagonId: wagon?.id ?? null,
-                              nextValue,
-                            })
+                              wagonId: wagon?.id ?? payload?.wagonId ?? null,
+                            });
+                          }
                         : undefined;
-  
+
                     return (
                       <HayrideCard
                         key={wagonKey}
@@ -74,6 +80,9 @@ export default function Timeline({
                         capacity={wagon?.capacity}
                         filled={wagon?.filled}
                         fill={wagon?.fill}
+                        version={wagon?.version}
+                        slotStart={slot?.start ?? null}
+                        wagonId={wagon?.id ?? null}
                         isEditable={isEditable}
                         onFilledChange={isEditable ? handleFilledChange : undefined}
                       />

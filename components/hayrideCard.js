@@ -27,6 +27,9 @@ export default function HayrideCard({
   capacity,
   filled,
   fill,
+  version,
+  slotStart,
+  wagonId,
   onFilledChange,
   isEditable = true,
 }) {
@@ -47,13 +50,25 @@ export default function HayrideCard({
     return Math.max(0, Math.round(numericCapacity));
   }, [capacity]);
 
+  const initialVersion = useMemo(() => {
+    const numericVersion = Number(version);
+    return Number.isFinite(numericVersion) && numericVersion > 0
+      ? Math.round(numericVersion)
+      : 1;
+  }, [version]);
+
   const [currentFilled, setCurrentFilled] = useState(initialFilled);
+  const [currentVersion, setCurrentVersion] = useState(initialVersion);
 
   useEffect(() => {
     setCurrentFilled(initialFilled);
   }, [initialFilled]);
 
-  const handleFilledChange = (nextValue) => {
+  useEffect(() => {
+    setCurrentVersion(initialVersion);
+  }, [initialVersion]);
+
+  const handleFilledChange = (nextValue, details) => {
     if (!Number.isFinite(nextValue)) {
       return;
     }
@@ -61,8 +76,24 @@ export default function HayrideCard({
     const clampedValue = Math.max(0, Math.min(nextValue, safeCapacity ?? nextValue));
     setCurrentFilled(clampedValue);
 
+    const numericVersion = Number(details?.version);
+    const resolvedVersion = Number.isFinite(numericVersion)
+      ? Math.max(1, Math.round(numericVersion))
+      : currentVersion;
+
+    if (resolvedVersion !== currentVersion) {
+      setCurrentVersion(resolvedVersion);
+    }
+
     if (typeof onFilledChange === "function") {
-      onFilledChange(clampedValue);
+      onFilledChange({
+        filled: clampedValue,
+        version: resolvedVersion,
+        slotStart,
+        wagonId,
+        meta: details?.meta ?? null,
+        wagon: details?.wagon ?? null,
+      });
     }
   };
 
@@ -78,6 +109,9 @@ export default function HayrideCard({
         max={effectiveMax}
         amount={currentFilled}
         isEditable={isEditable}
+        slotStart={slotStart}
+        wagonId={wagonId}
+        version={currentVersion}
         onChange={handleFilledChange}
       />
     </div>

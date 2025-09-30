@@ -1,6 +1,8 @@
-"use client"
+"use client";
+
+import { useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
-import { Minus, Person, Plus, User } from "phosphor-react";
+import { CheckCircle, CircleNotch, Minus, Person, Plus, WarningCircle } from "phosphor-react";
 
 const BAR_COLOR_CLASSES = {
   amber: "bg-amber-500",
@@ -25,8 +27,33 @@ export default function Fillbar({
   amount = 0,
   max = 0,
   isEditable = false,
+  slotStart,
+  wagonId,
+  version,
   onChange,
 }) {
+  const [localVersion, setLocalVersion] = useState(() => {
+    const numeric = Number(version);
+    return Number.isFinite(numeric) && numeric > 0 ? numeric : 1;
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pendingDirection, setPendingDirection] = useState(null);
+  const [status, setStatus] = useState(null);
+
+  useEffect(() => {
+    const numeric = Number(version);
+    if (Number.isFinite(numeric) && numeric > localVersion) {
+      setLocalVersion(numeric);
+    }
+  }, [version, localVersion]);
+
+  useEffect(() => {
+    if (!status || status.type !== "success") {
+      return undefined;
+    }
+    const timeout = setTimeout(() => setStatus(null), 2000);
+    return () => clearTimeout(timeout);
+  }, [status]);
   const numericAmount = Number(amount);
   const hasPositiveAmount = Number.isFinite(numericAmount) && numericAmount > 0;
 
@@ -50,25 +77,92 @@ export default function Fillbar({
   const displayAmount = Math.round(clampedAmount);
   const displayMax = Math.round(safeMax);
 
+  const canIncrement = isEditable && filledSegments < totalSegments && !isSubmitting;
+  const canDecrement = isEditable && filledSegments > 0 && !isSubmitting;
+
+  const mutateServer = useCallback(
+    async (delta) => {
+      if (!wagonId) {
+        if (typeof onChange === "function") {
+          const localNext = Math.max(0, Math.min(totalSegments, filledSegments + delta));
+          onChange(localNext);
+        }
+        setStatus({ type: "success", message: "Updated locally" });
+        return;
+      }
+
+      try {
+        setIsSubmitting(true);
+        setPendingDirection(Math.sign(delta));
+        setStatus({ type: "info", message: "Saving..." });
+
+        const response = await fetch("/api/hayrides", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            slotStart,
+            wagonId,
+            delta,
+            expectedVersion: localVersion,
+          }),
+        });
+
+        const payload = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          const message = payload?.message ?? `Request failed with ${response.status}`;
+          throw new Error(message);
+        }
+
+        const updatedWagon = payload?.data?.wagon ?? null;
+        const nextFilled = updatedWagon?.filled;
+        const nextVersion = updatedWagon?.version;
+
+        if (Number.isFinite(nextVersion)) {
+          setLocalVersion(nextVersion);
+        }
+
+        if (typeof onChange === "function" && Number.isFinite(nextFilled)) {
+          onChange(nextFilled, {
+            version: nextVersion,
+            meta: payload?.meta ?? null,
+            wagon: updatedWagon,
+          });
+        }
+
+        setStatus({ type: "success", message: "Saved" });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Unable to save";
+        setStatus({ type: "error", message });
+      } finally {
+        setIsSubmitting(false);
+        setPendingDirection(null);
+      }
+    },
+    [filledSegments, localVersion, onChange, slotStart, totalSegments, wagonId]
+  );
+
   const handleIncrement = () => {
-    if (!isEditable || typeof onChange !== "function") {
+    if (!canIncrement) {
       return;
     }
-
     const nextAmount = Math.min(totalSegments, filledSegments + 1);
-    if (nextAmount !== filledSegments) {
-      onChange(nextAmount);
+    const delta = nextAmount - filledSegments;
+    if (delta !== 0) {
+      mutateServer(delta);
     }
   };
 
   const handleDecrement = () => {
-    if (!isEditable || typeof onChange !== "function") {
+    if (!canDecrement) {
       return;
     }
-
     const nextAmount = Math.max(0, filledSegments - 1);
-    if (nextAmount !== filledSegments) {
-      onChange(nextAmount);
+    const delta = nextAmount - filledSegments;
+    if (delta !== 0) {
+      mutateServer(delta);
     }
   };
 
@@ -95,10 +189,15 @@ export default function Fillbar({
                 type="button"
                 key={index}
                 onClick={handleDecrement}
-                className={clsx(segmentClasses, "cursor-pointer select-none")}
+                className={clsx(segmentClasses, "cursor-pointer select-none", (!canDecrement || isSubmitting) && "opacity-60" )}
                 aria-label="Remove one"
+                disabled={!canDecrement}
               >
-                <Minus weight="bold" />
+                {isSubmitting && pendingDirection === -1 ? (
+                  <CircleNotch className="h-4 w-4 animate-spin" weight="bold" />
+                ) : (
+                  <Minus weight="bold" />
+                )}
               </button>
             );
           }
@@ -109,10 +208,15 @@ export default function Fillbar({
                 type="button"
                 key={index}
                 onClick={handleIncrement}
-                className={clsx(segmentClasses, "cursor-pointer select-none")}
+                className={clsx(segmentClasses, "cursor-pointer select-none", (!canIncrement || isSubmitting) && "opacity-60")}
                 aria-label="Add one"
+                disabled={!canIncrement}
               >
-                <Plus weight="bold" />
+                {isSubmitting && pendingDirection === 1 ? (
+                  <CircleNotch className="h-4 w-4 animate-spin" weight="bold" />
+                ) : (
+                  <Plus weight="bold" />
+                )}
               </button>
             );
           }
@@ -126,7 +230,30 @@ export default function Fillbar({
           );
         })}
       </div>
-      <span className="text-lg font-medium text-gray-700">{`${displayAmount}/${displayMax}`}</span>
+      <div className="flex flex-col gap-1">
+        <span className="text-lg font-medium text-gray-700">{`${displayAmount}/${displayMax}`}</span>
+        {status ? (
+          <span
+            className={clsx(
+              "flex items-center gap-1 text-xs",
+              status.type === "success"
+                ? "text-emerald-600"
+                : status.type === "error"
+                  ? "text-red-600"
+                  : "text-gray-600"
+            )}
+          >
+            {status.type === "success" ? (
+              <CheckCircle className="h-4 w-4" weight="bold" />
+            ) : status.type === "error" ? (
+              <WarningCircle className="h-4 w-4" weight="bold" />
+            ) : (
+              <CircleNotch className="h-4 w-4 animate-spin" weight="bold" />
+            )}
+            {status.message}
+          </span>
+        ) : null}
+      </div>
     </div>
   );
 }
