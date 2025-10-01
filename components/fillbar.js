@@ -29,6 +29,7 @@ export default function Fillbar({
   isEditable = false,
   slotStart,
   wagonId,
+  date,
   version,
   onChange,
 }) {
@@ -82,10 +83,19 @@ export default function Fillbar({
 
   const mutateServer = useCallback(
     async (delta) => {
+      if (!slotStart) {
+        setStatus({ type: "error", message: "Missing slot start time" });
+        return;
+      }
+
       if (!wagonId) {
         if (typeof onChange === "function") {
           const localNext = Math.max(0, Math.min(totalSegments, filledSegments + delta));
-          onChange(localNext);
+          onChange(localNext, {
+            slotStart,
+            wagonId,
+            date,
+          });
         }
         setStatus({ type: "success", message: "Updated locally" });
         return;
@@ -102,6 +112,7 @@ export default function Fillbar({
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            date,
             slotStart,
             wagonId,
             delta,
@@ -129,6 +140,8 @@ export default function Fillbar({
             version: nextVersion,
             meta: payload?.meta ?? null,
             wagon: updatedWagon,
+            date: payload?.data?.date ?? date ?? null,
+            slotStart,
           });
         }
 
@@ -141,7 +154,7 @@ export default function Fillbar({
         setPendingDirection(null);
       }
     },
-    [filledSegments, localVersion, onChange, slotStart, totalSegments, wagonId]
+    [date, filledSegments, localVersion, onChange, slotStart, totalSegments, wagonId]
   );
 
   const handleIncrement = () => {

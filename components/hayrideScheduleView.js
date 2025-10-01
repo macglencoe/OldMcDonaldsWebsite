@@ -86,6 +86,9 @@ export default function HayrideScheduleView({
   const [error, setError] = useState(initialError);
   const [isFetching, setIsFetching] = useState(false);
   const [selectedDate, setSelectedDate] = useState(() => {
+    if (typeof initialData?.date === "string" && initialData.date) {
+      return initialData.date;
+    }
     const today = new Date();
     return today.toISOString().slice(0, 10);
   });
@@ -136,8 +139,13 @@ export default function HayrideScheduleView({
   }, [fetchSchedule, selectedDate]);
 
   const handleWagonFilledChange = useCallback(
-    ({ slotStart, wagonId, filled, version, meta: updateMeta }) => {
+    ({ slotStart, wagonId, filled, version, meta: updateMeta, date }) => {
       if (!wagonId) {
+        return;
+      }
+
+      const effectiveDate = date ?? (typeof slotStart === "string" ? slotStart.slice(0, 10) : null) ?? selectedDate;
+      if (effectiveDate !== selectedDate) {
         return;
       }
 
@@ -222,7 +230,7 @@ export default function HayrideScheduleView({
         }));
       }
     },
-    []
+    [selectedDate]
   );
 
   const slots = useMemo(() => {
@@ -255,13 +263,28 @@ export default function HayrideScheduleView({
 
     const mergedSlots = rosterSlots.map((slot) => {
       const fetched = fetchedMap.get(slotKey(slot));
-      return isEditable ? mergeSlotWithRoster(fetched ?? slot) : fetched ?? slot;
+      if (!fetched) {
+        return isEditable ? mergeSlotWithRoster(slot) : slot;
+      }
+
+      const slotWithStart = {
+        ...fetched,
+        start: fetched?.start ?? slot.start ?? null,
+        label: fetched?.label ?? slot.label ?? null,
+      };
+
+      return isEditable ? mergeSlotWithRoster(slotWithStart) : slotWithStart;
     });
 
     baseSlots.forEach((slot) => {
       const key = slotKey(slot);
       if (!fetchedMap.has(key)) {
-        mergedSlots.push(isEditable ? mergeSlotWithRoster(slot) : slot);
+        const slotWithStart = {
+          ...slot,
+          start: slot?.start ?? null,
+          label: slot?.label ?? null,
+        };
+        mergedSlots.push(isEditable ? mergeSlotWithRoster(slotWithStart) : slotWithStart);
       }
     });
 
@@ -328,6 +351,7 @@ export default function HayrideScheduleView({
       <Timeline
         slots={slots}
         isEditable={isEditable}
+        date={scheduleDate}
         onWagonFilledChange={isEditable ? handleWagonFilledChange : undefined}
       />
     </main>

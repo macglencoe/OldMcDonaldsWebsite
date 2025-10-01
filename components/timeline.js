@@ -29,6 +29,7 @@ export default function Timeline({
   slots = [],
   isEditable = false,
   onWagonFilledChange,
+  date,
 }) {
   const sortedSlots = useMemo(() => {
     return [...slots]
@@ -69,6 +70,7 @@ export default function Timeline({
                               slotStart: slot?.start ?? payload?.slotStart ?? null,
                               slotLabel: slot?.label ?? null,
                               wagonId: wagon?.id ?? payload?.wagonId ?? null,
+                              date: payload?.date ?? date ?? null,
                             });
                           }
                         : undefined;
@@ -83,6 +85,7 @@ export default function Timeline({
                         version={wagon?.version}
                         slotStart={slot?.start ?? null}
                         wagonId={wagon?.id ?? null}
+                        date={date}
                         isEditable={isEditable}
                         onFilledChange={isEditable ? handleFilledChange : undefined}
                       />

@@ -30,6 +30,7 @@ export default function HayrideCard({
   version,
   slotStart,
   wagonId,
+  date,
   onFilledChange,
   isEditable = true,
 }) {
@@ -91,6 +92,7 @@ export default function HayrideCard({
         version: resolvedVersion,
         slotStart,
         wagonId,
+        date,
         meta: details?.meta ?? null,
         wagon: details?.wagon ?? null,
       });
@@ -111,6 +113,7 @@ export default function HayrideCard({
         isEditable={isEditable}
         slotStart={slotStart}
         wagonId={wagonId}
+        date={date}
         version={currentVersion}
         onChange={handleFilledChange}
       />

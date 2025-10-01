@@ -5,13 +5,13 @@ import crypto from "node:crypto";
 
 const MAX_RETRIES = 5;
 
-const scheduleState = initializeScheduleState(hayrideData);
-
 /**
- * ISO-8601 timestamp describing the last data refresh.
+ * ISO timestamp used when seeding new day states.
  * @type {string}
  */
-let lastUpdated = hayrideData?.generatedAt ?? new Date().toISOString();
+const INITIAL_LAST_UPDATED = hayrideData?.generatedAt ?? new Date().toISOString();
+
+const scheduleState = createScheduleState(hayrideData);
 
 /**
  * Cache policy for CDN and browsers.
@@ -47,49 +47,86 @@ class HttpError extends Error {
 }
 
 /**
- * Builds an internal mutable schedule representation from the seed data.
- * @param {any} source Raw schedule document.
- * @returns {{date: string | null, timezone: string | null, slots: Array<{start: string | null, label: string | null, wagons: Array<{id: string, color: string | null, capacity: number, filled: number, fill?: number, version: number}>}>}}}
+ * Creates the mutable schedule state keyed by date.
+ * @param {*} source Seed schedule payload.
+ * @returns {{ timezone: string | null, defaultDate: string | null, days: Map<string, { slots: any[], lastUpdated: string }> }}
  */
-function initializeScheduleState(source) {
-  const slots = Array.isArray(source?.slots) ? source.slots : [];
+function createScheduleState(source) {
+  const timezone = source?.timezone ?? null;
+  const defaultDate = typeof source?.date === "string"
+    ? source.date
+    : new Date().toISOString().slice(0, 10);
 
-  return {
-    date: source?.date ?? null,
-    timezone: source?.timezone ?? null,
-    slots: slots.map((slot, slotIndex) => {
-      const wagons = Array.isArray(slot?.wagons) ? slot.wagons : [];
+  const days = new Map();
+  if (defaultDate) {
+    days.set(defaultDate, {
+      slots: convertSourceSlots(source?.slots ?? []),
+      lastUpdated: INITIAL_LAST_UPDATED,
+    });
+  }
 
-      return {
-        start: slot?.start ?? null,
-        label: slot?.label ?? null,
-        wagons: wagons.map((wagon, wagonIndex) => {
-          const id = typeof wagon?.id === "string" && wagon.id
-            ? wagon.id
-            : `wagon-${slotIndex}-${wagonIndex}`;
+  return { timezone, defaultDate, days };
+}
 
-          const defaults = getWagonDefaults(id);
-          const capacity = Number.isFinite(Number(wagon?.capacity))
-            ? Math.max(0, Number(wagon.capacity))
-            : defaults.capacity ?? 0;
-          const filled = Number.isFinite(Number(wagon?.filled))
-            ? Number(wagon?.filled)
-            : Number.isFinite(Number(wagon?.fill))
-              ? Number(wagon?.fill)
-              : 0;
+/**
+ * Normalizes the seed slots for storage.
+ * @param {Array<Record<string, unknown>>} slots Raw slots from source.
+ * @returns {Array<{start: string | null, label: string | null, wagons: Array<Record<string, unknown>>}>}
+ */
+function convertSourceSlots(slots) {
+  return (Array.isArray(slots) ? slots : []).map((slot, slotIndex) => {
+    const wagons = Array.isArray(slot?.wagons) ? slot.wagons : [];
 
-          return {
-            id,
-            color: wagon?.color ?? defaults.color ?? null,
-            capacity,
-            filled: clampFilledValue(filled, capacity),
-            fill: clampFilledValue(wagon?.fill ?? filled ?? 0, capacity),
-            version: 1,
-          };
-        }),
-      };
-    }),
-  };
+    return {
+      start: slot?.start ?? null,
+      label: slot?.label ?? null,
+      wagons: wagons.map((wagon, wagonIndex) => {
+        const id = typeof wagon?.id === "string" && wagon.id
+          ? wagon.id
+          : `wagon-${slotIndex}-${wagonIndex}`;
+
+        const defaults = getWagonDefaults(id);
+        const capacity = Number.isFinite(Number(wagon?.capacity))
+          ? Math.max(0, Number(wagon.capacity))
+          : defaults.capacity ?? 0;
+        const filled = Number.isFinite(Number(wagon?.filled))
+          ? Number(wagon?.filled)
+          : Number.isFinite(Number(wagon?.fill))
+            ? Number(wagon?.fill)
+            : 0;
+
+        return {
+          id,
+          color: wagon?.color ?? defaults.color ?? null,
+          capacity,
+          filled: clampFilledValue(filled, capacity),
+          fill: clampFilledValue(wagon?.fill ?? filled ?? 0, capacity),
+          version: 1,
+        };
+      }),
+    };
+  });
+}
+
+/**
+ * Ensures a day state exists in memory.
+ * @param {string | null | undefined} dateISO Target date in YYYY-MM-DD format.
+ * @param {boolean} createIfMissing Whether to create an empty entry when absent.
+ * @returns {{slots: any[], lastUpdated: string} | null}
+ */
+function ensureDayState(dateISO, createIfMissing = true) {
+  const fallback = scheduleState.defaultDate;
+  const key = typeof dateISO === "string" && dateISO ? dateISO : fallback;
+  if (!key) {
+    return null;
+  }
+  if (!scheduleState.days.has(key) && createIfMissing) {
+    scheduleState.days.set(key, {
+      slots: [],
+      lastUpdated: new Date().toISOString(),
+    });
+  }
+  return scheduleState.days.get(key) ?? null;
 }
 
 /**
@@ -230,11 +267,6 @@ function buildFilters(searchParams) {
 function applyFilters(baseSlots, filters) {
   let slots = baseSlots;
 
-  if (filters.date && scheduleState?.date && filters.date !== scheduleState.date) {
-    // No slots for the requested date in the sample data.
-    return [];
-  }
-
   if (filters.start) {
     const startMs = Number(new Date(filters.start));
     slots = slots.filter((slot) => Number(new Date(slot.start)) === startMs);
@@ -268,58 +300,94 @@ function createEtag(payload) {
  * @param {string} wagonId Wagon identifier.
  * @returns {{slot: any, wagon: any, slotIndex: number, wagonIndex: number}}
  */
-function findSlotAndWagon(slotStart, wagonId) {
-  const slots = scheduleState?.slots ?? [];
+function findSlotAndWagon(dayState, slotStart, wagonId) {
+  const slots = Array.isArray(dayState?.slots) ? dayState.slots : [];
   const normalizedStart = typeof slotStart === "string" && slotStart.length ? slotStart : null;
-  let fallbackSlotIndex = -1;
 
-  for (let i = 0; i < slots.length; i += 1) {
-    const slot = slots[i];
-    if (normalizedStart && slot?.start !== normalizedStart) {
-      continue;
-    }
+  let slotMatch = null;
+  let slotIndex = -1;
 
-    if (!normalizedStart && fallbackSlotIndex === -1) {
-      fallbackSlotIndex = i;
-    }
-
-    const wagons = Array.isArray(slot?.wagons) ? slot.wagons : [];
-    const wagonIndex = wagons.findIndex((wagon) => wagon?.id === wagonId);
-
-    if (wagonIndex !== -1) {
-      return {
-        slot,
-        wagon: wagons[wagonIndex],
-        slotIndex: i,
-        wagonIndex,
-      };
-    }
-
-    if (normalizedStart) {
-      return {
-        slot,
-        wagon: null,
-        slotIndex: i,
-        wagonIndex: -1,
-      };
+  if (normalizedStart) {
+    slotIndex = slots.findIndex((slot) => slot?.start === normalizedStart);
+    if (slotIndex !== -1) {
+      slotMatch = slots[slotIndex];
     }
   }
 
-  if (fallbackSlotIndex !== -1) {
-    return {
-      slot: slots[fallbackSlotIndex],
-      wagon: null,
-      slotIndex: fallbackSlotIndex,
-      wagonIndex: -1,
-    };
+  if (!slotMatch && wagonId) {
+    slotIndex = slots.findIndex((slot) => Array.isArray(slot?.wagons) && slot.wagons.some((wagon) => wagon?.id === wagonId));
+    if (slotIndex !== -1) {
+      slotMatch = slots[slotIndex];
+    }
   }
+
+  if (!slotMatch && slots.length && !normalizedStart) {
+    slotIndex = 0;
+    slotMatch = slots[0];
+  }
+
+  const wagons = Array.isArray(slotMatch?.wagons) ? slotMatch.wagons : [];
+  const wagonIndex = wagons.findIndex((wagon) => wagon?.id === wagonId);
 
   return {
-    slot: null,
-    wagon: null,
-    slotIndex: -1,
-    wagonIndex: -1,
+    slot: slotMatch ?? null,
+    wagon: wagonIndex !== -1 ? wagons[wagonIndex] : null,
+    slotIndex,
+    wagonIndex,
   };
+}
+
+/**
+ * Generates a human-friendly label for a slot.
+ * @param {string | null} startISO ISO timestamp.
+ * @returns {string | null}
+ */
+function formatSlotLabel(startISO) {
+  if (!startISO) {
+    return null;
+  }
+  const date = new Date(startISO);
+  if (Number.isNaN(date.getTime())) {
+    return null;
+  }
+  return new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(date);
+}
+
+/**
+ * Ensures a slot exists inside the provided day state.
+ * @param {{slots: any[]}} dayState Day state container.
+ * @param {string | null} slotStart ISO timestamp for the slot.
+ * @param {string | null} slotLabel Optional label override.
+ * @returns {any}
+ */
+function ensureSlot(dayState, slotStart, slotLabel) {
+  if (!slotStart) {
+    throw new HttpError(400, "'slotStart' is required to create a new slot.");
+  }
+
+  if (!Array.isArray(dayState.slots)) {
+    dayState.slots = [];
+  }
+
+  let slot = dayState.slots.find((entry) => entry?.start === slotStart);
+  if (!slot) {
+    slot = {
+      start: slotStart,
+      label: slotLabel ?? formatSlotLabel(slotStart),
+      wagons: [],
+    };
+    dayState.slots.push(slot);
+    dayState.slots.sort((a, b) => new Date(a?.start ?? 0) - new Date(b?.start ?? 0));
+  }
+
+  if (!Array.isArray(slot.wagons)) {
+    slot.wagons = [];
+  }
+
+  return slot;
 }
 
 /**
@@ -353,14 +421,24 @@ function adjustWagonWithRetry(payload) {
   const maxAttempts = Number.isFinite(maxAttemptsRaw) && maxAttemptsRaw > 0
     ? Math.min(10, Math.max(1, Math.floor(maxAttemptsRaw)))
     : MAX_RETRIES;
+  const dateKey = typeof payload.date === "string" && payload.date
+    ? payload.date
+    : typeof payload.slotStart === "string" && payload.slotStart.length
+      ? payload.slotStart.slice(0, 10)
+      : null;
+  const dayState = ensureDayState(dateKey, true);
+
+  if (!dayState) {
+    throw new HttpError(400, "Unable to resolve schedule day for the update.");
+  }
 
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-    const lookup = findSlotAndWagon(payload.slotStart, payload.wagonId);
-    const slot = lookup.slot;
+    const lookup = findSlotAndWagon(dayState, payload.slotStart, payload.wagonId);
+    let slot = lookup.slot;
     let wagon = lookup.wagon;
 
     if (!slot) {
-      throw new HttpError(404, "Slot not found for the provided identifiers.");
+      slot = ensureSlot(dayState, payload.slotStart ?? null, payload.slotLabel ?? null);
     }
 
     if (!Array.isArray(slot.wagons)) {
@@ -384,17 +462,15 @@ function adjustWagonWithRetry(payload) {
       };
 
       slot.wagons.push(baseWagon);
-      if (Array.isArray(slot.wagons)) {
-        const orderMap = new Map(HAYRIDE_WAGONS.map((item, index) => [item.id, index]));
-        slot.wagons.sort((a, b) => {
-          const orderA = orderMap.has(a.id) ? orderMap.get(a.id) : Number.MAX_SAFE_INTEGER;
-          const orderB = orderMap.has(b.id) ? orderMap.get(b.id) : Number.MAX_SAFE_INTEGER;
-          if (orderA !== orderB) {
-            return orderA - orderB;
-          }
-          return String(a.id ?? "").localeCompare(String(b.id ?? ""));
-        });
-      }
+      const orderMap = new Map(HAYRIDE_WAGONS.map((item, index) => [item.id, index]));
+      slot.wagons.sort((a, b) => {
+        const orderA = orderMap.has(a.id) ? orderMap.get(a.id) : Number.MAX_SAFE_INTEGER;
+        const orderB = orderMap.has(b.id) ? orderMap.get(b.id) : Number.MAX_SAFE_INTEGER;
+        if (orderA !== orderB) {
+          return orderA - orderB;
+        }
+        return String(a.id ?? "").localeCompare(String(b.id ?? ""));
+      });
       wagon = baseWagon;
     }
 
@@ -427,13 +503,14 @@ function adjustWagonWithRetry(payload) {
       wagon.fill = nextFilled;
     }
     wagon.version = currentVersion + 1;
-    lastUpdated = new Date().toISOString();
+    dayState.lastUpdated = new Date().toISOString();
 
     return {
       slot,
       wagon,
       attempts: attempt,
       updated: true,
+      date: dateKey ?? scheduleState.defaultDate ?? null,
     };
   }
 
@@ -449,16 +526,17 @@ export async function GET(request) {
   try {
     const url = new URL(request.url);
     const filters = buildFilters(url.searchParams);
-
-    const normalizedSlots = normalizeSlots(scheduleState?.slots ?? []);
+    const targetDate = filters.date ?? scheduleState.defaultDate ?? new Date().toISOString().slice(0, 10);
+    const dayState = ensureDayState(targetDate, true);
+    const normalizedSlots = normalizeSlots(dayState?.slots ?? []);
     const filteredSlots = applyFilters(normalizedSlots, filters);
 
     const responseBody = {
       status: "ok",
       data: {
-        date: scheduleState?.date ?? null,
+        date: targetDate,
         timezone: scheduleState?.timezone ?? null,
-        lastUpdated,
+        lastUpdated: dayState?.lastUpdated ?? INITIAL_LAST_UPDATED,
         slots: filteredSlots,
       },
       meta: {
@@ -529,6 +607,13 @@ export async function POST(request) {
     const expectedVersion = payload.expectedVersion !== undefined
       ? Number(payload.expectedVersion)
       : undefined;
+    const slotLabel = typeof payload.slotLabel === "string" ? payload.slotLabel : undefined;
+    const dateParam = typeof payload.date === "string" ? payload.date : undefined;
+    const normalizedDate = dateParam && isValidDate(dateParam)
+      ? dateParam
+      : slotStart
+        ? slotStart.slice(0, 10)
+        : undefined;
 
     if (delta === undefined && setFilled === undefined) {
       throw new HttpError(400, "Provide either 'delta' or 'setFilled'.");
@@ -540,6 +625,7 @@ export async function POST(request) {
     }
 
     const result = adjustWagonWithRetry({
+      date: normalizedDate,
       slotStart,
       wagonId,
       delta,
@@ -547,12 +633,16 @@ export async function POST(request) {
       expectedVersion,
       autoRetry: payload.autoRetry !== false,
       maxRetries: payload.maxRetries,
+      slotLabel,
     });
+
+    const resultDate = result.date ?? normalizedDate ?? scheduleState.defaultDate ?? null;
+    const dayState = ensureDayState(resultDate, false);
 
     const responseBody = {
       status: "ok",
       data: {
-        date: scheduleState?.date ?? null,
+        date: resultDate,
         timezone: scheduleState?.timezone ?? null,
         slotStart: result.slot?.start ?? null,
         wagon: normalizeWagon(result.wagon),
@@ -560,7 +650,7 @@ export async function POST(request) {
       meta: {
         attempts: result.attempts,
         updated: result.updated,
-        lastUpdated,
+        lastUpdated: dayState?.lastUpdated ?? new Date().toISOString(),
       },
     };
 
