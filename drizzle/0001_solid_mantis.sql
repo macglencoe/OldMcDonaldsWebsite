@@ -1,0 +1,2 @@
+CREATE UNIQUE INDEX "hayride_slots_date_start_idx" ON "hayride_slots" USING btree ("date","start");--> statement-breakpoint
+CREATE UNIQUE INDEX "hayride_wagons_slot_wagon_idx" ON "hayride_wagons" USING btree ("slot_id","wagon_id");

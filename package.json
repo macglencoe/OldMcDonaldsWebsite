@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "drizzle-kit generate --config drizzle.config.ts",
+    "db:migrate": "drizzle-kit push --config drizzle.config.ts",
+    "db:studio": "drizzle-kit studio --config drizzle.config.ts"
   },
   "dependencies": {
     "@flags-sdk/statsig": "^0.2.2",
@@ -15,7 +18,9 @@
     "@fullcalendar/timegrid": "^6.1.17",
     "@react-google-maps/api": "^2.20.6",
     "@vercel/analytics": "^1.5.0",
+    "@vercel/postgres": "^0.10.0",
     "clsx": "^2.1.1",
+    "drizzle-orm": "^0.44.6",
     "flags": "^4.0.0",
     "framer-motion": "^12.15.0",
     "fuse.js": "^7.1.0",
@@ -37,6 +42,8 @@
     "@babel/traverse": "^7.28.3",
     "@tailwindcss/postcss": "^4",
     "cheerio": "^1.1.2",
+    "dotenv": "^17.2.3",
+    "drizzle-kit": "^0.31.5",
     "fast-glob": "^3.3.3",
     "tailwindcss": "^4"
   }
