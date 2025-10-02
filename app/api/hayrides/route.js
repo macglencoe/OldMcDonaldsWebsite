@@ -53,59 +53,13 @@ class HttpError extends Error {
  */
 function createScheduleState(source) {
   const timezone = source?.timezone ?? null;
-  const defaultDate = typeof source?.date === "string"
-    ? source.date
-    : new Date().toISOString().slice(0, 10);
+  const today = new Date().toISOString().slice(0, 10);
 
-  const days = new Map();
-  if (defaultDate) {
-    days.set(defaultDate, {
-      slots: convertSourceSlots(source?.slots ?? []),
-      lastUpdated: INITIAL_LAST_UPDATED,
-    });
-  }
-
-  return { timezone, defaultDate, days };
-}
-
-/**
- * Normalizes the seed slots for storage.
- * @param {Array<Record<string, unknown>>} slots Raw slots from source.
- * @returns {Array<{start: string | null, label: string | null, wagons: Array<Record<string, unknown>>}>}
- */
-function convertSourceSlots(slots) {
-  return (Array.isArray(slots) ? slots : []).map((slot, slotIndex) => {
-    const wagons = Array.isArray(slot?.wagons) ? slot.wagons : [];
-
-    return {
-      start: slot?.start ?? null,
-      label: slot?.label ?? null,
-      wagons: wagons.map((wagon, wagonIndex) => {
-        const id = typeof wagon?.id === "string" && wagon.id
-          ? wagon.id
-          : `wagon-${slotIndex}-${wagonIndex}`;
-
-        const defaults = getWagonDefaults(id);
-        const capacity = Number.isFinite(Number(wagon?.capacity))
-          ? Math.max(0, Number(wagon.capacity))
-          : defaults.capacity ?? 0;
-        const filled = Number.isFinite(Number(wagon?.filled))
-          ? Number(wagon?.filled)
-          : Number.isFinite(Number(wagon?.fill))
-            ? Number(wagon?.fill)
-            : 0;
-
-        return {
-          id,
-          color: wagon?.color ?? defaults.color ?? null,
-          capacity,
-          filled: clampFilledValue(filled, capacity),
-          fill: clampFilledValue(wagon?.fill ?? filled ?? 0, capacity),
-          version: 1,
-        };
-      }),
-    };
-  });
+  return {
+    timezone,
+    defaultDate: today,
+    days: new Map(),
+  };
 }
 
 /**
@@ -116,9 +70,14 @@ function convertSourceSlots(slots) {
  */
 function ensureDayState(dateISO, createIfMissing = true) {
   const fallback = scheduleState.defaultDate;
-  const key = typeof dateISO === "string" && dateISO ? dateISO : fallback;
+  const key = typeof dateISO === "string" && dateISO
+    ? dateISO
+    : fallback ?? new Date().toISOString().slice(0, 10);
   if (!key) {
     return null;
+  }
+  if (!scheduleState.defaultDate) {
+    scheduleState.defaultDate = key;
   }
   if (!scheduleState.days.has(key) && createIfMissing) {
     scheduleState.days.set(key, {
@@ -598,7 +557,10 @@ export async function POST(request) {
     }
 
     const slotStart = payload.slotStart ?? null;
-    if (slotStart && !isValidIso(slotStart)) {
+    if (!slotStart) {
+      throw new HttpError(400, "'slotStart' is required.");
+    }
+    if (!isValidIso(slotStart)) {
       throw new HttpError(400, "'slotStart' must be a valid ISO string ending in :00 or :30.");
     }
 

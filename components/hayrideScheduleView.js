@@ -236,10 +236,6 @@ export default function HayrideScheduleView({
   const slots = useMemo(() => {
     const baseSlots = Array.isArray(data?.slots) ? data.slots : [];
 
-    if (!isEditable) {
-      return baseSlots;
-    }
-
     const rosterSlots = getSlotsForDate(selectedDate).map((template) => ({
       start: template.start,
       label: template.label,
@@ -264,7 +260,7 @@ export default function HayrideScheduleView({
     const mergedSlots = rosterSlots.map((slot) => {
       const fetched = fetchedMap.get(slotKey(slot));
       if (!fetched) {
-        return isEditable ? mergeSlotWithRoster(slot) : slot;
+        return mergeSlotWithRoster(slot);
       }
 
       const slotWithStart = {
@@ -273,7 +269,7 @@ export default function HayrideScheduleView({
         label: fetched?.label ?? slot.label ?? null,
       };
 
-      return isEditable ? mergeSlotWithRoster(slotWithStart) : slotWithStart;
+      return mergeSlotWithRoster(slotWithStart);
     });
 
     baseSlots.forEach((slot) => {
@@ -284,7 +280,7 @@ export default function HayrideScheduleView({
           start: slot?.start ?? null,
           label: slot?.label ?? null,
         };
-        mergedSlots.push(isEditable ? mergeSlotWithRoster(slotWithStart) : slotWithStart);
+        mergedSlots.push(mergeSlotWithRoster(slotWithStart));
       }
     });
 
@@ -293,9 +289,9 @@ export default function HayrideScheduleView({
       const timeB = new Date(b?.start ?? 0).getTime();
       return timeA - timeB;
     });
-  }, [data, isEditable, selectedDate]);
+  }, [data, selectedDate]);
 
-  const scheduleDate = isEditable ? selectedDate : data?.date ?? selectedDate;
+  const scheduleDate = selectedDate;
   const timezone = data?.timezone ?? null;
   const lastUpdated = data?.lastUpdated ?? null;
   const fetchedAt = meta?.fetchedAt ?? null;
@@ -313,26 +309,24 @@ export default function HayrideScheduleView({
               </p>
             ) : null}
           </div>
-          {isEditable ? (
-            <div className="flex flex-col gap-2 text-sm">
-              <label className="font-medium text-gray-700" htmlFor="schedule-date">
-                Select date
-              </label>
-              <input
-                id="schedule-date"
-                type="date"
-                value={scheduleDate ?? ""}
-                onChange={(event) => {
-                  const value = event.target.value;
-                  if (!value) {
-                    return;
-                  }
-                  setSelectedDate(value);
-                }}
-                className="rounded-md border border-gray-300 px-2 py-1 text-sm text-gray-700 shadow-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-              />
-            </div>
-          ) : null}
+          <div className="flex flex-col gap-2 text-sm">
+            <label className="font-medium text-gray-700" htmlFor="schedule-date">
+              Select date
+            </label>
+            <input
+              id="schedule-date"
+              type="date"
+              value={scheduleDate ?? ""}
+              onChange={(event) => {
+                const value = event.target.value;
+                if (!value) {
+                  return;
+                }
+                setSelectedDate(value);
+              }}
+              className="rounded-md border border-gray-300 px-2 py-1 text-sm text-gray-700 shadow-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+            />
+          </div>
           <button
             type="button"
             onClick={handleManualRefresh}

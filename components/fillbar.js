@@ -57,11 +57,6 @@ export default function Fillbar({
   }, [status]);
   const numericAmount = Number(amount);
   const hasPositiveAmount = Number.isFinite(numericAmount) && numericAmount > 0;
-
-  if (!hasPositiveAmount && !isEditable) {
-    return null;
-  }
-
   const clampedAmount = hasPositiveAmount ? numericAmount : 0;
   const numericMax = Number(max);
   const hasPositiveMax = Number.isFinite(numericMax) && numericMax > 0;
