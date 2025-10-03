@@ -5,6 +5,8 @@ import { usePathname, useRouter } from "next/navigation"
 
 export const Navbar = () => {
     const items = [
+        { title: "View", path: "/"},
+        { title: "Edit", path: "/edit"}
     ]
     const [isOpen, setIsOpen] = useState(false)
     const pathname = usePathname();
