@@ -7,6 +7,7 @@ import { HAYRIDE_WAGONS, HAYRIDE_WAGON_LOOKUP, getWagonDefaults } from "@/lib/wa
 import { getSlotsForDate } from "@/lib/slots";
 
 const DEFAULT_POLL_INTERVAL = 30000; // 30 seconds
+const EDIT_POLL_INTERVAL = 2000; // 2 seconds
 
 function clampFilled(value, capacity) {
   const numericCapacity = Number.isFinite(capacity) ? Math.max(0, capacity) : 0;
@@ -78,8 +79,8 @@ export default function HayrideScheduleView({
   initialData = null,
   initialMeta = null,
   initialError = null,
-  pollInterval = DEFAULT_POLL_INTERVAL,
   isEditable = false,
+  pollInterval = isEditable ? EDIT_POLL_INTERVAL : DEFAULT_POLL_INTERVAL,
 }) {
   const [data, setData] = useState(initialData);
   const [meta, setMeta] = useState(initialMeta);
