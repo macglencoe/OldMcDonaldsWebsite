@@ -169,13 +169,13 @@ export default function Timeline({
             {timelineItems.map(({ anchorId, label }) => {
               const isActive = anchorId === activeAnchor;
               return (
-                <div key={anchorId} className="relative">
+                <div key={anchorId} className="relative w-full">
                   <div
                     className={`hidden md:block absolute -left-1 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full transition-colors ${isActive ? "bg-accent" : "bg-accent/30"}`}
                   />
                 <a
                   href={`#${anchorId}`}
-                  className={`whitespace-nowrap border-l px-3 py-1 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-accent md:w-full md:text-left ${
+                  className={`whitespace-nowrap border-l px-3 py-1 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-accent md:min-w-full md:text-left ${
                     isActive
                       ? "border-accent bg-accent text-background"
                       : "border-accent text-accent hover:bg-accent hover:text-background"
