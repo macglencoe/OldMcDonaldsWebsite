@@ -44,20 +44,9 @@
     "conditions": []
   },
   "show_night_maze_ad": {
-    "default": false,
+    "default": true,
     "operator": "AND",
-    "conditions": [
-      {
-        "criteria": "time",
-        "operator": "after",
-        "value": "2025-10-04T00:00:00-05:00"
-      },
-      {
-        "criteria": "time",
-        "operator": "before",
-        "value": "2025-10-26T23:59:59-05:00"
-      }
-    ]
+    "conditions": []
   },
   "show_contact_form": {
     "default": true,
@@ -86,7 +75,7 @@
     "conditions": []
   },
   "show_flood_banner": {
-    "default": false,
+    "default": true,
     "conditions": [],
     "args": [
       {
