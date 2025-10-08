@@ -1,21 +1,82 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import styles from "./navbar.module.css"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import mapIcon from '@/public/icons/map.svg?raw'
 import Link from "next/link"
 import { track } from "@vercel/analytics"
 
+const NAV_ITEMS = [
+    { key: "activities", title: "Activities", path: '/activities' },
+    { key: "about", title: "About", path: '/about' },
+    { key: "reservations", title: "Reservations", path: '/reservations' },
+    { key: "faq", title: "FAQ", path: '/faq' },
+    { key: "gallery", title: "Gallery", path: '/gallery' },
+    { key: "pricing", title: "Pricing", path: '/pricing' },
+]
+
+const PRIMARY_KEYS = new Set(["activities", "reservations", "pricing"])
+const PRIMARY_ITEMS = NAV_ITEMS.filter((item) => PRIMARY_KEYS.has(item.key))
+const SECONDARY_ITEMS = NAV_ITEMS.filter((item) => !PRIMARY_KEYS.has(item.key))
+const HAS_SECONDARY_ITEMS = SECONDARY_ITEMS.length > 0
+const MORE_MENU_ID = "navbar-more-menu"
+
+const mergeClassNames = (...classNames) => classNames.filter(Boolean).join(' ')
+
 export const Navbar = () => {
-    const items = [
-        { title: "Activities", path: '/activities' },
-        { title: "About", path: '/about' },
-        { title: "Reservations", path: '/reservations' },
-        { title: "FAQ", path: '/faq' },
-        { title: "Gallery", path: '/gallery' },
-    ]
     const [isOpen, setIsOpen] = useState(false)
-    const pathname = usePathname();
+    const [isMoreOpen, setIsMoreOpen] = useState(false)
+    const pathname = usePathname()
+    const moreRef = useRef(null)
+
+    useEffect(() => {
+        setIsOpen(false)
+        setIsMoreOpen(false)
+    }, [pathname])
+
+    useEffect(() => {
+        if (!isMoreOpen) {
+            return
+        }
+
+        const handlePointer = (event) => {
+            if (moreRef.current && moreRef.current.contains(event.target)) {
+                return
+            }
+            setIsMoreOpen(false)
+        }
+
+        const handleKey = (event) => {
+            if (event.key === "Escape") {
+                setIsMoreOpen(false)
+                const toggle = moreRef.current?.querySelector('button')
+                toggle?.focus()
+            }
+        }
+
+        document.addEventListener('pointerdown', handlePointer)
+        document.addEventListener('keydown', handleKey)
+
+        return () => {
+            document.removeEventListener('pointerdown', handlePointer)
+            document.removeEventListener('keydown', handleKey)
+        }
+    }, [isMoreOpen])
+
+    const renderNavItem = (item) => (
+        <li key={item.path} className={pathname === item.path ? styles.active : undefined}>
+            <a href={item.path}>{item.title}</a>
+        </li>
+    )
+
+    const moreToggleClassName = mergeClassNames(
+        styles.moreToggle,
+        isMoreOpen ? styles.moreToggleOpen : undefined
+    )
+    const moreMenuClassName = mergeClassNames(
+        styles.moreMenu,
+        isMoreOpen ? styles.moreMenuOpen : undefined
+    )
 
     return (
         <header className={styles.navbar + " relative"}>
@@ -23,11 +84,30 @@ export const Navbar = () => {
             <a href="/" aria-label="Home"><h1>Old McDonald's</h1></a>
             <nav>
                 <ul>
-                    {items.map((item) => (
-                        <li key={item.path} className={pathname === item.path ? styles.active : null}>
-                            <a href={item.path}>{item.title}</a>
+                    {PRIMARY_ITEMS.map(renderNavItem)}
+                    {HAS_SECONDARY_ITEMS && (
+                        <li className={styles.more} ref={moreRef}>
+                            <button
+                                type="button"
+                                className={moreToggleClassName}
+                                aria-haspopup="true"
+                                aria-expanded={isMoreOpen}
+                                aria-controls={MORE_MENU_ID}
+                                onClick={() => setIsMoreOpen((prev) => !prev)}
+                            >
+                                More
+                                <span aria-hidden="true" className={styles.chevron}></span>
+                            </button>
+                            <ul
+                                id={MORE_MENU_ID}
+                                className={moreMenuClassName}
+                                hidden={!isMoreOpen}
+                                aria-hidden={!isMoreOpen}
+                            >
+                                {SECONDARY_ITEMS.map(renderNavItem)}
+                            </ul>
                         </li>
-                    ))}
+                    )}
                     <li key="map" className={pathname === "/map" ? styles.active : null}>
                         <Link href="/map">
                             <span dangerouslySetInnerHTML={{ __html: mapIcon }} />
@@ -55,7 +135,7 @@ export const Navbar = () => {
             <div className={styles.menu + (isOpen ? " " + styles.open : "")}>
                 <nav>
                     <ul>
-                        {items.map((item) => (
+                        {NAV_ITEMS.map((item) => (
                             <li key={item.path} className={pathname === item.path ? styles.active : null}>
                                 <a href={item.path}>{item.title}</a>
                             </li>
