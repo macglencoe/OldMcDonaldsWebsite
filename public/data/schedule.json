@@ -126,6 +126,12 @@
         "category": "night-maze"
     },
     {
+        "title": "One Lane Road Performance",
+        "start": "2025-10-19T15:00:00",
+        "end": "2025-10-19T17:00:00",
+        "category": "event"
+    },
+    {
         "title": "Farm Swap",
         "start": "2025-10-04T11:00:00",
         "end": "2025-10-04T16:00:00",

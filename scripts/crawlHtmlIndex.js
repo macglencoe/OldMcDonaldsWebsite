@@ -8,6 +8,7 @@ const path = require("path");
 const fg = require("fast-glob");
 const cheerio = require("cheerio");
 
+
 const ROOT = process.cwd();
 const BUILD_HTML_DIRS = [
     path.join(ROOT, ".next", "server", "app"), // Next.js App Router SSG artifacts
@@ -20,6 +21,8 @@ const COLLECT_TAGS = new Set([
   "p","li","dt","dd","blockquote","pre","figcaption",
   "td","th"
 ]);
+
+const keywordsMap = require(path.join(ROOT, "config", "keywords.json"));
 
 function getDirectText($, el) {
   // Only the immediate text nodes of this element (no descendants)
@@ -182,7 +185,9 @@ async function main() {
                 continue;
             }
 
-            entries.push({ url, title: title || null, description: description || null, content });
+            const keywords = keywordsMap[url] || [];
+
+            entries.push({ url, title: title || null, description: description || null, content, keywords });
         }
     }
 

@@ -3,7 +3,8 @@ import PageHeader from "@/components/pageHeader";
 import ActivitiesClient from "./activitiesClient";
 
 export const metadata = {
-    title: "Activities"
+    title: "Activities",
+    description: "Explore all the fun at Old McDonald’s Pumpkin Patch"
 }
 
 export default function Activities() {
