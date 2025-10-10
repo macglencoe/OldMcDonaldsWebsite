@@ -94,5 +94,9 @@
   "show_olr_banner": {
     "default": true,
     "conditions": []
+  },
+  "show_farm_swap_banner": {
+    "default": false,
+    "conditions": []
   }
 }
