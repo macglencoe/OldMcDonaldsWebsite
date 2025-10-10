@@ -7,53 +7,134 @@
     top: 0;
     background-color: var(--background);
     z-index: 999;
-
 }
+
 .navbar h1 {
     white-space: nowrap;
     font-weight: 700;
     font-size: 34px;
     font-family: Satisfy;
 }
+
 .navbar nav {
     flex: 1;
 }
+
+.open {}
+
 .navbar nav ul {
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
     padding: 0 1rem;
+    list-style: none;
 }
-.navbar nav li.active {
-    border-bottom: 3px solid var(--foreground);
-}
-.navbar nav li:hover {
-    border-bottom: 3px solid var(--accent);
-}
+
 .navbar nav li {
     display: flex;
     align-items: flex-end;
     border-bottom: 3px solid transparent;
     transition: border-bottom 0.2s ease-out;
 }
-.navbar nav li a {
+
+.navbar nav li.active {
+    border-bottom: 3px solid var(--foreground);
+}
+
+.navbar nav li:hover {
+    border-bottom: 3px solid var(--accent);
+}
+
+.navbar nav li a,
+.moreToggle {
     text-transform: uppercase;
     font-weight: 600;
 }
+
 .navbar nav li svg {
     scale: 1.2;
     fill: var(--foreground);
 }
+
+.more {
+    position: relative;
+    align-items: center;
+}
+
+.moreToggle {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: transparent;
+    border: none;
+    color: inherit;
+    padding: 0;
+    cursor: pointer;
+}
+
+.moreToggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.moreToggleOpen .chevron {
+    transform: scaleY(-120%)
+}
+
+.chevron {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.25s ease;
+    transform: scaleY(120%);
+}
+
+.moreMenu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 50%;
+    translate: 50%;
+    padding: 1rem !important;
+    background-color: var(--background);
+    border-radius: 0 0 1rem 1rem;
+    display: none;
+    flex-direction: column;
+    gap: 0;
+}
+
+.moreMenu[hidden] {
+    display: none;
+}
+
+.moreMenuOpen {
+    display: flex;
+}
+
+
+.moreMenu li {
+    align-items: stretch;
+}
+
+.moreMenu li a {
+    display: block;
+    padding: 0.5rem 1rem;
+    width: 100%;
+}
+
+
+
 .navbar .buttons {
     display: flex;
     gap: 1rem;
 }
+
 .navbar .buttons a {
     padding: 0.5rem 1rem;
     background-color: var(--accent);
     color: var(--background);
     font-weight: 700;
 }
+
 .navbar .buttons a:last-child {
     background-color: var(--foreground);
 }
@@ -70,13 +151,14 @@
     height: 2.5rem;
     width: 2.5rem;
 }
+
 .navbar .mobileMap svg:active {
     scale: 0.9;
 }
+
 .navbar .mobileMap.active svg {
     fill: var(--accent);
 }
-
 
 .navbar .hamburger {
     display: none;
@@ -86,9 +168,11 @@
     transition: all 0.3s ease-out;
     border-bottom-width: 0px;
 }
+
 .navbar .hamburger.open {
     border-bottom: 5px solid var(--foreground);
 }
+
 .navbar .hamburger svg {
     fill: var(--foreground);
     height: 2.5rem;
@@ -104,11 +188,13 @@
     opacity: 1;
     scale: 1;
 }
+
 .navbar .hamburger.open svg:last-child {
     translate: 0px 0px;
     opacity: 1;
     scale: 1;
 }
+
 .navbar .hamburger svg:last-child {
     translate: 0 -100%;
 }
@@ -116,7 +202,6 @@
 .navbar .hamburger.open svg:first-child {
     translate: 0 100%;
 }
-
 
 .navbar .menu {
     position: absolute;
@@ -140,22 +225,25 @@
     flex-direction: column;
 }
 
-
 @media screen and (max-width: 768px) {
     .navbar .mobileNav {
         display: flex;
     }
+
     .navbar > nav,
     .navbar .buttons:not(.mobile) {
         display: none;
     }
+
     .navbar .menu nav {
         flex: 0;
     }
+
     .navbar .menu {
         justify-content: flex-start;
         gap: 1rem;
     }
+
     .navbar .hamburger {
         display: block;
     }
