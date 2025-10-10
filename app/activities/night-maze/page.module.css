@@ -21,3 +21,7 @@
 .body ul {
     color: var(--nightMazeForeground) !important;
 }
+
+.body * {
+    color: var(--nightMazeForeground) !important;
+}
