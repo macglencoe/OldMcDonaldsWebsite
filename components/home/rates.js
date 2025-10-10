@@ -57,9 +57,9 @@ export default function Rates() {
     {
       title: "U-Pick Flowers",
       details: [
-        "Zinnia & Sunflower fields to pick from",
+        "Zinnia, Cosmos & Sunflower fields to pick from",
         "Cutters & cups available onsite",
-        "Vases sold at the arrangement wagon",
+        "Vases sold at the 'Flower Bar'",
       ],
       cta: { href: "/activities/flower-fields", label: "Learn More" },
       price: pricing["flower-cup"]
@@ -75,7 +75,7 @@ export default function Rates() {
         fill
         className="object-cover object-center -z-10"
       />
-      <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-black/30 to-transparent -z-10" />
+      <div className="absolute inset-0 standard-backdrop -z-10" />
 
       {/* Header */}
       <motion.h1

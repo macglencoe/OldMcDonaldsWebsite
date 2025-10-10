@@ -75,16 +75,19 @@
         "end": "2025-10-26T18:00:00"
     },
     {
-        "title": "Night Maze",
-        "start": "2025-10-10T19:00:00",
-        "end": "2025-10-10T22:00:00",
-        "category": "night-maze"
+        "title": "Open",
+        "start": "2025-10-31T13:00:00",
+        "end": "2025-10-31T18:00:00"
     },
     {
-        "title": "Night Maze",
-        "start": "2025-10-11T19:00:00",
-        "end": "2025-10-11T22:00:00",
-        "category": "night-maze"
+        "title": "Open",
+        "start": "2025-11-01T11:00:00",
+        "end": "2025-11-01T18:00:00"
+    },
+    {
+        "title": "Open",
+        "start": "2025-11-02T12:00:00",
+        "end": "2025-11-02T18:00:00"
     },
     {
         "title": "Night Maze",
@@ -109,6 +112,30 @@
         "start": "2025-10-25T19:00:00",
         "end": "2025-10-25T22:00:00",
         "category": "night-maze"
+    },
+    {
+        "title": "Night Maze",
+        "start": "2025-10-31T19:00:00",
+        "end": "2025-10-31T22:00:00",
+        "category": "night-maze"
+    },
+    {
+        "title": "Night Maze",
+        "start": "2025-11-01T19:00:00",
+        "end": "2025-11-01T22:00:00",
+        "category": "night-maze"
+    },
+    {
+        "title": "One Lane Road Performance",
+        "start": "2025-10-19T15:00:00",
+        "end": "2025-10-19T17:00:00",
+        "category": "event"
+    },
+    {
+        "title": "Farm Swap",
+        "start": "2025-10-04T11:00:00",
+        "end": "2025-10-04T16:00:00",
+        "category": "event"
     }
 
 

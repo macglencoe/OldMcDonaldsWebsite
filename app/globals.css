@@ -39,6 +39,14 @@ body {
   font-family: "Inter", Helvetica, sans-serif;
 }
 
+.font-satisfy{
+  font-family: 'Satisfy';
+}
+
+.standard-backdrop{
+  @apply bg-gradient-to-b from-black/70 via-black/50 to-black/70
+}
+
 .header {
   display: flex;
   flex-direction: column;

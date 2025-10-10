@@ -3,35 +3,41 @@ import styles from './page.module.css'
 import { AndImage } from '@/components/andImage';
 import { BodyBlock } from '@/components/bodyBlock';
 import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
+import PageHeader from '@/components/pageHeader';
+import Action from '@/components/action';
+import Image from 'next/image';
+
+export const metadata = {
+    title: "Corn Maze",
+    description: "Get lost in Old McDonald’s 10-acre corn maze in Inwood, WV. Try daytime and spooky night mazes, complete challenges, and enjoy fall family fun."
+}
 
 export const CornMaze = () => {
     return (
         <Layout>
-            <div className='header'>
-                <h1>Corn Maze</h1>
-                <span>2025 Season</span>
-            </div>
+            <PageHeader subtitle="2025 Season">Corn Maze</PageHeader>
             <div className='body basic'>
                 <div className={styles.cornMaze}>
-                    <img src='/charleswmcdonaldmaze.jpg'>
-                    </img>
-                    <h2>2024 - Rest In Peace</h2>
-                    <p>Last year's maze was in memory of my father, Charles W. McDonald, and my grandfather, Charles W. McDonald</p>
-                    <p><b>We're still working on the maze for 2025. Stay tuned!</b></p>
+                    <Image width={1000} height={1000} src='/maze2025.JPG' />
+                    <h2 className='text-center my-3 !text-3xl md:my-6 md:!text-5xl'>2025 - Martinsburg 1877</h2>
+                    <p className='text-center'>This year's maze features <strong>Martinsburg's historical roundhouse</strong>, where the very <strong>first <u>nationwide</u> labor movement</strong> began.</p>
+                    <p className='text-center'>The Great Strike of 1877 began when the wages of railroad workers were cut by <i>10%</i>. Conductors, Engineers, Firemen, and Brakemen refused to move the trains until they received a fair wage.</p>
+                    <br />
+                    <p className='text-center'>You may notice large swaths of missing corn in the above image. In June, the corn maze flooded three times, washing away vital soil nutrients and making the field inaccessible for weeks. Against all odds, we managed to plant, but some areas didn't grow.</p>
                 </div>
                 <BodyBlock src="/cornMazeEntrance.jpg">
                     <h2>10 acres of fun</h2>
                     <p>Lose yourself in one of our two 5-acre corn mazes!</p>
                     <p>Our corn mazes are carefully designed each year to be both challenging and fun, all while having an over-arching theme.</p>
                     <p>(On average, our mazes take 20 minutes to complete)</p>
-                    <a className="button" href='/map?x=39.382729123233055&y=-78.04341793391379'>Find on the Map</a>
+                    <Action as='Link' href='/map?x=39.382729123233055&y=-78.04341793391379' variant='primary' className='mx-auto'>Find on the Map</Action>
                 </BodyBlock>
                 <BodyBlock fromUnsplash style="night" src="https://images.unsplash.com/photo-1603174378108-63103ad2f24b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                     <div className={styles.nightMaze}>
                         <h2>Night Maze</h2>
                         <p>After the sun sets, the corn maze becomes a new, spooky challenge</p>
-                        <p>Starting October 10th, come back after dark and find your way through the maze without the help of daylight</p>
-                        <a href='/activities/night-maze' className={styles.button}>See More</a>
+                        <p>Starting October 17th, come back after dark and find your way through the maze without the help of daylight</p>
+                        <Action as='Link' href='/activities/night-maze' variant='secondary' className={'mx-auto'}>See More</Action>
                     </div>
 
                 </BodyBlock>
@@ -40,7 +46,7 @@ export const CornMaze = () => {
                         <h2>Maze Game</h2>
                         <p>Hidden throughout the maze are stations with <b>QR Codes</b> to scan.</p>
                         <p>Think you can find all four?</p>
-                        <a href='/maze-game' className="button">See More</a>
+                        <Action as='Link' href={'/maze-game'} variant='primary' className={'mx-auto'}>See More</Action>
                     </BodyBlock>
                 }
                 <BodyBlock>
@@ -50,7 +56,7 @@ export const CornMaze = () => {
                         <li><b>Leave No Trace:</b> Do not leave any trash or personal items in the corn maze. Anything you leave in the maze will be tilled into the soil next summer, never to be seen again except by mother Earth herself.</li>
                         <li><b>Don't pick, snap, or stomp the corn.</b> It took months to grow and weeks to design. Let's keep it pretty for other visitors to enjoy!</li>
                         <li><b>Refrain from eating the corn</b>. You are human. This corn is meant for animals.</li>
-                        <li><b>Running is highly discouraged!</b> The maze is full of roots and rocks, and corn muffles sound surprisingly well.</li>
+                        <li><b>Running is forbidden</b></li>
                         <li><b>Consider the weather conditions</b>: It is liable to be muddy. Dress for the farm, not the runway.</li>
                     </ol>
                 </BodyBlock>
@@ -58,6 +64,10 @@ export const CornMaze = () => {
             <div className={styles.pastMazes + ' body basic'}>
                 <h2>Past Maze Designs</h2>
                 <ul>
+                    <li>
+                        <img src='/charleswmcdonaldmaze.jpg'></img>
+                        <span>2024</span>
+                    </li>
                     <li>
                         <img src='/2024maze.avif'></img>
                         <span>2023</span>

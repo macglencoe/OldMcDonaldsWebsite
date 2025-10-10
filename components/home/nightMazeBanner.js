@@ -1,9 +1,13 @@
+"use client";
 import Link from "next/link";
+import { track } from "@vercel/analytics";
 
 
 export default function NightMazeBanner() {
     return (
-        <Link href="/activities/night-maze">
+        <Link href="/activities/night-maze" onClick={() => {
+            track('Night Maze Click', { location: 'Banner' })
+            }}>
             <div className="w-full px-5 py-2 bg-accent flex flex-row flex-wrap gap-4 justify-between items-center" style={{
                 backgroundImage: 'url(https://images.unsplash.com/photo-1716573253327-cda613725dca?q=80&w=1331&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
                 backgroundPosition: 'center',

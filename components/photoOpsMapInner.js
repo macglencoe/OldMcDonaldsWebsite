@@ -4,7 +4,11 @@ import React, { useRef, useEffect } from 'react'
 import 'leaflet/dist/leaflet.css'
 import styles from './photoOpsMap.module.css'
 import icons from '@/public/lib/icons'
+import { makePhotoOpIcon } from '@/public/lib/icons'
 import features from '@/public/data/map-features.json'
+import path from 'path'
+import Image from 'next/image'
+import photoOps from '@/public/data/photoOps.json'
 // -- Functons -- //
 
 function getDistanceMiles(lat1, lon1, lat2, lon2) {
@@ -190,45 +194,6 @@ function ZoomVisibilityController() {
 
 // -- Markers -- //
 
-const photoOps = [
-    {
-        label: 'Harvest Royalty',
-        pos: [39.3843654, -78.0429576],
-        imgSrc: '/harvestRoyaltyPhotoOp.jpg'
-    },
-    {
-        label: 'Stocks',
-        pos: [39.3835555, -78.0433421],
-        imgSrc: '/gallery/0b2c98_f05cbe60cd6e4a5fb0fc1af18748eb20~mv2.avif'
-    },
-    {
-        label: 'Bench & Bridge',
-        pos: [39.3836282, -78.0433265],   
-    },
-    {
-        label: 'Big Chair',
-        pos: [39.3833115, -78.0432332],
-        imgSrc: '/placeholder.png'
-    },
-    {
-        label: '"Love"',
-        pos: [39.38272287986978, -78.0436764211604],
-        imgSrc: '/lovePhotoOp.jpg'
-    },
-    {
-        label: 'Swing',
-        pos: [39.381654454401975, -78.04468704613781]
-    },
-    {
-        label: 'Kissing Booth & Tractor',
-        pos: [39.38242472380304, -78.04515311653932]
-    },
-    {
-        label: 'Ꮤ Bug',
-        pos: [39.3829251383536, -78.04528277916505]
-    }
-]
-
 const bathrooms = [
     {
         pos: [39.38282398140298, -78.04305006931251]
@@ -251,7 +216,6 @@ export default function PhotoOpsMapInner() {
                 minZoom={16}
             >
                 <LocateControl />
-                <ZoomLogger />
                 <ZoomVisibilityController />
                 <FlyToQuery />
                 {/* -- Map Tile Layer -- */}
@@ -380,13 +344,15 @@ export default function PhotoOpsMapInner() {
                     <Marker
                         key={i}
                         position={pos}
-                        icon={icons.photoOp}
+                        icon={
+                            imgSrc ? makePhotoOpIcon({ imgSrc: path.posix.join('/photo-ops', imgSrc) }) : icons.photoOp
+                        }
                         className={styles.marker}
                     >
                         <Popup className={styles.imgPopup}>
                             <span>Photo Op: {label}</span>
                             {imgSrc &&
-                                <img src={imgSrc}/>
+                                <Image src={path.posix.join('/photo-ops', imgSrc)} alt={label} width={120} height={120} />
                             }
                         </Popup>
                     </Marker>
@@ -469,7 +435,10 @@ export default function PhotoOpsMapInner() {
                     position={[39.38274219398928, -78.04343323508722]}
                     icon={icons.maze}
                 >
-                    <Popup>Corn Maze Entrance</Popup>
+                    <Popup className={styles.imgPopup}>
+                        <label>Corn Maze Entrance</label>
+                        <Image src={'/photo-ops/corn-maze-entranc.jpg'} alt="Corn Maze Entrance" width={200} height={200} />
+                    </Popup>
                 </Marker>
                 <Marker
                     position={[39.38465031501388, -78.04952943171128]}

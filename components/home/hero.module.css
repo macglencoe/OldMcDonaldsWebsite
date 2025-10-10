@@ -6,17 +6,20 @@ section.hero {
     position: relative;
     width: 100%;
     flex-direction: column;
-    gap: 5vmax
+    gap: 5vmax;
 }
 section.hero img {
+    background-color: var(--foreground);
     position: absolute;
     object-fit: cover;
     left: 50%;
     transform: translateX(-50%);
     height: 100%;
-    z-index: -1;
+    z-index: 1;
+    width: 100%;
 }
 section.hero .cover {
+    z-index: 2;
     display: flex;
     flex-direction: column;
     background-image: linear-gradient(to bottom, transparent 0%, var(--foreground) 90%);

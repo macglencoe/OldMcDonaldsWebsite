@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { track } from '@vercel/analytics';
 
 export default function MazeCodePage() {
   const { code } = useParams();
@@ -33,6 +34,7 @@ export default function MazeCodePage() {
           }
           setItem(entry);
           setStatus('valid');
+          track('Found Maze Code', { code });
         } else {
           setStatus('invalid');
         }

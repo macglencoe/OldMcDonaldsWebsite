@@ -3,14 +3,418 @@ import { BodyBlock } from "@/components/bodyBlock";
 import Layout from "@/components/layout";
 import styles from "./page.module.css";
 import Link from "next/link";
+import PageHeader from "@/components/pageHeader";
+import Head from "next/head";
+
+function Generations() {
+    const generations = [
+        {
+            id: "gen1",
+            title: "Young McDonalds",
+            people: [
+                {
+                    name: "Liam 'Paul' McDonald",
+                    birthDeath: "2003 - Present",
+                },
+                {
+                    name: "Reece McDonald",
+                    birthDeath: "2002 - Present",
+                },
+                {
+                    name: "Alaina McDonald",
+                    birthDeath: "1996 - Present",
+                },
+                {
+                    name: "Theodore McDonald",
+                    birthDeath: "1993 - Present",
+                }
+            ],
+            images: [
+                {
+                    srcs: [
+                        "/liam-zoey-porch.jpg"
+                    ],
+                    caption: "Liam McDonald and dog Zoey on the porch at Glencoe Farm, 2003"
+                },
+                {
+                    srcs: [
+                        "/hillbilly-liam.jpg"
+                    ],
+                    caption: "Liam McDonald, 2024"
+                },
+                {
+                    srcs: [
+                        "/reece-baby.jpg",
+                    ],
+                    caption: "Reece McDonald, 2005"
+                },
+                {
+                    srcs: [
+                        "/reece.jpg",
+                    ],
+                    caption: "Reece McDonald, 2024"
+                },
+                {
+                    srcs: [
+                        "/ted-alaina-lawnmower.jpg"
+                    ],
+                    caption: "Theodore and Alaina McDonald, circa 2001"
+                },
+                {
+                    srcs: [
+                        "/young-mcdonalds-backhoe.jpg"
+                    ],
+                    caption: "All four Young McDonalds with their grandfather driving the backhoe, circa 2008"
+                }
+            ]
+        },
+        {
+            id: "gen2",
+            title: "Middle-Age McDonalds",
+            people: [
+                {
+                    name: "Charles 'Charlie Bill' McDonald",
+                    birthDeath: "1964 - 2024",
+                },
+                {
+                    name: "Stephanie Nesselrodt McDonald",
+                    birthDeath: "1974 - Present",
+                }
+            ],
+            images: [
+                {
+                    srcs: [
+                        "/charliebill1.png"
+                    ],
+                    caption: "Charles 'Charlie Bill' McDonald, 1967"
+                },
+                {
+                    srcs: [
+                        "/stephanie-baby.png"
+                    ],
+                    caption: "Stephanie Nesselrodt McDonald, 1975"
+                },
+                {
+                    srcs: [
+                        "/reunion1.jpg",
+                        "/reunion2.jpg",
+                        "/reunion3.jpg",
+                    ],
+                    caption: "Annual McDonald Family Reunion at Glencoe Farm"
+                },
+            ]
+        },
+        {
+            id: "gen3",
+            title: "Old McDonalds",
+            people: [
+                {
+                    name: "Charles 'Bub' Francis Wall McDonald",
+                    birthDeath: "1927 - 2024",
+                },
+                {
+                    name: "Willa Jean Hammersla McDonald",
+                    birthDeath: "1929 - 1998"
+                }
+            ],
+            images: [
+                {
+                    srcs: [
+                        "/bub-willa-gail-kathy.png"
+                    ],
+                    caption: "Charles 'Bub' McDonald (right) and Willa Jean Hammersla McDonald (left) with daughters Gail McDonald Fidelman (right) and Kathy (left), circa 1950s"
+                },
+                {
+                    srcs: [
+                        "/willa-jean-child.jpg"
+                    ],
+                    caption: "Willa Jean Hammersla, circa 1930s"
+                },
+                {
+                    srcs: [
+                        "/mfm-moline.png"
+                    ],
+                    caption: "Charles 'Bub' McDonald (middle) receiving a tractor for McDonald Farm Machinery, 1950"
+                },
+                {
+                    srcs: [
+                        "/mag-bub-and-peggy.png"
+                    ],
+                    caption: '"Grandma Mag" (right) with grandchildren Charles "Bub" McDonald (left) and Peggy McDonald (center)'
+                },
+                {
+                    srcs: [
+                        "/bubAndPeggy.jpg",
+                        "/bubAndPeggy2.png"
+                    ],
+                    caption: 'Peggy (left) and Charles "Bub" McDonald (right),  1929-1931'
+                },
+                {
+                    srcs: [
+                        "/limousin1.jpg",
+                        "/limousin2.jpg"
+                    ],
+                    caption: "Limousin Cattle at Glencoe Farm"
+                }
+            ]
+        },
+        {
+            id: "gen4",
+            title: "Old Old McDonalds",
+            people: [
+                {
+                    name: "Theodore Roosevelt McDonald",
+                    birthDeath: "1902 - 1973",
+                },
+                {
+                    name: "Elizabeth Wall McDonald",
+                    birthDeath: "1900 - 1929"
+                }
+            ],
+            images: [
+                {
+                    srcs: [
+                        "/barnunknown.png",
+                        "/barnunknown2.png",
+                    ],
+                    caption: "Unknown folks pictured in front of the big white barn at Glencoe Farm, circa 1910"
+                },
+                {
+                    srcs: [
+                        "/hay-stack.jpg"
+                    ],
+                    caption: "Straw stack in the barnyard at Glencoe Farm"
+                },
+                {
+                    srcs: [
+                        "/richard-mcdonald-glencoe.jpg"
+                    ],
+                    caption: "Richard Clyde McDonald (brother of Theodore Roosevelt McDonald) pictured in front of the workshop at Glencoe Farm"
+                },
+                {
+                    srcs: [
+                        "/daddy-ted.png"
+                    ],
+                    caption: "Theodore Roosevelt McDonald"
+                }
+            ]
+        },
+        {
+            id: "gen5",
+            title: "Old Old Old McDonalds",
+            people: [
+                {
+                    name: "Ernest Faulkner McDonald",
+                    birthDeath: "1874 - 1947",
+                },
+                {
+                    name: "Lily Margaret 'Grandma Mag' Borum McDonald",
+                    birthDeath: "1874 - 1962"
+                }
+            ],
+            images: [
+                {
+                    srcs: [
+                        "/ernest-young.png"
+                    ],
+                    caption: "Young Ernest Faulkner McDonald"
+                },
+                {
+                    srcs: [
+                        "/mcdonaldporch.jpg"
+                    ],
+                    caption: "McDonald Family gathered on the side porch at Glencoe Farm in 1929. Ernest Faulkner McDonald is pictured on the left"
+                },
+                {
+                    srcs: [
+                        "/ernest-mag-porch.jpg"
+                    ],
+                    caption: '"Grandma Mag" (center), Elizabeth (center left) holding daughter Peggy, and Ernest Faulkner McDonald (center right)<br/>on the porch at Glencoe Farm in 1926'
+                },
+                {
+                    srcs: [
+                        "/ernest-cherry.png"
+                    ],
+                    caption: 'Ernest Faulkner McDonald pictured with a cherry tree on the "hill field" at Glencoe Farm'
+                },
+                {
+                    srcs: [
+                        "/mag-late-years.jpg"
+                    ],
+                    caption: 'Margaret "Grandma Mag" Borum McDonald in her late years'
+                }
+            ]
+        },
+        {
+            id: "gen6",
+            title: "Old Old Old Old McDonalds",
+            people: [
+                {
+                    name: "James William McDonald",
+                    birthDeath: "1837 - 1911"
+                },
+                {
+                    name: "Alice Mae Stewart McDonald",
+                    birthDeath: "1855 - 1926"
+                }
+            ],
+            images: [
+                {
+                    srcs: [
+                        "/james-w-mcdonald-choral-society.jpg"
+                    ],
+                    caption: "The Choral Society, with James William McDonald pictured as tallest (center-right, back row)"
+                },
+                {
+                    srcs: [
+                        "/alice-stewart-mcdonald.jpg"
+                    ],
+                    caption: "Alice Mae Stewart McDonald"
+                }
+            ]
+        },
+        {
+            id: "gen7",
+            title: "Old Old Old Old Old McDonalds",
+            people: [
+                {
+                    name: "William McDonald",
+                    birthDeath: "1790 - 1856"
+                },
+                {
+                    name: "Margaret Evans Van Metre McDonald",
+                    birthDeath: "1798 - 1874"
+                }
+            ],
+            images: [
+                {
+                    srcs: [
+                        "/deed.jpg"
+                    ],
+                    caption: "18th century survey plat for the tract of land purchased by William McDonald. This parcel is now known as Glencoe Farm"
+                }
+            ]
+        },
+        {
+            id: "gen8",
+            title: "Old Old Old Old Old Old McDonalds",
+            people: [
+                {
+                    name: "James McDonald",
+                    birthDeath: "1752 - 1830"
+                },
+                {
+                    name: "Isabella Burns McDonald",
+                    birthDeath: "1766 - 1840"
+                }
+            ]
+        },
+        {
+            id: "gen9",
+            title: "Old Old Old Old Old Old Old McDonalds",
+            people: [
+                {
+                    name: "Andrew MacDonald",
+                    birthDeath: "1724 - 1799"
+                },
+                {
+                    name: "Hester MacDonald",
+                    birthDeath: "1730 - 1808"
+                }
+            ]
+        },
+        {
+            id: "gen10",
+            title: "Old Old Old Old Old Old Old Old McDonalds",
+            people: [
+                {
+                    name: "Donald Roy MacDonald",
+                    birthDeath: "1700 - 1749"
+                }, 
+                {
+                    name: "Jean MacLeod MacDonald",
+                    birthDeath: "1703 - unknown"
+                }
+            ]
+        },
+        {
+            id: "gen11",
+            title: "Old Old Old Old Old Old Old Old Old McDonalds",
+            people: [
+                {
+                    name: "Dougall MacDonald",
+                    birthDeath: "1680 - unknown"
+                },
+                {
+                    name: "Christan Robertson MacDonald",
+                    birthDeath: "1680 - 1706"
+                },
+            ]
+        },
+        {
+            id: "gen12",
+            title: "Eldest McDonalds",
+            people: [
+                {
+                    name: "Somairle mac Gilla Brigte",
+                    title: "King of the Isles",
+                    birthDeath: "unknown - 1164 AD"
+                },
+                {
+                    name: "Ragnhildr Óláfsdóttir",
+                    title: "Queen of the Isles, Princess of Man",
+                    birthDeath: "est. 1115 AD - unknown"
+                }
+            ]
+        }
+    ]
+
+    return (
+        <div>
+            <h2 className="text-center mb-5">McDonald Geneology</h2>
+            { generations.map((generation) => (
+                <div key={generation.id} className="flex flex-col gap-8 mb-14 border-x-9 border-y-transparent border-y-9 border-double border-foreground/20 px-2">
+                    <h3 className="!text-4xl text-center" >{generation.title}</h3>
+                    <div className="flex flex-row flex-wrap gap-4 text-center justify-evenly" style={{
+                        fontFamily: "Inter",
+                    }}>
+                        { generation.people.map((person) => (
+                            <div className="flex flex-col border-y-6 border-x-transparent border-x-6 border-double p-2 " key={person.name}>
+                                <div className="font-bold">{person.name}</div>
+                                <div className="text-sm">{person.birthDeath}</div>
+                            </div>
+                        )) }
+                    </div>
+                    { generation.images &&
+                        <div className={styles.gallery} style={{
+                        fontFamily: "Inter"
+                    }}>
+                        { generation.images.map((image) => (
+                            <div key={image.srcs[0]}>
+                                {image.srcs.map((src) => (
+                                    <img key={src} src={src} />
+                                ))}
+                                <p>{image.caption}</p>
+                            </div>
+                        ))}
+                    </div>
+                    }
+                </div>
+            ))}
+        </div>
+    )
+}
+
+export const metadata = {
+    title: "About The Farm",
+    description: "Learn the history of Old McDonald’s Pumpkin Patch and Glencoe Farm in Inwood, WV. Discover our family legacy, farm traditions, and 250+ years of agricultural heritage."
+}
 
 export default function About() {
+    
     return (
         <Layout>
-            <div className="header">
-                <h1>About Us</h1>
-                <span>The Story of Glencoe Farm</span>
-            </div>
+            <PageHeader subtitle="The Story of Glencoe Farm">About Us</PageHeader>
             <div className="body basic">
                 <BodyBlock src="localMap.png">
                     <h2>Our Farm</h2>
@@ -34,211 +438,13 @@ export default function About() {
                     <p>Our farm has been home to many different ventures over the decades.</p>
                     <p>From the late 1800s to the 1950s, we played a role in <a href="https://www.journal-news.net/journal-news/long-and-short-of-it-berkeley-countys-apple-industry-discussion-to-be-held/article_34739292-a1ba-5b92-a050-0757d0ce868e.html" target="_blank" className="!break-normal">Berkeley County's thriving Apple Industry</a>.<br/>
                     Our great-grandfather, Ernest Faulkner McDonald, was one of the original 18 guarantors of the C.H. Musselman Company Apple Plant in Inwood.</p>
-                    <p>In the 1950s, our grandfather, Charles "Bub" Francis Wall McDonald founded McDonald Farm Machinery - West Virginia's first John Deere dealership - and operated it until 1985.</p>
-                    <p>In 2001, our father, Charles "Charlie Bill" William McDonald, together with his wife Stephanie, planted corn and pumpkins on the farm for the first time, and established Old McDonald's Pumpkin Patch.</p>
+                    <p>In the 1950s, our grandfather, Charles "Bub" Francis Wall McDonald founded McDonald Farm Machinery and operated it until 1985.</p>
+                    <p>In 2006, our father, Charles "Charlie Bill" William McDonald, together with his wife Stephanie, planted corn and pumpkins on the farm for the first time, and established Old McDonald's Pumpkin Patch.</p>
                 </BodyBlock>
 
-                <BodyBlock>
-                    <h2>Old McDonald Geneology</h2>
-                    <div className={styles.geneology}>
-                        <h3>Young McDonalds</h3>
-                        <ul>
-                            <li>Liam 'Paul' McDonald <div><span>2003</span></div></li>
-                            <li>Reece McDonald <div><span>2002</span></div></li>
-                            <li>Alaina McDonald <div><span>1996</span></div></li>
-                            <li>Theodore McDonald <div><span>1993</span></div></li>
-                        </ul>
-                        <h3>Middle-Age McDonald</h3>
-                        <ul>
-                            <li>Charles 'Charlie Bill' McDonald <div><span>1964 - 2024</span></div></li>
-                            <li>Stephanie McDonald <div><span>1974</span></div></li>
-                        </ul>
-                        <h3>Old McDonald</h3>
-                        <ul>
-                            <li>Charles 'Bub' Francis Wall McDonald <div><span>1927 - 2024</span></div></li>
-                            <li>Willa Jean Hammersla McDonald <div><span>1929 - 1998</span></div></li>
-                        </ul>
-                        <h3>Old Old McDonald</h3>
-                        <ul>
-                            <li>Theodore Roosevelt McDonald <div><span>1902 - 1973</span></div></li>
-                            <li>Elizabeth Wall McDonald <div><span>1900 - 1929</span></div></li>
-                        </ul>
-                        <h3>Old Old Old McDonald</h3>
-                        <ul>
-                            <li>Ernest Faulkner McDonald <div><span>1874 - 1947</span></div></li>
-                            <li>Lily Margaret 'Grandma Mag' Borum McDonald <div><span>1874 - 1962</span></div></li>
-                        </ul>
-                        <h3>Old Old Old Old McDonald</h3>
-                        <ul>
-                            <li>James William McDonald <div><span>1837 - 1911</span></div></li>
-                            <li>Alice Mae Stewart McDonald <div><span>1855 - 1926</span></div></li>
-                        </ul>
-                        <h3>Old Old Old Old Old McDonald</h3>
-                        <ul>
-                            <li>William McDonald <div><span>1790 - 1856</span></div></li>
-                            <li>Margaret Evans Van Metre McDonald <div><span>1798 - 1874</span></div></li>
-                        </ul>
-                        <h3>Old Old Old Old Old Old McDonald</h3>
-                        <ul>
-                            <li>James McDonald <div><span>1752 - 1830</span></div></li>
-                            <li>Isabella Burns McDonald <div><span>1766 - 1840</span></div></li>
-                        </ul>
-                        <h3>Old Old Old Old Old Old Old McDonald</h3>
-                        <ul>
-                            <li>Andrew MacDonald 
-                                <div><span>1724 - 1799</span></div>
-                            </li>
-                            <li>Hester McDonald <div><span>1730 - 1808</span></div></li>
-                        </ul>
-                        <h3>Old Old Old Old Old Old Old Old McDonald</h3>
-                        <ul>
-                            <li>Donald Roy MacDonald <div><span>1700 - 1749</span></div></li>
-                            <li>Jean MacLeod MacDonald <div><span>1703 - unknown</span></div></li>
-                        </ul>
-                        <h3>Old Old Old Old Old Old Old Old Old McDonald</h3>
-                        <ul>
-                            <li>Dougall MacDonald <div><span>1680 - unknown</span></div></li>
-                            <li>Christan Roberston MacDonald <div><span>1680 - 1706</span></div></li>
-                        </ul>
-                            <h3>Old Old Old Old Old Old Old Old Old Old McDonald</h3>
-                        <ul>
-                            <li>Unknown MacDonald from Inverness</li>
-                        </ul>
-                        <h3>Eldest McDonald</h3>
-                        <ul>
-                            <li>
-                                <span><b>Somairle mac Gilla Brigte</b></span>
-                                <span>King of the Isles</span>
-                                <div><span>unknown - 1164 AD</span></div>
-                            </li>
-                            <li>
-                                <span><b>Ragnhildr Óláfsdóttir</b></span>
-                                <span>Queen of the Isles</span>
-                                <span>Princess of Man</span>
-                                <div><span>est. 1115 AD - unknown</span></div>
-                            </li>
-                        </ul>
+                <Generations />
 
-                    </div>
-                </BodyBlock>
-
-
-                <h2>Five+ Generations Ago</h2>
-                <div className={styles.gallery}>
-                    <div>
-                        <img src="/deed.jpg"></img>
-                        <p>18th century survey plat for the tract of land purchased by William McDonald, intended to be used as a homeplace for his mother. This parcel is now known as Glencoe Farm</p>
-                    </div>
-                    <div>
-                        <img src="/james-w-mcdonald-choral-society.jpg"></img>
-                        <p>The Choral Society, with James William McDonald pictured as tallest (center-right, back)</p>
-                    </div>
-                    <div>
-                        <img src="/alice-stewart-mcdonald.jpg"></img>
-                        <p>Alice Stewart McDonald, wife of James William McDonald</p>
-                    </div>
-                </div>
-                <h2>Four Generations Ago</h2>
-                <div className={styles.gallery}>
-                    <div>
-                        <img src="/ernest-young.png"></img>
-                        <p>Young Ernest Faulkner McDonald</p>
-                    </div>
-                    <div>
-                        <img src="/mcdonaldporch.jpg"></img>
-                        <p>McDonald Family gathered on the side porch at Glencoe Farm in 1929. Ernest Faulkner McDonald is pictured on the left</p>
-                    </div>
-                    <div>
-                        <img src="/ernest-mag-porch.jpg"></img>
-                        <p>"Grandma Mag" (center), Elizabeth (center left) holding daughter Peggy, and Ernest Faulkner McDonald (center right)<br/>on the porch at Glencoe Farm in 1926 </p>
-                    </div>
-                    <div>
-                        <img src="/ernest-cherry.png"></img>
-                        <p>Ernest Faulkner McDonald pictured with a cherry tree on the "hill field" at Glencoe Farm</p>
-                    </div>
-                    
-                    <div>
-                        <img src="/barnunknown.png"></img>
-                        <img src="/barnunknown2.png"></img>
-                        <p>Unknown folks pictured in front of the big white barn at Glencoe Farm, circa 1900</p>
-                    </div>
-                    <div>
-                        <img src="/hay-stack.jpg"></img>
-                        <p>Straw stack in the barnyard at Glencoe Farm</p>
-                    </div>
-                    <div>
-                        <img src="/mag-late-years.jpg"></img>
-                        <p>Margaret "Grandma Mag" Borum McDonald in her late years</p>
-                    </div>
-                </div>
-                <h2>Two and Three Generations Ago</h2>
-                <div className={styles.gallery}>
-                    <div>
-                        <img src="/richard-mcdonald-glencoe.jpg"></img>
-                        <p>Richard Clyde McDonald pictured in front of the workshop at Glencoe Farm</p>
-                    </div>
-                    
-                    <div>
-                        <img src="/bubAndPeggy.jpg"></img>
-                        <img src="/bubAndPeggy2.png"></img>
-                        <p>Peggy (left) and Charles "Bub" McDonald (right),  1929-1931</p>
-                    </div>
-                    <div>
-                        <img src="/mag-bub-and-peggy.png"></img>
-                        <p>"Grandma Mag" (right) with grandchildren Charles "Bub" McDonald (left) and Peggy McDonald (center)</p>
-                    </div>
-                    <div>
-                        <img src="/peg-mag-ernest-wedding.jpg"></img>
-                        <p>Wedding of Peggy McDonald Turner (left) with grandparents: <br/>
-                            Margaret "Grandma Mag" Borum McDonald (center left) and<br/>
-                            Ernest Faulkner McDonald (center right) <br/>
-                            at the Glencoe Farmhouse
-                        </p>
-                    </div>
-                    
-                    <div>
-                        <img src="/willa-jean-child.jpg"></img>
-                        <p>Willa Jean Hammersla, circa 1930s</p>
-                    </div>
-                </div>
-                <h2>One Generation Ago</h2>
-                <div className={styles.gallery}>
-                    
-                    <div>
-                        <img src="/bub-willa-gail-kathy.png"></img>
-                        <p>
-                            Charles "Bub" McDonald (right) and<br/>
-                            Willa Jean Hammersla McDonald (left)<br/> with
-                            daughters Gail McDonald Fidelman (right) and<br/>
-                            Kathy (left), circa 1950s
-
-                        </p>
-                    </div>
-                    <div>
-                        <img src="/mfm-moline.png"></img>
-                        <p>Charles "Bub" McDonald (middle) receiving a tractor for McDonald Farm Machinery, 1950</p>
-                    </div>
-                    <div>
-                        <img src="/charliebill1.png"></img>
-                        <p>Charles "Charlie Bill" McDonald, circa 1967</p>
-                    </div>
-                    <div>
-                        <img src="/limousin1.jpg"></img>
-                        <img src="/limousin2.jpg"></img>
-                        <p>Limousin Cattle at Glencoe Farm</p>
-                    </div>
-                    <div>
-                        <img src="/reunion1.jpg"></img>
-                        <img src="/reunion2.jpg"></img>
-                        <img src="/reunion3.jpg"></img>
-                        <p>Annual McDonald Family Reunion at Glencoe Farm</p>
-                    </div>
-                    <div>
-                        <img src="/liam-zoey-porch.jpg"></img>
-                        <p>Liam McDonald and dog Zoey on the porch at Glencoe Farm, 2003</p>
-                    </div>
-                    
-                </div>
+                
                 <BodyBlock src="protectedForever.jpg">
                     <h2>Protected Forever</h2>
                     <p>In 2007, Glencoe Farm was accepted into the <a href="https://landtrustalliance.org/land-trusts/explore/berkeley-county-farmland-protection-board-wv" target="_blank" className="!break-normal">Berkeley County Farm Preservation Land Trust.</a></p>
