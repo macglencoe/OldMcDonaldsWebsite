@@ -6,6 +6,11 @@ import pricing from "@/public/data/pricing"
 import PageHeader from "@/components/pageHeader"
 import Action from "@/components/action"
 
+export const metadata = {
+    title: "Pumpkin Patch",
+    description: "Pick your perfect pumpkin at Old McDonald’s Pumpkin Patch in Inwood, WV. Browse carving pumpkins, gourds, white pumpkins, and more by the pound."
+}
+
 export const PumpkinPatch = () => {
     return (
         <Layout>
@@ -25,7 +30,7 @@ export const PumpkinPatch = () => {
                         <p className="text-center">Pay at the weighing station, on your way back from the patch</p>
                         <p className="text-center">Cash and cards accepted</p>
                     </div>
-                    <AndImage fromUnsplash src="https://images.unsplash.com/photo-1740578266454-eee1d51fe7ff?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                    <AndImage src="/cart-corral.jpg">
                         <h2>Transportation</h2>
                         <p>If you want to pick multiple pumpkins, you may want to use a wagon</p>
                         <p>You can <b>grab a wagon</b> from the entrance, or bring your own. Don't be afraid to share wagons!</p>

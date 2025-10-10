@@ -11,6 +11,17 @@ const nextConfig = {
     async redirects() {
       return [
         {
+          source: '/:path*',
+          has: [
+            {
+              type: 'host',
+              value: 'oldmcdonaldspumpkinpatchwv.com',
+            },
+          ],
+          destination: 'https://www.oldmcdonaldspumpkinpatchwv.com/:path*',
+          permanent: true,
+        },
+        {
           source: '/night-maze',
           destination: '/activities/night-maze',
           permanent: true

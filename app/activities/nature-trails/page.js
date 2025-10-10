@@ -4,6 +4,11 @@ import Layout from '@/components/layout';
 import PageHeader from '@/components/pageHeader';
 import Action from '@/components/action';
 
+export const metadata = {
+    title: "Nature Trails",
+    description: "Explore nature trails at Old McDonald’s Pumpkin Patch. Hike through scenic woodlands, enjoy fall colors, and experience the beauty of Inwood, WV."
+}
+
 export const NatureTrails = () => {
     return (
         <Layout>

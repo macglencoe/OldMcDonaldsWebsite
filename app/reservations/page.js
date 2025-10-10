@@ -58,6 +58,11 @@ function GazeboRentalTable() {
   );
 }
 
+export const metadata = {
+  title: "Reservations",
+  description: "Book a private party gazebo at Old McDonald’s Pumpkin Patch in Inwood, WV. Reserve picnic space for birthdays, family gatherings, and special fall events."
+}
+
 
 export const Reservations = () => {
 

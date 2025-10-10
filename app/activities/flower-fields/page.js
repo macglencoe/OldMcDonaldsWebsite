@@ -4,6 +4,11 @@ import Layout from "@/components/layout";
 import PageHeader from "@/components/pageHeader";
 import pricing from "@/public/data/pricing";
 
+export const metadata = {
+    title: "Flower Fields",
+    description: "Pick your own sunflowers, zinnias, and cosmos at Old McDonald’s Pumpkin Patch. Visit our flower fields, cut your own bouquet, and capture farm photos."
+}
+
 export default function FlowerFields() {
     return (
         <Layout>

@@ -4,8 +4,16 @@ import Image from 'next/image'
 import Layout from '@/components/layout';
 import styles from './page.module.css'
 import PageHeader from '@/components/pageHeader';
+import photoOps from '@/public/data/photoOps.json'
+import { FileImage, Upload } from 'phosphor-react';
+import PhotoOpsListClient from './photoOpsListClient';
+import UploadSectionClient from './uploadSectionClient';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata = {
+    title: "Gallery"
+}
 
 export default async function GalleryPage() {
 
@@ -45,7 +53,12 @@ export default async function GalleryPage() {
                             <span>Tag our page on TikTok</span>
                         </a>
                     </div>
+                    <UploadSectionClient uploadUrl={"https://docs.google.com/forms/d/e/1FAIpQLSfdYBDpAJ0jIF3Qg1AgYKx3aTT-assp9eAPFGg-m5Z9dx-xyA/viewform?usp=header"} title={"Want your photo featured?"} subtitle={"Upload a photo!"} id={"upload"}/>
                 </div>
+
+                <PhotoOpsListClient photoOps={photoOps} />
+
+
                 <div className="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {images.map((fileName) => (
                         <div key={fileName} className="aspect-square relative rounded overflow-hidden shadow-lg group hover:scale-105 transition-transform">

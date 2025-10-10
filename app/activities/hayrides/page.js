@@ -5,6 +5,11 @@ import pricing from '@/public/data/pricing'
 import PageHeader from '@/components/pageHeader'
 import Action from '@/components/action'
 
+export const metadata = {
+    title: "Hay Rides",
+    description: "Enjoy scenic hayrides at Old McDonald’s Pumpkin Patch. Take a 20-minute tour of the farm by wagon, with special night hayrides in October."
+}
+
 export const HayRide = () => {
     return (
         <Layout>

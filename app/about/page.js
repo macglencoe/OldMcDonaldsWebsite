@@ -4,6 +4,7 @@ import Layout from "@/components/layout";
 import styles from "./page.module.css";
 import Link from "next/link";
 import PageHeader from "@/components/pageHeader";
+import Head from "next/head";
 
 function Generations() {
     const generations = [
@@ -404,6 +405,10 @@ function Generations() {
     )
 }
 
+export const metadata = {
+    title: "About The Farm",
+    description: "Learn the history of Old McDonald’s Pumpkin Patch and Glencoe Farm in Inwood, WV. Discover our family legacy, farm traditions, and 250+ years of agricultural heritage."
+}
 
 export default function About() {
     

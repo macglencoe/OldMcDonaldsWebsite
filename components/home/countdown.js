@@ -23,6 +23,14 @@ export default function Countdown({ targetDate, title }) {
     }
   }
 
+  const formatDisplayDate = (date) => {
+    const target = new Date(date)
+    return target.toLocaleDateString('en-US', { 
+      month: 'long', 
+      day: 'numeric' 
+    })
+  }
+
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft)
 
   useEffect(() => {
@@ -41,7 +49,7 @@ export default function Countdown({ targetDate, title }) {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     }}>
-        <h2 className='text-4xl text-background font-["Satisfy"] '>{title}</h2>
+        <h2 className='text-4xl text-background font-["Satisfy"]'>{title}: <strong>{formatDisplayDate(targetDate)}</strong></h2>
         <div className="flex gap-4 text-2xl font-mono text-background text-center py-4 w-full justify-around flex-wrap">
           <div className='flex flex-col items-center bg-foreground/60 pt-3 pb-2 rounded-2xl flex-1'>
             <span className='text-4xl font-bold font-["Satisfy"] m-2'>{pad(timeLeft.days)}</span>

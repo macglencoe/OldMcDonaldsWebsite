@@ -4,6 +4,11 @@ import PageHeader from "@/components/pageHeader";
 import PhotoOpsMap from "@/components/photoOpsMap";
 import PhotoOpsMapClient from "@/components/photoOpsMapClient";
 
+export const metadata = {
+    title: "Map",
+    description: "View a detailed map of Old McDonald’s Pumpkin Patch in Inwood, WV. Get directions, locate activities, and plan your day at our corn maze and fall festival."
+}
+
 export default function PhotoOps() {
     return (
         <Layout>

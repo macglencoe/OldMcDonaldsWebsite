@@ -8,7 +8,7 @@ export default function HeroSummer() {
         blurDataURL: "/summer-xs.webp",
       }}
       cta={{
-        description: "Available through August 20",
+        description: "Reserve your spot now!",
         buttons: [
           {
             href: "/reservations",

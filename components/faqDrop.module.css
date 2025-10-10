@@ -25,7 +25,7 @@
 .wrapper details[open] summary::before {
     rotate: 15deg;
 }
-.wrapper summary > svg {
+.wrapper summary > svg.arrow {
     min-width: 2em;
     min-height: 2em;
     width: 2em;
@@ -33,7 +33,7 @@
     fill: var(--accent);
     transition: transform 0.3s ease;
 }
-.wrapper details[open] summary > svg {
+.wrapper details[open] summary > svg.arrow {
     transform: scaleY(-1);
 }
 
