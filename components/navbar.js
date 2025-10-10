@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import mapIcon from '@/public/icons/map.svg?raw'
 import Link from "next/link"
 import { track } from "@vercel/analytics"
+import { CaretDown, CaretUp } from "phosphor-react"
 
 const NAV_ITEMS = [
     { key: "activities", title: "Activities", path: '/activities' },
@@ -96,8 +97,9 @@ export const Navbar = () => {
                                 onClick={() => setIsMoreOpen((prev) => !prev)}
                             >
                                 More
-                                <span aria-hidden="true" className={styles.chevron}></span>
+                                <CaretUp width={45} weight="bold" height={45} aria-hidden="true" className={styles.chevron}></CaretUp>
                             </button>
+                            
                             <ul
                                 id={MORE_MENU_ID}
                                 className={moreMenuClassName}
