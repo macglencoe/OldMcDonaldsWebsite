@@ -1,4 +1,16 @@
-import featureFlags from '@/public/flags/featureFlags.json'
+import defaultFlags from '@/public/flags/featureFlags.json';
+
+let featureFlags = defaultFlags ?? {};
+
+/**
+ * Replace the in-memory feature flag cache.
+ * @param {Record<string, any>} flags
+ */
+export function setFeatureFlags(flags) {
+  if (flags && typeof flags === 'object') {
+    featureFlags = flags;
+  }
+}
 
 /**
  * Evaluates a single condition based on provided context.
@@ -33,14 +45,9 @@ function evaluateCondition(condition, context) {
   return false;
 }
 
-/**
- * Evaluates whether a feature flag is enabled given the current context.
- * @param {string} key - The flag key to evaluate.
- * @param {Object} context - Optional context: { env, now, user, etc. }.
- * @returns {boolean}
- */
-export function isFeatureEnabled(key, context = {}) {
-  const flag = featureFlags[key];
+function evaluateFlag(key, context, flags) {
+  const source = flags && typeof flags === 'object' ? flags : featureFlags;
+  const flag = source?.[key];
   if (!flag) {
     console.warn(`Feature flag not found: ${key}`);
     return false;
@@ -48,7 +55,7 @@ export function isFeatureEnabled(key, context = {}) {
 
   const { default: defaultValue = false, operator = 'AND', conditions = [] } = flag;
 
-  if (!conditions.length || conditions.length === 0) return defaultValue;
+  if (!conditions?.length) return defaultValue;
 
   const results = conditions.map((condition) => evaluateCondition(condition, context));
 
@@ -57,4 +64,23 @@ export function isFeatureEnabled(key, context = {}) {
 
   console.warn(`Unknown operator: ${operator}`);
   return defaultValue;
+}
+
+/**
+ * Evaluates whether a feature flag is enabled given the current context.
+ * @param {string} key - The flag key to evaluate.
+ * @param {Object} context - Optional context: { env, now, user, etc. }.
+ * @returns {boolean}
+ */
+export function isFeatureEnabled(key, context = {}) {
+  return evaluateFlag(key, context, featureFlags);
+}
+
+/**
+ * Creates a scoped feature evaluator bound to the provided flag set.
+ * @param {Record<string, any>} flags
+ * @returns {(key: string, context?: Object) => boolean}
+ */
+export function createFeatureEvaluator(flags) {
+  return (key, context = {}) => evaluateFlag(key, context, flags);
 }

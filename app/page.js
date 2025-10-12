@@ -1,25 +1,19 @@
-import Image from "next/image";
 import Layout from "@/components/layout";
-import { createFeatureGate } from "@/flags";
 import YearProgressBar from "@/components/yearProgress";
 import OldMcDonutsAd from "@/components/oldMcDonutsAd";
 import TestimonialCarousel from "@/components/testimonials";
 import styles from "./page.module.css";
-import HeroFall from "@/components/home/heroFall";
-import HeroSummer from "@/components/home/heroSummer";
-import HeroWinter from "@/components/home/heroWinter";
 import Season from "@/components/home/season";
 import FacebookFeed from "@/components/facebookFeed";
 import Rates from "@/components/home/rates";
 import ContactForm from "@/components/contactForm";
 import Hero from "@/components/home/hero";
-import { isFeatureEnabled } from "@/public/lib/featureEvaluator";
 import NightMazeBanner from "@/components/home/nightMazeBanner";
 import FloodBanner from "@/components/home/floodBanner";
 import AuxSearch from "@/components/home/auxSearch";
 import FarmSwapBanner from "@/components/home/farmSwapBanner";
 import OneLaneRoadBanner from "@/components/home/oneLaneRoadBanner";
-
+import { loadFlags, getFeatureEvaluator } from "./flags";
 
 export const metadata = {
   title: "Real Farm Fun - Old McDonald's Pumpkin Patch",
@@ -27,6 +21,9 @@ export const metadata = {
 }
 
 export default async function Home() {
+
+  const flags = await loadFlags();
+  const isFeatureEnabled = getFeatureEvaluator(flags);
 
   const canonicalBase = "https://www.oldmcdonaldspumpkinpatchwv.com";
 
