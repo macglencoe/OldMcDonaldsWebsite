@@ -12,6 +12,8 @@
     "db:studio": "drizzle-kit studio --config drizzle.config.ts"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
     "@flags-sdk/statsig": "^0.2.2",
     "@fullcalendar/daygrid": "^6.1.17",
     "@fullcalendar/react": "^6.1.17",
@@ -20,6 +22,7 @@
     "@vercel/analytics": "^1.5.0",
     "@vercel/postgres": "^0.10.0",
     "clsx": "^2.1.1",
+    "dnd-kit": "^0.0.2",
     "drizzle-orm": "^0.44.6",
     "flags": "^4.0.0",
     "framer-motion": "^12.15.0",
