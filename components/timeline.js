@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import HayrideCard from "./hayrideCard";
 import { Clock } from "phosphor-react";
+import HayrideWagonOrderEditor from "./HayrideWagonOrderEditor";
 
 const timeFormatter = new Intl.DateTimeFormat("en-US", {
   hour: "numeric",
@@ -34,6 +35,74 @@ export default function Timeline({
   const [activeAnchor, setActiveAnchor] = useState(null);
   const nowAnchorRef = useRef(null);
 
+  const aggregatedWagons = useMemo(() => {
+    const seen = new Map();
+    const result = [];
+    let anonymousIndex = 0;
+
+    slots.forEach((slot) => {
+      const slotWagons = Array.isArray(slot?.wagons) ? slot.wagons : [];
+      slotWagons.forEach((wagon) => {
+        if (!wagon) {
+          return;
+        }
+        const rawId = wagon.id ?? null;
+        const id = rawId ?? `anonymous-wagon-${anonymousIndex++}`;
+        if (seen.has(id)) {
+          // Update the stored reference with the freshest data.
+          const existing = seen.get(id);
+          Object.assign(existing, wagon);
+          existing.id = id;
+          return;
+        }
+        const normalized = { ...wagon, id };
+        seen.set(id, normalized);
+        result.push(normalized);
+      });
+    });
+
+    return result;
+  }, [slots]);
+
+  const [globalWagons, setGlobalWagons] = useState(() => aggregatedWagons);
+
+  useEffect(() => {
+    setGlobalWagons((previous) => {
+      if (!previous.length) {
+        return aggregatedWagons;
+      }
+
+      const nextMap = new Map(aggregatedWagons.map((wagon) => [wagon.id, wagon]));
+      const merged = [];
+
+      previous.forEach((wagon) => {
+        const updated = nextMap.get(wagon.id);
+        if (updated) {
+          merged.push(updated);
+          nextMap.delete(wagon.id);
+        }
+      });
+
+      nextMap.forEach((wagon) => {
+        merged.push(wagon);
+      });
+
+      return merged;
+    });
+  }, [aggregatedWagons]);
+
+  const handleOrderChange = useCallback((nextOrder) => {
+    setGlobalWagons(nextOrder);
+  }, []);
+
+  const globalOrderMap = useMemo(() => {
+    const order = new Map();
+    globalWagons.forEach((wagon, index) => {
+      order.set(wagon?.id ?? `__fallback-${index}`, index);
+    });
+    return order;
+  }, [globalWagons]);
+
   const sortedSlots = useMemo(() => {
     return [...slots]
       .filter(Boolean)
@@ -43,6 +112,20 @@ export default function Timeline({
   const timelineItems = useMemo(() => {
     return sortedSlots.map((slot, slotIndex) => {
       const wagons = Array.isArray(slot?.wagons) ? slot.wagons : [];
+      const orderedWagons = wagons
+        .map((wagon, index) => ({
+          wagon,
+          index,
+          orderIndex: (() => {
+            const id = wagon?.id ?? null;
+            if (id !== null && globalOrderMap.has(id)) {
+              return globalOrderMap.get(id);
+            }
+            return Number.MAX_SAFE_INTEGER / 2 + index;
+          })(),
+        }))
+        .sort((a, b) => a.orderIndex - b.orderIndex)
+        .map((entry) => entry.wagon);
       const slotKey = slot?.start ?? slot?.label ?? `slot-${slotIndex}`;
       const label = getSlotLabel(slot?.label, slot?.start);
       const baseId = (slot?.start ?? label ?? `slot-${slotIndex}`)
@@ -55,13 +138,13 @@ export default function Timeline({
       return {
         slot,
         slotIndex,
-        wagons,
+        wagons: orderedWagons,
         slotKey,
         label,
         anchorId,
       };
     });
-  }, [sortedSlots]);
+  }, [sortedSlots, globalOrderMap]);
 
   useEffect(() => {
     if (!activeAnchor && timelineItems.length) {
@@ -154,7 +237,17 @@ export default function Timeline({
   };
 
   return (
-    <div className="flex flex-col gap-6 md:flex-row">
+    <div className="flex flex-col gap-6">
+      {globalWagons.length > 0 && isEditable ? (
+        <HayrideWagonOrderEditor
+          wagons={globalWagons}
+          onOrderChange={isEditable ? handleOrderChange : undefined}
+          className="md:max-w-xl"
+          getDragDisabled={() => !isEditable}
+        />
+      ) : null}
+
+      <div className="flex flex-col gap-6 md:flex-row">
       <nav className="-mx-6 overflow-x-auto px-6 md:mx-0 md:w-40 md:overflow-visible">
         <div className="sticky top-20 flex flex-col items-stretch gap-3 bg-background">
           <h4 className="text-sm font-semibold uppercase tracking-wide text-accent">Jump to time</h4>
@@ -246,6 +339,7 @@ export default function Timeline({
             )}
           </section>
         ))}
+      </div>
       </div>
     </div>
   );
