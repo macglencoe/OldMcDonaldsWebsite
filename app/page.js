@@ -13,17 +13,15 @@ import FloodBanner from "@/components/home/floodBanner";
 import AuxSearch from "@/components/home/auxSearch";
 import FarmSwapBanner from "@/components/home/farmSwapBanner";
 import OneLaneRoadBanner from "@/components/home/oneLaneRoadBanner";
-import { loadFlags, getFeatureEvaluator } from "./flags";
+import { getFeatureEvaluator } from "./flags";
 
 export const metadata = {
   title: "Real Farm Fun - Old McDonald's Pumpkin Patch",
   description: "Celebrate fall in Berkeley County, WV at Old McDonald’s Pumpkin Patch. Enjoy hayrides, a corn maze, petting zoo, flower fields, and family-friendly farm fun all season long."
 }
 
-export default async function Home() {
-
-  const flags = await loadFlags();
-  const isFeatureEnabled = getFeatureEvaluator(flags);
+export default function Home() {
+  const isFeatureEnabled = getFeatureEvaluator();
 
   const canonicalBase = "https://www.oldmcdonaldspumpkinpatchwv.com";
 
