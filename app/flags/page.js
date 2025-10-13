@@ -392,7 +392,7 @@ export default function Home() {
           )
         })
       }
-          }
+          
           <CommitPanel content={featureFlagsState} filePath={FEATURE_FLAGS_PATH} title="Update feature flags" />
         </>
       )}
