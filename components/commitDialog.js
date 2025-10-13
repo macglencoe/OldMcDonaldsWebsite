@@ -9,19 +9,20 @@ function loadFlagsFromLocalStorage() {
 
 export default function CommitDialog() {
 
-    const [responseConsole, setResponseConsole] = useState('');
+    const [responseConsole, setResponseConsole] = useState([]);
 
-    const commitToGithub = async (commitData, branch, message) => {
+    const encodePath = (path) => path.split("/").map(encodeURIComponent).join("/");
+
+    const uploadToBlob = async (commitData, label) => {
         try {
-            const filePath = encodeURIComponent('public/flags/featureFlags.json');
-            const url = `/api/files/${filePath}`;
+            const filePath = encodePath('flags.json');
+            const url = `/api/blob/${filePath}`;
 
             setResponseConsole(c => [
                 ...c,
                 {
                     time: new Date().toISOString(),
-                    status: 'standby',
-                    statusText: 'Waiting...',
+                    statusText: `Uploading${label ? ` (${label})` : ''}...`,
                     ok: true
                 }
             ])
@@ -32,28 +33,27 @@ export default function CommitDialog() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    branch,
-                    message,
-                    content: JSON.stringify(commitData, null, 2)
+                    content: JSON.stringify(commitData, null, 2),
+                    contentType: "application/json"
                 })
             });
 
-            const payload = await response.json();
+            const payload = await response.json().catch(() => ({}));
 
-            setResponseConsole(c => c.slice(0, -1));
+            setResponseConsole(c => c.slice(0, -1)); // remove spinner entry
 
-            console.log(payload);
-
+            const success = response.ok;
             setResponseConsole(c => [
                 ...c,
                 {
                     time: new Date().toLocaleString(),
                     status: response.status,
-                    statusText: response.statusText,
-                    ok: response.ok,
-                    ...(response.ok
-                        ? { message: payload.message, commitData: payload.result }
-                        : { error: payload.error })
+                    statusText: success ? "Blob updated" : "Upload failed",
+                    ok: success,
+                    label,
+                    ...(success
+                        ? { message: payload.message ?? 'Upload successful', blob: payload }
+                        : { error: payload.message || payload.error || response.statusText })
                 }
             ]);
 
@@ -74,27 +74,21 @@ export default function CommitDialog() {
     return (
         <div>
             <button onClick={() => {
-                const branches = ['cms', 'main'];
-                for (const branch of branches) {
-                    const flags = loadFlagsFromLocalStorage();
-                    if (flags) {
-                        commitToGithub(flags, branch, `Update feature flags: ${new Date().toLocaleString()}`);
-                    }
+                const flags = loadFlagsFromLocalStorage();
+                if (flags) {
+                    uploadToBlob(flags, 'Publish');
                 }
             }}
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3"
-            >Commit</button>
+            >Upload</button>
             <button onClick={() => {
-                const branches = ['testing'];
-                for (const branch of branches) {
-                    const flags = loadFlagsFromLocalStorage();
-                    if (flags) {
-                        commitToGithub(flags, branch, `Update feature flags: ${new Date().toLocaleString()}`);
-                    }
+                const flags = loadFlagsFromLocalStorage();
+                if (flags) {
+                    uploadToBlob(flags, 'Upload (overwrite)');
                 }
             }}
                 className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-3">
-                    Commit to Testing
+                    Upload (overwrite)
                 </button>
             {responseConsole.length > 0 &&
                 <div className='m-3'>

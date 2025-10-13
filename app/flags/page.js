@@ -3,8 +3,17 @@
 import CommitPanel from "@/components/commitPanel";
 import Layout from "@/components/layout";
 
-import featureFlags from "@/public/flags/featureFlags.json"
+import featureFlags from "@/public/flags/featureFlags.json";
 import { useEffect, useState } from "react";
+
+const FEATURE_FLAGS_PATH = "flags.json";
+
+function encodePath(path) {
+  return path
+    .split("/")
+    .map((segment) => encodeURIComponent(segment))
+    .join("/");
+}
 
 function saveFlagsToLocalStorage(flags) {
   try {
@@ -36,6 +45,8 @@ function mergeFlags(base, saved) {
 
 export default function Home() {
   const [featureFlagsState, setFeatureFlagsState] = useState(featureFlags);
+  const [loadingRemote, setLoadingRemote] = useState(false);
+  const [remoteError, setRemoteError] = useState(null);
 
   useEffect(() => {
     // Load from localStorage on first mount
@@ -47,6 +58,45 @@ export default function Home() {
         setFeatureFlagsState(merged);
       }
     } catch {}
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function fetchRemoteFlags() {
+      setLoadingRemote(true);
+      setRemoteError(null);
+      try {
+        const res = await fetch(`/api/blob/${encodePath(FEATURE_FLAGS_PATH)}`);
+        if (res.status === 404) {
+          return;
+        }
+        if (!res.ok) throw new Error(`Failed to load feature flags (${res.status})`);
+        const payload = await res.json();
+        let remoteData = null;
+        if (payload?.content && typeof payload.content === "object") {
+          remoteData = payload.content;
+        } else if (typeof payload?.content === "string") {
+          try {
+            remoteData = JSON.parse(payload.content);
+          } catch (error) {
+            console.warn("Blob payload was not valid JSON", error);
+          }
+        }
+        if (!cancelled && remoteData) {
+          const merged = mergeFlags(featureFlags, remoteData);
+          setFeatureFlagsState(merged);
+        }
+      } catch (error) {
+        console.error("Failed to fetch flags from blob", error);
+        if (!cancelled) setRemoteError(error.message || "Failed to fetch remote flags");
+      } finally {
+        if (!cancelled) setLoadingRemote(false);
+      }
+    }
+    fetchRemoteFlags();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -84,6 +134,12 @@ export default function Home() {
           Clear All LocalStorage
         </button>
       </div>
+      {loadingRemote && (
+        <div className="px-4 text-sm text-foreground/60">Loading latest flags from storage…</div>
+      )}
+      {remoteError && (
+        <div className="px-4 text-sm text-red-600">Failed to sync remote flags: {remoteError}</div>
+      )}
       {
         Object.keys(featureFlagsState).map((key) => {
           return (
@@ -332,7 +388,7 @@ export default function Home() {
           )
         })
       }
-      <CommitPanel content={featureFlagsState} filePath="public/flags/featureFlags.json" title="Update feature flags" />
+      <CommitPanel content={featureFlagsState} filePath={FEATURE_FLAGS_PATH} title="Update feature flags" />
     </Layout>
   )
 }
