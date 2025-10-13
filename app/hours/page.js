@@ -1,7 +1,6 @@
 "use client";
 
 import Layout from '@/components/layout';
-import hoursData from '@/public/data/hours.json';
 import { useEffect, useState } from 'react';
 import CommitPanel from "@/components/commitPanel";
 
@@ -15,7 +14,7 @@ function encodePath(path) {
 }
 
 export default function HoursPage() {
-    const [hoursState, setHoursState] = useState(hoursData);
+    const [hoursState, setHoursState] = useState(null);
     const [loadingRemote, setLoadingRemote] = useState(false);
     const [remoteError, setRemoteError] = useState(null);
 
@@ -27,7 +26,7 @@ export default function HoursPage() {
             try {
                 const res = await fetch(`/api/blob/${encodePath(HOURS_PATH)}`);
                 if (res.status === 404) {
-                    return;
+                    throw new Error("Hours blob does not exist.");
                 }
                 if (!res.ok) throw new Error(`Failed to fetch hours (${res.status})`);
                 const payload = await res.json();
@@ -65,23 +64,30 @@ export default function HoursPage() {
             {remoteError && (
                 <p className="px-4 text-sm text-red-600">{remoteError}</p>
             )}
-            <div className="stack">
-                {hoursState.map((hour, index) => (
-                    <HoursInput
-                        key={index}
-                        title={hour.day}
-                        dayValue={hour.day}
-                        openValue={hour.open}
-                        closeValue={hour.close}
-                        onChange={(e) => {
-                            const newHours = [...hoursState];
-                            newHours[index][e.target.name] = e.target.value;
-                            setHoursState(newHours);
-                        }}
-                    />
-                ))}
-            </div>
-            <CommitPanel content={hoursState} filePath={HOURS_PATH} title="Update hours" />
+            {!hoursState && !loadingRemote && !remoteError && (
+                <p className="px-4 text-sm text-foreground/60">No hours available.</p>
+            )}
+            {hoursState && (
+                <>
+                    <div className="stack">
+                        {hoursState.map((hour, index) => (
+                            <HoursInput
+                                key={index}
+                                title={hour.day}
+                                dayValue={hour.day}
+                                openValue={hour.open}
+                                closeValue={hour.close}
+                                onChange={(e) => {
+                                    const newHours = [...hoursState];
+                                    newHours[index][e.target.name] = e.target.value;
+                                    setHoursState(newHours);
+                                }}
+                            />
+                        ))}
+                    </div>
+                    <CommitPanel content={hoursState} filePath={HOURS_PATH} title="Update hours" />
+                </>
+            )}
         </Layout>
     )
 }

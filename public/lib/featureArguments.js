@@ -1,34 +1,44 @@
-import featureFlags from '@/public/flags/featureFlags.json'
+let featureFlags = {};
 
+/**
+ * Replace the in-memory feature flag cache used for argument lookups.
+ * @param {Record<string, any>} flags
+ */
+export function setFeatureArgumentFlags(flags) {
+    if (flags && typeof flags === "object") {
+        featureFlags = flags;
+    } else {
+        featureFlags = {};
+    }
+}
 
-export function getFeatureArg(key, paramKey) {
-    const flag = featureFlags[key];
+function locateFeatureArg(flags, key, param) {
+    const source = flags && typeof flags === "object" ? flags : featureFlags;
+    const flag = source?.[key];
     if (!flag) {
         console.warn(`Feature flag not found: ${key}`);
         return null;
     }
 
-    const args = flag.args;
-    if (!Array.isArray(args)) {
-        console.warn(`Feature args not found or invalid for: ${key}`);
+    if (!Array.isArray(flag.args)) {
+        console.warn(`Flag has no arguments: ${key}`);
         return null;
     }
 
-    const arg = args.find(a => a && a.key === paramKey);
-    if (!arg) {
-        console.warn(`Feature param not found: ${key}.${paramKey}`);
-        return null;
+    for (const arg of flag.args) {
+        if (arg?.key === param) {
+            return arg;
+        }
     }
 
-    switch (arg.type) {
-        case 'dates':
-            return Array.isArray(arg.values) ? arg.values : [];
-        case 'boolean':
-            return typeof arg.value === 'boolean' ? arg.value : String(arg.value) === 'true';
-        case 'number':
-            return typeof arg.value === 'number' ? arg.value : Number(arg.value);
-        case 'string':
-        default:
-            return arg.value ?? '';
-    }
+    console.warn(`Argument not found: ${param}`);
+    return null;
+}
+
+export function getFeatureArg(key, param) {
+    return locateFeatureArg(featureFlags, key, param);
+}
+
+export function createFeatureArgumentGetter(flags) {
+    return (key, param) => locateFeatureArg(flags, key, param);
 }

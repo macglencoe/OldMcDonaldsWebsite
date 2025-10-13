@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 
 import Layout from "@/components/layout";
-import calendarData from "@/public/data/schedule.json";
 import CommitPanel from "@/components/commitPanel";
 
 const CALENDAR_PATH = "public/data/schedule.json";
@@ -15,7 +14,7 @@ function encodePath(path) {
 }
 
 export default function CalendarEditor() {
-    const [calendarState, setCalendarState] = useState(calendarData);
+    const [calendarState, setCalendarState] = useState(null);
     const [loadingRemote, setLoadingRemote] = useState(false);
     const [remoteError, setRemoteError] = useState(null);
 
@@ -27,7 +26,7 @@ export default function CalendarEditor() {
             try {
                 const res = await fetch(`/api/blob/${encodePath(CALENDAR_PATH)}`);
                 if (res.status === 404) {
-                    return;
+                    throw new Error("Calendar blob does not exist.");
                 }
                 if (!res.ok) throw new Error(`Failed to fetch calendar (${res.status})`);
                 const payload = await res.json();
@@ -65,22 +64,29 @@ export default function CalendarEditor() {
             {remoteError && (
                 <p className="px-4 text-sm text-red-600">{remoteError}</p>
             )}
-            <div className="stack">
-                {calendarState.map((event, index) => (
-                    <EventInput
-                        key={index}
-                        title={event.title}
-                        startValue={event.start}
-                        endValue={event.end}
-                        onChange={(e) => {
-                            const newEvents = [...calendarState];
-                            newEvents[index][e.target.name] = e.target.value;
-                            setCalendarState(newEvents);
-                        }}
-                    />
-                ))}
-            </div>
-            <CommitPanel content={calendarState} filePath={CALENDAR_PATH} title="Update calendar" />
+            {!calendarState && !loadingRemote && !remoteError && (
+                <p className="px-4 text-sm text-foreground/60">No calendar events available.</p>
+            )}
+            {calendarState && (
+                <>
+                    <div className="stack">
+                        {calendarState.map((event, index) => (
+                            <EventInput
+                                key={index}
+                                title={event.title}
+                                startValue={event.start}
+                                endValue={event.end}
+                                onChange={(e) => {
+                                    const newEvents = [...calendarState];
+                                    newEvents[index][e.target.name] = e.target.value;
+                                    setCalendarState(newEvents);
+                                }}
+                            />
+                        ))}
+                    </div>
+                    <CommitPanel content={calendarState} filePath={CALENDAR_PATH} title="Update calendar" />
+                </>
+            )}
         </Layout>
     )
 }

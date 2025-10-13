@@ -1,6 +1,5 @@
 "use client";
 import Layout from "@/components/layout";
-import priceData from "@/public/data/pricing.json";
 import { useEffect, useState } from "react";
 import CommitPanel from "@/components/commitPanel";
 
@@ -15,7 +14,7 @@ function encodePath(path) {
 
 
 export default function Prices() {
-    const [priceState, setPriceState] = useState(priceData);
+    const [priceState, setPriceState] = useState(null);
     const [loadingRemote, setLoadingRemote] = useState(false);
     const [remoteError, setRemoteError] = useState(null);
 
@@ -27,7 +26,7 @@ export default function Prices() {
             try {
                 const res = await fetch(`/api/blob/${encodePath(PRICING_PATH)}`);
                 if (res.status === 404) {
-                    return;
+                    throw new Error("Pricing blob does not exist.");
                 }
                 if (!res.ok) throw new Error(`Failed to fetch pricing (${res.status})`);
                 const payload = await res.json();
@@ -65,22 +64,29 @@ export default function Prices() {
             {remoteError && (
                 <p className="px-4 text-sm text-red-600">{remoteError}</p>
             )}
-            <div className="k-grid">
-                {Object.keys(priceState).map((key) => (
-                    <PriceInput
-                        key={key}
-                        title={key}
-                        amountValue={priceState[key].amount}
-                        perValue={priceState[key].per}
-                        onChange={(e) => {
-                            const newPrices = { ...priceState };
-                            newPrices[key][e.target.name] = e.target.value;
-                            setPriceState(newPrices);
-                        }}
-                    />
-                ))}
-            </div>
-            <CommitPanel content={priceState} filePath={PRICING_PATH} title="Update pricing" />
+            {!priceState && !loadingRemote && !remoteError && (
+                <p className="px-4 text-sm text-foreground/60">No pricing data available.</p>
+            )}
+            {priceState && (
+                <>
+                    <div className="k-grid">
+                        {Object.keys(priceState).map((key) => (
+                            <PriceInput
+                                key={key}
+                                title={key}
+                                amountValue={priceState[key].amount}
+                                perValue={priceState[key].per}
+                                onChange={(e) => {
+                                    const newPrices = { ...priceState };
+                                    newPrices[key][e.target.name] = e.target.value;
+                                    setPriceState(newPrices);
+                                }}
+                            />
+                        ))}
+                    </div>
+                    <CommitPanel content={priceState} filePath={PRICING_PATH} title="Update pricing" />
+                </>
+            )}
         </Layout>
     )
 }

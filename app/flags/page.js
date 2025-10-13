@@ -3,7 +3,6 @@
 import CommitPanel from "@/components/commitPanel";
 import Layout from "@/components/layout";
 
-import featureFlags from "@/public/flags/featureFlags.json";
 import { useEffect, useState } from "react";
 
 const FEATURE_FLAGS_PATH = "flags.json";
@@ -44,21 +43,10 @@ function mergeFlags(base, saved) {
 
 
 export default function Home() {
-  const [featureFlagsState, setFeatureFlagsState] = useState(featureFlags);
+  const [featureFlagsState, setFeatureFlagsState] = useState(null);
+  const [remoteFlags, setRemoteFlags] = useState(null);
   const [loadingRemote, setLoadingRemote] = useState(false);
   const [remoteError, setRemoteError] = useState(null);
-
-  useEffect(() => {
-    // Load from localStorage on first mount
-    try {
-      const savedFlags = localStorage.getItem('featureFlags');
-      if (savedFlags) {
-        const parsed = JSON.parse(savedFlags);
-        const merged = mergeFlags(featureFlags, parsed);
-        setFeatureFlagsState(merged);
-      }
-    } catch {}
-  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -68,7 +56,7 @@ export default function Home() {
       try {
         const res = await fetch(`/api/blob/${encodePath(FEATURE_FLAGS_PATH)}`);
         if (res.status === 404) {
-          return;
+          throw new Error("Feature flags blob does not exist.");
         }
         if (!res.ok) throw new Error(`Failed to load feature flags (${res.status})`);
         const payload = await res.json();
@@ -83,7 +71,15 @@ export default function Home() {
           }
         }
         if (!cancelled && remoteData) {
-          const merged = mergeFlags(featureFlags, remoteData);
+          setRemoteFlags(remoteData);
+          let merged = remoteData;
+          try {
+            const savedFlags = localStorage.getItem("featureFlags");
+            if (savedFlags) {
+              const parsed = JSON.parse(savedFlags);
+              merged = mergeFlags(remoteData, parsed);
+            }
+          } catch {}
           setFeatureFlagsState(merged);
         }
       } catch (error) {
@@ -100,16 +96,21 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    saveFlagsToLocalStorage(featureFlagsState);
+    if (featureFlagsState) {
+      saveFlagsToLocalStorage(featureFlagsState);
+    }
   }, [featureFlagsState]);
 
   const resetLocalFlags = () => {
     try {
       localStorage.removeItem('featureFlags');
     } catch {}
-    // Reset state back to bundled defaults (deep clone to avoid refs)
-    const fresh = JSON.parse(JSON.stringify(featureFlags));
-    setFeatureFlagsState(fresh);
+    if (remoteFlags) {
+      const fresh = JSON.parse(JSON.stringify(remoteFlags));
+      setFeatureFlagsState(fresh);
+    } else {
+      setFeatureFlagsState(null);
+    }
   };
 
   const clearAllLocalStorage = () => {
@@ -120,97 +121,100 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className="flex flex-row gap-2 px-4 pt-4">
-        <button
-          onClick={resetLocalFlags}
-          className="btn"
-        >
-          Reset Local Flags
-        </button>
-        <button
-          onClick={clearAllLocalStorage}
-          className="btn"
-        >
-          Clear All LocalStorage
-        </button>
-      </div>
       {loadingRemote && (
         <div className="px-4 text-sm text-foreground/60">Loading latest flags from storage…</div>
       )}
       {remoteError && (
         <div className="px-4 text-sm text-red-600">Failed to sync remote flags: {remoteError}</div>
       )}
-      {
-        Object.keys(featureFlagsState).map((key) => {
-          return (
-            <div key={key} className="card">
-              <div className="card-header text-lg">{key}</div>
-              <div className="card-body flex flex-col gap-3">
-              <TrueFalseSelector
-                label="Default"
-                value={String(featureFlagsState[key].default)}
-                onChange={(e) => {
-                  const newFlags = { ...featureFlagsState };
-                  newFlags[key].default = e.target.value === "true";
-                  setFeatureFlagsState(newFlags);
-                }}
-              />
-              <div className="card">
-                <div className="card-header">Conditions</div>
-                <div className="card-body">
-                <div className="flex flex-row">
-                  <label className="mr-2">Operator:</label>
-                  <ConditionOperatorSelector
-                    value={featureFlagsState[key].operator}
+      {!featureFlagsState && !loadingRemote && !remoteError && (
+        <div className="px-4 text-sm text-foreground/60">No feature flags loaded.</div>
+      )}
+      {featureFlagsState && (
+        <>
+          <div className="flex flex-row gap-2 px-4 pt-4">
+            <button
+              onClick={resetLocalFlags}
+              className="btn"
+            >
+              Reset Local Flags
+            </button>
+            <button
+              onClick={clearAllLocalStorage}
+              className="btn"
+            >
+              Clear All LocalStorage
+            </button>
+          </div>
+          {Object.keys(featureFlagsState).map((key) => {
+            return (
+              <div key={key} className="card">
+                <div className="card-header text-lg">{key}</div>
+                <div className="card-body flex flex-col gap-3">
+                  <TrueFalseSelector
+                    label="Default"
+                    value={String(featureFlagsState[key].default)}
                     onChange={(e) => {
                       const newFlags = { ...featureFlagsState };
-                      newFlags[key].operator = e.target.value;
+                      newFlags[key].default = e.target.value === "true";
                       setFeatureFlagsState(newFlags);
                     }}
                   />
-                </div>
-                <div>
-                  {featureFlagsState[key].conditions.map((condition, index) => {
-                    return (
-                      <div key={index} className="flex flex-col gap-1 items-start mb-2 border-l-[2px] border-foreground/20 pl-2">
-                        <ConditionCriteriaSelector
-                          value={condition.criteria}
+                  <div className="card">
+                    <div className="card-header">Conditions</div>
+                    <div className="card-body">
+                      <div className="flex flex-row">
+                        <label className="mr-2">Operator:</label>
+                        <ConditionOperatorSelector
+                          value={featureFlagsState[key].operator}
                           onChange={(e) => {
                             const newFlags = { ...featureFlagsState };
-                            const next = e.target.value;
-                            newFlags[key].conditions[index].criteria = next;
-                            if (next === 'time') {
-                              newFlags[key].conditions[index].operator = 'after';
-                              newFlags[key].conditions[index].value = new Date().toISOString();
-                            } else if (next === 'env') {
-                              newFlags[key].conditions[index].operator = 'equals';
-                              newFlags[key].conditions[index].value = '';
-                            }
+                            newFlags[key].operator = e.target.value;
                             setFeatureFlagsState(newFlags);
                           }}
                         />
+                      </div>
+                      <div>
+                        {featureFlagsState[key].conditions.map((condition, index) => {
+                          return (
+                            <div key={index} className="flex flex-col gap-1 items-start mb-2 border-l-[2px] border-foreground/20 pl-2">
+                              <ConditionCriteriaSelector
+                                value={condition.criteria}
+                                onChange={(e) => {
+                                  const newFlags = { ...featureFlagsState };
+                                  const next = e.target.value;
+                                  newFlags[key].conditions[index].criteria = next;
+                                  if (next === "time") {
+                                    newFlags[key].conditions[index].operator = "after";
+                                    newFlags[key].conditions[index].value = new Date().toISOString();
+                                  } else if (next === "env") {
+                                    newFlags[key].conditions[index].operator = "equals";
+                                    newFlags[key].conditions[index].value = "";
+                                  }
+                                  setFeatureFlagsState(newFlags);
+                                }}
+                              />
 
-                        {condition.criteria === "time" && (
-                          <>
-                            <TimeOperatorSelector
-                              value={condition.operator}
-                              onChange={(e) => {
-                                const newFlags = { ...featureFlagsState };
-                                newFlags[key].conditions[index].operator = e.target.value;
-                                setFeatureFlagsState(newFlags);
-                              }}
-                            />
-                            <TimeSelector
-                              value={condition.value}
-                              onChange={(e) => {
-                                const newFlags = { ...featureFlagsState };
-                                newFlags[key].conditions[index].value = e.target.value;
-                                setFeatureFlagsState(newFlags);
-                              }}
-                            />
-                          </>
-                        )
-                        }
+                              {condition.criteria === "time" && (
+                                <>
+                                  <TimeOperatorSelector
+                                    value={condition.operator}
+                                    onChange={(e) => {
+                                      const newFlags = { ...featureFlagsState };
+                                      newFlags[key].conditions[index].operator = e.target.value;
+                                      setFeatureFlagsState(newFlags);
+                                    }}
+                                  />
+                                  <TimeSelector
+                                    value={condition.value}
+                                    onChange={(e) => {
+                                      const newFlags = { ...featureFlagsState };
+                                      newFlags[key].conditions[index].value = e.target.value;
+                                      setFeatureFlagsState(newFlags);
+                                    }}
+                                  />
+                                </>
+                              )}
 
                         {condition.criteria === "env" && (
                           <>
@@ -388,7 +392,10 @@ export default function Home() {
           )
         })
       }
-      <CommitPanel content={featureFlagsState} filePath={FEATURE_FLAGS_PATH} title="Update feature flags" />
+          }
+          <CommitPanel content={featureFlagsState} filePath={FEATURE_FLAGS_PATH} title="Update feature flags" />
+        </>
+      )}
     </Layout>
   )
 }

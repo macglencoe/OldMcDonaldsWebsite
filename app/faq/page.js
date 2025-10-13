@@ -1,7 +1,6 @@
 "use client";
 import Layout from "@/components/layout";
 import { useEffect, useState } from "react";
-import faqData from "@/public/data/faq.json";
 import CommitPanel from "@/components/commitPanel";
 
 function saveToLocalStorage(faq) {
@@ -19,23 +18,9 @@ function encodePath(path) {
 
 
 export default function FAQEditor() {
-    const [faqState, setFaqState] = useState(faqData);
+    const [faqState, setFaqState] = useState(null);
     const [loadingRemote, setLoadingRemote] = useState(false);
     const [remoteError, setRemoteError] = useState(null);
-
-    useEffect(() => {
-        try {
-            const stored = localStorage.getItem('faq');
-            if (stored) {
-                const parsed = JSON.parse(stored);
-                if (Array.isArray(parsed)) {
-                    setFaqState(parsed);
-                }
-            }
-        } catch (error) {
-            console.warn("Failed to read FAQ from localStorage", error);
-        }
-    }, []);
 
     useEffect(() => {
         let cancelled = false;
@@ -45,7 +30,7 @@ export default function FAQEditor() {
             try {
                 const res = await fetch(`/api/blob/${encodePath(FAQ_PATH)}`);
                 if (res.status === 404) {
-                    return;
+                    throw new Error("FAQ blob does not exist.");
                 }
                 if (!res.ok) throw new Error(`Failed to fetch FAQ (${res.status})`);
                 const payload = await res.json();
@@ -60,7 +45,19 @@ export default function FAQEditor() {
                     }
                 }
                 if (!cancelled && Array.isArray(remote)) {
-                    setFaqState(remote);
+                    let merged = remote;
+                    try {
+                        const stored = localStorage.getItem('faq');
+                        if (stored) {
+                            const parsed = JSON.parse(stored);
+                            if (Array.isArray(parsed)) {
+                                merged = parsed;
+                            }
+                        }
+                    } catch (error) {
+                        console.warn("Failed to read FAQ from localStorage", error);
+                    }
+                    setFaqState(merged);
                 }
             } catch (error) {
                 console.error("Failed to load FAQ from blob", error);
@@ -91,34 +88,39 @@ export default function FAQEditor() {
             {remoteError && (
                 <p className="px-4 text-sm text-red-600">{remoteError}</p>
             )}
-            <div className="stack">
-                {
-                    faqState.map((item, index) => {
-                        return (
-                            <FAQInput key={index} questionValue={item.question} answerValue={item.answer} onChange={(e) => {
-                                const newFaq = [...faqState];
-                                newFaq[index][e.target.name] = e.target.value;
-                                setFaqState(newFaq);
-                                saveToLocalStorage(newFaq);
-                            }}
-                                onDelete={() => {
+            {!faqState && !loadingRemote && !remoteError && (
+                <p className="px-4 text-sm text-foreground/60">No FAQ entries available.</p>
+            )}
+            {faqState && (
+                <div className="stack">
+                    {
+                        faqState.map((item, index) => {
+                            return (
+                                <FAQInput key={index} questionValue={item.question} answerValue={item.answer} onChange={(e) => {
                                     const newFaq = [...faqState];
-                                    newFaq.splice(index, 1);
+                                    newFaq[index][e.target.name] = e.target.value;
                                     setFaqState(newFaq);
                                     saveToLocalStorage(newFaq);
                                 }}
-                                onAddBelow={() => {
-                                    const newFaq = [...faqState];
-                                    newFaq.splice(index + 1, 0, { question: "", answer: "" });
-                                    setFaqState(newFaq);
-                                    saveToLocalStorage(newFaq);
-                                }}
-                            />
-                        )
-                    })
-                }
-                <CommitPanel content={faqState} filePath={FAQ_PATH} title="Update FAQ" />
-            </div>
+                                    onDelete={() => {
+                                        const newFaq = [...faqState];
+                                        newFaq.splice(index, 1);
+                                        setFaqState(newFaq);
+                                        saveToLocalStorage(newFaq);
+                                    }}
+                                    onAddBelow={() => {
+                                        const newFaq = [...faqState];
+                                        newFaq.splice(index + 1, 0, { question: "", answer: "" });
+                                        setFaqState(newFaq);
+                                        saveToLocalStorage(newFaq);
+                                    }}
+                                />
+                            )
+                        })
+                    }
+                    <CommitPanel content={faqState} filePath={FAQ_PATH} title="Update FAQ" />
+                </div>
+            )}
         </Layout>
     )
 }
