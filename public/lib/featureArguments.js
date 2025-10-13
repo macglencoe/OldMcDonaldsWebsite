@@ -1,6 +1,4 @@
-import defaultFlags from '@/public/flags/featureFlags.json';
-
-let featureFlags = defaultFlags ?? {};
+let featureFlags = {};
 
 /**
  * Replace the in-memory feature flag cache used for arguments.
@@ -9,6 +7,8 @@ let featureFlags = defaultFlags ?? {};
 export function setFeatureArgumentFlags(flags) {
     if (flags && typeof flags === 'object') {
         featureFlags = flags;
+    } else {
+        featureFlags = {};
     }
 }
 

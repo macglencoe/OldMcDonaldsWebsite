@@ -1,4 +1,3 @@
-import fallbackFlags from '@/public/flags/featureFlags.json';
 import {
     setFeatureFlags as setEvaluatorFlags,
     createFeatureEvaluator
@@ -8,21 +7,27 @@ import {
     createFeatureArgumentGetter
 } from '@/public/lib/featureArguments';
 
-let lastKnownGood = fallbackFlags ?? {};
+let lastKnownGood = null;
 
 function updateCaches(flags) {
-    setEvaluatorFlags(flags);
-    setFeatureArgumentFlags(flags);
+    if (flags && typeof flags === 'object') {
+        setEvaluatorFlags(flags);
+        setFeatureArgumentFlags(flags);
+    } else {
+        setEvaluatorFlags({});
+        setFeatureArgumentFlags({});
+    }
 }
 
 export async function loadFlags() {
-    try {
-        if (!process.env.FLAGS_URL) {
-            console.warn('FLAGS_URL is not configured; using fallback flags');
-            updateCaches(lastKnownGood);
-            return lastKnownGood;
-        }
+    if (!process.env.FLAGS_URL) {
+        console.error('FLAGS_URL is not configured; cannot load feature flags');
+        lastKnownGood = null;
+        updateCaches(null);
+        return null;
+    }
 
+    try {
         const res = await fetch(process.env.FLAGS_URL, {
             next: { revalidate: 30 },
             headers: { Accept: 'application/json' }
@@ -33,17 +38,19 @@ export async function loadFlags() {
         }
 
         const json = await res.json();
-        if (json && typeof json === 'object') {
-            lastKnownGood = json;
-        } else {
-            console.warn('Flags response was not an object; retaining last known flags');
+        if (!json || typeof json !== 'object') {
+            throw new Error('Flags response was not an object');
         }
+
+        lastKnownGood = json;
+        updateCaches(lastKnownGood);
+        return lastKnownGood;
     } catch (err) {
         console.error("Failed to load flags", err);
+        lastKnownGood = null;
+        updateCaches(null);
+        return null;
     }
-
-    updateCaches(lastKnownGood);
-    return lastKnownGood;
 }
 
 export function getFlags() {
@@ -51,9 +58,9 @@ export function getFlags() {
 }
 
 export function getFeatureEvaluator(flags = lastKnownGood) {
-    return createFeatureEvaluator(flags);
+    return createFeatureEvaluator(flags && typeof flags === 'object' ? flags : {});
 }
 
 export function getFeatureArgumentGetter(flags = lastKnownGood) {
-    return createFeatureArgumentGetter(flags);
+    return createFeatureArgumentGetter(flags && typeof flags === 'object' ? flags : {});
 }
