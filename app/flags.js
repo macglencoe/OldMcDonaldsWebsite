@@ -37,7 +37,7 @@ function extractPath(url) {
     }
 }
 
-async function handleFailure({ reason, status, blobPath }) {
+async function handleFailure({ reason, status, blobPath, clearCaches = false }) {
     await safeTrack('flags_fetch_failure', {
         reason,
         status: String(status ?? 0)
@@ -50,13 +50,18 @@ async function handleFailure({ reason, status, blobPath }) {
         });
     }
 
-    lastKnownGood = null;
-    updateCaches(null);
-    await safeTrack('flags_cache_cleared', {
-        trigger: reason,
-        runtime: 'server'
-    });
-    return null;
+    if (clearCaches) {
+        lastKnownGood = null;
+        updateCaches(null);
+        await safeTrack('flags_cache_cleared', {
+            trigger: reason,
+            runtime: 'server'
+        });
+    } else {
+        console.warn(`Retaining previous feature flags after ${reason}; status=${status ?? 'n/a'}`);
+    }
+
+    return lastKnownGood;
 }
 
 export async function loadFlags() {
@@ -79,7 +84,7 @@ export async function loadFlags() {
             const reason = res.status === 404 ? 'blob_not_found' : 'http_error';
             const path = res.status === 404 ? extractPath(process.env.FLAGS_URL) : undefined;
             console.error(`Failed to fetch feature flags: ${res.status} ${res.statusText}`);
-            return handleFailure({ reason, status: res.status, blobPath: path });
+            return handleFailure({ reason, status: res.status, blobPath: path, clearCaches: false });
         }
 
         let json;
@@ -87,12 +92,12 @@ export async function loadFlags() {
             json = await res.json();
         } catch (parseErr) {
             console.error('Failed to parse flags response', parseErr);
-            return handleFailure({ reason: 'parse_error', status: res.status });
+            return handleFailure({ reason: 'parse_error', status: res.status, clearCaches: true });
         }
 
         if (!json || typeof json !== 'object') {
             console.error('Flags response was not an object');
-            return handleFailure({ reason: 'invalid_payload', status: res.status });
+            return handleFailure({ reason: 'invalid_payload', status: res.status, clearCaches: true });
         }
 
         lastKnownGood = json;
@@ -101,7 +106,7 @@ export async function loadFlags() {
         return lastKnownGood;
     } catch (err) {
         console.error("Failed to load flags", err);
-        return handleFailure({ reason: 'fetch_error', status: 0 });
+        return handleFailure({ reason: 'fetch_error', status: 0, clearCaches: false });
     }
 }
 
