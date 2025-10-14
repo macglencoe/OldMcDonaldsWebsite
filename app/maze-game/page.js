@@ -1,7 +1,7 @@
 import Layout from '@/components/layout'
-import { isFeatureEnabled } from '@/public/lib/featureEvaluator'
 import PageHeader from '@/components/pageHeader'
 import MazeGameClient from './mazeGameClient'
+import { getFeatureEvaluator } from '@/app/flags'
 
 export const metadata = {
     title: "Maze Game",
@@ -9,8 +9,8 @@ export const metadata = {
 }
 
 export default function MazeGame() {
-
-    if (isFeatureEnabled('maze_game_enabled') == false) return null
+    const isFeatureEnabled = getFeatureEvaluator();
+    if (!isFeatureEnabled('maze_game_enabled')) return null
 
     return (
         <Layout>

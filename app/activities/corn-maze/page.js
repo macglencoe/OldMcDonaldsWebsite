@@ -2,10 +2,10 @@ import Layout from '@/components/layout'
 import styles from './page.module.css'
 import { AndImage } from '@/components/andImage';
 import { BodyBlock } from '@/components/bodyBlock';
-import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
 import PageHeader from '@/components/pageHeader';
 import Action from '@/components/action';
 import Image from 'next/image';
+import { getFeatureEvaluator } from '@/app/flags';
 
 export const metadata = {
     title: "Corn Maze",
@@ -13,6 +13,7 @@ export const metadata = {
 }
 
 export const CornMaze = () => {
+    const isFeatureEnabled = getFeatureEvaluator();
     return (
         <Layout>
             <PageHeader subtitle="2025 Season">Corn Maze</PageHeader>
