@@ -54,7 +54,6 @@ function Weather({ dates }) {
                 const weatherDataForDates = {}
                 const convertedDates = dates.map(date => {
                     const newDate = new Date(date)
-                    newDate.setDate(newDate.getDate() + 1)
                     return newDate.toISOString().split('T')[0]
                 })
                 convertedDates.forEach(date => {
@@ -84,7 +83,7 @@ function Weather({ dates }) {
                 Object.entries(weather).map(([date, data]) => (
                     data && data.icon && data.text &&
                     <div key={date} className="flex flex-col gap-2 bg-background/30 p-2 rounded-2xl items-center flex-1 text-center">
-                        <span className='text-sm font-bold'>{new Date(date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
+                        <span className='text-sm font-bold'>{new Date(`${date}T00:00:00`).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
                         <img src={data.icon} alt={data.text} className="w-15 h-15" />
                         <span>{data.text}</span>
                     </div>
