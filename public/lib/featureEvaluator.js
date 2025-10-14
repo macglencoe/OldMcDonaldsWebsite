@@ -1,3 +1,5 @@
+import { track } from "@vercel/analytics";
+
 let featureFlags = {};
 
 /**
@@ -50,6 +52,7 @@ function evaluateFlag(key, context, flags) {
   const flag = source?.[key];
   if (!flag) {
     console.warn(`Feature flag not found: ${key}`);
+    track('flags_flag_not_found', { key });
     return false;
   }
 
