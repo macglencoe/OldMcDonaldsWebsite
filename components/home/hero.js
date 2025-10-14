@@ -1,25 +1,19 @@
 import HeroFall from "./heroFall";
 import HeroWinter from "./heroWinter";
 import HeroSummer from "./heroSummer";
-import { isFeatureEnabled } from "@/public/lib/featureEvaluator";
+import { getFeatureEvaluator } from "@/app/flags";
 
+export default function Hero() {
+  const isFeatureEnabled = getFeatureEvaluator();
+  const now = new Date();
 
+  if (isFeatureEnabled("use_fall_hero", { now })) {
+    return <HeroFall />;
+  }
 
-export default async function Hero() {
-    const useFallHero = isFeatureEnabled(
-        'use_fall_hero', 
-        { now: new Date() }
-    );
-    const useWinterHero = isFeatureEnabled(
-        'use_winter_hero', 
-        { now: new Date() }
-    );
+  if (isFeatureEnabled("use_winter_hero", { now })) {
+    return <HeroWinter />;
+  }
 
-    if (useFallHero) {
-        return <HeroFall />;
-    } else if (useWinterHero) {
-        return <HeroWinter />;
-    } else {
-        return <HeroSummer />;
-    }
+  return <HeroSummer />;
 }
