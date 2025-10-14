@@ -1,4 +1,3 @@
-import { createFeatureGate } from "@/flags";
 import HeroFall from "./heroFall";
 import HeroWinter from "./heroWinter";
 import HeroSummer from "./heroSummer";
