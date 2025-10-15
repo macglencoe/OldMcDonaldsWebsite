@@ -1,7 +1,7 @@
 import Layout from '@/components/layout'
 import PageHeader from '@/components/pageHeader'
 import MazeGameClient from './mazeGameClient'
-import { getFeatureEvaluator, loadFlags, getFlags } from '@/app/flags'
+import { getFeatureEvaluator, loadFlags } from '@/app/flags'
 
 export const metadata = {
     title: "Maze Game",
@@ -9,8 +9,7 @@ export const metadata = {
 }
 
 export default async function MazeGame() {
-    const cachedFlags = getFlags();
-    const flags = cachedFlags ?? await loadFlags();
+    const flags = await loadFlags();
     const isFeatureEnabled = getFeatureEvaluator(flags);
     if (!isFeatureEnabled('maze_game_enabled')) return null
 
