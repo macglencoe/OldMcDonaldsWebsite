@@ -2,9 +2,10 @@
 
 import EntryForm from '@/components/mazeGameEntryForm'
 import { useState, useEffect } from 'react'
-import { isFeatureEnabled } from '@/public/lib/featureEvaluator'
+import { useFlags } from '@/app/FlagsContext'
 
 export default function MazeGameClient() {
+    const { isFeatureEnabled } = useFlags();
     const [mazeData, setMazeData] = useState({})
     const [foundCodes, setFoundCodes] = useState([])
     const [hasSubmitted, setHasSubmitted] = useState(false)

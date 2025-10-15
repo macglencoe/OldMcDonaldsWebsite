@@ -1,9 +1,10 @@
 "use client"
-import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
+import { useFlags } from '@/app/FlagsContext';
 import { useEffect, useState } from 'react';
 import { User, EnvelopeSimple, SpinnerGap } from 'phosphor-react';
 
 export default function ContactForm({ theme }) {
+    const { isFeatureEnabled } = useFlags();
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [errors, setErrors] = useState({});
     const [submitted, setSubmitted] = useState(false);

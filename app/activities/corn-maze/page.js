@@ -2,17 +2,19 @@ import Layout from '@/components/layout'
 import styles from './page.module.css'
 import { AndImage } from '@/components/andImage';
 import { BodyBlock } from '@/components/bodyBlock';
-import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
 import PageHeader from '@/components/pageHeader';
 import Action from '@/components/action';
 import Image from 'next/image';
+import { getFeatureEvaluator, loadFlags } from '@/app/flags';
 
 export const metadata = {
     title: "Corn Maze",
     description: "Get lost in Old McDonald’s 10-acre corn maze in Inwood, WV. Try daytime and spooky night mazes, complete challenges, and enjoy fall family fun."
 }
 
-export const CornMaze = () => {
+export default async function CornMaze() {
+    const flags = await loadFlags();
+    const isFeatureEnabled = getFeatureEvaluator(flags);
     return (
         <Layout>
             <PageHeader subtitle="2025 Season">Corn Maze</PageHeader>
@@ -110,5 +112,3 @@ export const CornMaze = () => {
         </Layout>
     )
 }
-
-export default CornMaze;

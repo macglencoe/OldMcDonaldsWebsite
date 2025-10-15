@@ -1,12 +1,16 @@
 'use client'
 
-import { getFeatureArg } from '@/public/lib/featureArguments'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useFlags } from '@/app/FlagsContext'
 
 
 
 export default function FloodBanner() {
-    const [dates, setDates] = useState(getFeatureArg('show_flood_banner', 'dates').values)
+    const { getFeatureArg } = useFlags()
+    const dates = useMemo(() => {
+        const arg = getFeatureArg('show_flood_banner', 'dates')
+        return Array.isArray(arg?.values) ? [...arg.values] : []
+    }, [getFeatureArg])
 
     return (
         <div className="w-full bg-accent p-4 flex flex-row flex-wrap gap-4 justify-between items-center" style={{
