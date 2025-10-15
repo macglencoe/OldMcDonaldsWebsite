@@ -119,6 +119,11 @@ function AdminDirectory() {
             icon: PiFlagDuotone
         },
         {
+            title: "Statsig Console",
+            href: "https://console.statsig.com/7sbSQx3I6cLjQgTO65sn45/home",
+            icon: PiFlagDuotone,
+        },
+        {
             title: "Prices",
             href: "/prices",
             icon: PiCurrencyCircleDollarDuotone,
