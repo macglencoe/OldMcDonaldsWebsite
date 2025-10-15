@@ -1,6 +1,6 @@
 import { cache } from 'react';
 import { evaluate, combine, flag } from 'flags/next';
-import { statsigAdapter } from '@flags-sdk/statsig';
+import { createStatsigAdapter } from '@flags-sdk/statsig';
 
 const STATSIG_ID_COOKIE = 'statsig-stable-id';
 
@@ -34,6 +34,13 @@ const CONFIG_DEFINITIONS = [
 const defaultGates = Object.freeze(
   Object.fromEntries(GATE_DEFINITIONS.map(({ key, defaultValue }) => [key, defaultValue])),
 );
+
+const statsigEnvironment = process.env.STATSIG_ENV_STRING?.trim();
+
+const statsigAdapter = createStatsigAdapter({
+  statsigServerApiKey: process.env.STATSIG_SERVER_API_KEY ?? '',
+  statsigOptions: statsigEnvironment ? { environment: { tier: statsigEnvironment } } : undefined,
+});
 
 function identifyStatsigUser({ headers, cookies }) {
   const cookieId = cookies?.get(STATSIG_ID_COOKIE)?.value;
