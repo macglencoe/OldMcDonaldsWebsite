@@ -1,201 +1,248 @@
-import { createClient as createEdgeConfigClient } from '@vercel/edge-config';
-import fallbackFlagsJson from '@/public/flags/featureFlags.json' assert { type: 'json' };
-import {
-    setFeatureFlags as setEvaluatorFlags,
-    createFeatureEvaluator
-} from '@/public/lib/featureEvaluator';
-import {
-    setFeatureArgumentFlags,
-    createFeatureArgumentGetter
-} from '@/public/lib/featureArguments';
-import { track } from '@vercel/analytics/server';
+import { cache } from 'react';
+import { evaluate, combine, flag } from 'flags/next';
+import { statsigAdapter } from '@flags-sdk/statsig';
 
-const EDGE_CONFIG_URL = process.env.EDGE_CONFIG ?? null;
-const EDGE_CONFIG_ITEM_KEY = process.env.EXPERIMENTATION_CONFIG_ITEM_KEY ?? null;
+const STATSIG_ID_COOKIE = 'statsig-stable-id';
 
-const edgeConfigClient = EDGE_CONFIG_URL ? createEdgeConfigClient(EDGE_CONFIG_URL) : null;
-const REFRESH_INTERVAL_MS = 60_000;
+const GATE_DEFINITIONS = [
+  { key: 'show_cookie_notice', defaultValue: true },
+  { key: 'show_night_maze_ad', defaultValue: true },
+  { key: 'show_flood_banner', defaultValue: true },
+  { key: 'show_aux_search', defaultValue: true },
+  { key: 'show_farm_swap_banner', defaultValue: false },
+  { key: 'show_olr_banner', defaultValue: true },
+  { key: 'show_vendor_promos', defaultValue: false },
+  { key: 'show_vendors', defaultValue: true },
+  { key: 'show_facebook_feed', defaultValue: true },
+  { key: 'show_countdown', defaultValue: false },
+  { key: 'show_contact_form', defaultValue: true },
+  { key: 'maze_game_enabled', defaultValue: true },
+  { key: 'use_google_forms', defaultValue: false },
+  { key: 'use_fall_hero', defaultValue: false },
+  { key: 'use_winter_hero', defaultValue: false },
+];
 
-let lastKnownGood = cloneFlags(fallbackFlagsJson);
-let lastRefreshTimestamp = 0;
-let inFlightRefresh = null;
-let loggedEdgeConfigWarning = false;
+const CONFIG_DEFINITIONS = [
+  {
+    statsigKey: 'show_flood_banner_config',
+    targetKey: 'show_flood_banner',
+    flagKey: 'show_flood_banner_config.config',
+    defaultValue: {},
+  },
+];
 
-seedCaches(lastKnownGood);
+const defaultGates = Object.freeze(
+  Object.fromEntries(GATE_DEFINITIONS.map(({ key, defaultValue }) => [key, defaultValue])),
+);
 
-function cloneFlags(source) {
-    if (!source || typeof source !== 'object') return {};
-    if (typeof structuredClone === 'function') {
-        return structuredClone(source);
-    }
-    return JSON.parse(JSON.stringify(source));
+function identifyStatsigUser({ headers, cookies }) {
+  const cookieId = cookies?.get(STATSIG_ID_COOKIE)?.value;
+  const forwardedFor = headers?.get('x-forwarded-for') ?? '';
+  const ip = forwardedFor.split(',')[0]?.trim() || undefined;
+  const vercelId = headers?.get('x-vercel-id') ?? headers?.get('x-request-id') ?? undefined;
+  const userAgent = headers?.get('user-agent') ?? undefined;
+  const userID = cookieId ?? vercelId ?? ip ?? 'anonymous';
+
+  const statsigUser = {
+    userID,
+  };
+
+  if (ip) {
+    statsigUser.ip = ip;
+  }
+
+  if (userAgent) {
+    statsigUser.userAgent = userAgent;
+  }
+
+  if (vercelId) {
+    statsigUser.custom = { vercelId };
+  }
+
+  return statsigUser;
 }
 
-function seedCaches(flags) {
-    if (flags && typeof flags === 'object') {
-        setEvaluatorFlags(flags);
-        setFeatureArgumentFlags(flags);
-    } else {
-        setEvaluatorFlags({});
-        setFeatureArgumentFlags({});
-    }
+function createGateFlag({ key, defaultValue }) {
+  return flag({
+    key,
+    defaultValue,
+    identify: identifyStatsigUser,
+    adapter: statsigAdapter.featureGate(
+      (gate) => (typeof gate?.value === 'boolean' ? gate.value : defaultValue),
+      { exposureLogging: true },
+    ),
+  });
 }
 
-async function safeTrack(event, props) {
-    try {
-        await track(event, props);
-    } catch (err) {
-        console.error(`Failed to record analytics event "${event}"`, err);
-    }
+function createConfigFlag({ flagKey, defaultValue }) {
+  if (!flagKey) {
+    throw new Error('statsig config definitions require a flagKey');
+  }
+  return flag({
+    key: flagKey,
+    defaultValue,
+    identify: identifyStatsigUser,
+    adapter: statsigAdapter.dynamicConfig(
+      (config) => (config?.value && typeof config.value === 'object' ? config.value : defaultValue),
+      { exposureLogging: true },
+    ),
+  });
 }
 
-async function tryEdgeConfig() {
-    if (!edgeConfigClient) {
-        if (EDGE_CONFIG_URL && !loggedEdgeConfigWarning) {
-            console.warn('Edge Config connection string is present but the client could not be created.');
-            loggedEdgeConfigWarning = true;
-        }
-        return null;
-    }
+const gateFlagEntries = GATE_DEFINITIONS.map((definition) => ({
+  key: definition.key,
+  defaultValue: definition.defaultValue,
+  declaration: createGateFlag(definition),
+}));
 
-    if (!EDGE_CONFIG_ITEM_KEY) {
-        if (!loggedEdgeConfigWarning) {
-            console.warn('Edge Config item key is not set; loading all Edge Config items as feature flags.');
-            loggedEdgeConfigWarning = true;
-        }
-        return loadAllFlagsFromEdgeConfig();
-    }
+const configFlagEntries = CONFIG_DEFINITIONS.map((definition) => {
+  const statsigKey = definition.statsigKey ?? definition.flagKey?.split('.')?.[0];
+  const flagKey = definition.flagKey ?? (statsigKey ? `${statsigKey}.config` : undefined);
 
-    try {
-        const data = await edgeConfigClient.get(EDGE_CONFIG_ITEM_KEY);
-        if (data && typeof data === 'object' && !Array.isArray(data)) {
-            return {
-                flags: cloneFlags(data),
-                source: 'edge_config'
-            };
-        }
+  if (!flagKey) {
+    throw new Error('statsig config definitions require either statsigKey or flagKey');
+  }
 
-        console.warn(`Edge Config item "${EDGE_CONFIG_ITEM_KEY}" was missing or not an object; attempting to load all items instead.`);
-        await safeTrack('flags_fetch_failure', {
-            reason: 'edge_config_invalid',
-            status: '0'
-        });
-        const merged = await loadAllFlagsFromEdgeConfig();
-        if (merged) return merged;
-        return null;
-    } catch (err) {
-        console.error('Failed to load feature flags from Edge Config', err);
-        await safeTrack('flags_fetch_failure', {
-            reason: 'edge_config_error',
-            status: '0'
-        });
-        const merged = await loadAllFlagsFromEdgeConfig();
-        if (merged) return merged;
-        return null;
-    }
+  return {
+    flagKey,
+    targetKey: definition.targetKey ?? statsigKey ?? flagKey.split('.')[0],
+    declaration: createConfigFlag({ ...definition, flagKey }),
+  };
+});
+
+const gateDeclarations = gateFlagEntries.map((entry) => entry.declaration);
+const configDeclarations = configFlagEntries.map((entry) => entry.declaration);
+
+function formatArgEntry(key, raw) {
+  if (raw && typeof raw === 'object' && Array.isArray(raw.values) && raw.key === key) {
+    return {
+      key,
+      values: [...raw.values],
+      raw,
+    };
+  }
+
+  if (Array.isArray(raw)) {
+    return {
+      key,
+      values: [...raw],
+      raw,
+    };
+  }
+
+  if (raw === undefined || raw === null) {
+    return {
+      key,
+      values: [],
+      raw,
+    };
+  }
+
+  return {
+    key,
+    values: [raw],
+    raw,
+  };
 }
 
-async function loadAllFlagsFromEdgeConfig() {
-    if (!edgeConfigClient) return null;
+function normalizeConfigValue(value) {
+  if (!value || typeof value !== 'object') {
+    return {
+      raw: value,
+      args: [formatArgEntry('value', value)],
+    };
+  }
 
-    try {
-        const allItems = await edgeConfigClient.getAll();
-        if (!allItems || typeof allItems !== 'object') {
-            await safeTrack('flags_fetch_failure', {
-                reason: 'edge_config_all_invalid',
-                status: '0'
-            });
-            return null;
-        }
+  if (Array.isArray(value.args)) {
+    return {
+      raw: value,
+      args: value.args.map((arg) => formatArgEntry(arg.key, arg)),
+    };
+  }
 
-        const mergedEntries = Object.entries(allItems).filter(([, value]) => value && typeof value === 'object' && !Array.isArray(value));
-        if (mergedEntries.length === 0) {
-            await safeTrack('flags_fetch_failure', {
-                reason: 'edge_config_all_empty',
-                status: '0'
-            });
-            return null;
-        }
-
-        const mergedFlags = Object.fromEntries(mergedEntries);
-        return {
-            flags: cloneFlags(mergedFlags),
-            source: 'edge_config_all'
-        };
-
-    } catch (err) {
-        console.error('Failed to load feature flags from Edge Config (getAll)', err);
-        await safeTrack('flags_fetch_failure', {
-            reason: 'edge_config_get_all_error',
-            status: '0'
-        });
-        return null;
-    }
+  const entries = Object.entries(value).map(([key, raw]) => formatArgEntry(key, raw));
+  return {
+    raw: value,
+    args: entries,
+  };
 }
 
-async function refreshFlags(force = false) {
-    const now = Date.now();
-    if (!force && now - lastRefreshTimestamp < REFRESH_INTERVAL_MS) {
-        return lastKnownGood;
-    }
+function lookupFeatureArg(config, param) {
+  if (!config) return null;
 
-    if (inFlightRefresh) {
-        return inFlightRefresh;
-    }
+  if (Array.isArray(config.args)) {
+    const match = config.args.find((arg) => arg.key === param);
+    if (match) return match;
+  }
 
-    const refreshPromise = (async () => {
-        const sources = [tryEdgeConfig];
+  if (config.raw && typeof config.raw === 'object' && param in config.raw) {
+    return formatArgEntry(param, config.raw[param]);
+  }
 
-        for (const loadSource of sources) {
-            const result = await loadSource();
-            if (result?.flags) {
-                lastKnownGood = result.flags;
-                seedCaches(lastKnownGood);
-                lastRefreshTimestamp = Date.now();
-                await safeTrack('flags_fetch_success', {
-                    source: result.source
-                });
-                return lastKnownGood;
-            }
-        }
-
-        if (!force) {
-            console.warn('No remote feature flag source succeeded; continuing with last known good flags.');
-        } else {
-            console.error('Forced feature flag refresh failed; retaining last known good flags.');
-        }
-        lastRefreshTimestamp = Date.now();
-        return lastKnownGood;
-    })().catch(async (err) => {
-        console.error('Unexpected error while refreshing feature flags', err);
-        await safeTrack('flags_fetch_failure', {
-            reason: 'unexpected_error',
-            status: '0'
-        });
-        lastRefreshTimestamp = Date.now();
-        return lastKnownGood;
-    }).finally(() => {
-        inFlightRefresh = null;
-    });
-
-    inFlightRefresh = refreshPromise;
-    return refreshPromise;
+  return null;
 }
+
+async function readGates() {
+  if (gateDeclarations.length === 0) {
+    return { ...defaultGates };
+  }
+
+  const gateValues = await evaluate(gateDeclarations);
+  const combinedGates = combine(gateDeclarations, gateValues);
+  return {
+    ...defaultGates,
+    ...combinedGates,
+  };
+}
+
+async function readConfigs() {
+  if (configDeclarations.length === 0) {
+    return {};
+  }
+
+  const configValues = await evaluate(configDeclarations);
+  const combinedConfigs = combine(configDeclarations, configValues);
+
+  const normalized = {};
+  for (const entry of configFlagEntries) {
+    const value = combinedConfigs[entry.flagKey];
+    if (value === undefined) continue;
+    normalized[entry.targetKey] = normalizeConfigValue(value);
+  }
+
+  return normalized;
+}
+
+async function loadFlagsRaw() {
+  try {
+    const [gates, configs] = await Promise.all([readGates(), readConfigs()]);
+    return { gates, configs };
+  } catch (error) {
+    console.error('Failed to load Statsig feature flags; falling back to defaults.', error);
+    return {
+      gates: { ...defaultGates },
+      configs: {},
+    };
+  }
+}
+
+const loadFlagsCached = cache(loadFlagsRaw);
 
 export async function loadFlags(options = {}) {
-    const { force = false } = options ?? {};
-    await refreshFlags(force);
-    return lastKnownGood;
+  if (options?.force) {
+    return loadFlagsRaw();
+  }
+  return loadFlagsCached();
 }
 
-export function getFlags() {
-    return lastKnownGood;
+export function getFeatureEvaluator(flags) {
+  const snapshot = flags ?? { gates: defaultGates };
+  const gates = snapshot.gates ?? defaultGates;
+  return (key) => Boolean(gates[key]);
 }
 
-export function getFeatureEvaluator(flags = lastKnownGood) {
-    return createFeatureEvaluator(flags && typeof flags === 'object' ? flags : {});
-}
-
-export function getFeatureArgumentGetter(flags = lastKnownGood) {
-    return createFeatureArgumentGetter(flags && typeof flags === 'object' ? flags : {});
+export function getFeatureArgumentGetter(flags) {
+  const snapshot = flags ?? { configs: {} };
+  const configs = snapshot.configs ?? {};
+  return (key, param) => lookupFeatureArg(configs[key], param);
 }
