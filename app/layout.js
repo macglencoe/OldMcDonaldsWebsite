@@ -3,6 +3,7 @@ import "./globals.css";
 import CookieNotice from "@/components/cookieNotice";
 import { loadFlags, getFeatureEvaluator } from "./flags";
 import { FlagsProvider } from "./FlagsContext";
+import StatsigAutoCapture from "@/components/analytics/StatsigAutoCapture";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +36,10 @@ export default async function RootLayout({ children }) {
         { isFeatureEnabled("show_cookie_notice") &&
           <CookieNotice />
         }
-        <FlagsProvider flags={flags}>{children}</FlagsProvider>
+        <FlagsProvider flags={flags}>
+          {children}
+          <StatsigAutoCapture />
+        </FlagsProvider>
       </body>
     </html>
   );
