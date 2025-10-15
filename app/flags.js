@@ -1,3 +1,5 @@
+import { createClient as createEdgeConfigClient } from '@vercel/edge-config';
+import fallbackFlagsJson from '@/public/flags/featureFlags.json' assert { type: 'json' };
 import {
     setFeatureFlags as setEvaluatorFlags,
     createFeatureEvaluator
@@ -8,9 +10,28 @@ import {
 } from '@/public/lib/featureArguments';
 import { track } from '@vercel/analytics/server';
 
-let lastKnownGood = null;
+const EDGE_CONFIG_URL = process.env.EDGE_CONFIG ?? null;
+const EDGE_CONFIG_ITEM_KEY = process.env.EXPERIMENTATION_CONFIG_ITEM_KEY ?? null;
 
-function updateCaches(flags) {
+const edgeConfigClient = EDGE_CONFIG_URL ? createEdgeConfigClient(EDGE_CONFIG_URL) : null;
+const REFRESH_INTERVAL_MS = 60_000;
+
+let lastKnownGood = cloneFlags(fallbackFlagsJson);
+let lastRefreshTimestamp = 0;
+let inFlightRefresh = null;
+let loggedEdgeConfigWarning = false;
+
+seedCaches(lastKnownGood);
+
+function cloneFlags(source) {
+    if (!source || typeof source !== 'object') return {};
+    if (typeof structuredClone === 'function') {
+        return structuredClone(source);
+    }
+    return JSON.parse(JSON.stringify(source));
+}
+
+function seedCaches(flags) {
     if (flags && typeof flags === 'object') {
         setEvaluatorFlags(flags);
         setFeatureArgumentFlags(flags);
@@ -28,86 +49,143 @@ async function safeTrack(event, props) {
     }
 }
 
-function extractPath(url) {
-    try {
-        const parsed = new URL(url);
-        return parsed.pathname.replace(/^\//, '') || parsed.pathname || parsed.hostname || 'unknown';
-    } catch {
-        return 'unknown';
-    }
-}
-
-async function handleFailure({ reason, status, blobPath, clearCaches = false }) {
-    await safeTrack('flags_fetch_failure', {
-        reason,
-        status: String(status ?? 0)
-    });
-
-    if (blobPath) {
-        await safeTrack('flags_blob_not_found', {
-            path: blobPath,
-            runtime: 'server'
-        });
-    }
-
-    if (clearCaches) {
-        lastKnownGood = null;
-        updateCaches(null);
-        await safeTrack('flags_cache_cleared', {
-            trigger: reason,
-            runtime: 'server'
-        });
-    } else {
-        console.warn(`Retaining previous feature flags after ${reason}; status=${status ?? 'n/a'}`);
-    }
-
-    return lastKnownGood;
-}
-
-export async function loadFlags() {
-    if (!process.env.FLAGS_URL) {
-        console.error('FLAGS_URL is not configured; cannot load feature flags');
-        lastKnownGood = null;
-        updateCaches(null);
-        await safeTrack('flags_env_missing', { runtime: 'server' });
-        await safeTrack('flags_cache_cleared', { trigger: 'env_missing', runtime: 'server' });
+async function tryEdgeConfig() {
+    if (!edgeConfigClient) {
+        if (EDGE_CONFIG_URL && !loggedEdgeConfigWarning) {
+            console.warn('Edge Config connection string is present but the client could not be created.');
+            loggedEdgeConfigWarning = true;
+        }
         return null;
     }
 
-    try {
-        const res = await fetch(process.env.FLAGS_URL, {
-            next: { revalidate: 30 },
-            headers: { Accept: 'application/json' }
-        });
-
-        if (!res.ok) {
-            const reason = res.status === 404 ? 'blob_not_found' : 'http_error';
-            const path = res.status === 404 ? extractPath(process.env.FLAGS_URL) : undefined;
-            console.error(`Failed to fetch feature flags: ${res.status} ${res.statusText}`);
-            return handleFailure({ reason, status: res.status, blobPath: path, clearCaches: false });
+    if (!EDGE_CONFIG_ITEM_KEY) {
+        if (!loggedEdgeConfigWarning) {
+            console.warn('Edge Config item key is not set; loading all Edge Config items as feature flags.');
+            loggedEdgeConfigWarning = true;
         }
-
-        let json;
-        try {
-            json = await res.json();
-        } catch (parseErr) {
-            console.error('Failed to parse flags response', parseErr);
-            return handleFailure({ reason: 'parse_error', status: res.status, clearCaches: true });
-        }
-
-        if (!json || typeof json !== 'object') {
-            console.error('Flags response was not an object');
-            return handleFailure({ reason: 'invalid_payload', status: res.status, clearCaches: true });
-        }
-
-        lastKnownGood = json;
-        updateCaches(lastKnownGood);
-        await safeTrack('flags_fetch_success', { source: 'remote' });
-        return lastKnownGood;
-    } catch (err) {
-        console.error("Failed to load flags", err);
-        return handleFailure({ reason: 'fetch_error', status: 0, clearCaches: false });
+        return loadAllFlagsFromEdgeConfig();
     }
+
+    try {
+        const data = await edgeConfigClient.get(EDGE_CONFIG_ITEM_KEY);
+        if (data && typeof data === 'object' && !Array.isArray(data)) {
+            return {
+                flags: cloneFlags(data),
+                source: 'edge_config'
+            };
+        }
+
+        console.warn(`Edge Config item "${EDGE_CONFIG_ITEM_KEY}" was missing or not an object; attempting to load all items instead.`);
+        await safeTrack('flags_fetch_failure', {
+            reason: 'edge_config_invalid',
+            status: '0'
+        });
+        const merged = await loadAllFlagsFromEdgeConfig();
+        if (merged) return merged;
+        return null;
+    } catch (err) {
+        console.error('Failed to load feature flags from Edge Config', err);
+        await safeTrack('flags_fetch_failure', {
+            reason: 'edge_config_error',
+            status: '0'
+        });
+        const merged = await loadAllFlagsFromEdgeConfig();
+        if (merged) return merged;
+        return null;
+    }
+}
+
+async function loadAllFlagsFromEdgeConfig() {
+    if (!edgeConfigClient) return null;
+
+    try {
+        const allItems = await edgeConfigClient.getAll();
+        if (!allItems || typeof allItems !== 'object') {
+            await safeTrack('flags_fetch_failure', {
+                reason: 'edge_config_all_invalid',
+                status: '0'
+            });
+            return null;
+        }
+
+        const mergedEntries = Object.entries(allItems).filter(([, value]) => value && typeof value === 'object' && !Array.isArray(value));
+        if (mergedEntries.length === 0) {
+            await safeTrack('flags_fetch_failure', {
+                reason: 'edge_config_all_empty',
+                status: '0'
+            });
+            return null;
+        }
+
+        const mergedFlags = Object.fromEntries(mergedEntries);
+        return {
+            flags: cloneFlags(mergedFlags),
+            source: 'edge_config_all'
+        };
+
+    } catch (err) {
+        console.error('Failed to load feature flags from Edge Config (getAll)', err);
+        await safeTrack('flags_fetch_failure', {
+            reason: 'edge_config_get_all_error',
+            status: '0'
+        });
+        return null;
+    }
+}
+
+async function refreshFlags(force = false) {
+    const now = Date.now();
+    if (!force && now - lastRefreshTimestamp < REFRESH_INTERVAL_MS) {
+        return lastKnownGood;
+    }
+
+    if (inFlightRefresh) {
+        return inFlightRefresh;
+    }
+
+    const refreshPromise = (async () => {
+        const sources = [tryEdgeConfig];
+
+        for (const loadSource of sources) {
+            const result = await loadSource();
+            if (result?.flags) {
+                lastKnownGood = result.flags;
+                seedCaches(lastKnownGood);
+                lastRefreshTimestamp = Date.now();
+                await safeTrack('flags_fetch_success', {
+                    source: result.source
+                });
+                return lastKnownGood;
+            }
+        }
+
+        if (!force) {
+            console.warn('No remote feature flag source succeeded; continuing with last known good flags.');
+        } else {
+            console.error('Forced feature flag refresh failed; retaining last known good flags.');
+        }
+        lastRefreshTimestamp = Date.now();
+        return lastKnownGood;
+    })().catch(async (err) => {
+        console.error('Unexpected error while refreshing feature flags', err);
+        await safeTrack('flags_fetch_failure', {
+            reason: 'unexpected_error',
+            status: '0'
+        });
+        lastRefreshTimestamp = Date.now();
+        return lastKnownGood;
+    }).finally(() => {
+        inFlightRefresh = null;
+    });
+
+    inFlightRefresh = refreshPromise;
+    return refreshPromise;
+}
+
+export async function loadFlags(options = {}) {
+    const { force = false } = options ?? {};
+    await refreshFlags(force);
+    return lastKnownGood;
 }
 
 export function getFlags() {
