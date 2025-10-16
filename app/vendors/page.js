@@ -3,7 +3,6 @@ import styles from './page.module.css'
 import VendorProfile from '@/components/vendorProfile'
 import PageHeader from '@/components/pageHeader'
 import Action from '@/components/action'
-import { isFeatureEnabled } from '@/public/lib/featureEvaluator'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import fs from 'fs'
@@ -15,7 +14,6 @@ export const metadata = {
 }
 
 export const Vendors = () => {
-    const useTwistedTatersMenu = isFeatureEnabled("use_taters_menu");
     let donutsMarkdown = '';
     try {
         const mdPath = path.join(process.cwd(), 'app', 'vendors', 'old-mcdonuts.md');
