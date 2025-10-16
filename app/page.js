@@ -13,6 +13,7 @@ import FloodBanner from "@/components/home/floodBanner";
 import AuxSearch from "@/components/home/auxSearch";
 import FarmSwapBanner from "@/components/home/farmSwapBanner";
 import OneLaneRoadBanner from "@/components/home/oneLaneRoadBanner";
+import SurveyBanner from "@/components/home/surveyBanner";
 import { getFeatureEvaluator, loadFlags } from "./flags";
 
 export const metadata = {
@@ -125,6 +126,10 @@ export default async function Home() {
 
         {isFeatureEnabled("show_aux_search") &&
           <AuxSearch />
+        }
+
+        {isFeatureEnabled("show_survey") &&
+          <SurveyBanner href="https://docs.google.com/forms/d/e/1FAIpQLSckFc0F7xg2RFf8z_Qg2cYz7LSfBSCCaVdQQwbENOV00yOU-w/viewform?usp=header" />
         }
 
         <Season />

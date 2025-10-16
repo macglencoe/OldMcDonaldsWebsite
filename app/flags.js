@@ -20,6 +20,7 @@ const GATE_DEFINITIONS = [
   { key: 'use_google_forms', defaultValue: false },
   { key: 'use_fall_hero', defaultValue: false },
   { key: 'use_winter_hero', defaultValue: false },
+  { key: 'show_survey', defaultValue: false}
 ];
 
 const CONFIG_DEFINITIONS = [
