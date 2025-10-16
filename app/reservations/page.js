@@ -70,6 +70,11 @@ export const Reservations = () => {
         <Layout>
             <PageHeader subtitle="2025 Season">Reservations</PageHeader>
             <div className="body basic">
+                <BodyBlock src='/bonfires.jpg'>
+                <h2>Night-time campfire</h2>
+                  <p>Rent a campfire for your group at the Night Maze</p>
+                  <a href="/activities/night-maze#reservations"><p>See More</p></a>
+                </BodyBlock>
                 <h2>Party Gazebo</h2>
                 <p className="description">A private party gazebo can be booked for a 2-hour time slot during daytime hours</p>
                 <BodyBlock src="/rentalgazebo.jpg">

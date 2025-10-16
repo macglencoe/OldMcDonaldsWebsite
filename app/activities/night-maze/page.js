@@ -52,7 +52,7 @@ export const NightMaze = () => {
                         </div>
                     </AndImage>
                     <AndImage style="night" src="/bonfires.jpg">
-                        <h2>Reservations</h2>
+                        <h2 id="reservations">Reservations</h2>
                         <div className="rounded-lg overflow-hidden">
                             <div className="p-4 bg-foreground/20">
                                 <p>Have a big group? Rent a <strong>campfire</strong> for your visit!</p>
