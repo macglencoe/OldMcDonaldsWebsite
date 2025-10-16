@@ -1,6 +1,7 @@
 import Layout from "@/components/layout";
 import styles from "./page.module.css";
 import { AndImage } from "@/components/andImage";
+import Action from "@/components/action";
 
 export const metadata = {
     title: "Night Maze",
@@ -70,8 +71,11 @@ export const NightMaze = () => {
                                 <h3 className="font-bold !font-serif">Campfire</h3>
                                 <ul>
                                     <li>Includes 1 bundle of firewood</li>
-                                    <li>Additional firewood must be purchased</li>
+                                    <li>Additional firewood may be purchased</li>
                                 </ul>
+                            </div>
+                            <div className="p-4 bg-foreground/60">
+                                <p className="text-center">Book at the admission booth, or <Action className="ml-2" as="a" href="tel:3048392330" variant="outline-primary">Call</Action></p>
                             </div>
                         </div>
                     </AndImage>
