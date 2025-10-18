@@ -75,6 +75,61 @@ function mergeSlotWithRoster(slot) {
   };
 }
 
+function getOrdinalSuffix(day) {
+  const rem100 = day % 100;
+  if (rem100 >= 11 && rem100 <= 13) {
+    return "th";
+  }
+  switch (day % 10) {
+    case 1:
+      return "st";
+    case 2:
+      return "nd";
+    case 3:
+      return "rd";
+    default:
+      return "th";
+  }
+}
+
+function formatScheduleDate(dateString) {
+  if (typeof dateString !== "string" || !dateString) {
+    return null;
+  }
+
+  const [yearString, monthString, dayString] = dateString.split("-");
+  const year = Number(yearString);
+  const month = Number(monthString);
+  const day = Number(dayString);
+
+  if (!Number.isFinite(year) || !Number.isFinite(month) || !Number.isFinite(day)) {
+    return dateString;
+  }
+
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (Number.isNaN(date.getTime())) {
+    return dateString;
+  }
+
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+
+  const ordinal = getOrdinalSuffix(day);
+  if (typeof formatter.formatToParts === "function") {
+    return formatter
+      .formatToParts(date)
+      .map((part) => (part.type === "day" ? `${part.value}${ordinal}` : part.value))
+      .join("");
+  }
+
+  const formatted = formatter.format(date);
+  return formatted.replace(new RegExp(`\\b${day}\\b`), `${day}${ordinal}`);
+}
+
 export default function HayrideScheduleView({
   initialData = null,
   initialMeta = null,
@@ -296,6 +351,7 @@ export default function HayrideScheduleView({
   const timezone = data?.timezone ?? null;
   const lastUpdated = data?.lastUpdated ?? null;
   const fetchedAt = meta?.fetchedAt ?? null;
+  const formattedScheduleDate = useMemo(() => formatScheduleDate(scheduleDate), [scheduleDate]);
 
   return (
     <main className="mx-auto flex max-w-5xl flex-col gap-8 p-6">
@@ -303,10 +359,9 @@ export default function HayrideScheduleView({
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Hayride Schedule</h1>
-            {scheduleDate ? (
-              <p className="text-sm text-gray-600">
-                Date: {scheduleDate}
-                {timezone ? ` (${timezone})` : ""}
+            {formattedScheduleDate ? (
+              <p className="text-5xl text-accent">
+                {formattedScheduleDate}
               </p>
             ) : null}
           </div>
