@@ -2,8 +2,10 @@
 import { FacebookLogo, InstagramLogo, TiktokLogo } from 'phosphor-react'
 import styles from './facebookFeed.module.css'
 import { track } from '@vercel/analytics'
-import { isFeatureEnabled } from '@/public/lib/featureEvaluator'
+import { useFlags } from '@/app/FlagsContext'
+
 export default function FacebookFeed() {
+    const { isFeatureEnabled } = useFlags();
     return (
         <div className="relative">
             <img src="https://images.unsplash.com/photo-1517292987719-0369a794ec0f?q=80&w=1674&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="absolute w-full h-full object-cover z-0 left-0 top-0" ></img>

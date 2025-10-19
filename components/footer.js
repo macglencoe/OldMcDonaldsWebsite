@@ -2,14 +2,14 @@
 import { Compass, FacebookLogo, InstagramLogo, Phone } from 'phosphor-react';
 import Link from 'next/link';
 import { track } from '@vercel/analytics';
-import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
+import { useFlags } from '@/app/FlagsContext';
 
 const socialLinks = [
   { platform: 'facebook', href: 'https://www.facebook.com/oldmcdonaldspumpkinpatchandcornmaze', icon: <FacebookLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
   { platform: 'instagram', href: 'https://www.instagram.com/oldmcdonaldspumpkin/', icon: <InstagramLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
 ];
 
-const quickLinks = [
+const baseQuickLinks = [
   { href: '/visit', text: 'Visit' },
   { href: '/about', text: 'About' },
   { href: '/activities', text: 'Activities' },
@@ -17,17 +17,16 @@ const quickLinks = [
   { href: '/reservations', text: 'Reservations' },
   { href: '/gallery', text: 'Gallery' },
   { href: '/map', text: 'Map' },
-  ...(isFeatureEnabled('show_vendors') ? [{ href: '/vendors', text: 'Vendors' }] : []),
+  { href: '/contact', text: 'Contact'},
 ];
 
-const activities = [
+const baseActivities = [
   { href: '/activities/pumpkin-patch', text: 'Pumpkin Patch' },
   { href: '/activities/corn-maze', text: 'Corn Maze' },
   { href: '/night-maze', text: 'Night Maze' },
   { href: '/activities/hayrides', text: 'Hayrides' },
   { href: '/activities/nature-trails', text: 'Nature Trails' },
   { href: '/activities/flower-fields', text: 'Flower Fields' },
-  ...(isFeatureEnabled('maze_game_enabled') ? [{ href: '/maze-game', text: 'Maze Game' }] : [])
 ];
 
 // === Reusable Components ===
@@ -48,6 +47,17 @@ const FooterLinkList = ({ title, icon, links }) => (
 );
 
 const Footer = () => {
+  const { isFeatureEnabled } = useFlags();
+  const quickLinks = [
+    ...baseQuickLinks,
+    ...(isFeatureEnabled('show_vendors') ? [{ href: '/vendors', text: 'Vendors' }] : []),
+  ];
+
+  const activities = [
+    ...baseActivities,
+    ...(isFeatureEnabled('maze_game_enabled') ? [{ href: '/maze-game', text: 'Maze Game' }] : []),
+  ];
+
   return (
     <footer className="flex flex-col pt-2 bg-[var(--foreground)] text-[var(--background)]">
       <div className="flex flex-wrap justify-evenly">

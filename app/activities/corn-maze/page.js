@@ -2,25 +2,30 @@ import Layout from '@/components/layout'
 import styles from './page.module.css'
 import { AndImage } from '@/components/andImage';
 import { BodyBlock } from '@/components/bodyBlock';
-import { isFeatureEnabled } from '@/public/lib/featureEvaluator';
 import PageHeader from '@/components/pageHeader';
 import Action from '@/components/action';
+import Image from 'next/image';
+import { getFeatureEvaluator, loadFlags } from '@/app/flags';
 
 export const metadata = {
-    title: "Corn Maze"
+    title: "Corn Maze",
+    description: "Get lost in Old McDonald’s 10-acre corn maze in Inwood, WV. Try daytime and spooky night mazes, complete challenges, and enjoy fall family fun."
 }
 
-export const CornMaze = () => {
+export default async function CornMaze() {
+    const flags = await loadFlags();
+    const isFeatureEnabled = getFeatureEvaluator(flags);
     return (
         <Layout>
             <PageHeader subtitle="2025 Season">Corn Maze</PageHeader>
             <div className='body basic'>
                 <div className={styles.cornMaze}>
-                    <img src='/charleswmcdonaldmaze.jpg'>
-                    </img>
-                    <h2>2024 - Rest In Peace</h2>
-                    <p>Last year's maze was in memory of my father, Charles W. McDonald, and my grandfather, Charles W. McDonald</p>
-                    <p><b>We're still working on the maze for 2025. Stay tuned!</b></p>
+                    <Image width={1000} height={1000} src='/maze2025.JPG' />
+                    <h2 className='text-center my-3 !text-3xl md:my-6 md:!text-5xl'>2025 - Martinsburg 1877</h2>
+                    <p className='text-center'>This year's maze features <strong>Martinsburg's historical roundhouse</strong>, where the very <strong>first <u>nationwide</u> labor movement</strong> began.</p>
+                    <p className='text-center'>The Great Strike of 1877 began when the wages of railroad workers were cut by <i>10%</i>. Conductors, Engineers, Firemen, and Brakemen refused to move the trains until they received a fair wage.</p>
+                    <br />
+                    <p className='text-center'>You may notice large swaths of missing corn in the above image. In June, the corn maze flooded three times, washing away vital soil nutrients and making the field inaccessible for weeks. Against all odds, we managed to plant, but some areas didn't grow.</p>
                 </div>
                 <BodyBlock src="/cornMazeEntrance.jpg">
                     <h2>10 acres of fun</h2>
@@ -61,6 +66,10 @@ export const CornMaze = () => {
             <div className={styles.pastMazes + ' body basic'}>
                 <h2>Past Maze Designs</h2>
                 <ul>
+                    <li>
+                        <img src='/charleswmcdonaldmaze.jpg'></img>
+                        <span>2024</span>
+                    </li>
                     <li>
                         <img src='/2024maze.avif'></img>
                         <span>2023</span>
@@ -103,5 +112,3 @@ export const CornMaze = () => {
         </Layout>
     )
 }
-
-export default CornMaze;

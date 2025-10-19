@@ -28,6 +28,16 @@ export function makeIcon({ svg, className = styles.marker, size = 24, anchor = s
     })
 }
 
+export function makePhotoOpIcon({ imgSrc, className = styles.marker, size = 38, anchor = size / 2}) {
+    return new L.DivIcon({
+        className: className,
+        html: `<div><img src="${imgSrc}" style="width: ${size}px; height: ${size}px; border-radius: 8px; object-fit: cover; border: 2px solid var(--background);" /></div>`,
+        iconSize: [size, size],
+        iconAnchor: [anchor, anchor],
+        popupAnchor: [0, -anchor]
+    })
+}
+
 export const icons = {
     entrance: makeIcon({ svg: entrance}),
     photoOp: makeIcon({ svg: photoOp }),

@@ -70,13 +70,7 @@ const artists = [
     credit: `Photo by <a href="https://unsplash.com/@upnorth52?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">James Ertl</a> on <a href="https://unsplash.com/photos/a-couple-of-turkeys-standing-next-to-each-other-HnQhbL8WdK4?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
       `,
       
-  },
-  {
-    usage: "Pumpkin Patch: Transportation",
-    image: "https://images.unsplash.com/photo-1740578266454-eee1d51fe7ff?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    credit: `Photo by <a href="https://unsplash.com/@abushihabmarey?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Mohamed Marey</a> on <a href="https://unsplash.com/photos/a-green-wagon-sitting-on-top-of-a-dirt-field-Qwi-aqCJrzI?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-      `
-  },
+  }
 
 ]
 

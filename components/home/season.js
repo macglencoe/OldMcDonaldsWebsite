@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { ArrowRight, HandWaving } from "phosphor-react";
 import Hours from "../hours";
 import Countdown from "./countdown";
-import { isFeatureEnabled } from "@/public/lib/featureEvaluator";
+import { useFlags } from "@/app/FlagsContext";
 
 
 // dynamic import
@@ -13,6 +13,7 @@ const FestivalCalendar = dynamic(() => import("@/components/calendar"), {
 });
 
 export default function Season() {
+  const { isFeatureEnabled } = useFlags();
   return (
     <section className="bg-foreground py-16 px-6 md:px-12 lg:px-24 w-full">
       <h1 className="text-4xl font-bold text-center text-background mb-12">2025 Season</h1>
