@@ -9,10 +9,12 @@ const RECIPIENTS = {
     'mcpaul1694@gmail.com',
     'sgmcdonald2@gmail.com',
     'oldmcdonaldsglencoefarm@gmail.com',
+    'oldmcdonaldspumpkinpatchwv@gmail.com'
   ],
   maze: [
     'oldmcdonaldsglencoefarm@gmail.com',
     'mcpaul1694@gmail.com',
+    'oldmcdonaldspumpkinpatchwv@gmail.com'
   ],
 };
 
