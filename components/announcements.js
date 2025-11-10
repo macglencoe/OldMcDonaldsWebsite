@@ -14,7 +14,7 @@ const DEFAULT_ANNOUNCEMENTS = [
     {
         id: "weather-closure-2025-10-18",
         short: "Closed Friday, Oct 18",
-        long: "A line of heavy rain is moving through Berkeley County, so the farm will remain closed on Friday, October 18. We plan to reopen Saturday at 11 AM once the fields dry out.",
+        long: "Heavy rain is forecasted, so the farm will remain closed on Friday, October 18. We plan to reopen Saturday at 10 AM.",
         icon: "CloudRain",
         severity: "alert",
         issued: "2025-10-15T09:00:00-04:00",
@@ -23,7 +23,7 @@ const DEFAULT_ANNOUNCEMENTS = [
     {
         id: "weekend-bluegrass-2025-10-19",
         short: "Live bluegrass this Saturday",
-        long: "The One Lane Road bluegrass band is playing from 2-5 PM on Saturday, October 19.",
+        long: "The One Lane Road bluegrass band is playing from 2–5 PM on Saturday, October 19.",
         icon: "Megaphone",
         severity: "info",
         issued: "2025-10-15T11:30:00-04:00",
@@ -32,6 +32,15 @@ const DEFAULT_ANNOUNCEMENTS = [
             text: "See More",
             href: "/#one-lane-road"
         }
+    },
+    {
+        id: "windy-2025-10-19",
+        short: "High winds on Saturday",
+        long: "High wind is forecasted on Saturday, October 18. We will remain open despite the wind.",
+        icon: "Wind",
+        severity: "warning",
+        issued: "2025-10-15T11:30:00-04:00",
+        expires: "2025-12-10T00:00:00-04:00"
     }
 ]
 
@@ -46,19 +55,19 @@ const ICON_MAP = {
 
 const SEVERITY_STYLES = {
     info: {
-        container: "border-foreground/15 bg-foreground text-background",
-        badge: "bg-accent/10 text-accent",
-        icon: "bg-accent/20 text-accent"
+        container: "",
+        badge: "bg-accent/15 text-accent",
+        iconWrapper: "bg-accent/15 text-accent"
     },
     warning: {
-        container: "border-yellow-500/40 bg-yellow-50 text-yellow-900",
+        container: "border-yellow-200",
         badge: "bg-yellow-100 text-yellow-900",
-        icon: "bg-yellow-200 text-yellow-900"
+        iconWrapper: "bg-yellow-50 text-yellow-900"
     },
     alert: {
-        container: "border-red-500/40 bg-foreground text-red-100",
+        container: "border-red-200",
         badge: "bg-red-100 text-red-900",
-        icon: "bg-red-200 text-red-900"
+        iconWrapper: "bg-red-50 text-red-800"
     }
 }
 
@@ -67,6 +76,8 @@ const SEVERITY_PRIORITY = {
     warning: 2,
     info: 1
 }
+
+const CARD_BASE_CLASSES = "rounded-2xl border border-foreground/10 bg-background text-foreground/90 p-4 text-sm shadow-sm"
 
 const DATE_FORMAT_OPTIONS = { month: "short", day: "numeric" }
 
@@ -119,42 +130,40 @@ export default function Announcements({ items = DEFAULT_ANNOUNCEMENTS } = {}) {
         <section
             aria-label="Latest announcements"
             aria-live="polite"
-            className="border-b border-foreground/10 bg-background text-foreground"
+            className="border-y border-foreground/10 bg-background text-foreground"
         >
-            <details className="group">
-                <summary className="flex cursor-pointer flex-col gap-3 px-4 py-4 text-left text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background/60 sm:flex-row sm:items-center sm:justify-between [&::-webkit-details-marker]:hidden">
-                    <div className="flex flex-1 items-center gap-3">
+            <details className="group" open>
+                <summary className="list-none border-b border-foreground/10 px-4 py-4 text-left text-sm text-foreground outline-none transition hover:bg-foreground/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex sm:items-center sm:justify-between [&::-webkit-details-marker]:hidden">
+                    <div className="flex flex-1 items-start gap-3">
                         <span
-                            className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl ${summarySeverity.icon}`}
+                            className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${summarySeverity.iconWrapper ?? "bg-foreground/10 text-foreground"}`}
                         >
                             <SummaryIcon size={26} weight="bold" />
                         </span>
-                        <div>
+                        <div className="space-y-1">
                             <p className="text-base font-semibold">{summaryAnnouncement.short}</p>
                             {summaryIssued && (
-                                <p className="text-xs uppercase tracking-wide text-foreground/70">
+                                <p className="text-xs uppercase tracking-wide text-foreground/60">
                                     Issued {summaryIssued}
                                 </p>
                             )}
                         </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                        <span className="text-xs uppercase tracking-wide text-foreground/70 group-open:hidden">
-                            View all {sortedAnnouncements.length} updates
+                    <div className="mt-3 flex items-center gap-3 text-xs uppercase tracking-wide text-foreground/60 sm:mt-0">
+                        <span className="group-open:hidden">
+                            View {sortedAnnouncements.length} updates
                         </span>
-                        <span className="text-xs uppercase tracking-wide text-foreground/70 hidden group-open:block">
-                            Hide Updates
-                        </span>
+                        <span className="hidden group-open:inline">Hide updates</span>
                     </div>
                 </summary>
-                <div className="border-t border-foreground/20 bg-background/95">
-                    <div className="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-3 text-sm text-foreground/90 sm:flex-row sm:items-center sm:justify-between">
-                        <p className="flex items-center gap-2 font-semibold uppercase tracking-wide text-foreground">
+                <div className="px-4 pb-5 pt-4">
+                    <div className="mx-auto flex max-w-5xl flex-col gap-2 border-b border-foreground/10 pb-3 text-xs uppercase tracking-wide text-foreground/60 sm:flex-row sm:items-center sm:justify-between">
+                        <p className="flex items-center gap-2 text-foreground">
                             <Megaphone size={18} weight="bold" />
                             Latest announcements
                         </p>
                     </div>
-                    <ul className="mx-auto grid max-w-5xl gap-3 px-4 pb-4 md:grid-cols-2">
+                    <ul className="mx-auto mt-4 flex max-w-5xl flex-col gap-3">
                         {sortedAnnouncements.map((announcement) => {
                             const Icon = ICON_MAP[announcement.icon] ?? Megaphone
                             const severity =
@@ -166,45 +175,47 @@ export default function Announcements({ items = DEFAULT_ANNOUNCEMENTS } = {}) {
                             return (
                                 <li
                                     key={key}
-                                    className={`group rounded-2xl border p-4 text-sm shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${severity.container}`}
+                                    className={`${CARD_BASE_CLASSES} ${severity.container}`}
                                 >
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex items-start gap-3">
                                         <span
-                                            className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl ${severity.icon}`}
+                                            className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ${severity.iconWrapper ?? "bg-foreground/10 text-foreground"}`}
                                         >
-                                            <Icon size={26} weight="bold" />
+                                            <Icon size={22} weight="bold" />
                                         </span>
-                                        <div className="flex-1">
-                                            <p className="text-base font-semibold">{announcement.short}</p>
+                                        <div className="flex-1 space-y-2">
+                                            <div className="flex flex-wrap items-center gap-2">
+                                                <p className="text-base font-semibold">{announcement.short}</p>
+                                            </div>
                                             {(issuedOn || expiresOn) && (
-                                                <p className="text-xs uppercase tracking-wide opacity-80">
+                                                <p className="text-xs uppercase tracking-wide text-foreground/60">
                                                     {issuedOn && `Issued ${issuedOn}`}
                                                     {issuedOn && expiresOn && " • "}
                                                     {expiresOn && `Thru ${expiresOn}`}
                                                 </p>
                                             )}
+                                            <p className="text-sm leading-relaxed text-foreground/80">
+                                                {announcement.long}
+                                            </p>
+                                            {announcement.cta?.href && (
+                                                <Link
+                                                    href={announcement.cta.href}
+                                                    className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-accent transition hover:opacity-80"
+                                                    target={
+                                                        isExternalLink(announcement.cta.href) ? "_blank" : undefined
+                                                    }
+                                                    rel={
+                                                        isExternalLink(announcement.cta.href)
+                                                            ? "noopener noreferrer"
+                                                            : undefined
+                                                    }
+                                                >
+                                                    {announcement.cta.text}
+                                                    <ArrowUpRight size={16} weight="bold" />
+                                                </Link>
+                                            )}
                                         </div>
                                     </div>
-                                    <p className="mt-3 text-sm leading-relaxed opacity-90">
-                                        {announcement.long}
-                                    </p>
-                                    {announcement.cta?.href && (
-                                        <Link
-                                            href={announcement.cta.href}
-                                            className="mt-4 inline-flex w-fit items-center gap-2 text-sm font-semibold text-accent hover:underline"
-                                            target={
-                                                isExternalLink(announcement.cta.href) ? "_blank" : undefined
-                                            }
-                                            rel={
-                                                isExternalLink(announcement.cta.href)
-                                                    ? "noopener noreferrer"
-                                                    : undefined
-                                            }
-                                        >
-                                            {announcement.cta.text}
-                                            <ArrowUpRight size={16} weight="bold" />
-                                        </Link>
-                                    )}
                                 </li>
                             )
                         })}
