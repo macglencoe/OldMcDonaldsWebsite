@@ -23,7 +23,7 @@ const DEFAULT_ANNOUNCEMENTS = [
     {
         id: "weekend-bluegrass-2025-10-19",
         short: "Live bluegrass this Saturday",
-        long: "The One Lane Road bluegrass band is playing from 2–5 PM on Saturday, October 19.",
+        long: "The One Lane Road bluegrass band is playing from 2-5 PM on Saturday, October 19.",
         icon: "Megaphone",
         severity: "info",
         issued: "2025-10-15T11:30:00-04:00",
@@ -188,7 +188,7 @@ export default function Announcements({ items = DEFAULT_ANNOUNCEMENTS } = {}) {
                                                 <p className="text-base font-semibold">{announcement.short}</p>
                                             </div>
                                             {(issuedOn || expiresOn) && (
-                                                <p className="text-xs uppercase tracking-wide text-foreground/60">
+                                                <p className="text-xs uppercase tracking-tighter text-foreground/60">
                                                     {issuedOn && `Issued ${issuedOn}`}
                                                     {issuedOn && expiresOn && " • "}
                                                     {expiresOn && `Thru ${expiresOn}`}
