@@ -4,7 +4,7 @@ import Footer from "./footer"
 import { Analytics } from "@vercel/analytics/next"
 import QrTracker from "./qrTracker"
 import { Suspense } from "react"
-import Announcements from "./announcements"
+import Announcements from "./announcements/announcements"
 
 const { default: Navbar } = require("./navbar")
 

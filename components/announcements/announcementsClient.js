@@ -94,7 +94,7 @@ const formatDate = (value) => {
     return date ? date.toLocaleDateString("en-US", DATE_FORMAT_OPTIONS) : null
 }
 
-export default function Announcements({ items = DEFAULT_ANNOUNCEMENTS } = {}) {
+export default function AnnouncementsClient({ items = DEFAULT_ANNOUNCEMENTS } = {}) {
     const now = new Date()
 
     const activeAnnouncements = (items ?? [])
