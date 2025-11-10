@@ -10,39 +10,7 @@ import {
     Warning
 } from "phosphor-react"
 
-const DEFAULT_ANNOUNCEMENTS = [
-    {
-        id: "weather-closure-2025-10-18",
-        short: "Closed Friday, Oct 18",
-        long: "Heavy rain is forecasted, so the farm will remain closed on Friday, October 18. We plan to reopen Saturday at 10 AM.",
-        icon: "CloudRain",
-        severity: "alert",
-        issued: "2025-10-15T09:00:00-04:00",
-        expires: "2025-12-18T23:59:59-04:00"
-    },
-    {
-        id: "weekend-bluegrass-2025-10-19",
-        short: "Live bluegrass this Saturday",
-        long: "The One Lane Road bluegrass band is playing from 2-5 PM on Saturday, October 19.",
-        icon: "Megaphone",
-        severity: "info",
-        issued: "2025-10-15T11:30:00-04:00",
-        expires: "2025-12-20T00:00:00-04:00",
-        cta: {
-            text: "See More",
-            href: "/#one-lane-road"
-        }
-    },
-    {
-        id: "windy-2025-10-19",
-        short: "High winds on Saturday",
-        long: "High wind is forecasted on Saturday, October 18. We will remain open despite the wind.",
-        icon: "Wind",
-        severity: "warning",
-        issued: "2025-10-15T11:30:00-04:00",
-        expires: "2025-12-10T00:00:00-04:00"
-    }
-]
+
 
 const ICON_MAP = {
     CloudRain,
@@ -94,7 +62,7 @@ const formatDate = (value) => {
     return date ? date.toLocaleDateString("en-US", DATE_FORMAT_OPTIONS) : null
 }
 
-export default function AnnouncementsClient({ items = DEFAULT_ANNOUNCEMENTS } = {}) {
+export default function AnnouncementsClient({ items } = {}) {
     const now = new Date()
 
     const activeAnnouncements = (items ?? [])
@@ -132,7 +100,7 @@ export default function AnnouncementsClient({ items = DEFAULT_ANNOUNCEMENTS } = 
             aria-live="polite"
             className="border-y border-foreground/10 bg-background text-foreground"
         >
-            <details className="group" open>
+            <details className="group">
                 <summary className="list-none border-b border-foreground/10 px-4 py-4 text-left text-sm text-foreground outline-none transition hover:bg-foreground/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex sm:items-center sm:justify-between [&::-webkit-details-marker]:hidden">
                     <div className="flex flex-1 items-start gap-3">
                         <span

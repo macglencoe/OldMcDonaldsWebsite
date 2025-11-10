@@ -1,8 +1,77 @@
+"use client";
+
+import { useMemo } from "react";
+import { useFlags } from "@/app/FlagsContext";
 import AnnouncementsClient from "./announcementsClient";
 
+const VALID_SEVERITIES = new Set(["info", "warning", "alert"]);
+
+function coerceString(value) {
+  return typeof value === "string" ? value.trim() : undefined;
+}
+
+function sanitizeCta(raw) {
+  if (!raw || typeof raw !== "object") return undefined;
+  const text = coerceString(raw.text);
+  const href = coerceString(raw.href);
+  if (!text || !href) return undefined;
+  return { text, href };
+}
+
+function sanitizeAnnouncement(entry) {
+  if (!entry || typeof entry !== "object") return null;
+
+  const short = coerceString(entry.short);
+  const long = coerceString(entry.long);
+
+  if (!short || !long) {
+    return null;
+  }
+
+  const id = coerceString(entry.id);
+  const icon = coerceString(entry.icon);
+  const issued = coerceString(entry.issued);
+  const expires = coerceString(entry.expires);
+  const severityCandidate =
+    typeof entry.severity === "string" ? entry.severity.trim().toLowerCase() : undefined;
+  const severity = severityCandidate && VALID_SEVERITIES.has(severityCandidate) ? severityCandidate : undefined;
+  const cta = sanitizeCta(entry.cta);
+
+  return {
+    id: id ?? undefined,
+    short,
+    long,
+    icon: icon ?? undefined,
+    issued: issued ?? undefined,
+    expires: expires ?? undefined,
+    severity: severity ?? undefined,
+    cta,
+  };
+}
+
+function parseAnnouncementsFromConfig(getFeatureArg) {
+  if (typeof getFeatureArg !== "function") {
+    return undefined;
+  }
+
+  const itemsArg = getFeatureArg("announcements", "items");
+  const entries = Array.isArray(itemsArg?.raw)
+    ? itemsArg.raw
+    : Array.isArray(itemsArg?.values)
+      ? itemsArg.values
+      : undefined;
+
+  if (!Array.isArray(entries)) {
+    return undefined;
+  }
+
+  const sanitized = entries.map(sanitizeAnnouncement).filter(Boolean);
+  return sanitized.length > 0 ? sanitized : undefined;
+}
 
 export default function Announcements() {
-    return (
-        <AnnouncementsClient />
-    )
+  const { getFeatureArg } = useFlags();
+  const items = useMemo(() => parseAnnouncementsFromConfig(getFeatureArg), [getFeatureArg]);
+
+  return <AnnouncementsClient items={items} />;
 }
