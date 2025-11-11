@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { useFlags } from "@/app/FlagsContext";
-import AnnouncementsClient from "./announcementsClient";
+import AnnouncementsView from "./announcementsView";
 
 /** Statsig severities we allow through to the client UI. */
 const VALID_SEVERITIES = new Set(["info", "warning", "alert"]);
@@ -98,5 +98,5 @@ export default function Announcements() {
   const { getFeatureArg } = useFlags();
   const items = useMemo(() => parseAnnouncementsFromConfig(getFeatureArg), [getFeatureArg]);
 
-  return <AnnouncementsClient items={items} />;
+  return <AnnouncementsView items={items} />;
 }

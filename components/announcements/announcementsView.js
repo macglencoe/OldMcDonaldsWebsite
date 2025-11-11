@@ -72,7 +72,7 @@ const toTimestamp = (value) => {
  * Render the announcements marquee using sanitized items coming from the server component.
  * @param {{items?: Array<object>}} props
  */
-export default function AnnouncementsClient({ items } = {}) {
+export default function AnnouncementsView({ items } = {}) {
     const { summary, list } = useMemo(() => {
         const now = Date.now()
         const prepared = (items ?? [])
