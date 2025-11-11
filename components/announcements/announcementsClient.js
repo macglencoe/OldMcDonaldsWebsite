@@ -92,12 +92,7 @@ export default function AnnouncementsClient({ items } = {}) {
     if (!list.length || !summary) return null
 
     const summaryAnnouncement = summary
-    const summarySeverity =
-        SEVERITY_STYLES[summaryAnnouncement.severity ?? "info"] ?? SEVERITY_STYLES.info
-    const SummaryIcon = ICON_MAP[summaryAnnouncement.icon] ?? Megaphone
-    const summaryIssued = summaryAnnouncement.issuedAt
-        ? dateFormatter.format(summaryAnnouncement.issuedAt)
-        : null
+    const summaryMeta = getAnnouncementDisplayMeta(summaryAnnouncement)
 
     return (
         <section
@@ -106,29 +101,7 @@ export default function AnnouncementsClient({ items } = {}) {
             className="border-y border-foreground/10 bg-background text-foreground"
         >
             <details className="group">
-                <summary className="list-none border-b border-foreground/10 px-4 py-4 text-left text-sm text-foreground outline-none transition hover:bg-foreground/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex sm:items-center sm:justify-between [&::-webkit-details-marker]:hidden">
-                    <div className="flex flex-1 items-start gap-3">
-                        <span
-                            className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${summarySeverity.iconWrapper ?? "bg-foreground/10 text-foreground"}`}
-                        >
-                            <SummaryIcon size={26} weight="bold" />
-                        </span>
-                        <div className="space-y-1">
-                            <p className="text-base font-semibold">{summaryAnnouncement.short}</p>
-                            {summaryIssued && (
-                                <p className="text-xs uppercase tracking-wide text-foreground/60">
-                                    Issued {summaryIssued}
-                                </p>
-                            )}
-                        </div>
-                    </div>
-                    <div className="mt-3 flex items-center gap-3 text-xs uppercase tracking-wide text-foreground/60 sm:mt-0">
-                        <span className="group-open:hidden">
-                            View {list.length} updates
-                        </span>
-                        <span className="hidden group-open:inline">Hide updates</span>
-                    </div>
-                </summary>
+                <AnnouncementSummary announcement={summaryAnnouncement} count={list.length} meta={summaryMeta} />
                 <div className="px-4 pb-5 pt-4">
                     <div className="mx-auto flex max-w-5xl flex-col gap-2 border-b border-foreground/10 pb-3 text-xs uppercase tracking-wide text-foreground/60 sm:flex-row sm:items-center sm:justify-between">
                         <p className="flex items-center gap-2 text-foreground">
@@ -137,64 +110,108 @@ export default function AnnouncementsClient({ items } = {}) {
                         </p>
                     </div>
                     <ul className="mx-auto mt-4 flex max-w-5xl flex-col gap-3">
-                        {list.map((announcement) => {
-                            const Icon = ICON_MAP[announcement.icon] ?? Megaphone
-                            const severity =
-                                SEVERITY_STYLES[announcement.severity ?? "info"] ?? SEVERITY_STYLES.info
-                            const issuedOn = announcement.issuedAt ? dateFormatter.format(announcement.issuedAt) : null
-                            const expiresOn = announcement.expiresAt ? dateFormatter.format(announcement.expiresAt) : null
-                            const key = announcement.id ?? announcement.short
-
-                            return (
-                                <li
-                                    key={key}
-                                    className={`${CARD_BASE_CLASSES} ${severity.container}`}
-                                >
-                                    <div className="flex items-start gap-3">
-                                        <span
-                                            className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ${severity.iconWrapper ?? "bg-foreground/10 text-foreground"}`}
-                                        >
-                                            <Icon size={22} weight="bold" />
-                                        </span>
-                                        <div className="flex-1 space-y-2">
-                                            <div className="flex flex-wrap items-center gap-2">
-                                                <p className="text-base font-semibold">{announcement.short}</p>
-                                            </div>
-                                            {(issuedOn || expiresOn) && (
-                                                <p className="text-xs uppercase tracking-tighter text-foreground/60">
-                                                    {issuedOn && `Issued ${issuedOn}`}
-                                                    {issuedOn && expiresOn && " • "}
-                                                    {expiresOn && `Thru ${expiresOn}`}
-                                                </p>
-                                            )}
-                                            <p className="text-sm leading-relaxed text-foreground/80">
-                                                {announcement.long}
-                                            </p>
-                                            {announcement.cta?.href && (
-                                                <Link
-                                                    href={announcement.cta.href}
-                                                    className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-accent transition hover:opacity-80"
-                                                    target={
-                                                        isExternalLink(announcement.cta.href) ? "_blank" : undefined
-                                                    }
-                                                    rel={
-                                                        isExternalLink(announcement.cta.href)
-                                                            ? "noopener noreferrer"
-                                                            : undefined
-                                                    }
-                                                >
-                                                    {announcement.cta.text}
-                                                    <ArrowUpRight size={16} weight="bold" />
-                                                </Link>
-                                            )}
-                                        </div>
-                                    </div>
-                                </li>
-                            )
-                        })}
+                        {list.map((announcement) => (
+                            <AnnouncementCard key={announcement.id ?? announcement.short} announcement={announcement} />
+                        ))}
                     </ul>
                 </div>
             </details>
         </section>
+    )
+}
+
+function getAnnouncementDisplayMeta(announcement) {
+    const severityStyles = SEVERITY_STYLES[announcement.severity ?? "info"] ?? SEVERITY_STYLES.info
+    const Icon = ICON_MAP[announcement.icon] ?? Megaphone
+    const issuedText = announcement.issuedAt ? dateFormatter.format(announcement.issuedAt) : null
+    const expiresText = announcement.expiresAt ? dateFormatter.format(announcement.expiresAt) : null
+    const ctaHref = announcement.cta?.href
+    const isExternal = ctaHref ? isExternalLink(ctaHref) : false
+    const ctaProps = ctaHref
+        ? {
+            href: ctaHref,
+            text: announcement.cta?.text,
+            target: isExternal ? "_blank" : undefined,
+            rel: isExternal ? "noopener noreferrer" : undefined
+        }
+        : null
+
+    return {
+        Icon,
+        severityStyles,
+        issuedText,
+        expiresText,
+        ctaProps
+    }
+}
+
+function AnnouncementSummary({ announcement, count, meta }) {
+    const { Icon, severityStyles, issuedText } = meta
+    return (
+        <summary className="list-none border-b border-foreground/10 px-4 py-4 text-left text-sm text-foreground outline-none transition hover:bg-foreground/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex sm:items-center sm:justify-between [&::-webkit-details-marker]:hidden">
+            <div className="flex flex-1 items-start gap-3">
+                <span
+                    className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${severityStyles.iconWrapper ?? "bg-foreground/10 text-foreground"}`}
+                >
+                    <Icon size={26} weight="bold" />
+                </span>
+                <div className="space-y-1">
+                    <p className="text-base font-semibold">{announcement.short}</p>
+                    {issuedText && (
+                        <p className="text-xs uppercase tracking-wide text-foreground/60">
+                            Issued {issuedText}
+                        </p>
+                    )}
+                </div>
+            </div>
+            <div className="mt-3 flex items-center gap-3 text-xs uppercase tracking-wide text-foreground/60 sm:mt-0">
+                <span className="group-open:hidden">
+                    View {count} updates
+                </span>
+                <span className="hidden group-open:inline">Hide updates</span>
+            </div>
+        </summary>
+    )
+}
+
+function AnnouncementCard({ announcement }) {
+    const { Icon, severityStyles, issuedText, expiresText, ctaProps } = getAnnouncementDisplayMeta(announcement)
+
+    return (
+        <li className={`${CARD_BASE_CLASSES} ${severityStyles.container}`}>
+            <div className="flex items-start gap-3">
+                <span
+                    className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ${severityStyles.iconWrapper ?? "bg-foreground/10 text-foreground"}`}
+                >
+                    <Icon size={22} weight="bold" />
+                </span>
+                <div className="flex-1 space-y-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                        <p className="text-base font-semibold">{announcement.short}</p>
+                    </div>
+                    {(issuedText || expiresText) && (
+                        <p className="text-xs uppercase tracking-tighter text-foreground/60">
+                            {issuedText && `Issued ${issuedText}`}
+                            {issuedText && expiresText && " • "}
+                            {expiresText && `Thru ${expiresText}`}
+                        </p>
+                    )}
+                    <p className="text-sm leading-relaxed text-foreground/80">
+                        {announcement.long}
+                    </p>
+                    {ctaProps && (
+                        <Link
+                            href={ctaProps.href}
+                            className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-accent transition hover:opacity-80"
+                            target={ctaProps.target}
+                            rel={ctaProps.rel}
+                        >
+                            {ctaProps.text}
+                            <ArrowUpRight size={16} weight="bold" />
+                        </Link>
+                    )}
+                </div>
+            </div>
+        </li>
     )
 }
