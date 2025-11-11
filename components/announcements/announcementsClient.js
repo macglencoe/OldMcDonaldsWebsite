@@ -1,4 +1,5 @@
 "use client"
+import { useMemo } from "react"
 import Link from "next/link"
 import {
     ArrowUpRight,
@@ -63,36 +64,42 @@ const formatDate = (value) => {
 }
 
 export default function AnnouncementsClient({ items } = {}) {
-    const now = new Date()
+    const { summary, list } = useMemo(() => {
+        const now = new Date()
+        const prepared = (items ?? [])
+            .filter(Boolean)
+            .map((announcement) => {
+                const issuedDate = parseDate(announcement.issued)
+                const expiresDate = parseDate(announcement.expires)
+                return {
+                    ...announcement,
+                    issuedDate,
+                    expiresDate,
+                    issuedTimestamp: issuedDate?.getTime() ?? 0
+                }
+            })
+            .filter((announcement) => !announcement.expiresDate || announcement.expiresDate >= now)
 
-    const activeAnnouncements = (items ?? [])
-        .filter(Boolean)
-        .filter((announcement) => {
-            const expires = parseDate(announcement.expires)
-            return !expires || expires >= now
+        prepared.sort((a, b) => {
+            const severityDiff =
+                (SEVERITY_PRIORITY[b.severity] ?? 0) - (SEVERITY_PRIORITY[a.severity] ?? 0)
+            if (severityDiff !== 0) return severityDiff
+            return (b.issuedTimestamp ?? 0) - (a.issuedTimestamp ?? 0)
         })
-        .sort((a, b) => {
-            const issuedA = parseDate(a.issued)?.getTime() ?? 0
-            const issuedB = parseDate(b.issued)?.getTime() ?? 0
-            return issuedB - issuedA
-        })
 
-    if (!activeAnnouncements.length) return null
+        return {
+            list: prepared,
+            summary: prepared[0] ?? null
+        }
+    }, [items])
 
-    const sortedAnnouncements = [...activeAnnouncements].sort((a, b) => {
-        const severityDiff =
-            (SEVERITY_PRIORITY[b.severity] ?? 0) - (SEVERITY_PRIORITY[a.severity] ?? 0)
-        if (severityDiff !== 0) return severityDiff
-        const issuedA = parseDate(a.issued)?.getTime() ?? 0
-        const issuedB = parseDate(b.issued)?.getTime() ?? 0
-        return issuedB - issuedA
-    })
+    if (!list.length || !summary) return null
 
-    const summaryAnnouncement = sortedAnnouncements[0]
+    const summaryAnnouncement = summary
     const summarySeverity =
         SEVERITY_STYLES[summaryAnnouncement.severity ?? "info"] ?? SEVERITY_STYLES.info
     const SummaryIcon = ICON_MAP[summaryAnnouncement.icon] ?? Megaphone
-    const summaryIssued = formatDate(summaryAnnouncement.issued)
+    const summaryIssued = formatDate(summaryAnnouncement.issuedDate ?? summaryAnnouncement.issued)
 
     return (
         <section
@@ -101,7 +108,7 @@ export default function AnnouncementsClient({ items } = {}) {
             className="border-y border-foreground/10 bg-background text-foreground"
         >
             <details className="group">
-                <summary className="list-none border-b border-foreground/10 px-4 py-4 text-left text-sm text-foreground outline-none transition hover:bg-foreground/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex sm:items-center sm:justify-between [&::-webkit-details-marker]:hidden">
+                <summary className="list-none border-b border-foreground/10 px-4 py-4 text-left text-sm text-foreground outline-none transition hover:bg-foreground/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex sm:items-center sm:justify-between [&::-webkit-details-marker]:hidden">
                     <div className="flex flex-1 items-start gap-3">
                         <span
                             className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${summarySeverity.iconWrapper ?? "bg-foreground/10 text-foreground"}`}
@@ -119,7 +126,7 @@ export default function AnnouncementsClient({ items } = {}) {
                     </div>
                     <div className="mt-3 flex items-center gap-3 text-xs uppercase tracking-wide text-foreground/60 sm:mt-0">
                         <span className="group-open:hidden">
-                            View {sortedAnnouncements.length} updates
+                            View {list.length} updates
                         </span>
                         <span className="hidden group-open:inline">Hide updates</span>
                     </div>
@@ -132,12 +139,12 @@ export default function AnnouncementsClient({ items } = {}) {
                         </p>
                     </div>
                     <ul className="mx-auto mt-4 flex max-w-5xl flex-col gap-3">
-                        {sortedAnnouncements.map((announcement) => {
+                        {list.map((announcement) => {
                             const Icon = ICON_MAP[announcement.icon] ?? Megaphone
                             const severity =
                                 SEVERITY_STYLES[announcement.severity ?? "info"] ?? SEVERITY_STYLES.info
-                            const issuedOn = formatDate(announcement.issued)
-                            const expiresOn = formatDate(announcement.expires)
+                            const issuedOn = formatDate(announcement.issuedDate ?? announcement.issued)
+                            const expiresOn = formatDate(announcement.expiresDate ?? announcement.expires)
                             const key = announcement.id ?? announcement.short
 
                             return (
