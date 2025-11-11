@@ -4,12 +4,23 @@ import { useMemo } from "react";
 import { useFlags } from "@/app/FlagsContext";
 import AnnouncementsClient from "./announcementsClient";
 
+/** Statsig severities we allow through to the client UI. */
 const VALID_SEVERITIES = new Set(["info", "warning", "alert"]);
 
+/**
+ * Convert unknown user-provided values into trimmed strings.
+ * @param {unknown} value
+ * @returns {string|undefined}
+ */
 function coerceString(value) {
   return typeof value === "string" ? value.trim() : undefined;
 }
 
+/**
+ * Normalize CTA entries coming from Statsig configs.
+ * @param {unknown} raw
+ * @returns {{text:string, href:string}|undefined}
+ */
 function sanitizeCta(raw) {
   if (!raw || typeof raw !== "object") return undefined;
   const text = coerceString(raw.text);
@@ -18,6 +29,11 @@ function sanitizeCta(raw) {
   return { text, href };
 }
 
+/**
+ * Convert raw Statsig config entries into the shape the client expects.
+ * @param {unknown} entry
+ * @returns {{id?:string, short:string, long:string, icon?:string, issued?:string, expires?:string, severity?:string, cta?:{text:string, href:string}}|null}
+ */
 function sanitizeAnnouncement(entry) {
   if (!entry || typeof entry !== "object") return null;
 
@@ -49,6 +65,11 @@ function sanitizeAnnouncement(entry) {
   };
 }
 
+/**
+ * Read the announcements dynamic config from FlagsContext and sanitize its payload.
+ * @param {(key:string, param:string)=>{raw?:unknown, values?:unknown[]}|null} getFeatureArg
+ * @returns {Array<object>|undefined}
+ */
 function parseAnnouncementsFromConfig(getFeatureArg) {
   if (typeof getFeatureArg !== "function") {
     return undefined;
@@ -69,6 +90,10 @@ function parseAnnouncementsFromConfig(getFeatureArg) {
   return sanitized.length > 0 ? sanitized : undefined;
 }
 
+/**
+ * Client component that fetches announcements via the Flags context.
+ * Sanitizing here keeps the downstream UI focused on presentation.
+ */
 export default function Announcements() {
   const { getFeatureArg } = useFlags();
   const items = useMemo(() => parseAnnouncementsFromConfig(getFeatureArg), [getFeatureArg]);

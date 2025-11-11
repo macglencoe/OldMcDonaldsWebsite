@@ -13,6 +13,7 @@ import {
 
 
 
+/** Maps backend-provided icon names to actual Phosphor components. */
 const ICON_MAP = {
     CloudRain,
     CloudLightning,
@@ -22,6 +23,7 @@ const ICON_MAP = {
     Warning
 }
 
+/** Tailwind styles keyed by Statsig severity level. */
 const SEVERITY_STYLES = {
     info: {
         container: "",
@@ -40,6 +42,7 @@ const SEVERITY_STYLES = {
     }
 }
 
+/** Higher value == higher priority when sorting announcements. */
 const SEVERITY_PRIORITY = {
     alert: 3,
     warning: 2,
@@ -53,6 +56,11 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", DATE_FORMAT_OPTIONS)
 
 const isExternalLink = (href = "") => /^https?:\/\//i.test(href)
 
+/**
+ * Convert values into numeric timestamps so we can reuse them throughout the render.
+ * @param {unknown} value
+ * @returns {number|null}
+ */
 const toTimestamp = (value) => {
     if (!value) return null
     const instance = value instanceof Date ? value : new Date(value)
@@ -60,6 +68,10 @@ const toTimestamp = (value) => {
     return Number.isNaN(time) ? null : time
 }
 
+/**
+ * Render the announcements marquee using sanitized items coming from the server component.
+ * @param {{items?: Array<object>}} props
+ */
 export default function AnnouncementsClient({ items } = {}) {
     const { summary, list } = useMemo(() => {
         const now = Date.now()
@@ -87,7 +99,7 @@ export default function AnnouncementsClient({ items } = {}) {
             list: prepared,
             summary: prepared[0] ?? null
         }
-    }, [items])
+    }, [items]) // Memo keeps filtering/sorting work out of render cycle.
 
     if (!list.length || !summary) return null
 
@@ -120,6 +132,10 @@ export default function AnnouncementsClient({ items } = {}) {
     )
 }
 
+/**
+ * Derive display-specific data (styles, formatted dates, CTA props) for an announcement entry.
+ * @param {object} announcement
+ */
 function getAnnouncementDisplayMeta(announcement) {
     const severityStyles = SEVERITY_STYLES[announcement.severity ?? "info"] ?? SEVERITY_STYLES.info
     const Icon = ICON_MAP[announcement.icon] ?? Megaphone
@@ -145,6 +161,10 @@ function getAnnouncementDisplayMeta(announcement) {
     }
 }
 
+/**
+ * Summary row that highlights the top-priority announcement.
+ * @param {{announcement: object, count: number, meta: ReturnType<typeof getAnnouncementDisplayMeta>}} props
+ */
 function AnnouncementSummary({ announcement, count, meta }) {
     const { Icon, severityStyles, issuedText } = meta
     return (
@@ -174,6 +194,10 @@ function AnnouncementSummary({ announcement, count, meta }) {
     )
 }
 
+/**
+ * Full card renderer for the announcements list.
+ * @param {{announcement: object}} props
+ */
 function AnnouncementCard({ announcement }) {
     const { Icon, severityStyles, issuedText, expiresText, ctaProps } = getAnnouncementDisplayMeta(announcement)
 
