@@ -49,42 +49,38 @@ const SEVERITY_PRIORITY = {
 const CARD_BASE_CLASSES = "rounded-2xl border border-foreground/10 bg-background text-foreground/90 p-4 text-sm shadow-sm"
 
 const DATE_FORMAT_OPTIONS = { month: "short", day: "numeric" }
+const dateFormatter = new Intl.DateTimeFormat("en-US", DATE_FORMAT_OPTIONS)
 
 const isExternalLink = (href = "") => /^https?:\/\//i.test(href)
 
-const parseDate = (value) => {
+const toTimestamp = (value) => {
     if (!value) return null
     const instance = value instanceof Date ? value : new Date(value)
-    return Number.isNaN(instance.getTime()) ? null : instance
-}
-
-const formatDate = (value) => {
-    const date = parseDate(value)
-    return date ? date.toLocaleDateString("en-US", DATE_FORMAT_OPTIONS) : null
+    const time = instance.getTime()
+    return Number.isNaN(time) ? null : time
 }
 
 export default function AnnouncementsClient({ items } = {}) {
     const { summary, list } = useMemo(() => {
-        const now = new Date()
+        const now = Date.now()
         const prepared = (items ?? [])
             .filter(Boolean)
             .map((announcement) => {
-                const issuedDate = parseDate(announcement.issued)
-                const expiresDate = parseDate(announcement.expires)
+                const issuedAt = toTimestamp(announcement.issued)
+                const expiresAt = toTimestamp(announcement.expires)
                 return {
                     ...announcement,
-                    issuedDate,
-                    expiresDate,
-                    issuedTimestamp: issuedDate?.getTime() ?? 0
+                    issuedAt,
+                    expiresAt
                 }
             })
-            .filter((announcement) => !announcement.expiresDate || announcement.expiresDate >= now)
+            .filter((announcement) => !announcement.expiresAt || announcement.expiresAt >= now)
 
         prepared.sort((a, b) => {
             const severityDiff =
                 (SEVERITY_PRIORITY[b.severity] ?? 0) - (SEVERITY_PRIORITY[a.severity] ?? 0)
             if (severityDiff !== 0) return severityDiff
-            return (b.issuedTimestamp ?? 0) - (a.issuedTimestamp ?? 0)
+            return (b.issuedAt ?? 0) - (a.issuedAt ?? 0)
         })
 
         return {
@@ -99,7 +95,9 @@ export default function AnnouncementsClient({ items } = {}) {
     const summarySeverity =
         SEVERITY_STYLES[summaryAnnouncement.severity ?? "info"] ?? SEVERITY_STYLES.info
     const SummaryIcon = ICON_MAP[summaryAnnouncement.icon] ?? Megaphone
-    const summaryIssued = formatDate(summaryAnnouncement.issuedDate ?? summaryAnnouncement.issued)
+    const summaryIssued = summaryAnnouncement.issuedAt
+        ? dateFormatter.format(summaryAnnouncement.issuedAt)
+        : null
 
     return (
         <section
@@ -143,8 +141,8 @@ export default function AnnouncementsClient({ items } = {}) {
                             const Icon = ICON_MAP[announcement.icon] ?? Megaphone
                             const severity =
                                 SEVERITY_STYLES[announcement.severity ?? "info"] ?? SEVERITY_STYLES.info
-                            const issuedOn = formatDate(announcement.issuedDate ?? announcement.issued)
-                            const expiresOn = formatDate(announcement.expiresDate ?? announcement.expires)
+                            const issuedOn = announcement.issuedAt ? dateFormatter.format(announcement.issuedAt) : null
+                            const expiresOn = announcement.expiresAt ? dateFormatter.format(announcement.expiresAt) : null
                             const key = announcement.id ?? announcement.short
 
                             return (
