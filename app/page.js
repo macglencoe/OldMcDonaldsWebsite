@@ -15,6 +15,7 @@ import FarmSwapBanner from "@/components/home/farmSwapBanner";
 import OneLaneRoadBanner from "@/components/home/oneLaneRoadBanner";
 import SurveyBanner from "@/components/home/surveyBanner";
 import { getFeatureEvaluator, loadFlags } from "./flags";
+import InfoStrip from "@/components/home/infoStrip";
 
 export const metadata = {
   title: "Real Farm Fun - Old McDonald's Pumpkin Patch",
@@ -123,6 +124,8 @@ export default async function Home() {
         <section className={styles.hero}>
           <Hero />
         </section>
+
+        <InfoStrip />
 
         {isFeatureEnabled("show_aux_search") &&
           <AuxSearch />
