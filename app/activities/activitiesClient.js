@@ -65,7 +65,7 @@ export default function ActivitiesClient() {
     });
     return (
         <section className="py-5 px-6 max-w-7xl mx-auto">
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[180px] sm:auto-rows-[220px] md:auto-rows-[250px] lg:auto-rows-[280px]">
+            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[180px] sm:auto-rows-[220px] md:auto-rows-[250px] lg:auto-rows-[280px] grid-flow-dense">
                 {activities.map((activity, i) => (
                     <ActivityCard key={i} {...activity} />
                 ))}
