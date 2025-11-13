@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Geist, Geist_Mono } from "next/font/google"
 import Action from "../action"
-import { Copy } from "phosphor-react";
+import { Cake, ClockAfternoon, Cloud, Copy, MapPin, Ticket } from "phosphor-react";
 import clsx from "clsx";
 
 
@@ -75,7 +75,8 @@ export default function InfoStrip() {
                         <HoursRow day="SUN" opens="12:00 PM" closes="6:00 PM" />
                     </tbody>
                 </table>
-            )
+            ),
+            icon: ClockAfternoon
         },
         {
             id: "pricing-admission",
@@ -86,7 +87,8 @@ export default function InfoStrip() {
                     <p className="font-satisfy text-8xl text-background mt-3">$6<span className="text-2xl tracking-wide">/person</span></p>
                     <p className="font-light tracking-wide">Children 3 and under are free</p>
                 </>
-            )
+            ),
+            icon: Ticket
         },
         {
             id: "weather",
@@ -99,7 +101,8 @@ export default function InfoStrip() {
                     today={forecast.today}
                     tomorrow={forecast.tomorrow}
                 />
-            )
+            ),
+            icon: Cloud
         },
         {
             id: "location",
@@ -115,7 +118,8 @@ export default function InfoStrip() {
                         <Copy size={30} className="ml-3 text-accent" />
                     </div>
                 </>
-            )
+            ),
+            icon: MapPin
         },
         {
             id: "opening-day",
@@ -126,7 +130,8 @@ export default function InfoStrip() {
                     <p className="font-light tracking-widest text-2xl my-4">Saturday, September 28th, 2026</p>
                     <p className="font-satisfy text-6xl text-background mt-2">Save the Date!</p>
                 </>
-            ) //TODO: Update date yearly
+            ), //TODO: Update date yearly
+            icon: Cake
         },
         
     ]
@@ -137,7 +142,8 @@ export default function InfoStrip() {
                     <InfoItem
                         key={item.id}
                         title={item.title}
-                        cta={item.cta}>
+                        cta={item.cta}
+                        icon={item.icon}>
                         {item.content}
                     </InfoItem>
                 ))}
@@ -146,13 +152,26 @@ export default function InfoStrip() {
     )
 }
 
-function InfoItem({ key, title, cta, children, className }) {
+function InfoItem({ key, title, cta, children, icon, className }) {
+    const IconComponent = icon;
     return (
-        <div className={clsx("flex flex-col flex-[1_1_260px] min-w-[240px] sm:min-w-[260px]", className, "border-2 border-background/20 bg-background/10 rounded-2xl  overflow-hidden items-center gap-2")} key={key}>
+        <div className={clsx("relative flex flex-col flex-[1_1_260px] min-w-[240px] sm:min-w-[260px]", className, "border-2 border-background/20 bg-background/10 rounded-2xl  overflow-hidden items-center gap-2")} key={key}>
             {title &&
-                <h3 className="text-background text-2xl font-bold bg-background/10 w-full text-center py-1 uppercase tracking-widest shadow-2xl">{title}</h3>
+                <h3 className="text-background text-2xl font-bold bg-background/10 w-full text-center py-1 uppercase tracking-widest shadow-2xl z-20">{title}</h3>
             }
-            <div className="flex flex-col items-center p-1 sm:p-2 pt-1 sm:pt-4 w-full gap-2 h-full justify-between text-center text-background">
+            {IconComponent &&
+                <>
+                    <IconComponent className="absolute text-background/10 z-10" style={{
+                        top: "0.3rem",
+                        left: "0.3rem",
+                    }} size={30} aria-hidden="true" weight="bold" />
+                    <IconComponent className="absolute text-background/10 z-10" style={{
+                        top: "0.3rem",
+                        right: "0.3rem",
+                    }} size={30} aria-hidden="true" weight="bold" />
+                </>
+            }
+            <div className="flex flex-col items-center p-1 sm:p-2 pt-1 sm:pt-4 w-full gap-2 h-full justify-between text-center text-background z-20">
                 {children}
                 {cta && cta.href && cta.text && (
                     <Action as="a" href={cta.href} className="uppercase tracking-wider w-full text-center max-w-md">{cta.text}</Action>
