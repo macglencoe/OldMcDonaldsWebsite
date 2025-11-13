@@ -57,7 +57,7 @@ function InfoItem({ title, cta, children, className }) {
     return (
         <div className={clsx(className, "border-2 border-background/20 bg-background/10 rounded-2xl  overflow-hidden flex flex-col items-center gap-2")}>
             {title &&
-                <h3 className="text-background text-2xl font-bold bg-background/10 w-full text-center py-1 uppercase tracking-wide">{title}</h3>
+                <h3 className="text-background text-2xl font-bold bg-background/10 w-full text-center py-1 uppercase tracking-widest">{title}</h3>
             }
                 <div className="flex flex-col items-center p-1 sm:p-2 pt-1 sm:pt-4 w-full gap-2 h-full justify-between text-center text-background">
                     {children}
