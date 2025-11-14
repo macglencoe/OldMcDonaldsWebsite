@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { useFlags } from "@/app/FlagsContext";
+import { useConfig } from "@/app/FlagsContext";
 import AnnouncementsView from "./announcementsView";
 
 /** Statsig severities we allow through to the client UI. */
@@ -66,16 +66,11 @@ function sanitizeAnnouncement(entry) {
 }
 
 /**
- * Read the announcements dynamic config from FlagsContext and sanitize its payload.
- * @param {(key:string, param:string)=>{raw?:unknown, values?:unknown[]}|null} getFeatureArg
+ * Read the announcements config argument and sanitize its payload.
+ * @param {{raw?:unknown, values?:unknown[]}|null} itemsArg
  * @returns {Array<object>|undefined}
  */
-function parseAnnouncementsFromConfig(getFeatureArg) {
-  if (typeof getFeatureArg !== "function") {
-    return undefined;
-  }
-
-  const itemsArg = getFeatureArg("announcements", "items");
+function parseAnnouncementsFromConfig(itemsArg) {
   const entries = Array.isArray(itemsArg?.raw)
     ? itemsArg.raw
     : Array.isArray(itemsArg?.values)
@@ -95,8 +90,8 @@ function parseAnnouncementsFromConfig(getFeatureArg) {
  * Sanitizing here keeps the downstream UI focused on presentation.
  */
 export default function Announcements() {
-  const { getFeatureArg } = useFlags();
-  const items = useMemo(() => parseAnnouncementsFromConfig(getFeatureArg), [getFeatureArg]);
+  const itemsArg = useConfig("announcements", "items");
+  const items = useMemo(() => parseAnnouncementsFromConfig(itemsArg), [itemsArg]);
 
   return <AnnouncementsView items={items} />;
 }
