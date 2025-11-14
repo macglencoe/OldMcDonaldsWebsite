@@ -3,59 +3,65 @@
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import timeGridPlugin from '@fullcalendar/timegrid'
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { useConfig } from "@/app/FlagsContext"
 
 export default function FestivalCalendar() {
-  const [events, setEvents] = useState([])
+  const scheduleConfig = useConfig("calendar_schedule", "schedule")
   // Weather
   const [weatherByDate, setWeatherByDate] = useState({})
 
-  useEffect(() => {
-    async function loadData() {
-      const [eventRes, scheduleRes] = await Promise.all([
-        fetch('/data/events.json'),
-        fetch('/data/schedule.json')
-      ])
-      const [eventData, scheduleData] = await Promise.all([
-        eventRes.json(),
-        scheduleRes.json()
-      ])
+  const events = useMemo(() => {
+    const entries = Array.isArray(scheduleConfig?.values)
+      ? scheduleConfig.values
+      : Array.isArray(scheduleConfig?.raw)
+        ? scheduleConfig.raw
+        : []
 
-      const taggedEvents = eventData.map(e => ({
-        ...e,
-        category: e.category === undefined ? 'event' : e.category
-      }))
-      const taggedSchedule = scheduleData.map(e => ({
-        ...e,
-        category: e.category === undefined ? 'schedule' : e.category
-      }))
-
-      const combined = [...taggedEvents, ...taggedSchedule].map(e => ({
-        ...e,
-        color:
-          e.category === 'event' ? 'var(--accent)' :
-            e.category === 'schedule' ? 'var(--foreground)' :
-              '#6b7280' // gray fallback
-      }))
-
-      setEvents(combined)
-      try {
-      const weatherRes = await fetch('/api/weather')
-      const weatherData = await weatherRes.json()
-      const weatherMap = {}
-      weatherData.forecast.forecastday.forEach(day => {
-        weatherMap[day.date] = {
-          icon: day.day.condition.icon,
-          text: day.day.condition.text
+    return entries
+      .filter((entry) => entry && typeof entry === 'object')
+      .map((entry) => {
+        const category = entry.category === undefined ? 'schedule' : entry.category
+        return {
+          ...entry,
+          category,
+          color:
+            category === 'event'
+              ? 'var(--accent)'
+              : category === 'schedule'
+                ? 'var(--foreground)'
+                : '#6b7280'
         }
       })
-      setWeatherByDate(weatherMap)
+  }, [scheduleConfig])
+
+  useEffect(() => {
+    let didCancel = false
+
+    async function loadWeather() {
+      try {
+        const weatherRes = await fetch('/api/weather')
+        const weatherData = await weatherRes.json()
+        const weatherMap = {}
+        weatherData.forecast.forecastday.forEach(day => {
+          weatherMap[day.date] = {
+            icon: day.day.condition.icon,
+            text: day.day.condition.text
+          }
+        })
+        if (!didCancel) {
+          setWeatherByDate(weatherMap)
+        }
       } catch (e) {
         console.warn("Failed to load weather data", e)
       }
     }
 
-    loadData()
+    loadWeather()
+
+    return () => {
+      didCancel = true
+    }
   }, [])
 
 

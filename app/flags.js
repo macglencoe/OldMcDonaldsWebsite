@@ -1,6 +1,7 @@
 import { cache } from 'react';
 import { evaluate, combine, flag } from 'flags/next';
 import { createStatsigAdapter } from '@flags-sdk/statsig';
+import calendarSchedule from '@/public/data/schedule.json';
 
 const STATSIG_ID_COOKIE = 'statsig-stable-id';
 
@@ -33,6 +34,12 @@ const CONFIG_DEFINITIONS = [
   {
     statsigKey: 'announcements',
     defaultValue: { items: [] },
+  },
+  {
+    statsigKey: 'calendar_schedule',
+    defaultValue: {
+      schedule: []
+    },
   },
 ];
 
