@@ -18,6 +18,31 @@ export function useFlags() {
   return ctx;
 }
 
+export function useConfig(configKey, param) {
+  const { flags } = useFlags();
+  const configs = flags?.configs ?? {};
+
+  return useMemo(() => {
+    const config = configs[configKey];
+    if (!config) return null;
+
+    if (param === undefined) {
+      return config;
+    }
+
+    if (Array.isArray(config.args)) {
+      const match = config.args.find((arg) => arg.key === param);
+      if (match) return match;
+    }
+
+    if (config.raw && typeof config.raw === "object" && param in config.raw) {
+      return normalizeFeatureArg(param, config.raw[param]);
+    }
+
+    return null;
+  }, [configs, configKey, param]);
+}
+
 function normalizeFeatureArg(param, raw) {
   if (raw && typeof raw === "object" && Array.isArray(raw.values) && raw.key === param) {
     return {
