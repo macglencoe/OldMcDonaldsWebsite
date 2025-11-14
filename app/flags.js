@@ -30,6 +30,10 @@ const CONFIG_DEFINITIONS = [
     flagKey: 'show_flood_banner_config.config',
     defaultValue: {},
   },
+  {
+    statsigKey: 'announcements',
+    defaultValue: { items: [] },
+  },
 ];
 
 const defaultGates = Object.freeze(
