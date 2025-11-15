@@ -38,7 +38,8 @@ const CONFIG_DEFINITIONS = [
   {
     statsigKey: 'calendar_schedule',
     defaultValue: {
-      schedule: []
+      schedule: [],
+      initialDate: ""
     },
   },
 ];

@@ -8,6 +8,7 @@ import { useConfig } from "@/app/FlagsContext"
 
 export default function FestivalCalendar() {
   const scheduleConfig = useConfig("calendar_schedule", "schedule")
+  const initialDateConfig = useConfig("calendar_schedule", "initialDate")
   // Weather
   const [weatherByDate, setWeatherByDate] = useState({})
 
@@ -34,6 +35,13 @@ export default function FestivalCalendar() {
         }
       })
   }, [scheduleConfig])
+
+  const initialDate = useMemo(() => {
+    if (typeof initialDateConfig?.raw === 'string') {
+      return initialDateConfig.raw
+    }
+    else return null
+  }, [initialDateConfig])
 
   useEffect(() => {
     let didCancel = false
@@ -76,7 +84,7 @@ export default function FestivalCalendar() {
           center: "title",
           right: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
-        initialDate={"2025-10-01"}
+        initialDate={initialDate}
         events={events}
         eventContent={(arg) => {
           const start = arg.event.start;
