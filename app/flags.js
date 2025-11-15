@@ -41,6 +41,10 @@ const CONFIG_DEFINITIONS = [
       initialDate: ""
     },
   },
+  {
+    statsigKey: 'pricing',
+    defaultValue: {}
+  }
 ];
 
 const defaultGates = Object.freeze(
