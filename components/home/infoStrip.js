@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import { Geist, Geist_Mono } from "next/font/google"
 import Action from "../action"
-import { Cake, ClockAfternoon, Cloud, Copy, MapPin, Ticket } from "phosphor-react";
+import { Cake, ClockAfternoon, Cloud, Copy, ForkKnife, MapPin, PawPrint, Prohibit, SquareLogo, Ticket, Wheelchair } from "phosphor-react";
 import clsx from "clsx";
+import Link from "next/link";
 
 
 export default function InfoStrip() {
@@ -136,7 +137,7 @@ export default function InfoStrip() {
 
     ]
     return (
-        <section className="bg-foreground py-4">
+        <section className="bg-foreground py-4 space-y-5">
             <div className="max-w-5xl mx-auto flex flex-wrap items-stretch px-1 sm:px-2 gap-2 sm:gap-4">
                 {items.map(item => (
                     <InfoItem
@@ -148,6 +149,7 @@ export default function InfoStrip() {
                     </InfoItem>
                 ))}
             </div>
+            <SecondaryStrip />
         </section>
     )
 }
@@ -235,3 +237,118 @@ function WeatherSummary({ loading, error, today, tomorrow }) {
         </div>
     )
 }
+
+
+// secondary strip
+
+function SecondaryStrip() {
+    const [selected, setSelected] = useState(null);
+
+    const items = [
+        {
+            id: "no-pets",
+            content: (
+                <>
+                    <PawPrint size={32+16} weight="fill" className="absolute"/>
+                    <Prohibit size={64+16} weight="regular" className="text-red-500 absolute"/>
+                </>
+            ),
+            text: (
+                <p>We have a strict <b>no pets</b> policy</p> //TODO: Rewrite this
+            )
+        },
+        {
+            id: "no-smoking",
+            content: (
+                <>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="absolute" width="48" height="48" fill="#ffffff" viewBox="0 0 256 256"><path d="M224,128H32a16,16,0,0,0-16,16v32a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V144A16,16,0,0,0,224,128Zm0,48H96V144H224v32ZM201,60.08c8-14.23,7.42-21.71,6.36-24.91a7.79,7.79,0,0,0-2.64-3.86,8,8,0,1,1,6.5-14.62,22.57,22.57,0,0,1,11.32,13.44c3.36,10.14.81,22.85-7.6,37.79-8,14.23-7.42,21.72-6.36,24.92a7.79,7.79,0,0,0,2.64,3.85,8,8,0,1,1-6.5,14.62,22.53,22.53,0,0,1-11.32-13.44C190.07,87.73,192.62,75,201,60.08Zm-40,0c8-14.23,7.42-21.71,6.36-24.91a7.79,7.79,0,0,0-2.64-3.86,8,8,0,1,1,6.5-14.62,22.57,22.57,0,0,1,11.32,13.44c3.36,10.14.81,22.85-7.6,37.79-8,14.23-7.42,21.72-6.36,24.92a7.79,7.79,0,0,0,2.64,3.85,8,8,0,1,1-6.5,14.62,22.53,22.53,0,0,1-11.32-13.44C150.07,87.73,152.62,75,161,60.08Z"></path></svg>
+                    <Prohibit size={64+16} weight="regular" className="text-red-500 absolute"/>
+                </>
+            ),
+            text: (
+                <p><b>No smoking is allowed</b> on the farm, due to the high risk of fire in the autumn season, and children present. <br/>
+                We have <b>two designated smoking areas</b>, one near the parking lot, and another near the fire pits.</p>
+            )
+        },
+        {
+            id: "handicap",
+            content: (
+                <div className="bg-blue-700 p-2 rounded-2xl">
+                    <Wheelchair size={32+16} weight="fill" color="white" />
+                    
+                </div>
+            ),
+            text: (
+                <p>The farm is <i>mostly</i> wheelchair accessible. Hayrides are not wheelchair accessible</p>
+            )
+        },
+        {
+            id: "card-payments",
+            content: (
+                <SquareLogo size={64} weight="duotone" />
+            ),
+            text: (
+                <p>We accept <b>all major card providers</b>, as well as tap-to-pay with <a href="https://squareup.com/us/en" target="_blank" className="text-accent hover:underline">Square</a>.</p>
+            )
+        },
+        {
+            id: "food-vendors",
+            content: (
+                <ForkKnife size={32+16} weight="duotone" className="" />
+            ),
+            text: (
+                <>
+                    <p>We have <b>3</b> food vendors available on-site every weekend to make your fall day as tasty as it is fun!</p>
+                    <Link href="/vendors" className="text-accent hover:underline">See More</Link>
+                </>
+            )
+        },
+        {
+            id: "all-ages",
+            content: (
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                    <p className="uppercase text-2xl font-semibold">All<br />Ages</p>
+                </div>
+            ),
+            text: (
+                <p>Our farm is the perfect place for a fall day, no matter your age. With a large playground and various fun activities, kids are sure to be entertained.<br />
+                We have x amount photo ops, so bring your friends and take some pics for your insta story!<br />
+                Just looking for a leisurely stroll? Enjoy our park-like grounds with a gentle flowing creek, lots of benches, and scenic views of the farm.
+                </p> //TODO x amount
+            )
+        }
+    ]
+    return (
+        <div className="flex flex-col gap-4 items-center max-w-5xl mx-auto px-2">
+            {/* icons */}
+            <div className="flex flex-row flex-wrap justify-center-safe gap-2">
+                {items.map((item)=> (
+                    <button 
+                        className={clsx(`aspect-square h-18 md:h-20 bg-background/20 rounded-2xl outline-4
+                            hover:scale-105 active:scale-95 transition-all duration-300 
+                            flex items-center justify-center relative overflow-hidden text-background
+                            ${selected == item.id ? 'outline-background/40' : 'outline-transparent'}
+                            `
+                        )}
+                        onClick={() => {
+                            setSelected(item.id)
+                        }}
+                        key={item.id}
+                        >
+                        {item.content}
+                    </button>
+                ))}
+            </div>
+            {/* text */}
+            <div className={clsx(`w-full bg-background/20 rounded-2xl overflow-hidden ${selected == null ? 'sr-only' : ''}`)}>
+                {items.map((item)=> (
+                    <div className={clsx(`space-y-1 text-background text-lg ${selected == item.id ? '' : 'sr-only'}`)} >
+                        <h2 className="text-sm tracking-wider uppercase text-background/20 w-full px-3 py-1 pt-1.5 bg-background/10">{item.id}</h2>
+                        <div className="px-4 py-2">{item.text}</div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
