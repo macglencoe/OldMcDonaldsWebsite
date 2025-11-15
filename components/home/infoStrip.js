@@ -155,22 +155,28 @@ export default function InfoStrip() {
 function InfoItem({ key, title, cta, children, icon, className }) {
     const IconComponent = icon;
     return (
-        <div className={clsx("relative flex flex-col flex-[1_1_260px] min-w-[240px] sm:min-w-[260px]", className, "border-2 border-background/20 bg-background/10 rounded-2xl  overflow-hidden items-center gap-2")} key={key}>
+        <div className={clsx("relative flex flex-col flex-[1_1_260px] min-w-[240px] sm:min-w-[260px]", className, "border-2 border-background/20 bg-background/10 rounded-2xl  overflow-hidden items-center gap-2 group")} key={key}>
             {title &&
-                <h3 className="text-background text-2xl font-bold bg-background/10 w-full text-center py-1 uppercase tracking-widest shadow-2xl z-20">{title}</h3>
+                <h3 className="text-background text-2xl font-bold bg-background/20 w-full text-center py-1 uppercase tracking-widest shadow-2xl z-20">{title}</h3>
             }
-            {IconComponent &&
-                <>
-                    <IconComponent className="absolute text-background/10 z-10" style={{
-                        top: "0.3rem",
-                        left: "0.3rem",
-                    }} size={30} aria-hidden="true" weight="bold" />
-                    <IconComponent className="absolute text-background/10 z-10" style={{
-                        top: "0.3rem",
-                        right: "0.3rem",
-                    }} size={30} aria-hidden="true" weight="bold" />
-                </>
-            }
+            {IconComponent && (
+                <div className="pointer-events-none w-full absolute flex justify-between gap-0.5 px-3 group-hover:px-4 transition-all duration-500 ease-in-out z-10" style={{
+                    top: "0.15rem"
+                }}>
+                    <IconComponent
+                        className="text-foreground group-hover:text-accent transition-all duration-500 ease-in-out"
+                        size={35}
+                        aria-hidden="true"
+                        weight="duotone"
+                    />
+                    <IconComponent
+                        className="text-foreground group-hover:text-accent transition-all duration-500 ease-in-out"
+                        size={35}
+                        aria-hidden="true"
+                        weight="light"
+                    />
+                </div>
+            )}
             <div className="flex flex-col items-center p-1 sm:p-2 pt-1 sm:pt-4 w-full gap-2 h-full justify-between text-center text-background z-20">
                 {children}
                 {cta && cta.href && cta.text && (
