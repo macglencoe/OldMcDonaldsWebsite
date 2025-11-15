@@ -109,7 +109,7 @@ export default function InfoStrip() {
             title: "Location",
             cta: { href: "/visit", text: "Visit" },
             content: (
-                <>
+                <div className="flex flex-row h-full items-center flex-wrap space-x-3 space-y-1 w-full justify-center">
                     <p className="font-light tracking-wide"><i>Old McDonald's<br className="block sm:hidden lg:block" /> Pumpkin Patch & Corn Maze</i></p>
                     <div className="flex flex-row items-center justify-between bg-accent/20 px-2 py-1 rounded-lg hover:underline cursor-pointer" onClick={() => navigator.clipboard.writeText(address).then(() => alert("Copied to clipboard"))}>
                         <p className="font-semibold text-left" >
@@ -117,7 +117,7 @@ export default function InfoStrip() {
                         </p>
                         <Copy size={30} className="ml-3 text-accent" />
                     </div>
-                </>
+                </div>
             ),
             icon: MapPin
         },
@@ -133,7 +133,7 @@ export default function InfoStrip() {
             ), //TODO: Update date yearly
             icon: Cake
         },
-        
+
     ]
     return (
         <section className="bg-foreground py-4">
