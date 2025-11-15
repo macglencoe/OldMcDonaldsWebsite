@@ -34,6 +34,13 @@ const CONFIG_DEFINITIONS = [
     statsigKey: 'announcements',
     defaultValue: { items: [] },
   },
+  {
+    statsigKey: 'calendar_schedule',
+    defaultValue: {
+      schedule: [],
+      initialDate: ""
+    },
+  },
 ];
 
 const defaultGates = Object.freeze(
