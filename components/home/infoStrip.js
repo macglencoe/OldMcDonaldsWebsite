@@ -6,6 +6,18 @@ import { Cake, ClockAfternoon, Cloud, Copy, ForkKnife, MapPin, PawPrint, Prohibi
 import clsx from "clsx";
 import Link from "next/link";
 
+const OPENING_DAY_DATE = "2026-09-28T10:00:00-04:00";
+const DEFAULT_CALENDAR_DATES = "20260928T100000/20260928T180000";
+
+const formatCalendarDatesParam = (isoDate, startTime = "T100000", endTime = "T180000") => {
+    if (typeof isoDate !== "string") return null;
+    const [datePart] = isoDate.split("T");
+    if (!datePart) return null;
+    const normalizedDate = datePart.replace(/-/g, "");
+    if (normalizedDate.length !== 8) return null;
+    return `${normalizedDate}${startTime}/${normalizedDate}${endTime}`;
+};
+
 
 export default function InfoStrip() {
     const address = "1597 Arden Nollville Rd. Inwood, WV 25428";
@@ -55,6 +67,9 @@ export default function InfoStrip() {
         fetchWeather();
         return () => { isActive = false; };
     }, []);
+
+    const openingDayCalendarDates = formatCalendarDatesParam(OPENING_DAY_DATE) ?? DEFAULT_CALENDAR_DATES;
+    const openingDayCalendarHref = `https://calendar.google.com/calendar/r/eventedit?text=Old+McDonalds+Opening+Day&dates=${openingDayCalendarDates}&details=Come+visit+us+for+our+opening+day!+https://oldmcdonaldspumpkinpatch.com&location=Old%20McDonalds%20Pumpkin%20Patch%20%26%20Corn%20Maze%2C%201597%20Arden%20Nollville%20Rd%2C%20Inwood%2C%20WV%2025428%2C%20USA`;
 
     const items = [
         {
@@ -125,12 +140,13 @@ export default function InfoStrip() {
         {
             id: "opening-day",
             title: "Opening Day",
-            cta: null,
+            cta: {
+                href: openingDayCalendarHref,
+                text: "Save the Date!",
+                target: "_blank"
+            },
             content: (
-                <>
-                    <p className="font-light tracking-widest text-2xl my-4">Saturday, September 28th, 2026</p>
-                    <p className="font-satisfy text-6xl text-background mt-2">Save the Date!</p>
-                </>
+                <OpeningDayCountdown targetDate={OPENING_DAY_DATE} />
             ), //TODO: Update date yearly
             icon: Cake
         },
@@ -182,7 +198,7 @@ function InfoItem({ key, title, cta, children, icon, className }) {
             <div className="flex flex-col items-center p-1 sm:p-2 pt-1 sm:pt-4 w-full gap-2 h-full justify-between text-center text-background z-20">
                 {children}
                 {cta && cta.href && cta.text && (
-                    <Action as="a" href={cta.href} className="uppercase tracking-wider w-full text-center max-w-md">{cta.text}</Action>
+                    <Action as="a" href={cta.href} target={cta.target} className="uppercase tracking-wider w-full text-center max-w-md">{cta.text}</Action>
                 )}
             </div>
         </div>
@@ -199,6 +215,71 @@ function HoursRow({ day, opens, closes }) {
             <td className="bg-foreground text-background py-0.5 px-3 rounded-r-lg">{closes}</td>
         </tr>
     )
+}
+
+function OpeningDayCountdown({ targetDate }) {
+    const calculateTimeLeft = () => {
+        const now = new Date();
+        const target = new Date(targetDate);
+        const difference = target - now;
+
+        if (Number.isNaN(target.getTime()) || difference <= 0) {
+            return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+        }
+
+        return {
+            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+            minutes: Math.floor((difference / (1000 * 60)) % 60),
+            seconds: Math.floor((difference / 1000) % 60),
+        };
+    };
+
+    const formatDisplayDate = () => {
+        const target = new Date(targetDate);
+        if (Number.isNaN(target.getTime())) return "";
+
+        return target.toLocaleDateString("en-US", {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        });
+    };
+
+    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTimeLeft(calculateTimeLeft());
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [targetDate]);
+
+    const pad = (n) => String(n).padStart(2, "0");
+    const displayDate = formatDisplayDate();
+
+    const units = [
+        { label: "Days", value: pad(timeLeft.days) },
+        { label: "Hours", value: pad(timeLeft.hours) },
+        { label: "Minutes", value: pad(timeLeft.minutes) },
+        { label: "Seconds", value: pad(timeLeft.seconds) },
+    ];
+
+    return (
+        <div className="flex flex-col items-center text-background w-full gap-3 my-2">
+            <p className="font-light tracking-widest text-xl sm:text-2xl">{displayDate || "Date TBA"}</p>
+            <div className="grid grid-cols-2 gap-2 w-full">
+                {units.map((unit) => (
+                    <div key={unit.label} className="bg-background/20 text-background rounded-2xl py-2 flex flex-col items-center">
+                        <span className="text-3xl font-bold font-['Satisfy']">{unit.value}</span>
+                        <span className="text-xs uppercase tracking-[0.3em] font-semibold">{unit.label}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 }
 
 function WeatherSummary({ loading, error, today, tomorrow }) {
@@ -351,4 +432,3 @@ function SecondaryStrip() {
         </div>
     )
 }
-
