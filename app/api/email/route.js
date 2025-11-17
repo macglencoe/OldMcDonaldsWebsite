@@ -6,9 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // Server-enforced recipients (do not trust client-provided lists)
 const RECIPIENTS = {
   contact: [
-    'mcpaul1694@gmail.com',
-    'sgmcdonald2@gmail.com',
-    'oldmcdonaldsglencoefarm@gmail.com',
+    'team@oldmcdonaldspumpkinpatch.com',
   ],
   maze: [
     'oldmcdonaldsglencoefarm@gmail.com',
