@@ -4,7 +4,7 @@ import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { useEffect, useMemo, useState } from "react"
-import { useConfig } from "@/app/FlagsContext"
+import { useConfig } from "@/app/ConfigsContext"
 
 export default function FestivalCalendar() {
   const scheduleConfig = useConfig("calendar_schedule", "schedule")

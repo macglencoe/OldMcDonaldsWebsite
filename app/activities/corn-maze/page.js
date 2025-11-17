@@ -5,7 +5,7 @@ import { BodyBlock } from '@/components/bodyBlock';
 import PageHeader from '@/components/pageHeader';
 import Action from '@/components/action';
 import Image from 'next/image';
-import { getFeatureEvaluator, loadFlags } from '@/app/flags';
+import { getFlagEvaluator, getFlags } from '@/app/flags.server';
 
 export const metadata = {
     title: "Corn Maze",
@@ -13,8 +13,8 @@ export const metadata = {
 }
 
 export default async function CornMaze() {
-    const flags = await loadFlags();
-    const isFeatureEnabled = getFeatureEvaluator(flags);
+    const flags = await getFlags();
+    const isFeatureEnabled = getFlagEvaluator(flags);
     return (
         <Layout>
             <PageHeader subtitle="2025 Season">Corn Maze</PageHeader>
