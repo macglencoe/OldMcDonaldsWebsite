@@ -59,6 +59,7 @@ export default function ContactForm({ theme }) {
                 },
                 body: JSON.stringify({
                     kind: 'contact',
+                    replyTo: formData.email.trim(),
                     text: `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`,
                     html: `<p>Name: ${formData.name}</p><p>Email: ${formData.email}</p><p>${formData.message}</p>`,
                 }),

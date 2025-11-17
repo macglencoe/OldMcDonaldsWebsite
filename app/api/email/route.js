@@ -9,18 +9,54 @@ const RECIPIENTS = {
     'mcpaul1694@gmail.com',
     'sgmcdonald2@gmail.com',
     'oldmcdonaldsglencoefarm@gmail.com',
-    'oldmcdonaldspumpkinpatchwv@gmail.com'
   ],
   maze: [
     'oldmcdonaldsglencoefarm@gmail.com',
     'mcpaul1694@gmail.com',
-    'oldmcdonaldspumpkinpatchwv@gmail.com'
   ],
 };
 
 const SUBJECTS = {
   contact: 'Contact Form Submission',
   maze: 'Maze Game Entry',
+};
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const normalizeReplyTo = (raw) => {
+  if (raw === undefined || raw === null) {
+    return { value: undefined };
+  }
+
+  if (typeof raw === 'string') {
+    const trimmed = raw.trim();
+    if (!trimmed) {
+      return { error: 'replyTo cannot be empty' };
+    }
+    if (!EMAIL_REGEX.test(trimmed)) {
+      return { error: 'Invalid replyTo email address' };
+    }
+    return { value: trimmed };
+  }
+
+  if (Array.isArray(raw)) {
+    const normalized = raw
+      .map((entry) => (typeof entry === 'string' ? entry.trim() : ''))
+      .filter(Boolean);
+
+    if (!normalized.length) {
+      return { error: 'replyTo list cannot be empty' };
+    }
+
+    const invalid = normalized.find((email) => !EMAIL_REGEX.test(email));
+    if (invalid) {
+      return { error: `Invalid replyTo email address: ${invalid}` };
+    }
+
+    return { value: normalized };
+  }
+
+  return { error: 'replyTo must be a string or array of strings' };
 };
 
 export async function POST(req) {
@@ -31,12 +67,7 @@ export async function POST(req) {
     }
 
     const body = await req.json();
-    const { kind, text, html } = body || {};
-
-    // Accept optional reply-to hints from client
-    const bodyEmail = (body?.replyTo || body?.reply_to || body?.email || '').toString().trim();
-    const emailRegex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i;
-    const isValidEmail = (v) => emailRegex.test(String(v || ''));
+    const { kind, text, html, replyTo } = body || {};
 
     if (!kind || !text || !html) {
         return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -50,31 +81,24 @@ export async function POST(req) {
         const toList = RECIPIENTS[kind];
         const subject = SUBJECTS[kind];
 
-        // Derive reply-to for contact messages
-        let replyToEmail = undefined;
-        if (kind === 'contact') {
-            if (isValidEmail(bodyEmail)) {
-                replyToEmail = bodyEmail;
-            } else {
-                // Fallback: try to find an email in the provided text
-                const fromText = (text && typeof text === 'string') ? text.match(emailRegex)?.[0] : undefined;
-                if (isValidEmail(fromText)) replyToEmail = fromText;
-            }
+        const { value: normalizedReplyTo, error: replyToError } = normalizeReplyTo(replyTo);
+        if (replyToError) {
+            return NextResponse.json({ error: replyToError }, { status: 400 });
         }
 
-        const sendPayload = {
+        const emailPayload = {
             from: "Old McDonald's Pumpkin Patch <no-reply@oldmcdonaldspumpkinpatchwv.com>",
             to: toList,
             subject,
             text,
             html,
         };
-        if (replyToEmail) {
-            // Resend Node SDK uses snake_case for reply-to
-            sendPayload.reply_to = replyToEmail;
+
+        if (normalizedReplyTo) {
+            emailPayload.replyTo = normalizedReplyTo;
         }
 
-        const { data, error } = await resend.emails.send(sendPayload);
+        const { data, error } = await resend.emails.send(emailPayload);
 
         if (error) {
             const msg = String(error.message || error || 'Unknown error');
