@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from 'react';
-import { useConfig } from '@/app/FlagsContext';
+import { useConfig } from '@/app/ConfigsContext';
 import { normalizePricing } from '@/utils/pricingConfig';
 
 export function usePricingConfig() {

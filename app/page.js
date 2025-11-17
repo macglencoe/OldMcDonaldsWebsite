@@ -14,7 +14,7 @@ import AuxSearch from "@/components/home/auxSearch";
 import FarmSwapBanner from "@/components/home/farmSwapBanner";
 import OneLaneRoadBanner from "@/components/home/oneLaneRoadBanner";
 import SurveyBanner from "@/components/home/surveyBanner";
-import { getFeatureEvaluator, loadFlags } from "./flags";
+import { getFlagEvaluator, getFlags } from "./flags.server";
 
 export const metadata = {
   title: "Real Farm Fun - Old McDonald's Pumpkin Patch",
@@ -22,8 +22,8 @@ export const metadata = {
 }
 
 export default async function Home() {
-  const flags = await loadFlags();
-  const isFeatureEnabled = getFeatureEvaluator(flags);
+  const flags = await getFlags();
+  const isFeatureEnabled = getFlagEvaluator(flags);
 
   const canonicalBase = "https://www.oldmcdonaldspumpkinpatchwv.com";
 
