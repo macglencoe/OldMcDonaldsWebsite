@@ -16,6 +16,7 @@ import OneLaneRoadBanner from "@/components/home/oneLaneRoadBanner";
 import SurveyBanner from "@/components/home/surveyBanner";
 import { getFlagEvaluator, getFlags } from "./flags.server";
 import FestivalCalendar from "@/components/calendar";
+import InfoStrip from "@/components/home/infoStrip";
 
 export const metadata = {
   title: "Real Farm Fun - Old McDonald's Pumpkin Patch",
@@ -126,6 +127,8 @@ export default async function Home() {
         <section className={styles.hero}>
           <Hero />
         </section>
+
+        <InfoStrip />
 
         {isFeatureEnabled("show_aux_search") &&
           <AuxSearch />
