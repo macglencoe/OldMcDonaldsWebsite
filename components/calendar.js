@@ -91,7 +91,7 @@ export default function FestivalCalendar() {
               center: "title",
               right: "dayGridMonth,timeGridWeek,timeGridDay",
             }}
-            initialDate={"2025-10-01"}
+            initialDate={initialDate}
             events={events}
             eventContent={(arg) => {
               const start = arg.event.start;
