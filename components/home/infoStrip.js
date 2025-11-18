@@ -192,7 +192,7 @@ function InfoItem({ key, title, cta, children, icon, className }) {
                         className="text-foreground group-hover:text-accent transition-all duration-500 ease-in-out"
                         size={35}
                         aria-hidden="true"
-                        weight="light"
+                        weight="duotone"
                     />
                 </div>
             )}
