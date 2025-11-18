@@ -26,7 +26,7 @@ export default function Action({
 
     if (as === "Link") {
         return (
-            <Link href={href} className={classes} {...props}>
+            <Link href={href} onClick={onClick} className={classes} {...props}>
                 {children}
             </Link>
         )
@@ -34,7 +34,7 @@ export default function Action({
 
     if (as === "a") {
         return (
-            <a href={href} className={classes} {...props}>
+            <a href={href} onClick={onClick} className={classes} {...props}>
                 {children}
             </a>
         )

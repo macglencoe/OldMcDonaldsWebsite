@@ -1,84 +1,43 @@
 "use client";
 import { createContext, useContext, useMemo } from "react";
 
-const defaultFlags = {
-  gates: {},
-  configs: {},
-};
+const defaultFlags = Object.freeze({});
 
+/**
+ * React context containing the latest gate snapshot and helpers.
+ */
 const FlagsContext = createContext({
   flags: defaultFlags,
   isFeatureEnabled: () => false,
-  getFeatureArg: () => null,
 });
 
+/**
+ * Access the current flags context from a client component.
+ *
+ * @returns {{flags:Record<string, boolean>, isFeatureEnabled:(key:string)=>boolean}}
+ */
 export function useFlags() {
   const ctx = useContext(FlagsContext);
   if (!ctx) throw new Error("FlagsContext is missing");
   return ctx;
 }
 
-function normalizeFeatureArg(param, raw) {
-  if (raw && typeof raw === "object" && Array.isArray(raw.values) && raw.key === param) {
-    return {
-      key: param,
-      values: [...raw.values],
-      raw,
-    };
-  }
-
-  if (Array.isArray(raw)) {
-    return {
-      key: param,
-      values: [...raw],
-      raw,
-    };
-  }
-
-  if (raw === undefined || raw === null) {
-    return {
-      key: param,
-      values: [],
-      raw,
-    };
-  }
-
-  return {
-    key: param,
-    values: [raw],
-    raw,
-  };
-}
-
+/**
+ * Provide gate values to client components.
+ *
+ * @param {{flags?:Record<string, boolean>, children:import('react').ReactNode}} props
+ * @returns {JSX.Element}
+ */
 export function FlagsProvider({ flags, children }) {
   const safeFlags = flags ?? defaultFlags;
 
   const value = useMemo(() => {
-    const gates = safeFlags?.gates ?? {};
-    const configs = safeFlags?.configs ?? {};
-
+    const gates = safeFlags ?? defaultFlags;
     const isFeatureEnabled = (key) => Boolean(gates[key]);
 
-    const getFeatureArg = (key, param) => {
-      const config = configs[key];
-      if (!config) return null;
-
-      if (Array.isArray(config.args)) {
-        const match = config.args.find((arg) => arg.key === param);
-        if (match) return match;
-      }
-
-      if (config.raw && typeof config.raw === "object" && param in config.raw) {
-        return normalizeFeatureArg(param, config.raw[param]);
-      }
-
-      return null;
-    };
-
     return {
-      flags: safeFlags,
+      flags: gates,
       isFeatureEnabled,
-      getFeatureArg,
     };
   }, [safeFlags]);
 

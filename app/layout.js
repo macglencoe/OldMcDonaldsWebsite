@@ -1,8 +1,10 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import CookieNotice from "@/components/cookieNotice";
-import { loadFlags, getFeatureEvaluator } from "./flags";
+import { getFlagEvaluator, getFlags } from "./flags.server";
+import { getConfigs } from "./configs.server";
 import { FlagsProvider } from "./FlagsContext";
+import { ConfigsProvider } from "./ConfigsContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,17 +27,17 @@ export const metadata = {
 
 
 export default async function RootLayout({ children }) {
-  const flags = await loadFlags();
-  const isFeatureEnabled = getFeatureEvaluator(flags);
+  const [flags, configs] = await Promise.all([getFlags(), getConfigs()]);
+  const isFeatureEnabled = getFlagEvaluator(flags);
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
-        { isFeatureEnabled("show_cookie_notice") &&
-          <CookieNotice />
-        }
-        <FlagsProvider flags={flags}>{children}</FlagsProvider>
+        {isFeatureEnabled("show_cookie_notice") && <CookieNotice />}
+        <FlagsProvider flags={flags}>
+          <ConfigsProvider configs={configs}>{children}</ConfigsProvider>
+        </FlagsProvider>
       </body>
     </html>
   );

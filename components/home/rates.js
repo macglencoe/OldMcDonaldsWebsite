@@ -10,7 +10,7 @@ import {
 } from "phosphor-react";
 import { motion } from "framer-motion";
 import { track } from "@vercel/analytics";
-import pricing from "@/public/data/pricing";
+import { usePricingConfig } from "@/hooks/usePricingConfig";
 
 // Mapping Phosphor icons
 const ICON_MAP = {
@@ -21,6 +21,7 @@ const ICON_MAP = {
 };
 
 export default function Rates() {
+  const pricing = usePricingConfig();
   const items = [
     {
       title: "Admission",
@@ -104,6 +105,9 @@ export default function Rates() {
 
 function RateCard({ title, details, price, cta }) {
   const Icon = ICON_MAP[title];
+  const amount = typeof price?.amount === 'number' ? price.amount : 0;
+  const per = price?.per;
+  const notes = Array.isArray(price?.notes) ? price.notes : [];
   return (
     <motion.article
       whileHover={{ scale: 1.05 }}
@@ -154,10 +158,10 @@ function RateCard({ title, details, price, cta }) {
       {/* Price Tag */}
       <div className="bg-foreground/90 text-center p-4">
         <p className="text-4xl font-bold text-background">
-          {price.amount >= 1.0 ? `$${price.amount}` : `¢${(price.amount * 100).toFixed(0)}`}
+          {amount >= 1.0 ? `$${amount}` : `¢${(amount * 100).toFixed(0)}`}
         </p>
-        {price.per && <p className="text-sm text-background/80 -mt-2">/ {price.per}</p>}
-        {price.notes.map((note) => (
+        {per && <p className="text-sm text-background/80 -mt-2">/ {per}</p>}
+        {notes.map((note) => (
           <p key={note} className="text-xs text-background/60 mt-1">
             {note}
           </p>
