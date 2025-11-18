@@ -22,6 +22,8 @@ const GATE_DEFINITIONS = [
   { key: 'use_fall_hero', defaultValue: false },
   { key: 'use_winter_hero', defaultValue: false },
   { key: 'show_survey', defaultValue: false },
+  { key: 'infostrip_show_weather', defaultValue: false},
+  { key: 'infostrip_show_countdown', defaultValue: false}
 ];
 
 const defaultGates = Object.freeze(

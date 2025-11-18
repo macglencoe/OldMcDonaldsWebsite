@@ -6,6 +6,7 @@ import { Cake, ClockAfternoon, Cloud, Copy, ForkKnife, MapPin, PawPrint, Prohibi
 import clsx from "clsx";
 import Link from "next/link";
 import { track } from '@vercel/analytics'
+import { useFlags } from "@/app/FlagsContext";
 
 const OPENING_DAY_DATE = "2026-09-28T10:00:00-04:00";
 const DEFAULT_CALENDAR_DATES = "20260928T100000/20260928T180000";
@@ -25,6 +26,7 @@ export default function InfoStrip() {
     const [forecast, setForecast] = useState({ today: null, tomorrow: null });
     const [weatherLoading, setWeatherLoading] = useState(true);
     const [weatherError, setWeatherError] = useState(null);
+    const { isFeatureEnabled } = useFlags();
 
     useEffect(() => {
         let isActive = true;
@@ -72,9 +74,16 @@ export default function InfoStrip() {
     const openingDayCalendarDates = formatCalendarDatesParam(OPENING_DAY_DATE) ?? DEFAULT_CALENDAR_DATES;
     const openingDayCalendarHref = `https://calendar.google.com/calendar/r/eventedit?text=Old+McDonalds+Opening+Day&dates=${openingDayCalendarDates}&details=Come+visit+us+for+our+opening+day!+https://oldmcdonaldspumpkinpatch.com&location=Old%20McDonalds%20Pumpkin%20Patch%20%26%20Corn%20Maze%2C%201597%20Arden%20Nollville%20Rd%2C%20Inwood%2C%20WV%2025428%2C%20USA`;
 
-    const items = [
-        {
-            id: "hours",
+    const FEATURE_CONFIG = [
+        { id: "hours" },
+        { id: "pricing-admission" },
+        { id: "location"},
+        { id: "weather", flag: "infostrip_show_weather"},
+        { id: "opening-day", flag: "infostrip_show_countdown"}
+    ]
+
+    const baseItems = {
+        "hours": {
             title: "Hours",
             cta: { href: "#calendar", text: "Calendar" },
             content: (
@@ -95,8 +104,7 @@ export default function InfoStrip() {
             ),
             icon: ClockAfternoon
         },
-        {
-            id: "pricing-admission",
+        "pricing-admission": {
             title: "Admission",
             cta: { href: "#rates", text: "Rates" },
             content: (
@@ -107,8 +115,7 @@ export default function InfoStrip() {
             ),
             icon: Ticket
         },
-        {
-            id: "weather",
+        "weather": {
             title: "Weather",
             cta: null,
             content: (
@@ -121,8 +128,7 @@ export default function InfoStrip() {
             ),
             icon: Cloud
         },
-        {
-            id: "location",
+        "location": {
             title: "Location",
             cta: { href: "/visit", text: "Visit" },
             content: (
@@ -138,8 +144,7 @@ export default function InfoStrip() {
             ),
             icon: MapPin
         },
-        {
-            id: "opening-day",
+        "opening-day": {
             title: "Opening Day",
             cta: {
                 href: openingDayCalendarHref,
@@ -151,8 +156,11 @@ export default function InfoStrip() {
             ), //TODO: Update date yearly
             icon: Cake
         },
+    }
 
-    ]
+    const items = FEATURE_CONFIG
+        .filter(({ flag }) => !flag || isFeatureEnabled(flag))
+        .map(({ id }) => ({ id, ...baseItems[id]}));
     return (
         <section className="bg-foreground py-4 space-y-5">
             <div className="max-w-5xl mx-auto flex flex-wrap items-stretch px-1 sm:px-2 gap-2 sm:gap-4">
