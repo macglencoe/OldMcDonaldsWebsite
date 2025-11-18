@@ -10,6 +10,7 @@ import {
     Megaphone,
     Warning
 } from "phosphor-react"
+import { track } from '@vercel/analytics'
 
 
 
@@ -168,7 +169,9 @@ function getAnnouncementDisplayMeta(announcement) {
 function AnnouncementSummary({ announcement, count, meta }) {
     const { Icon, severityStyles, issuedText } = meta
     return (
-        <summary className="list-none border-b border-foreground/10 px-4 py-4 text-left text-sm text-foreground outline-none transition hover:bg-foreground/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex sm:items-center sm:justify-between [&::-webkit-details-marker]:hidden">
+        <summary className="list-none border-b border-foreground/10 px-4 py-4 text-left text-sm text-foreground outline-none transition hover:bg-foreground/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex sm:items-center sm:justify-between [&::-webkit-details-marker]:hidden" onClick={
+            () => { track('announcement-click', {title: announcement.short})}
+        }>
             <div className="flex flex-1 items-start gap-3">
                 <span
                     className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${severityStyles.iconWrapper ?? "bg-foreground/10 text-foreground"}`}
