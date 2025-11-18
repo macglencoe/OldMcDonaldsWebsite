@@ -14,7 +14,7 @@ import AuxSearch from "@/components/home/auxSearch";
 import FarmSwapBanner from "@/components/home/farmSwapBanner";
 import OneLaneRoadBanner from "@/components/home/oneLaneRoadBanner";
 import SurveyBanner from "@/components/home/surveyBanner";
-import { getFeatureEvaluator, loadFlags } from "./flags";
+import { getFlagEvaluator, getFlags } from "./flags.server";
 import InfoStrip from "@/components/home/infoStrip";
 
 export const metadata = {
@@ -23,8 +23,8 @@ export const metadata = {
 }
 
 export default async function Home() {
-  const flags = await loadFlags();
-  const isFeatureEnabled = getFeatureEvaluator(flags);
+  const flags = await getFlags();
+  const isFeatureEnabled = getFlagEvaluator(flags);
 
   const canonicalBase = "https://www.oldmcdonaldspumpkinpatchwv.com";
 
@@ -116,9 +116,11 @@ export default async function Home() {
           )
         }
 
-        {isFeatureEnabled("show_flood_banner") && (
+        {/* {isFeatureEnabled("show_flood_banner") && (
           <FloodBanner />
-        )}
+        )} */}
+
+        
 
 
         <section className={styles.hero}>

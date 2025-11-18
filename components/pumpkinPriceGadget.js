@@ -1,11 +1,13 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react';
-import pricing from "@/public/data/pricing";
+import { usePricingConfig } from '@/hooks/usePricingConfig';
 
 export default function PumpkinPriceGadget() {
     const [weight, setWeight] = useState(20)
-    const price = (weight * pricing["pumpkin-patch"].amount).toFixed(2)
+    const pricing = usePricingConfig()
+    const pumpkinPricing = pricing["pumpkin-patch"] ?? { amount: 0 }
+    const price = (weight * pumpkinPricing.amount).toFixed(2)
     const scale = 0.5 + (weight / 70) * 1.5
     const sliderRef = useRef(null)
     const [handleX, setHandleX] = useState(0)
@@ -26,14 +28,14 @@ export default function PumpkinPriceGadget() {
     const comparisonMessage =
     funFacts.find(({ min, max }) => weight >= min && weight <= max)?.message ?? ''
 
-useEffect(() => {
-    if (sliderRef.current) {
-        const { offsetWidth } = sliderRef.current
-        const percent = (weight - 1) / (70 - 1)
-        const thumbSize = 16
-        setHandleX(percent * (offsetWidth - thumbSize))
-    }
-}, [weight])
+    useEffect(() => {
+        if (sliderRef.current) {
+            const { offsetWidth } = sliderRef.current
+            const percent = (weight - 1) / (70 - 1)
+            const thumbSize = 16
+            setHandleX(percent * (offsetWidth - thumbSize))
+        }
+    }, [weight])
 
 
 return (
