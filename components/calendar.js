@@ -7,6 +7,58 @@ import { useEffect, useMemo, useState } from "react"
 import { useConfig } from "@/app/ConfigsContext"
 import Image from "next/image"
 
+const GOOGLE_CALENDAR_URL = 'https://calendar.google.com/calendar/render'
+const SCHEDULE_EVENT_TITLE = "Old McDonald's"
+const NIGHT_MAZE_EVENT_TITLE = "Night Maze at Old McDonald's"
+
+function formatDateForGoogleCalendar(date, isAllDay) {
+  if (!date) return ''
+  if (isAllDay) {
+    return date.toISOString().slice(0, 10).replace(/-/g, '')
+  }
+  return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'
+}
+
+function getEventEndDate(event) {
+  if (event.end) return event.end
+  if (event.allDay && event.start) {
+    const nextDay = new Date(event.start)
+    nextDay.setDate(nextDay.getDate() + 1)
+    return nextDay
+  }
+  return event.start
+}
+
+function buildGoogleCalendarUrl(event) {
+  if (!event?.start) return null
+
+  const url = new URL(GOOGLE_CALENDAR_URL)
+  url.searchParams.set('action', 'TEMPLATE')
+
+  const category = event.extendedProps?.category
+  const title = category === 'schedule'
+    ? SCHEDULE_EVENT_TITLE
+    : category === 'night-maze'
+    ? NIGHT_MAZE_EVENT_TITLE
+    : (event.title || SCHEDULE_EVENT_TITLE)
+  url.searchParams.set('text', title)
+
+  const start = formatDateForGoogleCalendar(event.start, event.allDay)
+  const end = formatDateForGoogleCalendar(getEventEndDate(event), event.allDay)
+  if (start && end) {
+    url.searchParams.set('dates', `${start}/${end}`)
+  }
+
+  const description = event.extendedProps?.description ?? event.extendedProps?.details
+  if (description) {
+    url.searchParams.set('details', description)
+  }
+
+    url.searchParams.set('location', 'Old McDonalds Pumpkin Patch & Corn Maze, 1597 Arden Nollville Rd, Inwood, WV 25428, USA')
+
+  return url.toString()
+}
+
 export default function FestivalCalendar() {
   const scheduleConfig = useConfig("calendar_schedule", "schedule")
   const initialDateConfig = useConfig("calendar_schedule", "initialDate")
@@ -93,6 +145,13 @@ export default function FestivalCalendar() {
             }}
             initialDate={initialDate}
             events={events}
+            eventClick={(info) => {
+              info.jsEvent?.preventDefault()
+              const calendarUrl = buildGoogleCalendarUrl(info.event)
+              if (calendarUrl) {
+                window.open(calendarUrl, '_blank', 'noopener,noreferrer')
+              }
+            }}
             eventContent={(arg) => {
               const start = arg.event.start;
               const end = arg.event.end;
@@ -146,6 +205,7 @@ export default function FestivalCalendar() {
             
   
           />
+          <p className="mt-4">Click any event to add it to your Google Calendar</p>
         </div>
       </div>
     </section>
