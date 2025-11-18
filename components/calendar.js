@@ -5,6 +5,7 @@ import dayGridPlugin from "@fullcalendar/daygrid"
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { useEffect, useMemo, useState } from "react"
 import { useConfig } from "@/app/ConfigsContext"
+import Image from "next/image"
 
 export default function FestivalCalendar() {
   const scheduleConfig = useConfig("calendar_schedule", "schedule")
@@ -74,70 +75,79 @@ export default function FestivalCalendar() {
 
 
   return (
-    <div className="overflow-x-scroll w-full min-w-300px p-4 bg-background text-foreground">
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin]}
-        initialView="dayGridMonth"
-        height="auto"
-        headerToolbar={{
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay",
-        }}
-        initialDate={initialDate}
-        events={events}
-        eventContent={(arg) => {
-          const start = arg.event.start;
-          const end = arg.event.end;
-
-          const formatTime = (date) =>
-            date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }).toLowerCase();
-
-          const timeRange = start && end ? `${formatTime(start)} - ${formatTime(end)}` : '';
-
-          const wrapper = document.createElement('div');
-          wrapper.style.whiteSpace = 'normal';
-          wrapper.style.wordBreak = 'break-word';
-          wrapper.style.lineHeight = '1.2';
-          wrapper.style.padding = '2px 2px';
-          wrapper.innerHTML = `<strong>${timeRange}</strong><br/>${arg.event.title}`;
-
-          return { domNodes: [wrapper] };
-        }}
-        eventDidMount={info => {
-          // info.el is the <a> wrapper for that event in month‐view
-          const cat = info.event.extendedProps.category;
-          if (cat === 'schedule') {
-            info.el.style.backgroundColor = 'var(--foreground)';
-            info.el.style.color = 'white';
-          } else if (cat === 'night-maze') {
-            info.el.style.backgroundColor = 'var(--nightMazeBackground)';
-            info.el.style.color = 'white';
-          } else if (cat == 'event') {
-            info.el.style.backgroundColor = 'var(--accent)';
-            info.el.style.color = 'white'
-          }
-        }}
-        dayCellContent={(arg) => {
-          const day = arg.date.toISOString().split('T')[0]
-          const weather = weatherByDate[day]
-          if(!weather) return arg.dayNumberText
-
-          const el = document.createElement('div');
-          el.style.display = 'flex';
-          el.style.flexDirection = 'row-reverse';
-          el.style.alignItems = 'center';
-          el.style.justifyContent = 'center';
-          el.innerHTML = `
-            <span>${arg.dayNumberText}</span>
-            <img src="${weather.icon}" title="${weather.text}" style="width: 32px; height: 32px;" />
-          `
-          return {
-            domNodes: [el]
-          }
-        }}
-
-      />
-    </div>
+    <section className="text-center bg-foreground relative bg-[url('/tractorForge.jpg')] bg-cover bg-center" id="calendar">
+      <div className="standard-backdrop py-7">
+        <div>
+          <p className="md:hidden text-background py-4">If you're on mobile, you can scroll left and right to see the full calendar <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="var(--background)" viewBox="0 0 256 256" className="inline-block"><path d="M216,140v36c0,25.59-8.49,42.85-8.85,43.58A8,8,0,0,1,200,224a7.9,7.9,0,0,1-3.57-.85,8,8,0,0,1-3.58-10.73c.06-.12,7.16-14.81,7.16-36.42V140a12,12,0,0,0-24,0v4a8,8,0,0,1-16,0V124a12,12,0,0,0-24,0v12a8,8,0,0,1-16,0V68a12,12,0,0,0-24,0V176a8,8,0,0,1-14.79,4.23l-18.68-30-.14-.23A12,12,0,1,0,41.6,162L70.89,212A8,8,0,1,1,57.08,220l-29.32-50a28,28,0,0,1,48.41-28.17L80,148V68a28,28,0,0,1,56,0V98.7a28,28,0,0,1,38.65,16.69A28,28,0,0,1,216,140Zm32-92H195.31l18.34-18.34a8,8,0,0,0-11.31-11.32l-32,32a8,8,0,0,0,0,11.32l32,32a8,8,0,0,0,11.31-11.32L195.31,64H248a8,8,0,0,0,0-16Z"></path></svg></p>
+        </div>
+  
+        <div className="max-w-5xl mx-auto overflow-x-scroll w-full min-w-300px p-4 z-20 backdrop-blur-xl bg-foreground/20 no-scrollbar text-background rounded-2xl">
+          <FullCalendar
+            plugins={[dayGridPlugin, timeGridPlugin]}
+            initialView="dayGridMonth"
+            height="auto"
+            headerToolbar={{
+              left: "prev,next today",
+              center: "title",
+              right: "dayGridMonth,timeGridWeek,timeGridDay",
+            }}
+            initialDate={"2025-10-01"}
+            events={events}
+            eventContent={(arg) => {
+              const start = arg.event.start;
+              const end = arg.event.end;
+  
+              const formatTime = (date) =>
+                date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }).toLowerCase();
+  
+              const timeRange = start && end ? `${formatTime(start)} - ${formatTime(end)}` : '';
+  
+              const wrapper = document.createElement('div');
+              wrapper.style.whiteSpace = 'normal';
+              wrapper.style.wordBreak = 'break-word';
+              wrapper.style.lineHeight = '1.2';
+              wrapper.style.padding = '2px 2px';
+              wrapper.innerHTML = `<strong>${timeRange}</strong><br/>${arg.event.title}`;
+  
+              return { domNodes: [wrapper] };
+            }}
+            eventDidMount={info => {
+              // info.el is the <a> wrapper for that event in month‐view
+              const cat = info.event.extendedProps.category;
+              if (cat === 'schedule') {
+                info.el.style.backgroundColor = 'var(--foreground)';
+                info.el.style.color = 'white';
+              } else if (cat === 'night-maze') {
+                info.el.style.backgroundColor = 'var(--nightMazeBackground)';
+                info.el.style.color = 'white';
+              } else if (cat == 'event') {
+                info.el.style.backgroundColor = 'var(--accent)';
+                info.el.style.color = 'white'
+              }
+            }}
+            dayCellContent={(arg) => {
+              const day = arg.date.toISOString().split('T')[0]
+              const weather = weatherByDate[day]
+              if (!weather) return arg.dayNumberText
+  
+              const el = document.createElement('div');
+              el.style.display = 'flex';
+              el.style.flexDirection = 'row-reverse';
+              el.style.alignItems = 'center';
+              el.style.justifyContent = 'center';
+              el.innerHTML = `
+              <span>${arg.dayNumberText}</span>
+              <img src="${weather.icon}" title="${weather.text}" style="width: 32px; height: 32px;" />
+              `
+              return {
+                domNodes: [el]
+              }
+            }}
+            
+  
+          />
+        </div>
+      </div>
+    </section>
   )
 }
