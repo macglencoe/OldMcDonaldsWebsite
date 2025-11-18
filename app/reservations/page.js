@@ -4,9 +4,9 @@ import { BodyBlock } from "@/components/bodyBlock";
 
 import rentalSlots from "@/public/data/gazeboRentalSlots.json";
 import { useMemo } from "react";
-import pricing from "@/public/data/pricing"
 import PageHeader from "@/components/pageHeader";
 import Action from "@/components/action";
+import { getPricingData } from "@/utils/pricingServer";
 
 /**
  * Renders the gazebo-rental availability table from
@@ -64,7 +64,14 @@ export const metadata = {
 }
 
 
-export const Reservations = () => {
+export const Reservations = async () => {
+    const pricing = await getPricingData();
+    const gazeboRental = pricing["gazebo-rental"];
+    const gazeboPrice = Number(gazeboRental?.amount ?? 0).toFixed(2);
+    const admission = pricing.admission;
+    const admissionAmount = Number(admission?.amount ?? 0);
+    const admissionDisplay = admissionAmount >= 1 ? `$${admissionAmount.toFixed(2)}` : `¢${(admissionAmount * 100).toFixed(0)}`;
+    const admissionUnit = admission?.per ?? 'person';
 
     return (
         <Layout>
@@ -80,7 +87,7 @@ export const Reservations = () => {
                 <BodyBlock src="/rentalgazebo.jpg">
                     <h3>Pricing</h3>
                     <p>For 2 hours:</p>
-                    <p className="big">${pricing["gazebo-rental"].amount.toFixed(2)}</p>
+                    <p className="big">${gazeboPrice}</p>
                     <p>You will recieve an <b>email invoice</b> for your rental after booking</p>
                 </BodyBlock>
                 <BodyBlock>
@@ -109,7 +116,7 @@ export const Reservations = () => {
                 <BodyBlock src="/entrance.jpg">
                     <h3>General Admission</h3>
                     <p>All guests must pay <b>General Admission</b> at the gate:</p>
-                    <p className="big">$6 per person*</p>
+                    <p className="big">{admissionDisplay} per {admissionUnit}*</p>
                     <p>* Over the age of 3</p>
                 </BodyBlock>
                 <div className="mx-auto my-12 p-8 text-foreground">
