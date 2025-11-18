@@ -34,6 +34,12 @@ const CONFIG_DEFINITIONS = [
       saturday: {},
       sunday: {}
     }
+  },
+  {
+    statsigKey: 'faq',
+    defaultValue: {
+      questions: []
+    }
   }
 ];
 
