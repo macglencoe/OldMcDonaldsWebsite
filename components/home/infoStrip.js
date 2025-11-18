@@ -7,9 +7,16 @@ import clsx from "clsx";
 import Link from "next/link";
 import { track } from '@vercel/analytics'
 import { useFlags } from "@/app/FlagsContext";
+import { useConfig, useConfigs } from "@/app/ConfigsContext";
 
 const OPENING_DAY_DATE = "2026-09-28T10:00:00-04:00";
 const DEFAULT_CALENDAR_DATES = "20260928T100000/20260928T180000";
+const HOURS_DAY_KEYS = ["friday", "saturday", "sunday"];
+const FALLBACK_HOURS = [
+    { day: "FRI", opens: "1:00 PM", closes: "6:00 PM" },
+    { day: "SAT", opens: "10:00 AM", closes: "6:00 PM" },
+    { day: "SUN", opens: "12:00 PM", closes: "6:00 PM" },
+];
 
 const formatCalendarDatesParam = (isoDate, startTime = "T100000", endTime = "T180000") => {
     if (typeof isoDate !== "string") return null;
@@ -82,6 +89,10 @@ export default function InfoStrip() {
         { id: "opening-day", flag: "infostrip_show_countdown"}
     ]
 
+    const weeklyHoursConfig = useConfig("weekly-hours");
+    const weeklyHours = weeklyHoursConfig?.raw;
+    const hoursRows = buildHoursRows(weeklyHours);
+
     const baseItems = {
         "hours": {
             title: "Hours",
@@ -96,9 +107,9 @@ export default function InfoStrip() {
                         </tr>
                     </thead>
                     <tbody>
-                        <HoursRow day="FRI" opens="1:00 PM" closes="6:00 PM" />
-                        <HoursRow day="SAT" opens="10:00 AM" closes="6:00 PM" />
-                        <HoursRow day="SUN" opens="12:00 PM" closes="6:00 PM" />
+                        {hoursRows.map(({ day, opens, closes }) => (
+                            <HoursRow key={day} day={day} opens={opens} closes={closes} />
+                        ))}
                     </tbody>
                 </table>
             ),
@@ -226,6 +237,51 @@ function HoursRow({ day, opens, closes }) {
             <td className="bg-foreground text-background py-0.5 px-3 rounded-r-lg">{closes}</td>
         </tr>
     )
+}
+
+function buildHoursRows(schedule) {
+    if (!schedule || typeof schedule !== "object") {
+        return FALLBACK_HOURS;
+    }
+
+    const rows = HOURS_DAY_KEYS.reduce((acc, dayKey) => {
+        const data = schedule?.[dayKey];
+        if (!data || typeof data !== "object") return acc;
+
+        const opens = formatTimeToEnUs(data.open);
+        const closes = formatTimeToEnUs(data.close);
+
+        if (!opens || !closes) return acc;
+
+        acc.push({
+            day: dayKey.slice(0, 3).toUpperCase(),
+            opens,
+            closes,
+        });
+
+        return acc;
+    }, []);
+
+    return rows.length ? rows : FALLBACK_HOURS;
+}
+
+function formatTimeToEnUs(timeString) {
+    if (typeof timeString !== "string") return null;
+
+    const [hourPart, minutePart] = timeString.trim().split(":");
+    if (hourPart === undefined || minutePart === undefined) return null;
+
+    const hours = Number(hourPart);
+    const minutes = Number(minutePart);
+
+    if (!Number.isFinite(hours) || !Number.isFinite(minutes)) return null;
+
+    const normalizedHours = ((hours % 24) + 24) % 24;
+    const period = normalizedHours >= 12 ? "PM" : "AM";
+    const displayHour = normalizedHours % 12 || 12;
+    const displayMinutes = String(minutes).padStart(2, "0");
+
+    return `${displayHour}:${displayMinutes} ${period}`;
 }
 
 function OpeningDayCountdown({ targetDate }) {

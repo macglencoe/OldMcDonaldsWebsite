@@ -27,6 +27,14 @@ const CONFIG_DEFINITIONS = [
     statsigKey: 'pricing',
     defaultValue: {},
   },
+  {
+    statsigKey: 'weekly-hours',
+    defaultValue: {
+      friday: {},
+      saturday: {},
+      sunday: {}
+    }
+  }
 ];
 
 /**
