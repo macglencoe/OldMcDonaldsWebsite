@@ -5,6 +5,7 @@ import Action from "../action"
 import { Cake, ClockAfternoon, Cloud, Copy, ForkKnife, MapPin, PawPrint, Prohibit, SquareLogo, Ticket, Wheelchair } from "phosphor-react";
 import clsx from "clsx";
 import Link from "next/link";
+import { track } from '@vercel/analytics'
 
 const OPENING_DAY_DATE = "2026-09-28T10:00:00-04:00";
 const DEFAULT_CALENDAR_DATES = "20260928T100000/20260928T180000";
@@ -198,7 +199,9 @@ function InfoItem({ key, title, cta, children, icon, className }) {
             <div className="flex flex-col items-center p-1 sm:p-2 pt-1 sm:pt-4 w-full gap-2 h-full justify-between text-center text-background z-20">
                 {children}
                 {cta && cta.href && cta.text && (
-                    <Action as="a" href={cta.href} target={cta.target} className="uppercase tracking-wider w-full text-center max-w-md">{cta.text}</Action>
+                    <Action as="a" href={cta.href} target={cta.target} className="uppercase tracking-wider w-full text-center max-w-md" onClick={() => {
+                        track('infostrip-cta-click', {key: key});
+                    }}>{cta.text}</Action>
                 )}
             </div>
         </div>
@@ -412,7 +415,8 @@ function SecondaryStrip() {
                             `
                         )}
                         onClick={() => {
-                            setSelected(item.id)
+                            setSelected(item.id);
+                            track('infostrip-secondary-click', {key: item.id})
                         }}
                         key={item.id}
                         >
