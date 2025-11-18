@@ -200,7 +200,7 @@ function InfoItem({ key, title, cta, children, icon, className }) {
                 {children}
                 {cta && cta.href && cta.text && (
                     <Action as="a" href={cta.href} target={cta.target} className="uppercase tracking-wider w-full text-center max-w-md" onClick={() => {
-                        track('infostrip-cta-click', {key: key});
+                        track('infostrip-cta-click', {href: cta.href});
                     }}>{cta.text}</Action>
                 )}
             </div>
