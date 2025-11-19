@@ -178,6 +178,7 @@ export default function InfoStrip() {
                 {items.map(item => (
                     <InfoItem
                         key={item.id}
+                        id={item.id}
                         title={item.title}
                         cta={item.cta}
                         icon={item.icon}>
@@ -190,10 +191,10 @@ export default function InfoStrip() {
     )
 }
 
-function InfoItem({ key, title, cta, children, icon, className }) {
+function InfoItem({ id, title, cta, children, icon, className }) {
     const IconComponent = icon;
     return (
-        <div className={clsx("relative flex flex-col flex-[1_1_260px] min-w-[240px] sm:min-w-[260px]", className, "border-2 border-background/20 bg-background/10 rounded-2xl  overflow-hidden items-center gap-2 group")} key={key}>
+        <div className={clsx("relative flex flex-col flex-[1_1_260px] min-w-[240px] sm:min-w-[260px]", className, "border-2 border-background/20 bg-background/10 rounded-2xl  overflow-hidden items-center gap-2 group")} key={id}>
             {title &&
                 <h3 className="text-background text-2xl font-bold bg-background/20 w-full text-center py-1 uppercase tracking-widest shadow-2xl z-20">{title}</h3>
             }
@@ -491,7 +492,7 @@ function SecondaryStrip() {
             {/* text */}
             <div className={clsx(`w-full bg-background/20 rounded-2xl overflow-hidden ${selected == null ? 'sr-only' : ''}`)}>
                 {items.map((item)=> (
-                    <div className={clsx(`space-y-1 text-background text-lg ${selected == item.id ? '' : 'sr-only'}`)} >
+                    <div className={clsx(`space-y-1 text-background text-lg ${selected == item.id ? '' : 'sr-only'}`)} key={item.id}>
                         <h2 className="text-sm tracking-wider uppercase text-background/20 w-full px-3 py-1 pt-1.5 bg-background/10">{item.id}</h2>
                         <div className="px-4 py-2">{item.text}</div>
                     </div>
