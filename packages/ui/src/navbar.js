@@ -6,17 +6,17 @@ import mapIcon from '@/public/icons/map.svg?raw'
 import Link from "next/link"
 import { track } from "@vercel/analytics"
 import { CaretDown, CaretUp } from "phosphor-react"
+import React from "react"
 
 const MORE_MENU_ID = "navbar-more-menu"
 
 const mergeClassNames = (...classNames) => classNames.filter(Boolean).join(' ')
 
-export const Navbar = ({
+const Navbar = ({
     items,
     primaryKeys,
     titleText
 }) => {
-
     const primaryItems = items.filter((item) => primaryKeys.has(item.key))
     const secondaryItems = items.filter((item) => !primaryKeys.has(item.key))
     const hasSecondaryItems = secondaryItems.length > 0
@@ -154,4 +154,4 @@ export const Navbar = ({
     )
 }
 
-export default Navbar
+export { Navbar };

@@ -4,9 +4,7 @@ import Footer from "./footer"
 import { Analytics } from "@vercel/analytics/next"
 import QrTracker from "./qrTracker"
 import { Suspense } from "react"
-
-const { default: Navbar } = require("./navbar")
-
+import { Navbar } from "@oldmc/ui"
 
 const Layout = (props) => {
     return (
