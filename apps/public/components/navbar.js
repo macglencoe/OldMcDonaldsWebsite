@@ -7,24 +7,22 @@ import Link from "next/link"
 import { track } from "@vercel/analytics"
 import { CaretDown, CaretUp } from "phosphor-react"
 
-const NAV_ITEMS = [
-    { key: "activities", title: "Activities", path: '/activities' },
-    { key: "about", title: "About", path: '/about' },
-    { key: "reservations", title: "Reservations", path: '/reservations' },
-    { key: "faq", title: "FAQ", path: '/faq' },
-    { key: "gallery", title: "Gallery", path: '/gallery' },
-    { key: "pricing", title: "Pricing", path: '/pricing' },
-]
-
-const PRIMARY_KEYS = new Set(["activities", "reservations", "pricing"])
-const PRIMARY_ITEMS = NAV_ITEMS.filter((item) => PRIMARY_KEYS.has(item.key))
-const SECONDARY_ITEMS = NAV_ITEMS.filter((item) => !PRIMARY_KEYS.has(item.key))
-const HAS_SECONDARY_ITEMS = SECONDARY_ITEMS.length > 0
 const MORE_MENU_ID = "navbar-more-menu"
 
 const mergeClassNames = (...classNames) => classNames.filter(Boolean).join(' ')
 
-export const Navbar = () => {
+export const Navbar = ({
+    items,
+    primaryKeys,
+    titleText
+}) => {
+
+    const primaryItems = items.filter((item) => primaryKeys.has(item.key))
+    const secondaryItems = items.filter((item) => !primaryKeys.has(item.key))
+    const hasSecondaryItems = secondaryItems.length > 0
+
+
+
     const [isOpen, setIsOpen] = useState(false)
     const [isMoreOpen, setIsMoreOpen] = useState(false)
     const pathname = usePathname()
@@ -82,11 +80,11 @@ export const Navbar = () => {
     return (
         <header className={styles.navbar + " relative"}>
             <a href="#skip-navbar" className="absolute right-1/2 text-center underline bg-background py-3 px-4 opacity-0 focus:opacity-100 -translate-y-[150%] focus:translate-y-0 transition-all duration-200">Skip to main content</a>
-            <a href="/" aria-label="Home"><h1>Old McDonald's</h1></a>
+            <a href="/" aria-label="Home"><h1>{titleText}</h1></a>
             <nav>
                 <ul>
-                    {PRIMARY_ITEMS.map(renderNavItem)}
-                    {HAS_SECONDARY_ITEMS && (
+                    {primaryItems.map(renderNavItem)}
+                    {hasSecondaryItems && (
                         <li className={styles.more} ref={moreRef}>
                             <button
                                 type="button"
@@ -106,7 +104,7 @@ export const Navbar = () => {
                                 hidden={!isMoreOpen}
                                 aria-hidden={!isMoreOpen}
                             >
-                                {SECONDARY_ITEMS.map(renderNavItem)}
+                                {secondaryItems.map(renderNavItem)}
                             </ul>
                         </li>
                     )}
@@ -137,7 +135,7 @@ export const Navbar = () => {
             <div className={styles.menu + (isOpen ? " " + styles.open : "")}>
                 <nav>
                     <ul>
-                        {NAV_ITEMS.map((item) => (
+                        {items.map((item) => (
                             <li key={item.path} className={pathname === item.path ? styles.active : null}>
                                 <a href={item.path}>{item.title}</a>
                             </li>
