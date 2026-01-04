@@ -23,7 +23,7 @@ export default function FlowerFields() {
                 </AndImage>
                 <AndImage src="/flowerbar.jpg">
                     <h2 id="cut-your-own">Cut your own</h2>
-                    <p>We have an arrangement station ("Flower Bar") near the flower fields, where you will find cutters and cups</p>
+                    <p>We have an arrangement station (&quot;Flower Bar&quot;) near the flower fields, where you will find cutters and cups</p>
                     <ul>
                         <li>For <b>one cup</b> of <b>Any Flower</b>:<br></br><p className="big">${pricing["flower-cup"].amount.toFixed(2)}</p></li>
                     </ul>
