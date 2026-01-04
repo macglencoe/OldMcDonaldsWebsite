@@ -1,7 +1,7 @@
 "use client"
 
 import ContactForm from "@/components/contactForm"
-import ErrorPage from "@/components/error/errorPage"
+import { ErrorPage } from "@oldmc/ui";
 import Layout from "@/components/layout"
 
 export default function NormalError({ error, reset }) {

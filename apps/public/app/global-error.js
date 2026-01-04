@@ -1,7 +1,7 @@
 "use client";
 
 import "@/app/globals.css";
-import ErrorPage from "@/components/error/errorPage";
+import { ErrorPage } from "@oldmc/ui";
 
 export default function GlobalError({ error, reset }) {
     return (
