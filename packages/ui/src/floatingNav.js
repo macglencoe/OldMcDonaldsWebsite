@@ -4,7 +4,16 @@ import { usePathname } from "next/navigation"
 import { ArrowUp } from "phosphor-react";
 import faq from '@/public/data/faq.json'
 
-export default function FloatingNav() {
+export function FloatingNav({
+    controls = [
+        {
+            id: 'scrollTop',
+            label: 'Scroll to Top',
+            children: <ArrowUp size={24} weight="bold" />,
+            scrollToTop: true
+        }
+    ]
+}) {
     const pathname = usePathname();
 
     const hasFaq = faq.some(item =>
@@ -28,14 +37,26 @@ export default function FloatingNav() {
             flex flex-col bg-accent gap-3 
             rounded-full
         ">
-            <NavButton onClick={scrollToTop} id="scrollTop">
+            {controls.map(control => (
+                <NavButton
+                    onClick={
+                        control.scrollToTop ? scrollToTop :
+                        control.scrollToId ? () => scrollToId(control.scrollToId) : undefined
+                    }
+                    id={control.id}
+                    key={control.id}
+                >
+                    {control.children}
+                </NavButton>
+            ))}
+            {/* <NavButton onClick={scrollToTop} id="scrollTop">
                 <ArrowUp size={24} weight="bold" />
             </NavButton>
             { hasFaq &&
                 <NavButton onClick={() => scrollToId('faq')} id="scrollToFAQ">
                     FAQ
                 </NavButton>
-            }
+            } */}
 
         </div>
     )
@@ -57,3 +78,4 @@ function NavButton({ children, onClick, id }) {
         </button>
     )
 }
+
