@@ -102,7 +102,7 @@ export default function PhotoOps2025() {
                     <p>The winners of each of the following categories will be featured on the <Link href={"/map"}>Map</Link>!</p>
                 </div>
                 {winners.map((category, i) => (
-                    <div className='bg-foreground/5 flex flex-row items-center justify-between rounded-3xl border border-foreground/10 overflow-hidden' id={category.winner.src}>
+                    <div className='bg-foreground/5 flex flex-row items-center justify-between rounded-3xl border border-foreground/10 overflow-hidden' id={category.winner.src} key={i}>
                         <div className='m-3 p-2 md:p-4'>
                             <h2 className='text-foreground'>
                                 <span className='opacity-50'>Photo Op:</span>
