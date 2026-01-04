@@ -22,10 +22,10 @@ export default async function CornMaze() {
                 <div className={styles.cornMaze}>
                     <Image width={1000} height={1000} src='/maze2025.JPG' />
                     <h2 className='text-center my-3 !text-3xl md:my-6 md:!text-5xl'>2025 - Martinsburg 1877</h2>
-                    <p className='text-center'>This year's maze features <strong>Martinsburg's historical roundhouse</strong>, where the very <strong>first <u>nationwide</u> labor movement</strong> began.</p>
+                    <p className='text-center'>This year&apos;s maze features <strong>Martinsburg&apos;s historical roundhouse</strong>, where the very <strong>first <u>nationwide</u> labor movement</strong> began.</p>
                     <p className='text-center'>The Great Strike of 1877 began when the wages of railroad workers were cut by <i>10%</i>. Conductors, Engineers, Firemen, and Brakemen refused to move the trains until they received a fair wage.</p>
                     <br />
-                    <p className='text-center'>You may notice large swaths of missing corn in the above image. In June, the corn maze flooded three times, washing away vital soil nutrients and making the field inaccessible for weeks. Against all odds, we managed to plant, but some areas didn't grow.</p>
+                    <p className='text-center'>You may notice large swaths of missing corn in the above image. In June, the corn maze flooded three times, washing away vital soil nutrients and making the field inaccessible for weeks. Against all odds, we managed to plant, but some areas didn&apos;t grow.</p>
                 </div>
                 <BodyBlock src="/cornMazeEntrance.jpg">
                     <h2>10 acres of fun</h2>
@@ -56,7 +56,7 @@ export default async function CornMaze() {
                     <p>In order to preserve the corn for harvest, and to ensure all visitors can have a fun experience, we ask that you respect these rules:</p>
                     <ol>
                         <li><b>Leave No Trace:</b> Do not leave any trash or personal items in the corn maze. Anything you leave in the maze will be tilled into the soil next summer, never to be seen again except by mother Earth herself.</li>
-                        <li><b>Don't pick, snap, or stomp the corn.</b> It took months to grow and weeks to design. Let's keep it pretty for other visitors to enjoy!</li>
+                        <li><b>Don&apos;t pick, snap, or stomp the corn.</b> It took months to grow and weeks to design. Let&apos;s keep it pretty for other visitors to enjoy!</li>
                         <li><b>Refrain from eating the corn</b>. You are human. This corn is meant for animals.</li>
                         <li><b>Running is forbidden</b></li>
                         <li><b>Consider the weather conditions</b>: It is liable to be muddy. Dress for the farm, not the runway.</li>
