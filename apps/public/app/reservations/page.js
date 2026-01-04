@@ -89,7 +89,7 @@ export const Reservations = () => {
                     </div>
                 </BodyBlock>
                 <BodyBlock>
-                    <h3>What's included</h3>
+                    <h3>What&apos;s included</h3>
                     <ul>
                         <li>Two picnic tables under the gazebo</li>
                         <li>You may arrive <b>30 minutes early</b> to decorate</li>

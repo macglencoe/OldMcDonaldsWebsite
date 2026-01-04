@@ -32,7 +32,7 @@ function Photo({ src, alt, pos }) {
                 <p className='text-center'>
                     <strong>{alt}</strong>
                     <br />
-                    <em>Doesn't have a photo yet!</em>
+                    <em>Doesn&apos;t have a photo yet!</em>
                     <br />
                     <a className="!break-normal" href='#upload'>Be the first to upload one!</a>
                 </p>

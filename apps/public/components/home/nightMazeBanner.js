@@ -16,7 +16,7 @@ export default function NightMazeBanner() {
                 <div className="flex flex-row flex-wrap gap-2 md:gap-4">
                     <div className="flex flex-col">
                         <h1 className="text-4xl md:text-6xl font-bold text-accent/70 uppercase">Six Nights</h1>
-                        <span className="text-2xl md:text-3xl text-background/70 tracking-wider">at Old McDonald's!</span>
+                        <span className="text-2xl md:text-3xl text-background/70 tracking-wider">at Old McDonald&apos;s!</span>
                     </div>
                     <ul className="flex flex-col flex-wrap font-bold text-background/70 list-disc list-inside">
                         <li >Corn Maze in the dark</li>

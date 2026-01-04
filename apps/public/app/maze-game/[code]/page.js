@@ -56,7 +56,7 @@ export default function MazeCodePage() {
   if (status === 'loading') {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p>Loading…</p>
+        <p>Loading...</p>
       </div>
     );
   }
@@ -66,10 +66,10 @@ export default function MazeCodePage() {
       <div className="flex flex-col items-center justify-center h-screen px-4 text-center">
         <h1 className="text-2xl font-semibold mb-2">Invalid Code</h1>
         <p className="text-lg">
-          The code "<code className="font-mono">{code}</code>" isn’t recognized.
+          The code &quot;<code className="font-mono">{code}</code>&quot; isn&apos;t recognized.
         </p>
         <p className="mt-4 text-sm opacity-70">
-          Redirecting back in 4 seconds…
+          Redirecting back in 4 seconds...
         </p>
       </div>
     );

@@ -86,9 +86,9 @@ export default function Attribution() {
 
       <div className={`max-w-3xl mx-auto px-6 py-12 ` + " " + styles.body}>
         <p className="text-2xl mb-6">
-          We're still working on procuring in-season photographs of the farm.
+          We&apos;re still working on procuring in-season photographs of the farm.
         </p>
-        <p className="mb-6">This website is new, and we haven't had the chance to photograph the festival in full swing yet.</p >
+        <p className="mb-6">This website is new, and we haven&apos;t had the chance to photograph the festival in full swing yet.</p >
         <p className="text-2xl mb-6">
           So, until then, we use stock and placeholder images provided by talented contributors on{" "}
           <a href="https://unsplash.com/" target="_blank" rel="noopener noreferrer">

@@ -27,7 +27,7 @@ export default function CookieNotice() {
             }`}>
             <div className="flex flex-col">
                 <h1 className="text-2xl md:text-4xl font-bold text-foreground/70">Old McDonald had a <a href="https://en.wikipedia.org/wiki/HTTP_cookie" target="_blank" rel="noopener noreferrer" className="text-accent">cookie</a>...</h1>
-                <p className="text-lg md:text-xl text-foreground/70">And he's using it to make sure you get the best experience</p>
+                <p className="text-lg md:text-xl text-foreground/70">And he&apos;s using it to make sure you get the best experience</p>
             </div>
             <div className="flex flex-row gap-4">
                 <button className="text-background font-bold tracking-wider uppercase p-2 bg-foreground hover:bg-foreground/70 cursor-pointer"

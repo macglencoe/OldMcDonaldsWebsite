@@ -20,7 +20,7 @@ export default function FloodBanner() {
         }}>
             <div className="flex flex-col">
                 <h1 className="text-4xl md:text-6xl font-bold text-background/70 uppercase">Weather Advisory</h1>
-                <p className="text-2xl md:text-3xl text-background/70">Old McDonald's hours may be affected.</p>
+                <p className="text-2xl md:text-3xl text-background/70">Old McDonald&apos;s hours may be affected.</p>
                 <a href="https://www.facebook.com/oldmcdonaldspumpkinpatchandcornmaze" target="_blank" rel="noopener noreferrer" className="text-md text-accent font-bold tracking-wider uppercase my-2 bg-foreground/70 py-1 px-2 w-fit">Stay updated on Facebook</a>
             </div>
 

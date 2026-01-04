@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import styles from './page.module.css'
 import Layout from "@/components/layout"
 

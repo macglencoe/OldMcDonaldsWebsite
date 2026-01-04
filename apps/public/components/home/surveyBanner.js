@@ -10,7 +10,7 @@ export default function SurveyBanner({ href }) {
                         We want to hear from you!
                     </h2>
                     <p className="text-base md:text-lg text-background/50">
-                        Your feedback shapes the next season of Old McDonald's.
+                        Your feedback shapes the next season of Old McDonald&apos;s.
                     </p>
                 </div>
 

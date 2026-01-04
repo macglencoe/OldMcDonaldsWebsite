@@ -33,7 +33,7 @@ export const PumpkinPatch = () => {
                     <AndImage src="/cart-corral.jpg">
                         <h2>Transportation</h2>
                         <p>If you want to pick multiple pumpkins, you may want to use a wagon</p>
-                        <p>You can <b>grab a wagon</b> from the entrance, or bring your own. Don't be afraid to share wagons!</p>
+                        <p>You can <b>grab a wagon</b> from the entrance, or bring your own. Don&apos;t be afraid to share wagons!</p>
                     </AndImage>
                     <AndImage src="/smallPumpkins.jpg">
                         <h2>Variety</h2>
@@ -50,12 +50,12 @@ export const PumpkinPatch = () => {
                         </ul>
                     </AndImage>
                     <AndImage src="/pumpkinsCloseUp.jpg">
-                        <h2>Do's and Don'ts</h2>
-                        <p>Don't:</p>
+                        <h2>Do&apos;s and Don&apos;ts</h2>
+                        <p>Don&apos;t:</p>
                         <ul>
                             <li>Destroy Pumpkins</li>
                             <li>Abuse the carts</li>
-                            <li>Pick pumpkins you don't intend on purchasing</li>
+                            <li>Pick pumpkins you don&apos;t intend on purchasing</li>
                         </ul>
                         <p>Do:</p>
                         <ul>
