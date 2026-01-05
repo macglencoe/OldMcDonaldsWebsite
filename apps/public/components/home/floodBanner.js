@@ -1,16 +1,13 @@
-'use client'
+"use client";
 
-import { useEffect, useMemo, useState } from 'react'
-import { useFlags } from '@/app/FlagsContext'
-
-
+import { useEffect, useMemo, useState } from 'react';
+import { useConfig } from '@/app/ConfigsContext';
 
 export default function FloodBanner() {
-    const { getFeatureArg } = useFlags()
+    const datesArg = useConfig('show_flood_banner', 'dates');
     const dates = useMemo(() => {
-        const arg = getFeatureArg('show_flood_banner', 'dates')
-        return Array.isArray(arg?.values) ? [...arg.values] : []
-    }, [getFeatureArg])
+        return Array.isArray(datesArg?.values) ? [...datesArg.values] : [];
+    }, [datesArg]);
 
     return (
         <div className="w-full bg-accent p-4 flex flex-row flex-wrap gap-4 justify-between items-center" style={{
@@ -29,7 +26,7 @@ export default function FloodBanner() {
             </div>
 
         </div>
-    )
+    );
 }
 
 function Weather({ dates }) {

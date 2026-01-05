@@ -2,8 +2,8 @@ import Layout from "@/components/layout"
 import styles from "./page.module.css"
 import { AndImage } from "@/components/andImage"
 import PumpkinPriceGadget from "@/components/pumpkinPriceGadget"
-import pricing from "@/public/data/pricing"
 import PageHeader from "@/components/pageHeader"
+import { getPricingData } from "@/utils/pricingServer"
 import { Action } from "@oldmc/ui";
 
 export const metadata = {
@@ -11,7 +11,11 @@ export const metadata = {
     description: "Pick your perfect pumpkin at Old McDonald’s Pumpkin Patch in Inwood, WV. Browse carving pumpkins, gourds, white pumpkins, and more by the pound."
 }
 
-export const PumpkinPatch = () => {
+export const PumpkinPatch = async () => {
+    const pricing = await getPricingData()
+    const pumpkinPatchPrice = pricing["pumpkin-patch"]
+    const pumpkinAmount = Number(pumpkinPatchPrice?.amount ?? 0).toFixed(2)
+    const pumpkinUnit = pumpkinPatchPrice?.per ?? 'pound'
     return (
         <Layout>
             <PageHeader subtitle="2025 Season">Pumpkin Patch</PageHeader>
@@ -25,7 +29,7 @@ export const PumpkinPatch = () => {
                     <div className="flex flex-col gap-3 shadow-lg rounded-2xl p-6 border border-accent/20">
                         <h2 className="text-center border-b-3">Pricing</h2>
                         <p className="text-center">Pumpkins from the patch are priced at:</p>
-                        <p className={styles.big + " text-center"}>${pricing["pumpkin-patch"].amount.toFixed(2)} / {pricing["pumpkin-patch"].per}</p>
+                        <p className={styles.big + " text-center"}>${pumpkinAmount} / {pumpkinUnit}</p>
                         <PumpkinPriceGadget/>
                         <p className="text-center">Pay at the weighing station, on your way back from the patch</p>
                         <p className="text-center">Cash and cards accepted</p>

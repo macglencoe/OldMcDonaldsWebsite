@@ -1,5 +1,6 @@
 @source "./**/*.{js,ts,jsx,tsx,mdx}";
 @source "../../../packages/ui/src/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../../../packages/public-ui/src/**/*.{js,ts,jsx,tsx,mdx}";
 @import "tailwindcss";
 
 :root {
@@ -17,6 +18,23 @@
   --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+@layer utilities {
+  /* Chrome, Safari, Edge, and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Firefox */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  /* IE and Edge */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+  }
 }
 
 @font-face {
@@ -89,6 +107,13 @@ body {
   margin: 0 0.5em;
 }
 
+a.link {
+  color: var(--accent);
+}
+a.link:hover {
+  text-decoration: underline;
+}
+
 .body {
   display: flex;
   flex-direction: column;
@@ -137,6 +162,8 @@ body {
   text-decoration: underline;
 }
 
+
+
 .body.basic section>h2 {
   font-size: 3rem;
   text-align: center;
@@ -159,6 +186,15 @@ body {
   margin: 1em auto;
 }
 
+.sr-only:not(:focus):not(:active) {
+  clip: rect(0 0 0 0); 
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap; 
+  width: 1px;
+}
 
 /* -- Fullcalendar -- */
 .fc .fc-daygrid-event {
@@ -172,6 +208,25 @@ body {
   min-width: 500px !important;
 }
 
+  /* gridlines */
+.fc-theme-standard td, .fc-theme-standard th, .fc-theme-standard .fc-scrollgrid {
+  @apply border-background/30
+}
+
+  /* buttons */
+.fc .fc-button {
+  @apply bg-accent border-foreground/30 font-bold text-background hover:bg-[#ff9d2d] focus:bg-[#ff9d2d]
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  @apply bg-[#c27620]
+}
+
+  /* day headers */
+.fc .fc-scrollgrid-section-sticky > * {
+  @apply bg-background/20
+}
+
 
 @media screen and (max-width: 768px) {
   .body.basic {
@@ -181,6 +236,8 @@ body {
   .body.basic h2 {
     font-size: 2.5rem;
   }
+
+
 
   .body.basic p {
     font-size: 1em;
