@@ -1,8 +1,8 @@
 import Layout from '@/components/layout'
 import styles from './page.module.css'
 import { AndImage } from '@/components/andImage'
-import pricing from '@/public/data/pricing'
 import PageHeader from '@/components/pageHeader'
+import { getPricingData } from '@/utils/pricingServer'
 import { Action } from "@oldmc/ui";
 
 export const metadata = {
@@ -10,7 +10,9 @@ export const metadata = {
     description: "Enjoy scenic hayrides at Old McDonald’s Pumpkin Patch. Take a 20-minute tour of the farm by wagon, with special night hayrides in October."
 }
 
-export const HayRide = () => {
+export const HayRide = async () => {
+    const pricing = await getPricingData()
+    const hayridePrice = Number(pricing.hayride?.amount ?? 0).toFixed(2)
     return (
         <Layout>
             <PageHeader subtitle="2025 Season">Hay Rides</PageHeader>
@@ -22,7 +24,7 @@ export const HayRide = () => {
                 <AndImage src='/pondeastdock.jpg'>
                     <h2>Pricing</h2>
                     <p>For one person, above 3 years of age:</p>
-                    <p className='big'>${pricing.hayride.amount}</p>
+                    <p className='big'>${hayridePrice}</p>
                     <p>Must be paid at the admission booth</p>
                     <p>If you plan on bringing a large group, make sure your group is all together at the admission booth</p>
                 </AndImage>
