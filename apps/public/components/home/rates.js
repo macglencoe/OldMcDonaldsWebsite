@@ -68,7 +68,7 @@ export default function Rates() {
   ];
 
   return (
-    <section className="relative overflow-hidden py-16">
+    <section className="relative overflow-hidden py-16" id="rates">
       {/* Background */}
       <Image
         src="/willow.jpg"
