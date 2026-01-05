@@ -1,4 +1,5 @@
 import { Navbar } from "@oldmc/ui"
+import "./globals.css"
 
 
 export const metadata = {
