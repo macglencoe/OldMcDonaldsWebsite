@@ -3,7 +3,6 @@ import YearProgressBar from "@/components/yearProgress";
 import OldMcDonutsAd from "@/components/oldMcDonutsAd";
 import TestimonialCarousel from "@/components/testimonials";
 import styles from "./page.module.css";
-import Season from "@/components/home/season";
 import FacebookFeed from "@/components/facebookFeed";
 import Rates from "@/components/home/rates";
 import ContactForm from "@/components/contactForm";
@@ -15,7 +14,7 @@ import FarmSwapBanner from "@/components/home/farmSwapBanner";
 import OneLaneRoadBanner from "@/components/home/oneLaneRoadBanner";
 import SurveyBanner from "@/components/home/surveyBanner";
 import { getFlagEvaluator, getFlags } from "./flags.server";
-import FestivalCalendar from "@/components/calendar";
+import Calendar from "@/components/calendarClient"; 
 import InfoStrip from "@/components/home/infoStrip";
 
 export const metadata = {
@@ -138,7 +137,7 @@ export default async function Home() {
           <SurveyBanner href="https://docs.google.com/forms/d/e/1FAIpQLSckFc0F7xg2RFf8z_Qg2cYz7LSfBSCCaVdQQwbENOV00yOU-w/viewform?usp=header" />
         }
 
-        <FestivalCalendar />
+        <Calendar />
 
         <Rates />
         {isFeatureEnabled("show_farm_swap_banner") &&

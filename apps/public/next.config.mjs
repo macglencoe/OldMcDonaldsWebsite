@@ -8,7 +8,7 @@ const nextConfig = {
     experimental: {
       outputFileTracingRoot: path.join(__dirname, "../.."),
     },
-    transpilePackages: ["@oldmc/ui"],
+    transpilePackages: ["@oldmc/ui", "@oldmc/public-ui"],
     images: {
         remotePatterns: [
             {
