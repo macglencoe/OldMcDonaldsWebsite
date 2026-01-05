@@ -5,6 +5,7 @@
     "paths": {
       "@/*": ["./*"],
       "@ui/*": ["../../packages/ui/src/*"],
+      "@public-ui/*": ["../../packages/public-ui/src/*"],
       "@config/*": ["../../packages/config/*"]
     }
   }
