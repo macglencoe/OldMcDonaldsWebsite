@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { useConfigs } from "@/app/ConfigsContext";
-import AnnouncementsView from "./announcementsView";
+import { AnnouncementsView } from "@oldmc/public-ui";
 
 /** Statsig severities we allow through to the client UI. */
 const VALID_SEVERITIES = new Set(["info", "warning", "alert"]);
