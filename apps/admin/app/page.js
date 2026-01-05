@@ -1,3 +1,9 @@
+import Hero from "@/components/hero";
+
 export default function () {
-    return <h1>Admin Dashboard</h1>;
+    return (
+        <section>
+            <Hero />
+        </section>
+    )
 }
