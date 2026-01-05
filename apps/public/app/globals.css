@@ -107,6 +107,13 @@ body {
   margin: 0 0.5em;
 }
 
+a.link {
+  color: var(--accent);
+}
+a.link:hover {
+  text-decoration: underline;
+}
+
 .body {
   display: flex;
   flex-direction: column;
@@ -154,6 +161,8 @@ body {
 .basic a:hover {
   text-decoration: underline;
 }
+
+
 
 .body.basic section>h2 {
   font-size: 3rem;

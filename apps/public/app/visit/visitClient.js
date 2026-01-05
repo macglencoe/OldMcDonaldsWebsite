@@ -4,6 +4,7 @@ import Hours from "@/components/hours";
 import QuickCard from "@/components/quickCard";
 import { FAQDrop } from "@/components/faqDrop";
 import { MapTrifold, Question, Ticket, MapPin } from "phosphor-react";
+import Link from "next/link";
 
 export default function VisitClient() {
     const address = "1597 Arden Nollville Rd. Inwood, WV 25428";
@@ -64,9 +65,11 @@ export default function VisitClient() {
                 </div>
             </section>
 
-            <section className="my-12 bg-foreground py-3 px-4 rounded-xl text-background shadow-lg">
-                <h2 className="text-center font-satisfy text-5xl mt-5">Hours</h2>
-                <p className="description text-center m-4">Seasonal hours - weather permitting</p>
+            <section className="flex flex-row items-center flex-wrap justify-center md:justify-between my-12 bg-foreground py-3 px-3 md:px-5 rounded-xl text-background shadow-lg">
+                <div className="flex flex-col items-start h-full justify-center text-left">
+                    <h2 className="text-center font-satisfy text-5xl mt-5">Hours</h2>
+                    <p className="description text-center my-5">Weather permitting. <Link className="link" href="/#calendar">See calendar</Link> for more details</p>
+                </div>
                 <Hours />
             </section>
         </div>
