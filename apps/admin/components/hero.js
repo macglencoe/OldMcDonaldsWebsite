@@ -15,7 +15,7 @@ export default function Hero() {
                 "
             />
             <div className="z-10 space-y-2">
-                <h2 className="text-background font-semibold text-4xl">Manage Old McDonald&apos;s Website</h2>
+                <h2 className="text-background font-semibold text-lg md:text-4xl">Manage Old McDonald&apos;s Website</h2>
                 <p className="text-background/90 max-w-lg">Welcome to the Old McDonald&apos;s website admin panel</p>
             </div>
         </div>
