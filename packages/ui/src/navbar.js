@@ -2,10 +2,9 @@
 import { useEffect, useRef, useState } from "react"
 import styles from "./navbar.module.css"
 import { usePathname } from "next/navigation"
-import mapIcon from '@/public/icons/map.svg?raw'
 import Link from "next/link"
 import { track } from "@vercel/analytics"
-import { CaretDown, CaretUp } from "phosphor-react"
+import { CaretDown, CaretUp, MapTrifold } from "phosphor-react"
 import React from "react"
 
 const MORE_MENU_ID = "navbar-more-menu"
@@ -118,7 +117,7 @@ const Navbar = ({
                         )}
                         <li key="map" className={pathname === "/map" ? styles.active : null}>
                             <Link href="/map">
-                                <span dangerouslySetInnerHTML={{ __html: mapIcon }} />
+                                <MapTrifold size={28} weight="bold" aria-hidden="true" className={styles.mapIcon} />
                             </Link>
                         </li>
                     </ul>

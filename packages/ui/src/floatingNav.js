@@ -1,8 +1,6 @@
 "use client"
 
-import { usePathname } from "next/navigation"
 import { ArrowUp } from "phosphor-react";
-import faq from '@/public/data/faq.json'
 
 export function FloatingNav({
     controls = [
@@ -14,11 +12,6 @@ export function FloatingNav({
         }
     ]
 }) {
-    const pathname = usePathname();
-
-    const hasFaq = faq.some(item =>
-        item.pages?.includes(pathname) // only true if this FAQ applies to current path
-    );
 
     const scrollToTop = () => {
         window.scrollTo({
