@@ -1,0 +1,68 @@
+{
+    "title": "announcements - items",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "required": ["id", "short", "long", "issued", "expires"],
+        "properties": {
+            "id": {
+                "type": "string",
+                "description": "Unique identifier for the announcement"
+            },
+            "short": {
+                "type": "string",
+                "description": "Short description for the announcement header, 4-8 words"
+            },
+            "long": {
+                "type": "string",
+                "description": "Long description for the announcement body, 1-3 sentences"
+            },
+            "icon": {
+                "type": "string",
+                "description": "Name of the Phosphor icon to display with the announcement",
+                "enum": [
+                    "CloudRain",
+                    "CloudLightning",
+                    "CloudSnow",
+                    "Wind",
+                    "Megaphone",
+                    "Warning"
+                ]
+            },
+            "severity": {
+                "type": "string",
+                "description": "Severity level of the announcement. Determines the color scheme and listing order.",
+                "enum": [
+                    "info",
+                    "warning",
+                    "alert"
+                ]
+            },
+            "issued": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date and time when the announcement was issued"
+            },
+            "expires": {
+                "type": ["string", "null"],
+                "format": "date-time",
+                "description": "The date and time when the announcement expires. Null if it does not expire."
+            },
+            "cta": {
+                "type": "object",
+                "description": "Call-to-action link for the announcement",
+                "required": ["text", "href"],
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "description": "Text to display for the call-to-action link"
+                    },
+                    "href": {
+                        "type": "string",
+                        "description": "URL for the call-to-action link"
+                    }
+                }
+            }
+        }
+    }
+}
