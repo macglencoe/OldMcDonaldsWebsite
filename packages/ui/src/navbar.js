@@ -14,7 +14,9 @@ const mergeClassNames = (...classNames) => classNames.filter(Boolean).join(' ')
 const Navbar = ({
     items,
     primaryKeys,
-    titleText
+    titleText,
+    primaryLink,
+    secondaryLink
 }) => {
     const primaryItems = items.filter((item) => primaryKeys.has(item.key))
     const secondaryItems = items.filter((item) => !primaryKeys.has(item.key))
@@ -104,7 +106,7 @@ const Navbar = ({
                                     More
                                     <CaretUp width={45} weight="bold" height={45} aria-hidden="true" className={styles.chevron}></CaretUp>
                                 </button>
-                                
+
                                 <ul
                                     id={MORE_MENU_ID}
                                     className={moreMenuClassName}
@@ -122,12 +124,13 @@ const Navbar = ({
                         </li>
                     </ul>
                 </nav>
-                <div className={styles.buttons}>
-                    <a href="tel:304-839-2330" onClick={() => {
-                        track('Call Button', { location: 'Navbar' })
-                    }}>Call</a>
-                    <a href="/visit">Visit</a>
-                </div>
+                {primaryLink || secondaryLink ? (
+                    <div className={styles.buttons + ' ' + styles.mobile}>
+                        {primaryLink && <a href={primaryLink.href}>{primaryLink.text}</a>}
+                        {secondaryLink && <a href={secondaryLink.href}>{secondaryLink.text}</a>}
+                    </div>
+                ) : null
+                }
                 <div className={styles.mobileNav}>
                     <Link className={styles.mobileMap + (pathname === "/map" ? " " + styles.active : "")} href="/map">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m600-120-240-84-186 72q-20 8-37-4.5T120-170v-560q0-13 7.5-23t20.5-15l212-72 240 84 186-72q20-8 37 4.5t17 33.5v560q0 13-7.5 23T812-192l-212 72Zm-40-98v-468l-160-56v468l160 56Zm80 0 120-40v-474l-120 46v468Zm-440-10 120-46v-468l-120 40v474Zm440-458v468-468Zm-320-56v468-468Z" /></svg>
@@ -149,12 +152,13 @@ const Navbar = ({
                             ))}
                         </ul>
                     </nav>
-                    <div className={styles.buttons + ' ' + styles.mobile}>
-                        <a href="tel:304-839-2330" onClick={() => {
-                            track('Call Button', { location: 'Navbar' })
-                        }}>Call</a>
-                        <a href="/visit">Visit</a>
-                    </div>
+                    {primaryLink || secondaryLink ? (
+                        <div className={styles.buttons + ' ' + styles.mobile}>
+                            {primaryLink && <a href={primaryLink.href}>{primaryLink.text}</a>}
+                            {secondaryLink && <a href={secondaryLink.href}>{secondaryLink.text}</a>}
+                        </div>
+                    ) : null
+                    }
                 </div>
                 <div id="skip-navbar" className="hidden"></div>
             </header>

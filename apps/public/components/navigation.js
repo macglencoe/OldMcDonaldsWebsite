@@ -43,6 +43,14 @@ export default function Navigation() {
                     { key: "pricing", title: "Pricing", path: '/pricing' }
                 ]}
                 primaryKeys={new Set(["activities", "reservations", "pricing"])}
+                primaryLink={{
+                    href: "tel:304-839-2330",
+                    text: "Call"
+                }}
+                secondaryLink={{
+                    href: "/visit",
+                    text: "Visit"
+                }}
             />
         </>
     )
