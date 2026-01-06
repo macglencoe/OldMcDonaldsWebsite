@@ -15,8 +15,7 @@ const Navbar = ({
     items,
     primaryKeys,
     titleText,
-    primaryLink,
-    secondaryLink
+    auxiliaryItems
 }) => {
     const primaryItems = items.filter((item) => primaryKeys.has(item.key))
     const secondaryItems = items.filter((item) => !primaryKeys.has(item.key))
@@ -117,19 +116,27 @@ const Navbar = ({
                                 </ul>
                             </li>
                         )}
-                        <li key="map" className={pathname === "/map" ? styles.active : null}>
-                            <Link href="/map">
-                                <MapTrifold size={28} weight="bold" aria-hidden="true" className={styles.mapIcon} />
-                            </Link>
-                        </li>
                     </ul>
                 </nav>
-                {primaryLink || secondaryLink ? (
-                    <div className={styles.buttons + ' ' + styles.mobile}>
-                        {primaryLink && <a href={primaryLink.href}>{primaryLink.text}</a>}
-                        {secondaryLink && <a href={secondaryLink.href}>{secondaryLink.text}</a>}
-                    </div>
-                ) : null
+                {
+                    auxiliaryItems ? (
+                        <div className="hidden md:flex flex-row gap-2 items-stretch">
+                            {auxiliaryItems.map(({ href, children, label }, index) => {
+                                return (
+                                    <a
+                                        key={index}
+                                        href={href}
+                                        aria-label={label}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={`rounded-full p-1.5 flex items-center justify-center hover:scale-105 transition-all shadow-md` + (index % 2 === 0 ? " bg-accent" : " bg-foreground")}
+                                    >
+                                        {children}
+                                    </a>
+                                )
+                            })}
+                        </div>
+                    ) : null
                 }
                 <div className={styles.mobileNav}>
                     <Link className={styles.mobileMap + (pathname === "/map" ? " " + styles.active : "")} href="/map">
@@ -152,12 +159,25 @@ const Navbar = ({
                             ))}
                         </ul>
                     </nav>
-                    {primaryLink || secondaryLink ? (
-                        <div className={styles.buttons + ' ' + styles.mobile}>
-                            {primaryLink && <a href={primaryLink.href}>{primaryLink.text}</a>}
-                            {secondaryLink && <a href={secondaryLink.href}>{secondaryLink.text}</a>}
-                        </div>
-                    ) : null
+                    {
+                        auxiliaryItems ? (
+                            <div className={`flex md:hidden flex-row gap-2 items-stretch`}>
+                                {auxiliaryItems.map(({ href, children, label }, index) => {
+                                    return (
+                                        <a
+                                            key={index}
+                                            href={href}
+                                            aria-label={label}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`rounded-full p-1.5 flex items-center justify-center hover:scale-105 transition-all shadow-md` + (index % 2 === 0 ? " bg-accent" : " bg-foreground")}
+                                        >
+                                            {children}
+                                        </a>
+                                    )
+                                })}
+                            </div>
+                        ) : null
                     }
                 </div>
                 <div id="skip-navbar" className="hidden"></div>
