@@ -58,18 +58,20 @@ function buildGoogleCalendarUrl(event) {
 }
 
 export function FestivalCalendar({
-  scheduleConfig, initialDateConfig,
+  scheduleConfig, scheduleArray, initialDateConfig, initialDateString,
   bgSrc
 }) {
   // Weather
   const [weatherByDate, setWeatherByDate] = useState({})
 
   const events = useMemo(() => {
-    const entries = Array.isArray(scheduleConfig?.values)
-      ? scheduleConfig.values
-      : Array.isArray(scheduleConfig?.raw)
-        ? scheduleConfig.raw
-        : []
+    const entries = Array.isArray(scheduleArray)
+      ? scheduleArray
+      : Array.isArray(scheduleConfig?.values)
+        ? scheduleConfig.values
+        : Array.isArray(scheduleConfig?.raw)
+          ? scheduleConfig.raw
+          : []
 
     return entries
       .filter((entry) => entry && typeof entry === 'object')
@@ -86,14 +88,17 @@ export function FestivalCalendar({
                 : '#6b7280'
         }
       })
-  }, [scheduleConfig])
+  }, [scheduleArray, scheduleConfig])
 
   const initialDate = useMemo(() => {
+    if (typeof initialDateString === 'string') {
+      return initialDateString
+    }
     if (typeof initialDateConfig?.raw === 'string') {
       return initialDateConfig.raw
     }
     else return null
-  }, [initialDateConfig])
+  }, [initialDateConfig, initialDateString])
 
   useEffect(() => {
     let didCancel = false
