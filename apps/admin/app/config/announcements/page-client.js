@@ -3,7 +3,6 @@
 import AnnouncementEditor from "@/components/config/announcementEditor"
 import PreviewDivider from "@/components/config/previewDivider"
 import { AnnouncementsView } from "@public-ui/announcementsView"
-import { CaretDown } from "phosphor-react"
 import { useMemo, useRef, useState } from "react"
 
 function cloneItems(items) {
@@ -14,9 +13,25 @@ export default function AnnouncementsPageClient({ announcements }) {
     const originalItemsRef = useRef(cloneItems(announcements))
     const [items, setItems] = useState(() => cloneItems(announcements))
     const [selectedIndex, setSelectedIndex] = useState(() => (announcements?.length ? 0 : null))
+    const [saveState, setSaveState] = useState({ status: "idle", message: "" })
 
     const hasChanges = useMemo(() => {
         return JSON.stringify(items) !== JSON.stringify(originalItemsRef.current)
+    }, [items])
+
+    const validationErrors = useMemo(() => {
+        const errors = []
+        const ids = new Set()
+        items.forEach((item, idx) => {
+            if (!item.id?.trim()) errors.push(`Announcement ${idx + 1} is missing an id`)
+            if (!item.short?.trim()) errors.push(`Announcement ${idx + 1} is missing a title`)
+            if (!item.long?.trim()) errors.push(`Announcement ${idx + 1} is missing a description`)
+            if (item.id) {
+                if (ids.has(item.id)) errors.push(`Duplicate id "${item.id}"`)
+                ids.add(item.id)
+            }
+        })
+        return errors
     }, [items])
 
     const handleAnnouncementChange = (index, nextAnnouncement) => {
@@ -75,6 +90,46 @@ export default function AnnouncementsPageClient({ announcements }) {
         return !Number.isNaN(date.getTime()) && date.getTime() < Date.now()
     }
 
+    const sanitizedItems = () => {
+        return items.map((item) => {
+            const next = { ...item }
+            const hasCta = item.cta && (item.cta.text?.trim() || item.cta.href?.trim())
+            if (!hasCta) {
+                delete next.cta
+            } else {
+                next.cta = {
+                    text: item.cta.text ?? "",
+                    href: item.cta.href ?? "",
+                }
+            }
+            return next
+        })
+    }
+
+    const handleSave = async () => {
+        setSaveState({ status: "saving", message: "" })
+        try {
+            const response = await fetch("/api/config?key=announcements", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ items: sanitizedItems() }),
+            })
+            if (!response.ok) {
+                const data = await response.json().catch(() => ({}))
+                throw new Error(data.error || `Save failed with status ${response.status}`)
+            }
+            const data = await response.json()
+            originalItemsRef.current = cloneItems(data.value?.items ?? items)
+            setItems(cloneItems(data.value?.items ?? items))
+            setSaveState({ status: "success", message: "Saved" })
+        } catch (error) {
+            const message = error instanceof Error ? error.message : "Failed to save"
+            setSaveState({ status: "error", message })
+        } finally {
+            setTimeout(() => setSaveState({ status: "idle", message: "" }), 2000)
+        }
+    }
+
     return (
         <div className="space-y-5 p-3">
             <div className="flex flex-wrap items-end justify-between gap-3">
@@ -85,10 +140,11 @@ export default function AnnouncementsPageClient({ announcements }) {
                 <div className="flex items-center gap-2">
                     <button
                         type="button"
-                        disabled
-                        className="rounded-md border border-gray-300 px-3 py-2 text-sm font-semibold text-gray-600 opacity-60"
+                        onClick={handleSave}
+                        disabled={validationErrors.length > 0 || !hasChanges || saveState.status === "saving"}
+                        className="rounded-md border border-gray-300 px-3 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                        Post
+                        {saveState.status === "saving" ? "Saving..." : "Save changes"}
                     </button>
                     <button
                         type="button"
@@ -107,6 +163,19 @@ export default function AnnouncementsPageClient({ announcements }) {
                     </button>
                 </div>
             </div>
+            {(saveState.status === "error" || validationErrors.length > 0 || saveState.status === "success") && (
+                <div className="text-xs">
+                    {validationErrors.length > 0 && (
+                        <p className="text-red-600">Fix before saving: {validationErrors[0]}</p>
+                    )}
+                    {saveState.status === "error" && (
+                        <p className="text-red-600">Save failed: {saveState.message}</p>
+                    )}
+                    {saveState.status === "success" && (
+                        <p className="text-green-600">Saved</p>
+                    )}
+                </div>
+            )}
 
             <div className="grid gap-2 md:grid-cols-[320px_minmax(0,1fr)]">
                 <div className="rounded-lg border border-gray-200 bg-white">
@@ -132,7 +201,7 @@ export default function AnnouncementsPageClient({ announcements }) {
                                                     {announcement.short?.trim() || "Untitled"}
                                                 </p>
                                                 <p className="text-xs text-gray-500">
-                                                    Issued {formatDate(announcement.issued)} · Expires {announcement.expires ? formatDate(announcement.expires) : "No expiry"}
+                                                    Issued {formatDate(announcement.issued)} - Expires {announcement.expires ? formatDate(announcement.expires) : "No expiry"}
                                                 </p>
                                             </div>
                                             <div className="flex flex-col items-end gap-1 text-xs">
