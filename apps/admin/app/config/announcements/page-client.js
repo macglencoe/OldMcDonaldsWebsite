@@ -1,5 +1,6 @@
 "use client"
 
+import ConfigActionsBar from "@/components/config/actionsBar"
 import AnnouncementEditor from "@/components/config/announcementEditor"
 import PreviewDivider from "@/components/config/previewDivider"
 import { AnnouncementsView } from "@public-ui/announcementsView"
@@ -132,37 +133,27 @@ export default function AnnouncementsPageClient({ announcements }) {
 
     return (
         <div className="space-y-5 p-3">
-            <div className="flex flex-wrap items-end justify-between gap-3">
-                <div>
-                    <h1 className="text-2xl font-semibold text-gray-900">Announcements</h1>
-                    <p className="text-sm text-gray-600">Edit copy, icons, and severity. Changes update immediately.</p>
-                </div>
-                <div className="flex items-center gap-2">
-                    <button
-                        type="button"
-                        onClick={handleSave}
-                        disabled={validationErrors.length > 0 || !hasChanges || saveState.status === "saving"}
-                        className="rounded-md border border-gray-300 px-3 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                        {saveState.status === "saving" ? "Saving..." : "Save changes"}
-                    </button>
-                    <button
-                        type="button"
-                        onClick={handleAddAnnouncement}
-                        className="rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
-                    >
-                        Add announcement
-                    </button>
-                    <button
-                        type="button"
-                        onClick={handleResetAll}
-                        disabled={!hasChanges}
-                        className="rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                        Revert to original
-                    </button>
-                </div>
-            </div>
+            <ConfigActionsBar
+                title="Announcements"
+                description="Edit copy, icons, and severity. Changes update immediately."
+                buttons={[
+                    {
+                        label: saveState.status === "saving" ? "Saving..." : "Save changes",
+                        onClick: handleSave,
+                        disabled: validationErrors.length > 0 || !hasChanges || saveState.status === "saving",
+                    },
+                    {
+                        label: "Add announcement",
+                        onClick: handleAddAnnouncement,
+                    },
+                    {
+                        label: "Revert to original",
+                        onClick: handleResetAll,
+                        disabled: !hasChanges,
+                    }
+                ]}
+            />
+            
             {(saveState.status === "error" || validationErrors.length > 0 || saveState.status === "success") && (
                 <div className="text-xs">
                     {validationErrors.length > 0 && (
