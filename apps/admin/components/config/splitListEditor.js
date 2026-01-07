@@ -19,7 +19,7 @@ export default function ConfigSplitListEditor({
                 {items.length === 0 ? (
                     renderEmpty ?? <p className="px-4 py-6 text-center text-sm text-gray-500">No items found.</p>
                 ): (
-                    <ul className="divide-y divide-gray-100">
+                    <ul className="divide-y divide-gray-100 max-h-[500px] overflow-y-auto">
                         {items.map((item, index) => (
                             <li key={getKey(item, index)}>
                                 {renderRow({
