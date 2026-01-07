@@ -1,6 +1,7 @@
 "use client";
 import ConfigActionsBar from "@/components/config/actionsBar";
 import FAQEditor from "@/components/config/faqEditor";
+import ConfigSplitListEditor from "@/components/config/splitListEditor";
 import { useMemo, useRef, useState } from "react";
 
 function cloneItems(items) {
@@ -155,69 +156,62 @@ export default function FAQsPageClient({ faqs }) {
                 </div>
             )}
 
-            <div className="grid gap-2 md:grid-cols-[320px_minmax(0,1fr)]">
-                <div className="rounded-lg border border-gray-200 bg-white">
-                    <div className="border-b border-gray-100 px-3 py-2 text-sm font-semibold text-gray-700">
-                        FAQs ({items.length})
+            <ConfigSplitListEditor
+                title="FAQs"
+                items={items}
+                selectedIndex={selectedIndex}
+                onSelect={setSelectedIndex}
+                getKey={(_, idx) => idx}
+                renderEmpty={<p className="px-4 py-6 text-center text-sm text-gray-500">No FAQs found.</p>}
+                renderRow={({ item, index, selected, onSelect }) => (
+                    <div
+                        className={`flex items-center gap-3 px-3 py-3 ${selected ? "bg-accent/10" : "hover:bg-gray-50"
+                            }`}
+                    >
+                        <button type="button" onClick={onSelect} className="flex-1 text-left overflow-hidden">
+                            <div className="space-y-1 overflow-hidden">
+                                <p className="text-sm font-semibold text-gray-900">
+                                    {item.question || <span className="italic text-gray-400">No question</span>}
+                                </p>
+                                <p className="text-xs truncate">
+                                    {item.answer || <span className="italic text-gray-400">No answer</span>}
+                                </p>
+                            </div>
+                        </button>
+                        <div className="flex flex-col gap-1">
+                            <button
+                                type="button"
+                                onClick={() => handleMove(index, -1)}
+                                disabled={index === 0}
+                                className="rounded border border-gray-200 px-2 text-xs font-semibold text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+                                aria-label="Move FAQ up"
+                            >
+                                ↑
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => handleMove(index, 1)}
+                                disabled={index === items.length - 1}
+                                className="rounded border border-gray-200 px-2 text-xs font-semibold text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+                                aria-label="Move FAQ down"
+                            >
+                                ↓
+                            </button>
+                        </div>
                     </div>
-                    {items.length === 0 ? (
-                        <p className="px-4 py-6 text-center text-sm text-gray-500">No FAQs found.</p>
-                    ) : (
-                        <ul className="divide-y divide-gray-100">
-                            {items.map((item, index) => {
-                                const selected = index === selectedIndex;
-                                return (
-                                    <li key={index}>
-                                        <div className={`flex items-center gap-3 px-3 py-3 ${selected ? "bg-accent/10" : "hover:bg-gray-50"}`}>
-                                            <button
-                                                type="button"
-                                                onClick={() => setSelectedIndex(index)}
-                                                className="flex-1 text-left overflow-hidden"
-                                            >
-                                                <div className="space-y-1 overflow-hidden">
-                                                    <p className="text-sm font-semibold text-gray-900">
-                                                        {item.question || <span className="italic text-gray-400">No question</span>}
-                                                    </p>
-                                                    <p className="text-xs truncate">{item.answer || <span className="italic text-gray-400">No answer</span>}</p>
-                                                </div>
-                                            </button>
-                                            <div className="flex flex-col gap-1">
-                                                <button
-                                                    type="button"
-                                                    onClick={() => handleMove(index, -1)}
-                                                    disabled={index === 0}
-                                                    className="rounded border border-gray-200 px-2 text-xs font-semibold text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
-                                                    aria-label="Move FAQ up"
-                                                >
-                                                    ↑
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => handleMove(index, 1)}
-                                                    disabled={index === items.length - 1}
-                                                    className="rounded border border-gray-200 px-2 text-xs font-semibold text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
-                                                    aria-label="Move FAQ down"
-                                                >
-                                                    ↓
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    )}
-                </div>
-                {selectedIndex === null ? (
-                    <p className="text-sm text-gray-500">Select an FAQ to edit.</p>
-                ) : (
-                    <FAQEditor
-                        faq={items[selectedIndex]}
-                        onChange={(updated) => handleFAQChange(selectedIndex, updated)}
-                        onDelete={() => handleFAQDelete(selectedIndex)}
-                    />
                 )}
-            </div>
+                rightContent={
+                    selectedIndex === null ? (
+                        <p className="text-sm text-gray-500">Select an FAQ to edit.</p>
+                    ) : (
+                        <FAQEditor
+                            faq={items[selectedIndex]}
+                            onChange={(updated) => handleFAQChange(selectedIndex, updated)}
+                            onDelete={() => handleFAQDelete(selectedIndex)}
+                        />
+                    )
+                }
+            />
         </div>
     )
 }
