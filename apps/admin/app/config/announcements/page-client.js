@@ -1,6 +1,8 @@
 "use client"
 
 import AnnouncementEditor from "@/components/config/announcementEditor"
+import { AnnouncementsView } from "@public-ui/announcementsView"
+import { CaretDown } from "phosphor-react"
 import { useMemo, useRef, useState } from "react"
 
 function cloneItems(items) {
@@ -158,6 +160,21 @@ export default function AnnouncementsPageClient({ announcements }) {
                     )}
                 </div>
             </div>
+            <div className="flex flex-col items-center justify-center" style={{
+                backgroundImage: `repeating-linear-gradient(
+                    45deg,
+                    #ffdeb8,
+                    #ffdeb8 10px,
+                    #ffffff 10px,
+                    #ffffff 20px
+                )`
+            }}>
+                <h2 className="text-2xl font-bold text-gray-900 py-2 text-center tracking-wider">
+                    Preview
+                </h2>
+                <CaretDown size={20} weight="bold" className="mx-auto -mt-3 mb-2d inline-block" />
+            </div>
+            <AnnouncementsView items={items} />
         </div>
     )
 }
