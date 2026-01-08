@@ -67,8 +67,46 @@ export default function CalendarPageClient({ calendarConfig }) {
         setSelectedIndex(items.length);
     }
 
+    const normalizeDateTime = (value) => {
+        if (!value) return null;
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return null;
+        return date.toISOString();
+    };
+
     const handleSave = async () => {
-        // TODO
+        setSaveState({ status: "saving", message: "" });
+        try {
+            const sanitizedItems = items.map((item, index) => {
+                const start = normalizeDateTime(item.start);
+                const end = normalizeDateTime(item.end);
+                if (!start || !end) {
+                    throw new Error(`Event ${index + 1} has an invalid start or end date-time.`);
+                }
+                return { ...item, start, end };
+            });
+
+            const response = await fetch("/api/config?key=calendar_schedule", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ schedule: sanitizedItems, initialDate })
+            })
+            if (!response.ok) {
+                const data = await response.json().catch(() => ({}))
+                // Surface server-side validation details in the console for debugging.
+                console.error("Calendar schedule save failed", { status: response.status, details: data })
+                throw new Error(data.error || `Save failed with status ${response.status}`)
+            }
+            const data = await response.json()
+            originalItemsRef.current = cloneItems(data.value?.schedule ?? items)
+            setItems(cloneItems(data.value?.schedule ?? items))
+            setSaveState({ status: "success", message: "Saved" })
+        } catch (error) {
+            const message = error instanceof Error ? error.message : "Failed to save"
+            setSaveState({ status: "error", message })
+        } finally {
+            setTimeout(() => setSaveState({ status: "idle", message: "" }), 2000)
+        }
     }
 
     const formatDate = (iso) => {
@@ -162,7 +200,7 @@ export default function CalendarPageClient({ calendarConfig }) {
                     )
                 }
             />
-            
+
             <PreviewDivider />
 
             <FestivalCalendar scheduleArray={items} initialDateString={initialDate} />
