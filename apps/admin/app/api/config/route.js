@@ -7,6 +7,7 @@ import announcementsSchema from "@/schemas/announcements.schema.json"
 import faqSchema from "@/schemas/faq.schema.json"
 import calendarScheduleSchema from "@/schemas/calendar_schedule.schema.json"
 import weeklyHoursSchema from "@/schemas/weekly-hours.schema.json"
+import pricingSchema from "@/schemas/pricing.schema.json"
 
 const statsigEnv = process.env.STATSIG_ENV_STRING?.trim()
 const consoleApiKey = process.env.STATSIG_CONSOLE_API_KEY
@@ -36,6 +37,7 @@ const schemaRegistry = {
   faq: ajv.compile(faqSchema),
   calendar_schedule: ajv.compile(calendarScheduleSchema),
   "weekly-hours": ajv.compile(weeklyHoursSchema),
+  pricing: ajv.compile(pricingSchema),
 }
 
 const CONFIG_IDS = {
@@ -43,6 +45,7 @@ const CONFIG_IDS = {
   faq: process.env.STATSIG_CONFIG_ID_FAQ ?? "faq",
   calendar_schedule: process.env.STATSIG_CONFIG_ID_CALENDAR ?? "calendar_schedule",
   "weekly-hours": process.env.STATSIG_CONFIG_ID_WEEKLY_HOURS ?? "weekly-hours",
+  pricing: process.env.STATSIG_CONFIG_ID_PRICING ?? "pricing",
 }
 
 /**
