@@ -51,6 +51,11 @@ export default function () {
                     {
                         name: "Weekly Hours",
                         url: "/config/hours"
+                    },
+                    {
+                        name: "Feature Flags (Statsig)",
+                        url: "https://console.statsig.com/7sbSQx3I6cLjQgTO65sn45/gates",
+                        target: "_blank"
                     }
                 ]}
             />
