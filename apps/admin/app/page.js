@@ -24,9 +24,6 @@ export default function () {
                         name: "Email",
                         url: "https://mail.zoho.com"
                     },
-                    {
-
-                    }
                 ]}
             />
             <Hero />
