@@ -2,6 +2,7 @@ import DirectoryGrid from "@/components/directoryGrid";
 import ExternalLinks from "@/components/externalLinks";
 import Hero from "@/components/hero";
 import Link from "next/link";
+import { PiCalendarDuotone, PiClockDuotone, PiCurrencyDollarDuotone, PiFlagDuotone, PiMegaphoneDuotone, PiQuestionDuotone } from "react-icons/pi";
 
 export default function () {
     return (
@@ -35,27 +36,33 @@ export default function () {
                     {
                         name: "Announcements",
                         url: "/config/announcements",
+                        icon: PiMegaphoneDuotone
                     },
                     {
                         name: "FAQs",
-                        url: "/config/faqs"
+                        url: "/config/faqs",
+                        icon: PiQuestionDuotone
                     },
                     {
                         name: "Calendar Events",
-                        url: "/config/events"
+                        url: "/config/events",
+                        icon: PiCalendarDuotone
                     },
                     {
                         name: "Pricing",
-                        url: "/config/pricing"
+                        url: "/config/pricing",
+                        icon: PiCurrencyDollarDuotone
                     },
                     {
                         name: "Weekly Hours",
-                        url: "/config/hours"
+                        url: "/config/hours",
+                        icon: PiClockDuotone
                     },
                     {
                         name: "Feature Flags (Statsig)",
                         url: "https://console.statsig.com/7sbSQx3I6cLjQgTO65sn45/gates",
-                        target: "_blank"
+                        target: "_blank",
+                        icon: PiFlagDuotone
                     }
                 ]}
             />
