@@ -10,6 +10,16 @@ export default function NormalError({ error, reset }) {
             : "Something went wrong"
         )
     return (
-        <ErrorPage error={error} reset={reset} message={message}/>
+        <ErrorPage error={error} reset={reset} message={message} buttons={[
+            {
+                label: "Go Home",
+                href: "/"
+            },
+            {
+                label: "Contact the developer",
+                href: "mailto:developer@oldmcdonaldspumpkinpatch.com",
+                target: "_blank"
+            }
+        ]}/>
     )
 }
