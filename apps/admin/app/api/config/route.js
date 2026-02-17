@@ -31,7 +31,19 @@ async function ensureStatsigInitialized() {
   }
 }
 
-const ajv = addFormats(new Ajv({ allErrors: true, strict: false }))
+function createAjv() {
+  const instance = new Ajv({ allErrors: true, strict: false })
+  try {
+    addFormats(instance)
+  } catch (error) {
+    // Some workspace installs resolve Ajv v6, which has built-in formats but
+    // is incompatible with ajv-formats v3. Keep the API route functional.
+    console.warn("AJV formats plugin could not be applied; continuing without it.", error)
+  }
+  return instance
+}
+
+const ajv = createAjv()
 const schemaRegistry = {
   announcements: ajv.compile(announcementsSchema),
   faq: ajv.compile(faqSchema),
