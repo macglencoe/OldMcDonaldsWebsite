@@ -14,7 +14,9 @@ import AuxSearch from "@/components/home/auxSearch";
 import FarmSwapBanner from "@/components/home/farmSwapBanner";
 import OneLaneRoadBanner from "@/components/home/oneLaneRoadBanner";
 import SurveyBanner from "@/components/home/surveyBanner";
-import { getFeatureEvaluator, loadFlags } from "./flags";
+import { getFlagEvaluator, getFlags } from "./flags.server";
+import FestivalCalendar from "@/components/calendar";
+import InfoStrip from "@/components/home/infoStrip";
 
 export const metadata = {
   title: "Real Farm Fun - Old McDonald's Pumpkin Patch",
@@ -22,8 +24,8 @@ export const metadata = {
 }
 
 export default async function Home() {
-  const flags = await loadFlags();
-  const isFeatureEnabled = getFeatureEvaluator(flags);
+  const flags = await getFlags();
+  const isFeatureEnabled = getFlagEvaluator(flags);
 
   const canonicalBase = "https://www.oldmcdonaldspumpkinpatchwv.com";
 
@@ -115,14 +117,18 @@ export default async function Home() {
           )
         }
 
-        {isFeatureEnabled("show_flood_banner") && (
+        {/* {isFeatureEnabled("show_flood_banner") && (
           <FloodBanner />
-        )}
+        )} */}
+
+        
 
 
         <section className={styles.hero}>
           <Hero />
         </section>
+
+        <InfoStrip />
 
         {isFeatureEnabled("show_aux_search") &&
           <AuxSearch />
@@ -132,8 +138,8 @@ export default async function Home() {
           <SurveyBanner href="https://docs.google.com/forms/d/e/1FAIpQLSckFc0F7xg2RFf8z_Qg2cYz7LSfBSCCaVdQQwbENOV00yOU-w/viewform?usp=header" />
         }
 
-        <Season />
-        <YearProgressBar highlightStart="2025-09-20" highlightEnd="2025-11-02" />
+        <FestivalCalendar />
+
         <Rates />
         {isFeatureEnabled("show_farm_swap_banner") &&
           <FarmSwapBanner />
