@@ -28,7 +28,7 @@ export default function OneLaneRoadBanner() {
                         <Image src={'/olr-graphic-postponed.jpg'} width={1400} height={1400} className="p-2" alt="One Lane Road Promotional Graphic: Live music at Old McDonald's"/>
                     </div>
                     <div className="flex flex-col flex-1 gap-3">
-                        <h3 className="text-3xl text-background font-semibold">Live at Old McDonald's</h3>
+                        <h3 className="text-3xl text-background font-semibold">Live at Old McDonald&rsquo;s</h3>
                         <p className="w-full bg-background py-2 px-3 rounded-2xl outline-4 outline-red-400
                             uppercase font-bold text-3xl text-red-500 text-center"
                             >Postponed</p>
