@@ -1,47 +1,22 @@
 {
-  "name": "old-mcdonalds-website",
+  "name": "old-mcdonalds",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "postbuild": "node scripts/crawlHtmlIndex.js"
+    "dev": "turbo dev --filter=@oldmc/public",
+    "dev:public": "turbo dev --filter=@oldmc/public",
+    "lint": "turbo lint",
+    "build": "turbo build",
+    "test": "turbo test",
+    "clean": "turbo clean"
   },
-  "dependencies": {
-    "@flags-sdk/statsig": "^0.2.2",
-    "@fullcalendar/daygrid": "^6.1.17",
-    "@fullcalendar/react": "^6.1.17",
-    "@fullcalendar/timegrid": "^6.1.17",
-    "@react-google-maps/api": "^2.20.6",
-    "@vercel/analytics": "^1.5.0",
-    "@vercel/edge-config": "^1.4.0",
-    "clsx": "^2.1.1",
-    "flags": "^4.0.0",
-    "framer-motion": "^12.15.0",
-    "fuse.js": "^7.1.0",
-    "html-to-text": "^9.0.5",
-    "js-cookie": "^3.0.5",
-    "leaflet": "^1.9.4",
-    "next": "15.2.4",
-    "phosphor-react": "^1.4.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-leaflet": "^5.0.0",
-    "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1",
-    "resend": "^4.0.0",
-    "uuid": "^11.1.0"
-  },
+    "next": "15.2.7",
   "devDependencies": {
-    "@babel/parser": "^7.28.3",
-    "@babel/traverse": "^7.28.3",
-    "@tailwindcss/postcss": "^4",
-    "cheerio": "^1.1.2",
-    "eslint": "9.37.0",
-    "eslint-config-next": "15.5.5",
-    "fast-glob": "^3.3.3",
-    "tailwindcss": "^4"
-  }
+    "turbo": "^2.2.3"
+  },
+  "packageManager": "npm@10.9.2"
 }
