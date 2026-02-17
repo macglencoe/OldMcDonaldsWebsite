@@ -1,0 +1,43 @@
+{
+    "title": "FAQ Schema",
+    "type": "object",
+    "required": [
+        "questions"
+    ],
+    "properties": {
+        "questions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "question",
+                    "answer"
+                ],
+                "properties": {
+                    "question": {
+                        "type": "string",
+                        "description": "The frequently asked question"
+                    },
+                    "answer": {
+                        "type": "string",
+                        "description": "The answer to the frequently asked question"
+                    },
+                    "pages": {
+                        "type": "array",
+                        "description": "Pages where this frequently asked question should be displayed (i.e. '/activities/pumpkin-patch')",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "keywords": {
+                        "type": "array",
+                        "description": "Keywords associated with this FAQ for search purposes",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
