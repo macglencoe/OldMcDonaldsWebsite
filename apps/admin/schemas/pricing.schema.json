@@ -1,0 +1,48 @@
+{
+    "title": "Pricing Schema",
+    "type": "object",
+    "required": [
+        "admission",
+        "hayride",
+        "pumpkin-patch",
+        "flower-cup",
+        "sunflower",
+        "gazebo-rental"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "admission": { "$ref": "#/definitions/priceEntry" },
+        "hayride": { "$ref": "#/definitions/priceEntry" },
+        "pumpkin-patch": { "$ref": "#/definitions/priceEntry" },
+        "flower-cup": { "$ref": "#/definitions/priceEntry" },
+        "sunflower": { "$ref": "#/definitions/priceEntry" },
+        "gazebo-rental": { "$ref": "#/definitions/priceEntry" }
+    },
+    "definitions": {
+        "priceEntry": {
+            "type": "object",
+            "required": ["amount", "per"],
+            "additionalProperties": false,
+            "properties": {
+                "amount": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Numeric price for this item"
+                },
+                "per": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unit for the price, e.g. person, pound, stem"
+                },
+                "notes": {
+                    "type": "array",
+                    "description": "Optional notes displayed with the price",
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                }
+            }
+        }
+    }
+}

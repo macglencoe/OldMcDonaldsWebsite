@@ -1,0 +1,35 @@
+{
+    "title": "Weekly Hours Schema",
+    "type": "object",
+    "required": [
+        "friday",
+        "saturday",
+        "sunday"
+    ],
+    "properties": {
+        "friday": { "$ref": "#/$defs/dayHours" },
+        "saturday": { "$ref": "#/$defs/dayHours" },
+        "sunday": { "$ref": "#/$defs/dayHours" }
+    },
+    "$defs": {
+        "dayHours": {
+            "type": "object",
+            "required": [
+                "open",
+                "close"
+            ],
+            "properties": {
+                "open": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$",
+                    "description": "24h time, HH:MM:SS"
+                },
+                "close": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$",
+                    "description": "24h time, HH:MM:SS"
+                }
+            }
+        }
+    }
+}

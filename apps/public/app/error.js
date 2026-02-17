@@ -7,6 +7,16 @@ import Layout from "@/components/layout"
 export default function NormalError({ error, reset }) {
 
     return (
-        <Layout><ErrorPage error={error} reset={reset} message="Something went wrong"/></Layout>
+        <Layout><ErrorPage error={error} reset={reset} message="Something went wrong" buttons={[
+            {
+                label: "Go Home",
+                href: "/"
+            },
+            {
+                label: "Contact Developer",
+                href: "mailto:developer@oldmcdonaldspumpkinpatch.com",
+                target: "_blank"
+            }
+        ]}/></Layout>
     )
 }

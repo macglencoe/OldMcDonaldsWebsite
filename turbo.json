@@ -15,5 +15,13 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "out/**", "public/search-index.json"]
     }
-  }
+  },
+  "globalEnv": [
+    "PREVIEW_USER",
+    "PREVIEW_PASS",
+    "ENABLE_PREVIEW_PROTECTION",
+    "STATSIG_ENV_STRING",
+    "STATSIG_SERVER_API_KEY",
+    "STATSIG_CONSOLE_API_KEY"
+  ]
 }
