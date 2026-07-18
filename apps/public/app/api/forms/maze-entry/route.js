@@ -1,43 +1,19 @@
 import { getDatabase } from '@oldmc/db';
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
 
 import {
-  escapeHtml,
   getClientIp,
   hashIp,
   normalizeUserAgent,
   validateMazeEntry,
 } from '@/lib/mazeEntry.mjs';
+import { sendMazeEntryNotification } from '@/lib/email/server';
 
 export const runtime = 'nodejs';
 
 const MAX_REQUEST_BYTES = 10_000;
 const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW_HOURS = 1;
-const MAZE_RECIPIENTS = [
-  'oldmcdonaldsglencoefarm@gmail.com',
-  'mcpaul1694@gmail.com',
-];
-
-async function notifyStaff({ name, phone, year }) {
-  if (!process.env.RESEND_API_KEY) {
-    throw new Error('RESEND_API_KEY is not configured.');
-  }
-
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  const { error } = await resend.emails.send({
-    from: "Old McDonald's Pumpkin Patch <no-reply@oldmcdonaldspumpkinpatchwv.com>",
-    to: MAZE_RECIPIENTS,
-    subject: `Maze Game Entry — ${year}`,
-    text: `Name: ${name}\nPhone Number: ${phone}\nYear: ${year}`,
-    html: `<p>Name: ${escapeHtml(name)}</p><p>Phone Number: ${escapeHtml(phone)}</p><p>Year: ${year}</p>`,
-  });
-
-  if (error) {
-    throw new Error(String(error.message || error));
-  }
-}
 
 export async function POST(request) {
   const contentLength = Number(request.headers.get('content-length') || 0);
@@ -113,7 +89,7 @@ export async function POST(request) {
 
     let notificationSent = true;
     try {
-      await notifyStaff({ ...value, year });
+      await sendMazeEntryNotification({ ...value, year });
     } catch (notificationError) {
       notificationSent = false;
       console.error('Maze entry was saved, but its notification failed:', notificationError.message);
