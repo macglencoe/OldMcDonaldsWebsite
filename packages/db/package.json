@@ -1,0 +1,15 @@
+{
+  "name": "@oldmc/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.1",
+    "server-only": "^0.0.1"
+  }
+}

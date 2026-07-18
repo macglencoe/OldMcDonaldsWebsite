@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "node --test lib/*.test.mjs",
     "postbuild": "node scripts/crawlHtmlIndex.js"
   },
   "dependencies": {
@@ -34,7 +35,8 @@
     "resend": "^4.0.0",
     "uuid": "^11.1.0",
     "@oldmc/ui": "0.0.0",
-    "@oldmc/public-ui": "0.0.0"
+    "@oldmc/public-ui": "0.0.0",
+    "@oldmc/db": "0.0.0"
   },
   "devDependencies": {
     "@babel/parser": "^7.28.3",

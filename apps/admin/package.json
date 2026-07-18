@@ -14,6 +14,7 @@
     "@fullcalendar/react": "^6.1.17",
     "@fullcalendar/timegrid": "^6.1.17",
     "@oldmc/public-ui": "0.0.0",
+    "@oldmc/db": "0.0.0",
     "@oldmc/ui": "0.0.0",
     "@vercel/analytics": "^1.5.0",
     "@vercel/edge-config": "^1.4.0",
