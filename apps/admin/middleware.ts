@@ -5,6 +5,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 // Helper: decide whether this request should require authentication
 function shouldProtect(req: NextRequest): boolean {
+  // Submission data contains personal information and is always protected.
+  if (req.nextUrl.pathname.startsWith("/maze-entries")) return true;
+
   // Activation toggle: protection is on only when the env var is "1"
   if (process.env.ENABLE_PREVIEW_PROTECTION !== "1") return false;
 
@@ -20,6 +23,13 @@ export function middleware(req: NextRequest) {
   const user = process.env.PREVIEW_USER || "";
   const pass = process.env.PREVIEW_PASS || "";
 
+  if (!user || !pass) {
+    return new NextResponse("Admin authentication is not configured", {
+      status: 503,
+      headers: { "Cache-Control": "no-store" },
+    });
+  }
+
   // Read the Authorization header (if present)
   const auth = req.headers.get("authorization") || "";
 
@@ -28,7 +38,11 @@ export function middleware(req: NextRequest) {
   const expected = "Basic " + btoa(`${user}:${pass}`);
 
   if (auth === expected) {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    if (req.nextUrl.pathname.startsWith("/maze-entries")) {
+      response.headers.set("Cache-Control", "no-store");
+    }
+    return response;
   }
 
   // Challenge the client: a 401 with `WWW-Authenticate` prompts a login dialog
