@@ -2,7 +2,7 @@ import DirectoryGrid from "@/components/directoryGrid";
 import ExternalLinks from "@/components/externalLinks";
 import Hero from "@/components/hero";
 import Link from "next/link";
-import { PiCalendarDuotone, PiChartLineDuotone, PiClockDuotone, PiCurrencyDollarDuotone, PiEnvelopeDuotone, PiFlagDuotone, PiGithubLogoDuotone, PiMegaphoneDuotone, PiQuestionDuotone } from "react-icons/pi";
+import { PiCalendarDuotone, PiChartLineDuotone, PiClipboardTextDuotone, PiClockDuotone, PiCurrencyDollarDuotone, PiEnvelopeDuotone, PiFlagDuotone, PiGithubLogoDuotone, PiMegaphoneDuotone, PiQuestionDuotone } from "react-icons/pi";
 
 export default function () {
     return (
@@ -28,6 +28,18 @@ export default function () {
                 ]}
             />
             <Hero />
+
+            <h2 className="tracking-widest uppercase text-xl ml-3 border-b-3 border-accent/10 text-foreground/80">Form Submissions</h2>
+
+            <DirectoryGrid
+                items={[
+                    {
+                        name: "Maze Entries",
+                        url: "/maze-entries",
+                        icon: PiClipboardTextDuotone
+                    }
+                ]}
+            />
 
             <h2 className="tracking-widest uppercase text-xl ml-3 border-b-3 border-accent/10 text-foreground/80">Site Configuration</h2>
             
