@@ -98,8 +98,8 @@ export default function InfoStrip() {
             cta: { href: "#rates", text: "Rates" },
             content: (
                 <>
-                    <p className="font-satisfy text-8xl text-background mt-3">$6<span className="text-2xl tracking-wide">/person</span></p>
-                    <p className="font-light tracking-wide">Children 3 and under are free</p>
+                    <p className="font-satisfy text-4xl sm:text-8xl text-background mt-3">$6<span className="text-xl sm:text-2xl tracking-wide">/person</span></p>
+                    <p className="font-light tracking-wide text-xs sm:text-base">Children 3 and under are free</p>
                 </>
             ),
             icon: Ticket
@@ -122,9 +122,9 @@ export default function InfoStrip() {
             cta: { href: "/visit", text: "Visit" },
             content: (
                 <div className="flex flex-col h-full items-center flex-wrap space-x-3 space-y-1 w-full justify-evenly">
-                    <p className="font-light tracking-wide md:text-2xl"><i>Old McDonald&rsquo;s<br className="block sm:hidden lg:block" /> Pumpkin Patch & Corn Maze</i></p>
+                    <p className="font-light tracking-wide text-xs sm:text-base md:text-2xl"><i>Old McDonald&rsquo;s<br className="block sm:hidden lg:block" /> Pumpkin Patch & Corn Maze</i></p>
                     <div className="flex flex-row items-center justify-between bg-accent/20 px-2 py-1 rounded-lg hover:underline cursor-pointer" onClick={() => navigator.clipboard.writeText(address).then(() => alert("Copied to clipboard"))}>
-                        <p className="font-semibold text-left" >
+                        <p className="font-semibold text-left text-xs sm:text-base" >
                             1597 Arden Nollville Rd,<br className="block sm:hidden lg:block" /> Inwood, WV 25428
                         </p>
                         <Copy size={30} className="ml-3 text-accent" />
@@ -172,9 +172,9 @@ export default function InfoStrip() {
 function InfoItem({ id, title, cta, children, icon, className }) {
     const IconComponent = icon;
     return (
-        <div className={clsx("relative flex flex-col flex-[1_1_260px] min-w-[240px] sm:min-w-[260px]", className, "border-2 border-background/20 bg-background/10 rounded-2xl  overflow-hidden items-center gap-2 group")} key={id}>
+        <div className={clsx("relative flex flex-col",  " min-w-44 sm:min-w-65 flex-1 sm:flex-[1_1_260px]",  className, "border-2 border-background/20 bg-background/10 rounded-2xl  overflow-hidden items-center gap-2 group")} key={id}>
             {title &&
-                <h3 className="text-background text-2xl font-bold bg-background/20 w-full text-center py-1 uppercase tracking-widest shadow-2xl z-20">{title}</h3>
+                <h3 className="text-background text-lg sm:text-2xl font-bold bg-background/20 w-full text-center py-1 uppercase tracking-widest shadow-2xl z-20">{title}</h3>
             }
             {IconComponent && (
                 <div className="pointer-events-none w-full absolute flex justify-between gap-0.5 px-3 group-hover:px-4 transition-all duration-500 ease-in-out z-10" style={{
@@ -197,7 +197,7 @@ function InfoItem({ id, title, cta, children, icon, className }) {
             <div className="flex flex-col items-center p-1 sm:p-2 pt-1 sm:pt-4 w-full gap-2 h-full justify-between text-center text-background z-20">
                 {children}
                 {cta && cta.href && cta.text && (
-                    <Action as="a" href={cta.href} target={cta.target} className="uppercase tracking-wider w-full text-center max-w-md" onClick={() => {
+                    <Action as="a" href={cta.href} target={cta.target} className="text-sm sm:text-base uppercase tracking-wider w-full text-center max-w-md" onClick={() => {
                         track('infostrip-cta-click', {href: cta.href});
                     }}>{cta.text}</Action>
                 )}
@@ -259,12 +259,12 @@ function OpeningDayCountdown({ targetDate }) {
 
     return (
         <div className="flex flex-col items-center text-background w-full gap-3 my-2">
-            <p className="font-light tracking-widest text-xl sm:text-2xl">{displayDate || "Date TBA"}</p>
+            <p className="font-light tracking-widest text-sm sm:text-2xl">{displayDate || "Date TBA"}</p>
             <div className="grid grid-cols-2 gap-2 w-full">
                 {units.map((unit) => (
                     <div key={unit.label} className="bg-background/20 text-background rounded-2xl py-2 flex flex-col items-center">
-                        <span className="text-3xl font-bold font-['Satisfy']">{unit.value}</span>
-                        <span className="text-xs uppercase tracking-[0.3em] font-semibold">{unit.label}</span>
+                        <span className="text-lg sm:text-3xl font-bold font-['Satisfy']">{unit.value}</span>
+                        <span className="text-xs uppercase tracking-widest sm:tracking-[0.3em] font-semibold">{unit.label}</span>
                     </div>
                 ))}
             </div>
