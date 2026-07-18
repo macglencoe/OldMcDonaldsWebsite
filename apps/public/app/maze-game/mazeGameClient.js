@@ -3,6 +3,7 @@
 import EntryForm from '@/components/mazeGameEntryForm'
 import { useState, useEffect } from 'react'
 import { useFlags } from '@/app/FlagsContext'
+import { buildMazeSubmission, shouldEnableMazeFallback } from '@/lib/mazeSubmission.mjs'
 
 export default function MazeGameClient() {
     const { isFeatureEnabled } = useFlags();
@@ -69,17 +70,24 @@ export default function MazeGameClient() {
         Object.keys(mazeData).every(code => foundCodes.includes(code))
 
     const handleEntrySubmit = async ({ name, phone }) => {
+        const usingDatabase = isFeatureEnabled('use_db_forms')
+        const { endpoint, payload } = buildMazeSubmission({ name, phone, usingDatabase })
+
+        const enableGoogleFormsFallback = () => {
+            try {
+                const until = Date.now() + 24 * 60 * 60 * 1000 // 24h
+                localStorage.setItem('email_disabled_until', String(until))
+                setForceGoogleFormsClient(true)
+            } catch {}
+        }
+
         try {
-            const response = await fetch('/api/email', {
+            const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    kind: 'maze',
-                    text: `Name: ${name}\nPhone Number: ${phone}`,
-                    html: `<p>Name: ${name}</p><p>Phone Number: ${phone}</p>`,
-                }),
+                body: JSON.stringify(payload),
             });
 
             const data = await response.json();
@@ -102,18 +110,21 @@ export default function MazeGameClient() {
                 alert(`Thanks for playing, ${name}! Your entry for ${currentYear} has been recorded. If you win the drawing, we will contact you at ${phone}.`);
             } else {
                 alert(`Submission failed: ${data.error || 'Unknown error'}`);
-                // enable client-side fallback for 24h on limit errors
-                if (response.status === 429 || data?.code === 'LIMIT_EXCEEDED' || /limit|quota|rate|daily/i.test(String(data.error))) {
-                    try {
-                        const until = Date.now() + 24 * 60 * 60 * 1000 // 24h
-                        localStorage.setItem('email_disabled_until', String(until))
-                        setForceGoogleFormsClient(true)
-                    } catch {}
+                if (shouldEnableMazeFallback({
+                    usingDatabase,
+                    status: response.status,
+                    code: data?.code,
+                    error: data?.error,
+                })) {
+                    enableGoogleFormsFallback()
                 }
             }
         } catch (error) {
             console.error('Submission error:', error);
             alert('An unexpected error occurred. Please try again later.');
+            if (usingDatabase) {
+                enableGoogleFormsFallback()
+            }
         }
     }
 
