@@ -37,6 +37,11 @@ export default function () {
                         name: "Maze Entries",
                         url: "/maze-entries",
                         icon: PiClipboardTextDuotone
+                    },
+                    {
+                        name: "Reservation Requests",
+                        url: "/reservation-requests",
+                        icon: PiCalendarDuotone
                     }
                 ]}
             />
