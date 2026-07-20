@@ -42,6 +42,11 @@ export default function () {
                         name: "Reservation Requests",
                         url: "/reservation-requests",
                         icon: PiCalendarDuotone
+                    },
+                    {
+                        name: "Vendor Applications",
+                        url: "/vendor-applications",
+                        icon: PiClipboardTextDuotone
                     }
                 ]}
             />

@@ -92,6 +92,7 @@ const OVERRIDES = {
   '/gallery':      { changeFrequency: 'monthly', priority: 0.6 },
   '/maze-game':    { changeFrequency: 'monthly', priority: 0.4 },
   '/vendors':      { changeFrequency: 'monthly', priority: 0.5 },
+  '/vendors/apply': { changeFrequency: 'monthly', priority: 0.6 },
   '/privacy-policy': { changeFrequency: 'yearly', priority: 0.3 },
   '/attribution':    { changeFrequency: 'yearly', priority: 0.2 },
 };

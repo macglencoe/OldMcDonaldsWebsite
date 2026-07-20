@@ -27,6 +27,7 @@ export const Vendors = () => {
             <PageHeader subtitle="2025 Season">Vendors</PageHeader>
             <div className="body basic !pb-6">
                 <Action as='a' variant='primary' className={'mx-auto'} href={'/map?x=39.38310990806668&y=-78.04274712816566'}>Find on the Map</Action>
+                <Action as='a' variant='secondary' className={'mx-auto mt-3'} href={'/vendors/apply'}>Apply to be a Vendor</Action>
                 <VendorProfile
                     name="Old McDonuts"
                     subtitle="Donuts, Coffee, and Slushies"

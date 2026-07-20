@@ -2,7 +2,7 @@
 
 import { Navbar } from "@ui/navbar";
 
-const PRIMARY_KEYS = new Set(["maze-entries", "reservation-requests"]);
+const PRIMARY_KEYS = new Set(["maze-entries", "reservation-requests", "vendor-applications"]);
 
 export default function Navigation() {
     return (
@@ -19,6 +19,11 @@ export default function Navigation() {
               key: "reservation-requests",
               path: "/reservation-requests",
               title: "Reservation Requests"
+            },
+            {
+              key: "vendor-applications",
+              path: "/vendor-applications",
+              title: "Vendor Applications"
             }
           ]}
           auxiliaryItems={[
