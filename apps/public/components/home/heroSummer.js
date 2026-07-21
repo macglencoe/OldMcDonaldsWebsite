@@ -17,7 +17,7 @@ export default function HeroSummer() {
             trackEvent: { name: "Reservations", props: { location: "Hero Summer" } },
           },
           {
-            href: "https://docs.google.com/forms/d/e/1FAIpQLSdNLOwNjhKnsI4QT18MCGOrEvxXP164zfLpXQOZSSBcJQxo3A/viewform?usp=header",
+            href: "/vendors/apply",
             label: "Apply to be a vendor",
             icon: "ArrowSquareOut",
             trackEvent: { name: "Vendor Application", props: { location: "Hero Summer" } },

@@ -5,8 +5,8 @@ import { BodyBlock } from "@/components/bodyBlock";
 import rentalSlots from "@/public/data/gazeboRentalSlots.json";
 import { useMemo } from "react";
 import PageHeader from "@/components/pageHeader";
-import { Action } from "@oldmc/ui";
 import { getPricingData } from "@/utils/pricingServer";
+import ReservationRequestForm from "./reservationRequestForm";
 
 /**
  * Renders the gazebo-rental availability table from
@@ -119,22 +119,7 @@ export const Reservations = async () => {
                     <p className="big">{admissionDisplay} per {admissionUnit}*</p>
                     <p>* Over the age of 3</p>
                 </BodyBlock>
-                <div className="mx-auto my-12 p-8 text-foreground">
-                    <h3 className="!text-7xl text-center mb-10 tracking-wide">Ready to book?</h3>
-
-                    <div className="flex flex-col items-center space-y-6 !text-2xl">
-                        <p className="font-medium">
-                            Call us:
-                            <Action as="a" href='tel:304-839-2330' className={'mx-4'} variant="outline-secondary">304-839-2330</Action>
-                        </p>
-
-                        <div className="relative w-full flex items-center justify-center">
-                            <span className="text-sm uppercase tracking-widest font-semibold bg-background p-2">OR</span>
-                            <span className="absolute left-0 right-0 h-px bg-foreground/20 top-1/2 -z-10"></span>
-                        </div>
-                        <Action as="a" href={'https://docs.google.com/forms/d/e/1FAIpQLSfUPYvXsF4qcMsmtgOuidB06WPJkKKwlSLmo3uPnNDWgziPsw/viewform?usp=sharing&ouid=100113173059112922558'} variant="outline-secondary" className={'mx-4'}>Fill Out Form</Action>
-                    </div>
-                </div>
+                <ReservationRequestForm priceDisplay={`$${gazeboPrice}`} />
 
 
             </div>

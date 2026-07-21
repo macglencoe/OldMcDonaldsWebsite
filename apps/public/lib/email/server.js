@@ -8,6 +8,8 @@ const FROM_ADDRESS = "Old McDonald's Pumpkin Patch <no-reply@oldmcdonaldspumpkin
 
 const RECIPIENTS = Object.freeze({
   contact: ['team@oldmcdonaldspumpkinpatch.com'],
+  reservations: ['team@oldmcdonaldspumpkinpatch.com'],
+  vendors: ['team@oldmcdonaldspumpkinpatch.com'],
   maze: [
     'oldmcdonaldsglencoefarm@gmail.com',
     'mcpaul1694@gmail.com',
@@ -137,6 +139,96 @@ export async function sendMazeEntryNotification({ name, phone, year }) {
     subject: `Maze Game Entry — ${year}`,
     text: `Name: ${name}\nPhone Number: ${phone}\nYear: ${year}`,
     html: `<p>Name: ${escapeHtml(name)}</p><p>Phone Number: ${escapeHtml(phone)}</p><p>Year: ${year}</p>`,
+  });
+}
+
+function reservationDetailsText(request) {
+  const price = `$${(request.priceCents / 100).toFixed(2)}`;
+  return [
+    `Request ID: ${request.id}`,
+    `Name: ${request.name}`,
+    `Email: ${request.email}`,
+    `Phone: ${request.phone}`,
+    `Preferred date: ${request.preferredDate}`,
+    `Preferred time: ${request.preferredTimeLabel}`,
+    `Fallback dates: ${request.fallbackDates || 'None provided'}`,
+    `Price acknowledged: ${price}`,
+    `Additional comments: ${request.additionalComments || 'None provided'}`,
+  ].join('\n');
+}
+
+export async function sendReservationStaffNotification(request) {
+  const text = reservationDetailsText(request);
+  return deliver({
+    to: RECIPIENTS.reservations,
+    subject: `Gazebo reservation request #${request.id} — ${request.preferredDate}`,
+    text,
+    html: `<h2>Gazebo reservation request #${request.id}</h2><p><strong>This is a request, not a confirmed booking.</strong></p><pre style="font-family: sans-serif; white-space: pre-wrap">${escapeHtml(text)}</pre>`,
+    replyTo: request.email,
+  });
+}
+
+export async function sendReservationCustomerReceipt(request) {
+  const price = `$${(request.priceCents / 100).toFixed(2)}`;
+  const text = [
+    `Hi ${request.name},`,
+    '',
+    `We received your gazebo reservation request #${request.id}.`,
+    `Preferred date: ${request.preferredDate}`,
+    `Preferred time: ${request.preferredTimeLabel}`,
+    `Rental price acknowledged: ${price}`, '',
+    'This message is a receipt, not a booking confirmation. Staff will contact you about availability and payment details.',
+  ].join('\n');
+  return deliver({
+    to: [request.email],
+    subject: `We received your gazebo reservation request #${request.id}`,
+    text,
+    html: `<p>Hi ${escapeHtml(request.name)},</p><p>We received your gazebo reservation request <strong>#${request.id}</strong>.</p><ul><li>Preferred date: ${escapeHtml(request.preferredDate)}</li><li>Preferred time: ${escapeHtml(request.preferredTimeLabel)}</li><li>Rental price acknowledged: ${price}</li></ul><p><strong>This is a receipt, not a booking confirmation.</strong> Staff will contact you about availability and payment details.</p>`,
+    replyTo: RECIPIENTS.reservations,
+  });
+}
+
+function vendorDetailsText(application) {
+  return [
+    `Application ID: ${application.id}`,
+    `Business: ${application.businessName}`,
+    `Contact: ${application.contactName}`,
+    `Email: ${application.email}`,
+    `Phone: ${application.phone}`,
+    `Website/social media: ${application.websiteUrl || 'None provided'}`,
+    `Electricity: ${application.electricityLabel}`,
+    `Food vendor: ${application.isFoodVendor ? 'Yes' : 'No'}`,
+    `Certification: ${application.certificationLabel || 'Not applicable'}`,
+    `Availability notes: ${application.availabilityNotes || 'None provided'}`,
+  ].join('\n');
+}
+
+export async function sendVendorStaffNotification(application) {
+  const text = vendorDetailsText(application);
+  return deliver({
+    to: RECIPIENTS.vendors,
+    subject: `Vendor application #${application.id} — ${application.businessName}`,
+    text,
+    html: `<h2>Vendor application #${application.id}</h2><p><strong>This application has not been approved.</strong></p><pre style="font-family: sans-serif; white-space: pre-wrap">${escapeHtml(text)}</pre>`,
+    replyTo: application.email,
+  });
+}
+
+export async function sendVendorCustomerReceipt(application) {
+  const certificationNote = application.isFoodVendor
+    ? '<p>Food vendors must provide current health-department certification before vending. Staff may contact you for proof.</p>'
+    : '';
+  return deliver({
+    to: [application.email],
+    subject: `We received your vendor application #${application.id}`,
+    text: [
+      `Hi ${application.contactName},`, '',
+      `We received vendor application #${application.id} for ${application.businessName}.`, '',
+      'This is a receipt, not an approval to vend. Our team will review your application and contact you.',
+      application.isFoodVendor ? 'Food vendors must provide current health-department certification before vending. Staff may contact you for proof.' : '',
+    ].filter(Boolean).join('\n'),
+    html: `<p>Hi ${escapeHtml(application.contactName)},</p><p>We received vendor application <strong>#${application.id}</strong> for <strong>${escapeHtml(application.businessName)}</strong>.</p><p><strong>This is a receipt, not an approval to vend.</strong> Our team will review your application and contact you.</p>${certificationNote}`,
+    replyTo: RECIPIENTS.vendors,
   });
 }
 

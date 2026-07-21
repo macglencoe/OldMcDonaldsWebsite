@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 // Helper: decide whether this request should require authentication
 function shouldProtect(req: NextRequest): boolean {
   // Submission data contains personal information and is always protected.
-  if (req.nextUrl.pathname.startsWith("/maze-entries")) return true;
+  if (req.nextUrl.pathname.startsWith("/maze-entries") || req.nextUrl.pathname.startsWith("/reservation-requests") || req.nextUrl.pathname.startsWith("/vendor-applications")) return true;
 
   // Activation toggle: protection is on only when the env var is "1"
   if (process.env.ENABLE_PREVIEW_PROTECTION !== "1") return false;
@@ -39,7 +39,7 @@ export function middleware(req: NextRequest) {
 
   if (auth === expected) {
     const response = NextResponse.next();
-    if (req.nextUrl.pathname.startsWith("/maze-entries")) {
+    if (req.nextUrl.pathname.startsWith("/maze-entries") || req.nextUrl.pathname.startsWith("/reservation-requests") || req.nextUrl.pathname.startsWith("/vendor-applications")) {
       response.headers.set("Cache-Control", "no-store");
     }
     return response;

@@ -19,6 +19,8 @@ const GATE_DEFINITIONS = [
   { key: 'maze_game_enabled', defaultValue: true },
   { key: 'use_google_forms', defaultValue: false },
   { key: 'use_db_forms', defaultValue: false },
+  { key: 'use_db_reservations', defaultValue: false },
+  { key: 'use_db_vendor_applications', defaultValue: false },
   { key: 'use_fall_hero', defaultValue: false },
   { key: 'use_winter_hero', defaultValue: false },
   { key: 'show_survey', defaultValue: false}
