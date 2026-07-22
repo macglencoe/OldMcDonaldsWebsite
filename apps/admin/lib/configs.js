@@ -20,7 +20,11 @@ async function ensureInit() {
         })
     }
     try {
-        init = Statsig.initialize(key);
+        const environment = process.env.STATSIG_ENV_STRING?.trim();
+        init = Statsig.initialize(
+            key,
+            environment ? { environment: { tier: environment } } : undefined
+        );
         await init
         return init;
     } catch (err) {
@@ -35,5 +39,8 @@ async function ensureInit() {
 
 export async function getConfig(key, user = { userID: 'admin'}) {
     await ensureInit();
+    // Serverless instances can retain an older SDK snapshot between requests.
+    // Refresh it explicitly so config editors always open with the latest value.
+    await Statsig.syncConfigSpecs();
     return Statsig.getConfigSync(user, key).value ?? null;
 }
