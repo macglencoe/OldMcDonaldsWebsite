@@ -2,8 +2,10 @@ import { getDatabase } from '@oldmc/db';
 import { NextResponse } from 'next/server';
 
 import { sendReservationCustomerReceipt, sendReservationStaffNotification } from '@/lib/email/server';
+import { gazeboSlotLabels, snapshotGazeboSlotConfig } from '@/lib/gazeboSlotConfig.mjs';
+import { getGazeboSeasonForDate } from '@/lib/gazeboSlotConfigServer.mjs';
 import { getClientIp, hashIp, normalizeUserAgent } from '@/lib/mazeEntry.mjs';
-import { RESERVATION_SLOT_LABELS, validateReservationRequest } from '@/lib/reservationRequest.mjs';
+import { validateReservationRequest } from '@/lib/reservationRequest.mjs';
 import { getPricingData } from '@/utils/pricingServer';
 
 export const runtime = 'nodejs';
@@ -21,6 +23,24 @@ export async function POST(request) {
   try { body = await request.json(); } catch { return NextResponse.json({ error: 'Invalid JSON.' }, { status: 400 }); }
   const validation = validateReservationRequest(body);
   if (validation.error) return NextResponse.json({ error: validation.error }, { status: 400 });
+  const value = validation.value;
+
+  let gazeboSeason;
+  try {
+    gazeboSeason = await getGazeboSeasonForDate(value.preferredDate);
+    if (!gazeboSeason) {
+      return NextResponse.json(
+        { error: 'Gazebo rentals are not configured for the selected date.', code: 'DATE_UNAVAILABLE' },
+        { status: 422 },
+      );
+    }
+  } catch (error) {
+    console.error('Reservation slot configuration error:', error.message);
+    return NextResponse.json(
+      { error: 'Gazebo times are temporarily unavailable.', code: 'DATABASE_ERROR' },
+      { status: 503 },
+    );
+  }
 
   let ipHash;
   try { ipHash = hashIp(getClientIp(request.headers), process.env.IP_HASH_SECRET); }
@@ -39,8 +59,8 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Reservation pricing is unavailable.' }, { status: 503 });
   }
 
-  const value = validation.value;
   try {
+    const slotConfigSnapshot = snapshotGazeboSlotConfig(gazeboSeason);
     const rows = await getDatabase().query(
       `WITH rate_limit_lock AS MATERIALIZED (
          SELECT pg_advisory_xact_lock(hashtextextended($1, 0))
@@ -59,7 +79,10 @@ export async function POST(request) {
        RETURNING id::text, created_at`,
       [ipHash, RATE_LIMIT_WINDOW_HOURS, value.email, value.name, value.phone, value.phoneNormalized,
         value.preferredDate, value.preferredTimeSlot, value.fallbackDates, priceCents, POLICY_VERSION,
-        value.additionalComments, normalizeUserAgent(request.headers), JSON.stringify({ source: 'reservations-page' }), RATE_LIMIT_MAX],
+        value.additionalComments, normalizeUserAgent(request.headers), JSON.stringify({
+          source: 'reservations-page',
+          gazeboSlotConfig: slotConfigSnapshot,
+        }), RATE_LIMIT_MAX],
     );
 
     if (!rows.length) return NextResponse.json(
@@ -69,7 +92,7 @@ export async function POST(request) {
 
     const emailData = {
       id: rows[0].id, ...value, priceCents,
-      preferredTimeLabel: RESERVATION_SLOT_LABELS[value.preferredTimeSlot],
+      preferredTimeLabel: gazeboSlotLabels(gazeboSeason)[value.preferredTimeSlot],
     };
     const [staffEmail, customerEmail] = await Promise.allSettled([
       sendReservationStaffNotification(emailData), sendReservationCustomerReceipt(emailData),

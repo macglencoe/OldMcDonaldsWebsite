@@ -2,54 +2,53 @@ import Layout from "@/components/layout";
 import styles from "./page.module.css";
 import { BodyBlock } from "@/components/bodyBlock";
 
-import rentalSlots from "@/public/data/gazeboRentalSlots.json";
-import { useMemo } from "react";
 import PageHeader from "@/components/pageHeader";
+import { gazeboSlotLabels } from "@/lib/gazeboSlotConfig.mjs";
+import { getCurrentOrUpcomingGazeboSeason } from "@/lib/gazeboSlotConfigServer.mjs";
 import { getPricingData } from "@/utils/pricingServer";
 import ReservationRequestForm from "./reservationRequestForm";
 
-/**
- * Renders the gazebo-rental availability table from
- * `@/public/data/gazeboRentalSlots.json`.
- *
- * The JSON schema:
- * [
- *   { "day": "Fridays", "slots": [ { "start": "1:00 PM", "end": "3:00 PM" }, … ] },
- *   …
- * ]
- */
-function GazeboRentalTable() {
-  const maxCols = useMemo(
-    () => Math.max(...rentalSlots.map(({ slots }) => slots.length)),
-    [],
-  );
+const RENTAL_DAYS = ["Fridays", "Saturdays", "Sundays"];
+const MONTH_NAMES = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
 
+function formatSeasonDate(date) {
+  const [, month, day] = String(date).match(/^\d{4}-(\d{2})-(\d{2})/) ?? [];
+  const monthName = MONTH_NAMES[Number(month) - 1];
+  const dayNumber = Number(day);
+
+  if (!monthName || !dayNumber) return date;
+
+  const suffix = dayNumber % 100 >= 11 && dayNumber % 100 <= 13
+    ? "th"
+    : { 1: "st", 2: "nd", 3: "rd" }[dayNumber % 10] ?? "th";
+
+  return `${monthName} ${dayNumber}${suffix}`;
+}
+
+function GazeboRentalTable({ season }) {
+  const labels = gazeboSlotLabels(season ?? undefined);
   return (
     <table className="w-full border-collapse text-left">
       <thead>
         <tr className="border-b">
           <th className="py-2 pr-4">Day</th>
-          <th colSpan={maxCols} className="py-2">
+          <th colSpan={2} className="py-2">
             Time Slots
           </th>
         </tr>
       </thead>
 
       <tbody>
-        {rentalSlots.map(({ day, slots }) => (
+        {RENTAL_DAYS.map((day) => (
           <tr key={day} className="border-b last:border-0">
             <td className="py-2 pr-4 font-medium">{day}</td>
-
-            {/* one <td> per slot */}
-            {slots.map(({ start, end }) => (
-              <td key={`${start}-${end}`} className="py-2 px-3">
-                {start} – {end}
+            {[labels.early, labels.late].map((label) => (
+              <td key={label} className="py-2 px-3">
+                {label}
               </td>
-            ))}
-
-            {/* pad with empty cells if this day has fewer slots than maxCols */}
-            {Array.from({ length: maxCols - slots.length }).map((_, idx) => (
-              <td key={`pad-${idx}`} />
             ))}
           </tr>
         ))}
@@ -65,7 +64,18 @@ export const metadata = {
 
 
 export const Reservations = async () => {
-    const pricing = await getPricingData();
+    const todayParts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit",
+    }).formatToParts(new Date());
+    const todayValues = Object.fromEntries(todayParts.map(({ type, value }) => [type, value]));
+    const today = `${todayValues.year}-${todayValues.month}-${todayValues.day}`;
+    const [pricing, gazeboSeason] = await Promise.all([
+      getPricingData(),
+      getCurrentOrUpcomingGazeboSeason(today).catch((error) => {
+        console.error("Could not load public gazebo season configuration:", error.message);
+        return null;
+      }),
+    ]);
     const gazeboRental = pricing["gazebo-rental"];
     const gazeboPrice = Number(gazeboRental?.amount ?? 0).toFixed(2);
     const admission = pricing.admission;
@@ -75,7 +85,7 @@ export const Reservations = async () => {
 
     return (
         <Layout>
-            <PageHeader subtitle="2025 Season">Reservations</PageHeader>
+            <PageHeader subtitle={gazeboSeason?.season_name ?? "Reservations"}>Reservations</PageHeader>
             <div className="body basic">
                 <BodyBlock src='/bonfires.jpg'>
                 <h2>Night-time campfire</h2>
@@ -91,8 +101,14 @@ export const Reservations = async () => {
                     <p>You will recieve an <b>email invoice</b> for your rental after booking</p>
                 </BodyBlock>
                 <BodyBlock>
+                    {gazeboSeason &&
+                        <p>
+                          <h3 className="font-semibold font-satisfy text-4xl mx-auto text-center">{gazeboSeason.season_name}:</h3>
+                          <p className="mx-auto text-center"><b>{formatSeasonDate(gazeboSeason.start_date)}</b> through <b>{formatSeasonDate(gazeboSeason.end_date)}</b></p>
+                        </p>
+                    }
                     <div className={styles.timeSlots + " font-[Inter]"}>
-                        <GazeboRentalTable />
+                        <GazeboRentalTable season={gazeboSeason} />
                     </div>
                 </BodyBlock>
                 <BodyBlock>

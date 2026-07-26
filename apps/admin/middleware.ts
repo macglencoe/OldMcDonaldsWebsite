@@ -3,10 +3,24 @@
 // valid credentials in the `Authorization: Basic ...` header.
 import { NextRequest, NextResponse } from "next/server";
 
+const SENSITIVE_PREFIXES = [
+  "/maze-entries",
+  "/reservation-requests",
+  "/vendor-applications",
+  "/bookings",
+  "/api/bookings",
+];
+
+function containsSensitiveData(pathname: string): boolean {
+  return SENSITIVE_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
+  );
+}
+
 // Helper: decide whether this request should require authentication
 function shouldProtect(req: NextRequest): boolean {
   // Submission data contains personal information and is always protected.
-  if (req.nextUrl.pathname.startsWith("/maze-entries") || req.nextUrl.pathname.startsWith("/reservation-requests") || req.nextUrl.pathname.startsWith("/vendor-applications")) return true;
+  if (containsSensitiveData(req.nextUrl.pathname)) return true;
 
   // Activation toggle: protection is on only when the env var is "1"
   if (process.env.ENABLE_PREVIEW_PROTECTION !== "1") return false;
@@ -39,7 +53,7 @@ export function middleware(req: NextRequest) {
 
   if (auth === expected) {
     const response = NextResponse.next();
-    if (req.nextUrl.pathname.startsWith("/maze-entries") || req.nextUrl.pathname.startsWith("/reservation-requests") || req.nextUrl.pathname.startsWith("/vendor-applications")) {
+    if (containsSensitiveData(req.nextUrl.pathname)) {
       response.headers.set("Cache-Control", "no-store");
     }
     return response;

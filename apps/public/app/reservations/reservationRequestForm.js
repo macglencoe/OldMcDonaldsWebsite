@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useFlags } from '@/app/FlagsContext';
-import { RESERVATION_SLOT_LABELS } from '@/lib/reservationRequest.mjs';
 
 const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfUPYvXsF4qcMsmtgOuidB06WPJkKKwlSLmo3uPnNDWgziPsw/viewform?usp=sharing&ouid=100113173059112922558';
 const initialForm = {
@@ -18,6 +17,9 @@ export default function ReservationRequestForm({ priceDisplay }) {
   const [message, setMessage] = useState('');
   const [requestId, setRequestId] = useState(null);
   const [forceGoogleForm, setForceGoogleForm] = useState(false);
+  const [slotLookup, setSlotLookup] = useState({
+    status: 'idle', slots: {}, season: null, error: '',
+  });
 
   useEffect(() => {
     const until = Number(localStorage.getItem('reservation_forms_disabled_until') || 0);
@@ -25,9 +27,41 @@ export default function ReservationRequestForm({ priceDisplay }) {
   }, []);
 
   const useDatabase = isFeatureEnabled('use_db_reservations') && !forceGoogleForm;
+
+  useEffect(() => {
+    if (!useDatabase || !form.preferredDate) {
+      setSlotLookup({ status: 'idle', slots: {}, season: null, error: '' });
+      return;
+    }
+    const controller = new AbortController();
+    setSlotLookup({ status: 'loading', slots: {}, season: null, error: '' });
+    fetch(`/api/reservations/gazebo-slots?date=${encodeURIComponent(form.preferredDate)}`, {
+      signal: controller.signal,
+    })
+      .then(async (response) => {
+        const data = await response.json();
+        if (response.status >= 500) {
+          localStorage.setItem('reservation_forms_disabled_until', String(Date.now() + 24 * 60 * 60 * 1000));
+          setForceGoogleForm(true);
+        }
+        if (!response.ok) throw new Error(data.error || 'Gazebo times are unavailable for this date.');
+        setSlotLookup({ status: 'ready', slots: data.slots, season: data.season, error: '' });
+      })
+      .catch((error) => {
+        if (error.name !== 'AbortError') {
+          setSlotLookup({ status: 'error', slots: {}, season: null, error: error.message });
+        }
+      });
+    return () => controller.abort();
+  }, [form.preferredDate, useDatabase]);
+
   const update = (event) => {
     const { name, type, checked, value } = event.target;
-    setForm((current) => ({ ...current, [name]: type === 'checkbox' ? checked : value }));
+    setForm((current) => ({
+      ...current,
+      [name]: type === 'checkbox' ? checked : value,
+      ...(name === 'preferredDate' ? { preferredTimeSlot: '' } : {}),
+    }));
   };
 
   const enableFallback = () => {
@@ -86,10 +120,21 @@ export default function ReservationRequestForm({ priceDisplay }) {
         <label className="font-semibold">Preferred date *<input className={inputClass} name="preferredDate" onChange={update} required type="date" value={form.preferredDate} /></label>
       </div>
       <label className="block font-semibold">Preferred time slot *
-        <select className={inputClass} name="preferredTimeSlot" onChange={update} required value={form.preferredTimeSlot}>
-          <option value="">Choose a time</option>
-          {Object.entries(RESERVATION_SLOT_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+        <select
+          className={inputClass}
+          disabled={slotLookup.status !== 'ready'}
+          name="preferredTimeSlot"
+          onChange={update}
+          required
+          value={form.preferredTimeSlot}
+        >
+          <option value="">
+            {!form.preferredDate ? 'Choose a date first' : slotLookup.status === 'loading' ? 'Loading times…' : 'Choose a time'}
+          </option>
+          {Object.entries(slotLookup.slots).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
         </select>
+        {slotLookup.season && <span className="mt-1 block text-sm font-normal text-foreground/70">{slotLookup.season.name}</span>}
+        {slotLookup.error && <span className="mt-1 block text-sm font-normal text-red-700">{slotLookup.error}</span>}
       </label>
       <label className="block font-semibold">Fallback dates or times<textarea className={inputClass} maxLength={1000} name="fallbackDates" onChange={update} rows={3} value={form.fallbackDates} /></label>
       <fieldset className="space-y-3 rounded-lg bg-foreground/[0.04] p-4">
@@ -100,7 +145,7 @@ export default function ReservationRequestForm({ priceDisplay }) {
       </fieldset>
       <label className="block font-semibold">Additional comments<textarea className={inputClass} maxLength={2000} name="additionalComments" onChange={update} rows={4} value={form.additionalComments} /></label>
       {message && <p className="rounded-lg bg-red-50 p-3 text-red-800" role="alert">{message}</p>}
-      <button className="w-full rounded-lg bg-accent px-5 py-3 font-bold text-white disabled:opacity-60" disabled={isSubmitting} type="submit">{isSubmitting ? 'Sending request…' : 'Submit request'}</button>
+      <button className="w-full rounded-lg bg-accent px-5 py-3 font-bold text-white disabled:opacity-60" disabled={isSubmitting || slotLookup.status !== 'ready'} type="submit">{isSubmitting ? 'Sending request…' : 'Submit request'}</button>
     </form>
   );
 }
