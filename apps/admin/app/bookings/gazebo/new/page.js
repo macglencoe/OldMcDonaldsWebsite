@@ -22,11 +22,12 @@ export default async function NewGazeboBookingPage({ searchParams }) {
 
   return (
     <main className="px-4 py-8 sm:px-8">
-      <Link className="underline" href="/bookings/gazebo">← Gazebo bookings</Link>
+      <Link className="inline-block font-semibold text-foreground/70 underline underline-offset-4 hover:text-foreground" href="/bookings/gazebo">← Gazebo bookings</Link>
       <h1 className="mt-4 text-3xl font-bold">{request ? `Book request #${request.id}` : "New gazebo booking"}</h1>
       {request && (
-        <section className="my-6 max-w-3xl rounded-xl border border-foreground/20 p-5">
-          <h2 className="text-xl font-bold">{request.name}</h2>
+        <section className="my-6 max-w-3xl rounded-xl border border-accent/30 bg-accent/[0.05] p-5">
+          <p className="text-xs font-semibold uppercase tracking-widest text-accent">Reservation request #{request.id}</p>
+          <h2 className="mt-1 text-xl font-bold">{request.name}</h2>
           <p><a className="underline" href={`mailto:${request.email}`}>{request.email}</a> · <a className="underline" href={`tel:${request.phone_normalized}`}>{request.phone}</a></p>
           <dl className="mt-4 grid gap-3 sm:grid-cols-2">
             <div><dt className="font-semibold">Preferred date</dt><dd>{request.preferred_date}</dd></div>
@@ -36,7 +37,7 @@ export default async function NewGazeboBookingPage({ searchParams }) {
           {request.additional_comments && <p className="mt-3"><strong>Customer comments:</strong> {request.additional_comments}</p>}
           <p className="mt-3"><strong>Price acknowledged:</strong> ${(request.price_cents_snapshot / 100).toFixed(2)}</p>
           {request.bookings.length > 0 && (
-            <div className="mt-4 rounded-lg bg-foreground/5 p-3">
+            <div className="mt-4 rounded-lg border border-foreground/10 bg-white/70 p-3">
               <strong>Previous bookings:</strong>
               <ul className="list-disc pl-5">
                 {request.bookings.map((booking) => (

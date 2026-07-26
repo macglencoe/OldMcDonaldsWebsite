@@ -24,7 +24,7 @@ export default async function CampfireBookingPage({ params, searchParams }) {
 
   return (
     <main className="px-4 py-8 sm:px-8">
-      <Link className="underline" href={returnTo}>← Campfire bookings</Link>
+      <Link className="inline-block font-semibold text-foreground/70 underline underline-offset-4 hover:text-foreground" href={returnTo}>← Campfire bookings</Link>
       <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-sm font-semibold uppercase tracking-widest text-foreground/60">CF-{booking.id}</p>
@@ -34,7 +34,7 @@ export default async function CampfireBookingPage({ params, searchParams }) {
       </div>
       {booking.status === "cancelled" ? (
         <div className="mt-8 max-w-4xl">
-          <p className="mb-4 rounded-lg bg-foreground/5 p-4">Cancelled bookings are retained as read-only history.</p>
+          <p className="mb-4 rounded-lg border border-foreground/15 bg-foreground/[0.04] p-4 text-foreground/70">Cancelled bookings are retained as read-only history.</p>
           <BookingList bookings={[booking]} type="campfires" />
         </div>
       ) : (

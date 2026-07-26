@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PiGearBold, PiPlusBold, PiWarningBold } from "react-icons/pi";
 
 import BookingCalendar from "@/components/bookings/bookingCalendar";
 import BookingFilters from "@/components/bookings/bookingFilters";
@@ -57,13 +58,17 @@ export default async function GazeboBookingsPage({ searchParams }) {
           <p className="mt-2 text-foreground/70">One gazebo with an early and late slot each day.</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Link className="rounded-lg border px-4 py-2 font-semibold" href="/bookings/gazebo/seasons">Season settings</Link>
-          <Link className="rounded-lg bg-accent px-4 py-2 font-semibold text-white" href="/bookings/gazebo/new">New booking</Link>
+          <Link className="inline-flex items-center gap-2 rounded-lg border border-foreground px-4 py-2 font-semibold transition hover:bg-foreground hover:text-white" href="/bookings/gazebo/seasons">
+            <PiGearBold aria-hidden="true" /> Season settings
+          </Link>
+          <Link className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-semibold text-white transition hover:opacity-90" href="/bookings/gazebo/new">
+            <PiPlusBold aria-hidden="true" /> New booking
+          </Link>
         </div>
       </div>
       {!seasons.length && (
-        <p className="mt-6 rounded-lg bg-amber-100 p-4 text-amber-900">
-          Create a gazebo season before adding bookings.
+        <p className="mt-6 flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 p-4 font-medium text-amber-900">
+          <PiWarningBold aria-hidden="true" size={20} /> Create a gazebo season before adding bookings.
         </p>
       )}
       <BookingFilters filters={filters} type="gazebo" />
@@ -90,9 +95,9 @@ export default async function GazeboBookingsPage({ searchParams }) {
         />
         {totalPages > 1 && (
           <nav className="mt-6 flex justify-between">
-            {currentPage > 1 ? <Link href={pageHref(currentPage - 1)}>Previous</Link> : <span />}
-            <span>Page {currentPage} of {totalPages}</span>
-            {currentPage < totalPages ? <Link href={pageHref(currentPage + 1)}>Next</Link> : <span />}
+            {currentPage > 1 ? <Link className="rounded-lg border border-foreground px-4 py-2 font-semibold" href={pageHref(currentPage - 1)}>Previous</Link> : <span />}
+            <span className="self-center text-sm font-semibold">Page {currentPage} of {totalPages}</span>
+            {currentPage < totalPages ? <Link className="rounded-lg border border-foreground px-4 py-2 font-semibold" href={pageHref(currentPage + 1)}>Next</Link> : <span />}
           </nav>
         )}
       </section>

@@ -40,8 +40,8 @@ function pageUrl({ page, year, slot, requestId }) {
 function BookingHistory({ bookings }) {
   if (!bookings.length) return null;
   return (
-    <section className="mt-5 rounded-lg bg-foreground/5 p-4">
-      <h3 className="font-bold">Booking history</h3>
+    <section className="mt-5 rounded-lg border border-foreground/10 bg-foreground/[0.03] p-4">
+      <h3 className="text-sm font-bold uppercase tracking-wider text-foreground/70">Booking history</h3>
       <ul className="mt-2 space-y-2">
         {bookings.map((booking) => (
           <li className="flex flex-wrap items-center justify-between gap-2" key={booking.id}>
@@ -51,7 +51,7 @@ function BookingHistory({ bookings }) {
               {' · '}<span className="capitalize">{booking.time_slot}</span>
               {' · '}<span className="capitalize">{booking.status}</span>
             </span>
-            <Link className="font-semibold underline" href={`/bookings/gazebo/${booking.id}`}>
+            <Link className="font-semibold text-accent underline underline-offset-4" href={`/bookings/gazebo/${booking.id}`}>
               View booking
             </Link>
           </li>
@@ -66,7 +66,7 @@ function RequestAction({ request }) {
   if (activeBooking) {
     return (
       <Link
-        className="mt-4 inline-block rounded-lg bg-accent px-4 py-2 font-semibold text-white"
+        className="mt-4 inline-block rounded-lg bg-accent px-4 py-2 font-semibold text-white transition hover:opacity-90"
         href={`/bookings/gazebo/${activeBooking.id}`}
       >
         View active booking GZ-{activeBooking.id}
@@ -75,7 +75,7 @@ function RequestAction({ request }) {
   }
   return (
     <Link
-      className="mt-4 inline-block rounded-lg bg-accent px-4 py-2 font-semibold text-white"
+      className="mt-4 inline-block rounded-lg bg-accent px-4 py-2 font-semibold text-white transition hover:opacity-90"
       href={`/bookings/gazebo/new?request=${request.id}`}
     >
       {request.bookings.length ? 'Create replacement booking' : 'Review and create booking'}
@@ -115,7 +115,7 @@ export default async function ReservationRequestsPage({ searchParams }) {
       </div>
 
       {requestId && (
-        <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-lg bg-accent/10 p-4">
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-accent/30 bg-accent/[0.07] p-4">
           <p className="font-semibold">Showing reservation request #{requestId}</p>
           <Link className="underline" href="/reservation-requests">Show all requests</Link>
         </div>
@@ -125,22 +125,22 @@ export default async function ReservationRequestsPage({ searchParams }) {
         <form className="mb-6 flex flex-wrap items-end gap-3">
           <label className="font-semibold">
             Year
-            <select className="block rounded border p-2" defaultValue={year ?? ''} name="year">
+            <select className="mt-1 block rounded-lg border border-foreground/30 bg-white px-3 py-2 font-normal" defaultValue={year ?? ''} name="year">
               <option value="">All</option>
               {data.years.map((availableYear) => <option key={availableYear}>{availableYear}</option>)}
             </select>
           </label>
           <label className="font-semibold">
             Time
-            <select className="block rounded border p-2" defaultValue={slot ?? ''} name="slot">
+            <select className="mt-1 block rounded-lg border border-foreground/30 bg-white px-3 py-2 font-normal" defaultValue={slot ?? ''} name="slot">
               <option value="">All</option>
               {Object.entries(SLOT_LABELS).map(([value, label]) => (
                 <option key={value} value={value}>{label}</option>
               ))}
             </select>
           </label>
-          <button className="rounded border px-4 py-2 font-semibold">Apply</button>
-          <Link className="p-2 underline" href="/reservation-requests">Clear</Link>
+          <button className="rounded-lg border border-foreground px-4 py-2 font-semibold transition hover:bg-foreground hover:text-white">Apply</button>
+          <Link className="p-2 font-semibold underline underline-offset-4" href="/reservation-requests">Clear</Link>
         </form>
       )}
 
@@ -184,13 +184,13 @@ export default async function ReservationRequestsPage({ searchParams }) {
       </div>
 
       {data.totalPages > 1 && (
-        <nav className="mt-6 flex justify-between">
+        <nav className="mt-6 flex items-center justify-between gap-4">
           {data.currentPage > 1
-            ? <Link href={pageUrl({ page: data.currentPage - 1, year, slot, requestId })}>Previous</Link>
+            ? <Link className="rounded-lg border border-foreground px-4 py-2 font-semibold" href={pageUrl({ page: data.currentPage - 1, year, slot, requestId })}>Previous</Link>
             : <span />}
-          <span>Page {data.currentPage} of {data.totalPages}</span>
+          <span className="text-sm font-semibold">Page {data.currentPage} of {data.totalPages}</span>
           {data.currentPage < data.totalPages
-            ? <Link href={pageUrl({ page: data.currentPage + 1, year, slot, requestId })}>Next</Link>
+            ? <Link className="rounded-lg border border-foreground px-4 py-2 font-semibold" href={pageUrl({ page: data.currentPage + 1, year, slot, requestId })}>Next</Link>
             : <span />}
         </nav>
       )}

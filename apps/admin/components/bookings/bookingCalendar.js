@@ -75,13 +75,13 @@ export default function BookingCalendar({
   return (
     <div>
       {type === "gazebo" && (
-        <div className="mb-3">
+        <div className="mb-4 grid gap-3 md:grid-cols-2">
           {visibleSeasons.map((season) => (
-            <div className="rounded-lg bg-accent/10 p-4" key={season.id}>
-              <p className="text-sm font-semibold uppercase tracking-wider text-foreground/60">Visible season</p>
+            <div className="rounded-xl border border-accent/30 bg-accent/[0.07] p-4" key={season.id}>
+              <p className="text-xs font-semibold uppercase tracking-widest text-accent">Visible season</p>
               <h3 className="text-lg font-bold">{season.season_name}</h3>
-              <p>{formatDate(season.start_date)}–{formatDate(season.end_date)}</p>
-              <p>
+              <p className="text-sm text-foreground/70">{formatDate(season.start_date)}–{formatDate(season.end_date)}</p>
+              <p className="mt-2 text-sm font-medium">
                 Early: {formatTime(season.early_start_time)}–{formatTime(season.early_end_time)}
                 {" · "}
                 Late: {formatTime(season.late_start_time)}–{formatTime(season.late_end_time)}
@@ -89,13 +89,13 @@ export default function BookingCalendar({
             </div>
           ))}
           {!visibleSeasons.length && (
-            <p className="rounded-lg bg-foreground/5 p-4 text-foreground/70">
+            <p className="rounded-xl border border-dashed border-foreground/30 p-4 text-foreground/70 md:col-span-2">
               No gazebo season is configured for the visible month.
             </p>
           )}
         </div>
       )}
-      <div className="overflow-x-auto rounded-xl border border-foreground/20 bg-background p-3 shadow-sm">
+      <div className="overflow-x-auto rounded-xl border border-foreground/20 bg-white p-3 shadow-sm">
         <div className="min-w-[700px]">
         <FullCalendar
           datesSet={({ view }) => {

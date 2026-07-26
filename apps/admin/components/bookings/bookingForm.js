@@ -2,8 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { PiCheckCircleBold, PiFloppyDiskBold, PiPlusCircleBold } from "react-icons/pi";
 
-const inputClass = "mt-1 block w-full rounded-lg border border-foreground/30 bg-background px-3 py-2";
+const inputClass = "mt-1 block w-full rounded-lg border border-foreground/30 bg-white px-3 py-2 font-normal outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20";
+const fieldsetClass = "grid gap-4 rounded-xl border border-foreground/20 bg-white p-5 shadow-sm sm:grid-cols-2";
 
 export default function BookingForm({ type, request = null, booking = null, returnTo = null }) {
   const router = useRouter();
@@ -45,8 +47,8 @@ export default function BookingForm({ type, request = null, booking = null, retu
   return (
     <form className="max-w-3xl space-y-6" onSubmit={submit}>
       {!isConversion && (
-        <fieldset className="grid gap-4 rounded-xl border border-foreground/20 p-5 sm:grid-cols-2">
-          <legend className="px-2 text-lg font-bold">Customer</legend>
+        <fieldset className={fieldsetClass}>
+          <legend className="px-2 text-xl font-bold">Customer details</legend>
           <label className="font-semibold">
             Name
             <input className={inputClass} defaultValue={booking?.customer_name ?? ""} maxLength={120} name="customerName" required />
@@ -66,8 +68,8 @@ export default function BookingForm({ type, request = null, booking = null, retu
         </fieldset>
       )}
 
-      <fieldset className="grid gap-4 rounded-xl border border-foreground/20 p-5 sm:grid-cols-2">
-        <legend className="px-2 text-lg font-bold">Booking</legend>
+      <fieldset className={fieldsetClass}>
+        <legend className="px-2 text-xl font-bold">Booking details</legend>
         <label className="font-semibold">
           Date
           <input
@@ -112,12 +114,17 @@ export default function BookingForm({ type, request = null, booking = null, retu
         </label>
       </fieldset>
 
-      {error && <p className="rounded-lg bg-red-100 p-3 font-semibold text-red-800">{error}</p>}
+      {error && <p className="rounded-lg border border-red-200 bg-red-50 p-3 font-semibold text-red-800" role="alert">{error}</p>}
       <button
-        className="rounded-lg bg-accent px-5 py-3 font-bold text-white disabled:opacity-50"
+        className="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-3 font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
         disabled={pending}
         type="submit"
       >
+        {isEditing
+          ? <PiFloppyDiskBold aria-hidden="true" />
+          : isConversion
+            ? <PiCheckCircleBold aria-hidden="true" />
+            : <PiPlusCircleBold aria-hidden="true" />}
         {pending
           ? isEditing ? "Saving changes…" : "Creating booking…"
           : isEditing ? "Save changes" : isConversion ? "Create booking from request" : "Create booking"}

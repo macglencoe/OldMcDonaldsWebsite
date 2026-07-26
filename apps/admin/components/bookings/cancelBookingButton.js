@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { PiXCircleBold } from "react-icons/pi";
 
 export default function CancelBookingButton({ bookingId, type }) {
   const router = useRouter();
@@ -23,14 +24,15 @@ export default function CancelBookingButton({ bookingId, type }) {
   return (
     <div className="text-right">
       <button
-        className="rounded border border-red-700 px-3 py-1.5 text-sm font-semibold text-red-800 disabled:opacity-50"
+        className="inline-flex items-center gap-2 rounded-lg border border-red-300 bg-white px-3 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
         disabled={state.pending}
         onClick={cancel}
         type="button"
       >
+        <PiXCircleBold aria-hidden="true" />
         {state.pending ? "Cancelling…" : "Cancel booking"}
       </button>
-      {state.error && <p className="mt-1 max-w-xs text-sm text-red-700">{state.error}</p>}
+      {state.error && <p className="mt-2 max-w-xs text-sm font-medium text-red-700" role="alert">{state.error}</p>}
     </div>
   );
 }

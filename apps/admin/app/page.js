@@ -2,7 +2,7 @@ import DirectoryGrid from "@/components/directoryGrid";
 import ExternalLinks from "@/components/externalLinks";
 import Hero from "@/components/hero";
 import Link from "next/link";
-import { PiCalendarCheckDuotone, PiCalendarDuotone, PiChartLineDuotone, PiClipboardTextDuotone, PiClockDuotone, PiCurrencyDollarDuotone, PiEnvelopeDuotone, PiFlagDuotone, PiGithubLogoDuotone, PiMegaphoneDuotone, PiQuestionDuotone, PiUserListDuotone } from "react-icons/pi";
+import { PiCalendarCheckDuotone, PiCalendarDuotone, PiChartLineDuotone, PiClipboardTextDuotone, PiClockDuotone, PiCurrencyDollarDuotone, PiEnvelopeDuotone, PiFlagDuotone, PiGithubLogoDuotone, PiMegaphoneDuotone, PiQuestionDuotone } from "react-icons/pi";
 
 export default function () {
     return (

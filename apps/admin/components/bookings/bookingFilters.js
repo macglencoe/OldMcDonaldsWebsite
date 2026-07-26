@@ -1,15 +1,16 @@
 import Link from "next/link";
+import { PiFunnelBold, PiMagnifyingGlassBold } from "react-icons/pi";
 
-const inputClass = "mt-1 block rounded-lg border border-foreground/30 bg-background px-3 py-2";
+const inputClass = "mt-1 block w-full rounded-lg border border-foreground/30 bg-white px-3 py-2 font-normal outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20";
 
 export default function BookingFilters({ filters, type }) {
   const basePath = `/bookings/${type}`;
   return (
-    <form className="mt-6 flex flex-wrap items-end gap-3 rounded-xl border border-foreground/20 p-4">
-      <label className="font-semibold">
-        Customer or ID
+    <form className="mt-6 grid gap-4 rounded-xl border border-foreground/20 bg-foreground/[0.02] p-4 sm:grid-cols-2 lg:grid-cols-6">
+      <label className="font-semibold sm:col-span-2">
+        <span className="flex items-center gap-1.5"><PiMagnifyingGlassBold aria-hidden="true" /> Customer or ID</span>
         <input
-          className={`${inputClass} w-64`}
+          className={inputClass}
           defaultValue={filters.search ?? ""}
           name="search"
           placeholder={type === "gazebo" ? "Name, email, phone, GZ-12, #381" : "Name, email, phone, CF-12"}
@@ -44,8 +45,12 @@ export default function BookingFilters({ filters, type }) {
           </select>
         </label>
       )}
-      <button className="rounded-lg bg-accent px-4 py-2 font-semibold text-white">Apply filters</button>
-      <Link className="px-2 py-2 underline" href={basePath}>Clear</Link>
+      <div className="flex items-end gap-2 sm:col-span-2 lg:col-span-1">
+        <button className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-semibold text-white transition hover:opacity-90">
+          <PiFunnelBold aria-hidden="true" /> Apply
+        </button>
+        <Link className="rounded-lg px-3 py-2 font-semibold underline underline-offset-4" href={basePath}>Clear</Link>
+      </div>
     </form>
   );
 }

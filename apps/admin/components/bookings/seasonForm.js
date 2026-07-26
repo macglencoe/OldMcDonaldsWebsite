@@ -2,8 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { PiFloppyDiskBold, PiPlusCircleBold } from "react-icons/pi";
 
-const inputClass = "mt-1 block w-full rounded-lg border border-foreground/30 bg-background px-3 py-2";
+const inputClass = "mt-1 block w-full rounded-lg border border-foreground/30 bg-white px-3 py-2 font-normal outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20";
 
 export default function SeasonForm({ season = null }) {
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function SeasonForm({ season = null }) {
   }
 
   return (
-    <form className="grid max-w-3xl gap-4 rounded-xl border border-foreground/20 p-5 sm:grid-cols-2" onSubmit={submit}>
+    <form className="grid max-w-3xl gap-4 rounded-xl border border-foreground/20 bg-white p-5 shadow-sm sm:grid-cols-2" onSubmit={submit}>
       <label className="font-semibold sm:col-span-2">
         Season name
         <input className={inputClass} defaultValue={season?.season_name ?? ""} name="seasonName" placeholder="2027 Fall Season" required />
@@ -45,8 +46,9 @@ export default function SeasonForm({ season = null }) {
       <label className="font-semibold">Early end<input className={inputClass} defaultValue={season?.early_end_time ?? "15:00"} name="earlyEndTime" required type="time" /></label>
       <label className="font-semibold">Late start<input className={inputClass} defaultValue={season?.late_start_time ?? "16:00"} name="lateStartTime" required type="time" /></label>
       <label className="font-semibold">Late end<input className={inputClass} defaultValue={season?.late_end_time ?? "18:00"} name="lateEndTime" required type="time" /></label>
-      {error && <p className="rounded-lg bg-red-100 p-3 font-semibold text-red-800 sm:col-span-2">{error}</p>}
-      <button className="w-fit rounded-lg bg-accent px-5 py-3 font-bold text-white disabled:opacity-50" disabled={pending} type="submit">
+      {error && <p className="rounded-lg border border-red-200 bg-red-50 p-3 font-semibold text-red-800 sm:col-span-2" role="alert">{error}</p>}
+      <button className="inline-flex w-fit items-center gap-2 rounded-lg bg-accent px-5 py-3 font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50" disabled={pending} type="submit">
+        {isEditing ? <PiFloppyDiskBold aria-hidden="true" /> : <PiPlusCircleBold aria-hidden="true" />}
         {pending ? (isEditing ? "Saving changes…" : "Creating season…") : (isEditing ? "Save changes" : "Create season")}
       </button>
     </form>

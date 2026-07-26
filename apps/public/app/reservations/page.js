@@ -9,6 +9,24 @@ import { getPricingData } from "@/utils/pricingServer";
 import ReservationRequestForm from "./reservationRequestForm";
 
 const RENTAL_DAYS = ["Fridays", "Saturdays", "Sundays"];
+const MONTH_NAMES = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+function formatSeasonDate(date) {
+  const [, month, day] = String(date).match(/^\d{4}-(\d{2})-(\d{2})/) ?? [];
+  const monthName = MONTH_NAMES[Number(month) - 1];
+  const dayNumber = Number(day);
+
+  if (!monthName || !dayNumber) return date;
+
+  const suffix = dayNumber % 100 >= 11 && dayNumber % 100 <= 13
+    ? "th"
+    : { 1: "st", 2: "nd", 3: "rd" }[dayNumber % 10] ?? "th";
+
+  return `${monthName} ${dayNumber}${suffix}`;
+}
 
 function GazeboRentalTable({ season }) {
   const labels = gazeboSlotLabels(season ?? undefined);
@@ -83,8 +101,13 @@ export const Reservations = async () => {
                     <p>You will recieve an <b>email invoice</b> for your rental after booking</p>
                 </BodyBlock>
                 <BodyBlock>
+                    {gazeboSeason &&
+                        <p>
+                          <h3 className="font-semibold font-satisfy text-4xl mx-auto text-center">{gazeboSeason.season_name}:</h3>
+                          <p className="mx-auto text-center"><b>{formatSeasonDate(gazeboSeason.start_date)}</b> through <b>{formatSeasonDate(gazeboSeason.end_date)}</b></p>
+                        </p>
+                    }
                     <div className={styles.timeSlots + " font-[Inter]"}>
-                        {gazeboSeason && <p className="mb-3 font-semibold">{gazeboSeason.season_name}: {gazeboSeason.start_date} through {gazeboSeason.end_date}</p>}
                         <GazeboRentalTable season={gazeboSeason} />
                     </div>
                 </BodyBlock>

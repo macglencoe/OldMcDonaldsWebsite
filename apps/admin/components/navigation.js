@@ -11,24 +11,19 @@ export default function Navigation() {
           primaryKeys={PRIMARY_KEYS}
           items={[
             {
-              key: "bookings",
-              path: "/bookings",
-              title: "Bookings"
-            },
-            {
               key: "maze-entries",
               path: "/maze-entries",
               title: "Maze Entries"
             },
             {
+              key: "bookings",
+              path: "/bookings",
+              title: "Bookings"
+            },
+            {
               key: "reservation-requests",
               path: "/reservation-requests",
               title: "Reservation Requests"
-            },
-            {
-              key: "vendor-applications",
-              path: "/vendor-applications",
-              title: "Vendor Applications"
             }
           ]}
           auxiliaryItems={[
@@ -36,11 +31,6 @@ export default function Navigation() {
                 href: "https://oldmcdonaldspumpkinpatch.com",
                 label: "Public Site",
                 children: <span className="text-white font-semibold px-1">Public Site</span>
-            },
-            {
-                href: "https://ops.oldmcdonaldspumpkinpatch.com",
-                label: "Staff Tools",
-                children: <span className="text-white font-semibold px-1">Staff Tools</span>
             }
           ]}
         />

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PiPlusBold } from "react-icons/pi";
 
 import BookingCalendar from "@/components/bookings/bookingCalendar";
 import BookingFilters from "@/components/bookings/bookingFilters";
@@ -33,7 +34,9 @@ export default async function CampfireBookingsPage({ searchParams }) {
           <h1 className="text-3xl font-bold">Campfires</h1>
           <p className="mt-2 text-foreground/70">Each record reserves one campfire for the selected night.</p>
         </div>
-        <Link className="rounded-lg bg-accent px-4 py-2 font-semibold text-white" href="/bookings/campfires/new">New booking</Link>
+        <Link className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-semibold text-white transition hover:opacity-90" href="/bookings/campfires/new">
+          <PiPlusBold aria-hidden="true" /> New booking
+        </Link>
       </div>
       <BookingFilters filters={filters} type="campfires" />
       <p className="mt-4 text-sm text-foreground/70">
@@ -49,9 +52,9 @@ export default async function CampfireBookingsPage({ searchParams }) {
         <BookingList bookings={listedBookings} returnTo={returnTo} type="campfires" />
         {totalPages > 1 && (
           <nav className="mt-6 flex justify-between">
-            {currentPage > 1 ? <Link href={pageHref(currentPage - 1)}>Previous</Link> : <span />}
-            <span>Page {currentPage} of {totalPages}</span>
-            {currentPage < totalPages ? <Link href={pageHref(currentPage + 1)}>Next</Link> : <span />}
+            {currentPage > 1 ? <Link className="rounded-lg border border-foreground px-4 py-2 font-semibold" href={pageHref(currentPage - 1)}>Previous</Link> : <span />}
+            <span className="self-center text-sm font-semibold">Page {currentPage} of {totalPages}</span>
+            {currentPage < totalPages ? <Link className="rounded-lg border border-foreground px-4 py-2 font-semibold" href={pageHref(currentPage + 1)}>Next</Link> : <span />}
           </nav>
         )}
       </section>
