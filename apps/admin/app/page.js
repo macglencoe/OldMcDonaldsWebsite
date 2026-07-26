@@ -2,7 +2,7 @@ import DirectoryGrid from "@/components/directoryGrid";
 import ExternalLinks from "@/components/externalLinks";
 import Hero from "@/components/hero";
 import Link from "next/link";
-import { PiCalendarDuotone, PiChartLineDuotone, PiClipboardTextDuotone, PiClockDuotone, PiCurrencyDollarDuotone, PiEnvelopeDuotone, PiFlagDuotone, PiGithubLogoDuotone, PiMegaphoneDuotone, PiQuestionDuotone } from "react-icons/pi";
+import { PiCalendarCheckDuotone, PiCalendarDuotone, PiChartLineDuotone, PiClipboardTextDuotone, PiClockDuotone, PiCurrencyDollarDuotone, PiEnvelopeDuotone, PiFlagDuotone, PiGithubLogoDuotone, PiMegaphoneDuotone, PiQuestionDuotone, PiUserListDuotone } from "react-icons/pi";
 
 export default function () {
     return (
@@ -28,6 +28,24 @@ export default function () {
                 ]}
             />
             <Hero />
+
+            <h2 className="tracking-widest uppercase text-xl ml-3 border-b-3 border-accent/10 text-foreground/80">Bookings</h2>
+
+            <DirectoryGrid
+                items={[
+                    {
+                        name: "Gazebo Bookings",
+                        url: "/bookings/gazebo",
+                        icon: PiCalendarCheckDuotone
+                    },
+                    {
+                        name: "Campfire Bookings",
+                        url: "/bookings/campfires",
+                        icon: PiCalendarCheckDuotone
+                    }
+                ]}
+            />
+
 
             <h2 className="tracking-widest uppercase text-xl ml-3 border-b-3 border-accent/10 text-foreground/80">Form Submissions</h2>
 

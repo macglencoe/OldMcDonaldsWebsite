@@ -2,54 +2,35 @@ import Layout from "@/components/layout";
 import styles from "./page.module.css";
 import { BodyBlock } from "@/components/bodyBlock";
 
-import rentalSlots from "@/public/data/gazeboRentalSlots.json";
-import { useMemo } from "react";
 import PageHeader from "@/components/pageHeader";
+import { gazeboSlotLabels } from "@/lib/gazeboSlotConfig.mjs";
+import { getCurrentOrUpcomingGazeboSeason } from "@/lib/gazeboSlotConfigServer.mjs";
 import { getPricingData } from "@/utils/pricingServer";
 import ReservationRequestForm from "./reservationRequestForm";
 
-/**
- * Renders the gazebo-rental availability table from
- * `@/public/data/gazeboRentalSlots.json`.
- *
- * The JSON schema:
- * [
- *   { "day": "Fridays", "slots": [ { "start": "1:00 PM", "end": "3:00 PM" }, … ] },
- *   …
- * ]
- */
-function GazeboRentalTable() {
-  const maxCols = useMemo(
-    () => Math.max(...rentalSlots.map(({ slots }) => slots.length)),
-    [],
-  );
+const RENTAL_DAYS = ["Fridays", "Saturdays", "Sundays"];
 
+function GazeboRentalTable({ season }) {
+  const labels = gazeboSlotLabels(season ?? undefined);
   return (
     <table className="w-full border-collapse text-left">
       <thead>
         <tr className="border-b">
           <th className="py-2 pr-4">Day</th>
-          <th colSpan={maxCols} className="py-2">
+          <th colSpan={2} className="py-2">
             Time Slots
           </th>
         </tr>
       </thead>
 
       <tbody>
-        {rentalSlots.map(({ day, slots }) => (
+        {RENTAL_DAYS.map((day) => (
           <tr key={day} className="border-b last:border-0">
             <td className="py-2 pr-4 font-medium">{day}</td>
-
-            {/* one <td> per slot */}
-            {slots.map(({ start, end }) => (
-              <td key={`${start}-${end}`} className="py-2 px-3">
-                {start} – {end}
+            {[labels.early, labels.late].map((label) => (
+              <td key={label} className="py-2 px-3">
+                {label}
               </td>
-            ))}
-
-            {/* pad with empty cells if this day has fewer slots than maxCols */}
-            {Array.from({ length: maxCols - slots.length }).map((_, idx) => (
-              <td key={`pad-${idx}`} />
             ))}
           </tr>
         ))}
@@ -65,7 +46,18 @@ export const metadata = {
 
 
 export const Reservations = async () => {
-    const pricing = await getPricingData();
+    const todayParts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit",
+    }).formatToParts(new Date());
+    const todayValues = Object.fromEntries(todayParts.map(({ type, value }) => [type, value]));
+    const today = `${todayValues.year}-${todayValues.month}-${todayValues.day}`;
+    const [pricing, gazeboSeason] = await Promise.all([
+      getPricingData(),
+      getCurrentOrUpcomingGazeboSeason(today).catch((error) => {
+        console.error("Could not load public gazebo season configuration:", error.message);
+        return null;
+      }),
+    ]);
     const gazeboRental = pricing["gazebo-rental"];
     const gazeboPrice = Number(gazeboRental?.amount ?? 0).toFixed(2);
     const admission = pricing.admission;
@@ -75,7 +67,7 @@ export const Reservations = async () => {
 
     return (
         <Layout>
-            <PageHeader subtitle="2025 Season">Reservations</PageHeader>
+            <PageHeader subtitle={gazeboSeason?.season_name ?? "Reservations"}>Reservations</PageHeader>
             <div className="body basic">
                 <BodyBlock src='/bonfires.jpg'>
                 <h2>Night-time campfire</h2>
@@ -92,7 +84,8 @@ export const Reservations = async () => {
                 </BodyBlock>
                 <BodyBlock>
                     <div className={styles.timeSlots + " font-[Inter]"}>
-                        <GazeboRentalTable />
+                        {gazeboSeason && <p className="mb-3 font-semibold">{gazeboSeason.season_name}: {gazeboSeason.start_date} through {gazeboSeason.end_date}</p>}
+                        <GazeboRentalTable season={gazeboSeason} />
                     </div>
                 </BodyBlock>
                 <BodyBlock>

@@ -2,7 +2,7 @@
 
 import { Navbar } from "@ui/navbar";
 
-const PRIMARY_KEYS = new Set(["maze-entries", "reservation-requests", "vendor-applications"]);
+const PRIMARY_KEYS = new Set(["bookings", "maze-entries", "reservation-requests", "vendor-applications"]);
 
 export default function Navigation() {
     return (
@@ -10,6 +10,11 @@ export default function Navigation() {
           titleText={"OMPP Admin"}
           primaryKeys={PRIMARY_KEYS}
           items={[
+            {
+              key: "bookings",
+              path: "/bookings",
+              title: "Bookings"
+            },
             {
               key: "maze-entries",
               path: "/maze-entries",
