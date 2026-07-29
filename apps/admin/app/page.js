@@ -29,6 +29,18 @@ export default function () {
             />
             <Hero />
 
+            <h2 className="tracking-widest uppercase text-xl ml-3 border-b-3 border-accent/10 text-foreground/80">Farm Operations</h2>
+
+            <DirectoryGrid
+                items={[
+                    {
+                        name: "Hayride Schedule",
+                        url: "/hayrides",
+                        icon: PiCalendarCheckDuotone
+                    }
+                ]}
+            />
+
             <h2 className="tracking-widest uppercase text-xl ml-3 border-b-3 border-accent/10 text-foreground/80">Bookings</h2>
 
             <DirectoryGrid
