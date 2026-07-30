@@ -18,12 +18,12 @@ export const PumpkinPatch = async () => {
     const pumpkinUnit = pumpkinPatchPrice?.per ?? 'pound'
     return (
         <Layout>
-            <PageHeader subtitle="2025 Season">Pumpkin Patch</PageHeader>
+            <PageHeader subtitle="2026 Season">Pumpkin Patch</PageHeader>
             <div className="body basic">
                 <div className={styles.body}>
                     <AndImage src="/pumpkinlanes.jpg">
                         <h2>Where is it?</h2>
-                        <p>The two pumpkin patches can be found beyond the corn maze, just along the farm lane</p>
+                        <p>The two pumpkin patches can be found beyond the hayride corral, just along the farm lane</p>
                         <Action as="Link" className={'mx-auto'} variant="primary" href={'/map?x=39.3825184665116&y=-78.04699996825022'}>See More</Action>
                     </AndImage>
                     <div className="flex flex-col gap-3 shadow-lg rounded-2xl p-6 border border-accent/20">
