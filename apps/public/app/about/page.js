@@ -3,8 +3,175 @@ import { BodyBlock } from "@/components/bodyBlock";
 import Layout from "@/components/layout";
 import styles from "./page.module.css";
 import Link from "next/link";
+import Image from "next/image";
 import PageHeader from "@/components/pageHeader";
 import Head from "next/head";
+
+const charlieBillPhotos = {
+    feature: {
+        src: "/charlie-bill/IMG_20260729_233027 (3).jpg",
+        width: 1582,
+        height: 1080,
+        alt: "Charlie Bill McDonald standing beside a tractor and planter in a pasture at Glencoe Farm",
+        displayCaption: false
+    },
+    collage: [
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (2).jpg",
+            width: 1536,
+            height: 2048,
+            alt: "Milkshake time!",
+            displayCaption: true
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233026 (1).jpg",
+            width: 1331,
+            height: 2048,
+            alt: "Charlie Bill, Spencer, and Muffin",
+            displayCaption: true
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233026.jpg",
+            width: 1536,
+            height: 2048,
+            alt: "Charlie Bill carries a piglet",
+            displayCaption: false
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (1).jpg",
+            width: 1054,
+            height: 1499,
+            alt: "Charlie Bill and Ted in the sunflower field",
+            displayCaption: false
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (10).jpg",
+            width: 1152,
+            height: 2048,
+            alt: "Charlie Bill and family at his father's 96th birthday party",
+            displayCaption: true
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (4).jpg",
+            width: 922,
+            height: 2047,
+            alt: "Charlie Bill and Reece in the garden",
+            displayCaption: false
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (5).jpg",
+            width: 1536,
+            height: 2048,
+            alt: "Charlie Bill holding a piglet wrapped in a blanket",
+            displayCaption: false
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (6).jpg",
+            width: 995,
+            height: 2047,
+            alt: "OJ and Charlie Bill",
+            displayCaption: true
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (7).jpg",
+            width: 1536,
+            height: 2048,
+            alt: "Charlie Bill and family working together planting pumpkins",
+            displayCaption: false
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (8).jpg",
+            width: 2048,
+            height: 2048,
+            alt: "Charlie Bill relaxing at home with Spencer",
+            displayCaption: false
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (9).jpg",
+            width: 972,
+            height: 2047,
+            alt: "Charlie Bill found an unusually shaped rock",
+            displayCaption: true
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027.jpg",
+            width: 1196,
+            height: 2047,
+            alt: "Charlie Bill the plumber",
+            displayCaption: true
+        },
+    ],
+    closing: {
+        src: "/charlie-bill/IMG_20260729_233028.jpg",
+        width: 2047,
+        height: 995,
+        alt: "Charlie Bill pushing a wheelbarrow past a pig in the barnyard at Glencoe Farm",
+        displayCaption: false
+    },
+};
+
+function CharlieBillCollage() {
+    return (
+        <section className={styles.charlieBillStory} aria-labelledby="charlie-bill-heading">
+            <header className={styles.charlieBillIntro}>
+                <p>Charlie Bill McDonald · 1964–2024</p>
+                <h2 id="charlie-bill-heading">A life at Glencoe</h2>
+                <p>
+                    Charlie Bill spent his life taking care of Glencoe. He was happiest working in the fields, tending the animals, and spending time here with his family.
+                </p>
+            </header>
+
+            <figure className={styles.charlieBillFeature}>
+                <Image
+                    src={charlieBillPhotos.feature.src}
+                    width={charlieBillPhotos.feature.width}
+                    height={charlieBillPhotos.feature.height}
+                    alt={charlieBillPhotos.feature.alt}
+                    sizes="(max-width: 900px) 100vw, 1180px"
+                />
+                {charlieBillPhotos.feature.displayCaption && (
+                    <figcaption className={styles.charlieBillCaption}>
+                        {charlieBillPhotos.feature.alt}
+                    </figcaption>
+                )}
+            </figure>
+
+            <div className={styles.charlieBillCollage}>
+                {charlieBillPhotos.collage.map((photo) => (
+                    <figure className={styles.charlieBillPhoto} key={photo.src}>
+                        <Image
+                            src={photo.src}
+                            width={photo.width}
+                            height={photo.height}
+                            alt={photo.alt}
+                            sizes="(max-width: 540px) 50vw, (max-width: 900px) 33vw, 25vw"
+                        />
+                        {photo.displayCaption && (
+                            <figcaption className={styles.charlieBillCaption}>
+                                {photo.alt}
+                            </figcaption>
+                        )}
+                    </figure>
+                ))}
+            </div>
+
+            <figure className={styles.charlieBillClosing}>
+                <Image
+                    src={charlieBillPhotos.closing.src}
+                    width={charlieBillPhotos.closing.width}
+                    height={charlieBillPhotos.closing.height}
+                    alt={charlieBillPhotos.closing.alt}
+                    sizes="(max-width: 900px) 100vw, 1180px"
+                />
+                {charlieBillPhotos.closing.displayCaption && (
+                    <figcaption className={styles.charlieBillCaption}>
+                        {charlieBillPhotos.closing.alt}
+                    </figcaption>
+                )}
+            </figure>
+        </section>
+    );
+}
 
 function Generations() {
     const generations = [
@@ -416,12 +583,18 @@ export default function About() {
         <Layout>
             <PageHeader subtitle="The Story of Glencoe Farm">About Us</PageHeader>
             <div className="body basic">
+                
                 <BodyBlock src="localMap.png">
                     <h2>Our Farm</h2>
                     <p>We&apos;re a family-owned (and operated) farm in <b>Berkeley County, West Virginia</b>, right off Interstate 81.</p>
                     <p>With Middle Creek running through our park-like grounds, our farm is the perfect place to spend some quality time with your family or friends!</p>
                     <p>Six weekends each fall, we open our farm to the community for various festival <Link href="/activities">activities</Link>.</p>
                     <p>It is a labor of love to spend the year preparing for the season, and we&apos;re dedicated to bringing you and your family the best farm experience. We feel blessed to be able to share our home place with you!</p>
+                </BodyBlock>
+                <BodyBlock src="/protectedForever.jpg">
+                    <h2>Protected Forever</h2>
+                    <p>On August 17, 2007, a permanent conservation easement was placed on 161 acres of Glencoe Farm. Held by the <a href="https://wvfp.org/berkeley/" target="_blank" rel="noreferrer" className="!break-normal">Berkeley County Farmland Protection Board</a>, it ensures that this land will remain farmland for generations to come.</p>
+                    <p><Link href="/conservation"><b>See how we care for Glencoe&apos;s land, water, and wildlife.</b></Link></p>
                 </BodyBlock>
                 <BodyBlock src="macdonaldOfGlencoe.jpg">
                     <h2 className="md:!text-5xl">Yes, we&apos;re really <u>McDonalds</u></h2>
@@ -442,14 +615,9 @@ export default function About() {
                     <p>In 2006, our father, Charles &quot;Charlie Bill&quot; William McDonald, together with his wife Stephanie, planted corn and pumpkins on the farm for the first time, and established Old McDonald&apos;s Pumpkin Patch.</p>
                 </BodyBlock>
 
-                <Generations />
+                <CharlieBillCollage />
 
-                
-                <BodyBlock src="protectedForever.jpg">
-                    <h2>Protected Forever</h2>
-                    <p>In 2007, Glencoe Farm was accepted into the <a href="https://landtrustalliance.org/land-trusts/explore/berkeley-county-farmland-protection-board-wv" target="_blank" className="!break-normal">Berkeley County Farm Preservation Land Trust.</a></p>
-                    <p>We are very proud to be a part of this union, which ensures that this land will be conserved for generations to come.</p>
-                </BodyBlock>
+                <Generations />
             </div>
         </Layout>
     );
