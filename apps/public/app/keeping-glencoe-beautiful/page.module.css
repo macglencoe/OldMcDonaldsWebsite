@@ -178,7 +178,7 @@
 .smallStories h2,
 .invitation h2 {
     margin: 0.25rem 0 1.2rem;
-    font-family: Satisfy, cursive;
+    font-family: Georgia, cursive;
     font-size: clamp(3rem, 6vw, 5rem);
     font-weight: 400;
     letter-spacing: 0;
@@ -238,7 +238,7 @@
 .legacyCopy h2 {
     max-width: 820px;
     margin: 0.25rem 0 2rem;
-    font-family: Satisfy, cursive;
+    font-family: Georgia, cursive;
     font-size: clamp(3rem, 6vw, 5.4rem);
     font-weight: 400;
     letter-spacing: 0;
@@ -266,42 +266,25 @@
     line-height: 1.8;
 }
 
-.photoPlaceholder {
+.legacyPhoto {
     margin: 0;
 }
 
-.photoPlaceholder > div {
-    display: flex;
+.legacyPhoto > div {
+    position: relative;
     aspect-ratio: 4 / 5;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    border: 2px dashed rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.34);
     border-radius: 12rem 12rem 0.75rem 0.75rem;
-    background:
-        radial-gradient(circle at 50% 35%, rgba(227, 139, 38, 0.24), transparent 34%),
-        linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.015));
-    text-align: center;
+    box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.28);
 }
 
-.photoPlaceholder span,
-.photoPlaceholder small {
-    color: rgba(255, 255, 255, 0.55);
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+.legacyPhoto img {
+    object-fit: cover;
+    object-position: center;
 }
 
-.photoPlaceholder strong {
-    margin: 0.3rem 0 0.6rem;
-    font-family: Satisfy, cursive;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 400;
-}
-
-.photoPlaceholder figcaption {
+.legacyPhoto figcaption {
     padding: 0.8rem 0;
     color: rgba(255, 255, 255, 0.66);
     font-size: 0.82rem;
@@ -320,7 +303,7 @@
 
 .sectionHeader h2 {
     margin: 0.25rem 0 1.2rem;
-    font-family: Satisfy, cursive;
+    font-family: Georgia, cursive;
     font-size: clamp(3rem, 6vw, 5rem);
     font-weight: 400;
     letter-spacing: 0;
@@ -333,13 +316,15 @@
 }
 
 .practiceGrid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
 }
 
 .practiceCard {
+    flex: 1 1 min(320px, calc(33.333% - 0.67rem));
     min-height: 260px;
+    min-width: 260px;
     padding: 1.8rem;
     border: 1px solid rgba(22, 40, 12, 0.12);
     border-radius: 0.75rem;
@@ -364,9 +349,9 @@
 .practiceCard h3 {
     margin: 2.5rem 0 0.8rem;
     color: var(--pine);
-    font-family: Satisfy, cursive;
+    font-family: Inter, Helvetica, sans-serif;
     font-size: 2rem;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .practiceCard p {
@@ -685,7 +670,7 @@
         grid-template-columns: 1fr;
     }
 
-    .photoPlaceholder {
+    .legacyPhoto {
         width: min(420px, 100%);
         margin: 0 auto;
     }

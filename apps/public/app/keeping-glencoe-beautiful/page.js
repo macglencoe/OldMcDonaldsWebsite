@@ -141,9 +141,14 @@ export default function KeepingGlencoeBeautiful() {
                             He made it his life&apos;s mission to take care of this place. He did right by the land, and he raised four children who are just as dedicated to protecting it, working it, and sharing it with their community.
                         </p>
                     </div>
-                    <figure className={styles.photoPlaceholder}>
-                        <div aria-hidden="true">
-                            <strong>Charlie Bill Placeholder</strong>
+                    <figure className={styles.legacyPhoto}>
+                        <div>
+                            <Image
+                                src="/charliebillwheelbarrow.jpg"
+                                alt="Charlie Bill McDonald pushing a wheelbarrow beside the barn at Glencoe Farm"
+                                fill
+                                sizes="(max-width: 800px) 100vw, 32vw"
+                            />
                         </div>
                         <figcaption>
                             Charles &ldquo;Charlie Bill&rdquo; William McDonald

@@ -416,12 +416,18 @@ export default function About() {
         <Layout>
             <PageHeader subtitle="The Story of Glencoe Farm">About Us</PageHeader>
             <div className="body basic">
+                
                 <BodyBlock src="localMap.png">
                     <h2>Our Farm</h2>
                     <p>We&apos;re a family-owned (and operated) farm in <b>Berkeley County, West Virginia</b>, right off Interstate 81.</p>
                     <p>With Middle Creek running through our park-like grounds, our farm is the perfect place to spend some quality time with your family or friends!</p>
                     <p>Six weekends each fall, we open our farm to the community for various festival <Link href="/activities">activities</Link>.</p>
                     <p>It is a labor of love to spend the year preparing for the season, and we&apos;re dedicated to bringing you and your family the best farm experience. We feel blessed to be able to share our home place with you!</p>
+                </BodyBlock>
+                <BodyBlock src="/protectedForever.jpg">
+                    <h2>Protected Forever</h2>
+                    <p>On August 17, 2007, a permanent conservation easement was placed on 161 acres of Glencoe Farm. Held by the <a href="https://wvfp.org/berkeley/" target="_blank" rel="noreferrer" className="!break-normal">Berkeley County Farmland Protection Board</a>, it ensures that this land will remain farmland for generations to come.</p>
+                    <p><Link href="/keeping-glencoe-beautiful"><b>See how we care for Glencoe&apos;s land, water, and wildlife.</b></Link></p>
                 </BodyBlock>
                 <BodyBlock src="macdonaldOfGlencoe.jpg">
                     <h2 className="md:!text-5xl">Yes, we&apos;re really <u>McDonalds</u></h2>
@@ -443,13 +449,6 @@ export default function About() {
                 </BodyBlock>
 
                 <Generations />
-
-                
-                <BodyBlock src="/protectedForever.jpg">
-                    <h2>Protected Forever</h2>
-                    <p>On August 17, 2007, a permanent conservation easement was placed on 161 acres of Glencoe Farm. Held by the <a href="https://wvfp.org/berkeley/" target="_blank" rel="noreferrer" className="!break-normal">Berkeley County Farmland Protection Board</a>, it ensures that this land will remain farmland for generations to come.</p>
-                    <p><Link href="/keeping-glencoe-beautiful"><b>See how we care for Glencoe&apos;s land, water, and wildlife.</b></Link></p>
-                </BodyBlock>
             </div>
         </Layout>
     );
