@@ -594,7 +594,7 @@ export default function About() {
                 <BodyBlock src="/protectedForever.jpg">
                     <h2>Protected Forever</h2>
                     <p>On August 17, 2007, a permanent conservation easement was placed on 161 acres of Glencoe Farm. Held by the <a href="https://wvfp.org/berkeley/" target="_blank" rel="noreferrer" className="!break-normal">Berkeley County Farmland Protection Board</a>, it ensures that this land will remain farmland for generations to come.</p>
-                    <p><Link href="/keeping-glencoe-beautiful"><b>See how we care for Glencoe&apos;s land, water, and wildlife.</b></Link></p>
+                    <p><Link href="/conservation"><b>See how we care for Glencoe&apos;s land, water, and wildlife.</b></Link></p>
                 </BodyBlock>
                 <BodyBlock src="macdonaldOfGlencoe.jpg">
                     <h2 className="md:!text-5xl">Yes, we&apos;re really <u>McDonalds</u></h2>
