@@ -286,14 +286,26 @@ export default function PhotoOpsMapInner() {
                 </Polygon>
 
                 <Polygon
-                    positions={features.sunflowers}
+                    positions={features['sunflower-1']}
                     color="var(--accent)"
                 >
                     <Popup>
                         <a href='/activities/flower-fields'>See More</a>
                     </Popup>
                     <Tooltip className={styles.pTooltip} permanent direction='center' offset={[0, 0]}>
-                        SUNFLOWERS
+                        SUNFLOWER PATCH 1
+                    </Tooltip>
+                </Polygon>
+
+                <Polygon
+                    positions={features['sunflower-2']}
+                    color="var(--accent)"
+                >
+                    <Popup>
+                        <a href='/activities/flower-fields'>See More</a>
+                    </Popup>
+                    <Tooltip className={styles.pTooltip} permanent direction='center' offset={[0, 0]}>
+                        SUNFLOWER PATCH 2
                     </Tooltip>
                 </Polygon>
 
@@ -325,11 +337,11 @@ export default function PhotoOpsMapInner() {
                 </Polygon>
 
                 <Polygon
-                    positions={features.zinnias}
+                    positions={features.flowers}
                     color="green"
                 >
                     <Tooltip className={styles.pTooltip} permanent direction='center' offset={[0, 0]}>
-                        ZINNIAS
+                        FLOWER FIELD
                     </Tooltip>
                     <Popup>
                         <a href='/activities/flower-fields'>See More</a>
@@ -422,7 +434,7 @@ export default function PhotoOpsMapInner() {
                     </Tooltip>
                 </Marker>
                 <Marker
-                    position={[39.38163138370034, -78.04489454865366]}
+                    position={[39.3824, -78.04629722222222]}
                     icon={icons.flower}
                 >
                     <Popup><a href='/activities/flower-fields'>See More</a></Popup>

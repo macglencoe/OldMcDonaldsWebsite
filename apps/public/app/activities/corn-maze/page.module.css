@@ -6,7 +6,7 @@
     flex-direction: column;
 }
 
-.cornMaze img {
+.cornMaze img, .placeholder {
     height: 100%;
     width: 90%;
     aspect-ratio: 2/1;
@@ -16,6 +16,8 @@
     border-width: 3px 0;
     max-width: 700px;
 }
+
+
 
 .rules {
     margin: 2em;

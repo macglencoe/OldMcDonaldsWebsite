@@ -12,20 +12,78 @@ export const metadata = {
     description: "Get lost in Old McDonald’s 10-acre corn maze in Inwood, WV. Try daytime and spooky night mazes, complete challenges, and enjoy fall family fun."
 }
 
+const pastMazes = [
+    {
+        year: 2025,
+        image: '/maze2025.JPG',
+        caption: 'Martinsburg 1877 - Flooded Corn Maze'
+    },
+    {
+        year: 2024,
+        image: '/charleswmcdonaldmaze.jpg',
+        caption: 'Rest in Peace Charles W. McDonald'
+    },
+    {
+        year: 2023,
+        image: '/2024maze.avif',
+        caption: '#FFA Strong'
+    },
+    {
+        year: 2021,
+        image: '/2021maze.avif',
+        caption: 'May the Norse be with you'
+    },
+    {
+        year: 2020,
+        image: '/2020maze.avif',
+        caption: 'Grown in the USA'
+    },
+    {
+        year: 2012,
+        image: '/americaMaze.avif',
+        caption: 'Believe in America'
+    },
+    {
+        year: 2016,
+        image: '/looseLipsMaze.avif',
+        caption: 'Loose Lips Sink Ships'
+    },
+    {
+        year: 2015,
+        image: '/noahsArkMaze.avif',
+        caption: 'Noah\'s Ark'
+    },
+    {
+        year: 2014,
+        image: '/mountaineersMaze.avif',
+        caption: 'Mountaineers are Always Free'
+    },
+    {
+        year: 2011,
+        image: '/eatLocalMaze.avif',
+        caption: 'Eat Local'
+    },
+    {
+        year: 2008,
+        image: '/protectedMaze.avif',
+        caption: 'This Land is Protected Forever'
+    },
+]
+
 export default async function CornMaze() {
     const flags = await getFlags();
     const isFeatureEnabled = getFlagEvaluator(flags);
     return (
         <Layout>
-            <PageHeader subtitle="2025 Season">Corn Maze</PageHeader>
+            <PageHeader subtitle="2026 Season">Corn Maze</PageHeader>
             <div className='body basic'>
                 <div className={styles.cornMaze}>
-                    <Image width={1000} height={1000} src='/maze2025.JPG' />
-                    <h2 className='text-center my-3 !text-3xl md:my-6 md:!text-5xl'>2025 - Martinsburg 1877</h2>
-                    <p className='text-center'>This year&apos;s maze features <strong>Martinsburg&apos;s historical roundhouse</strong>, where the very <strong>first <u>nationwide</u> labor movement</strong> began.</p>
-                    <p className='text-center'>The Great Strike of 1877 began when the wages of railroad workers were cut by <i>10%</i>. Conductors, Engineers, Firemen, and Brakemen refused to move the trains until they received a fair wage.</p>
-                    <br />
-                    <p className='text-center'>You may notice large swaths of missing corn in the above image. In June, the corn maze flooded three times, washing away vital soil nutrients and making the field inaccessible for weeks. Against all odds, we managed to plant, but some areas didn&apos;t grow.</p>
+                    {/* <Image width={1000} height={1000} src='/maze2025.JPG' /> */}
+                    <div className={styles.placeholder + ' bg-radial from-orange-200 to-40% to-transparent flex items-center justify-center'}>
+                        <p className='mx-auto my-auto text-center text-5xl! font-bold'>?</p>
+                    </div>
+                    <h2 className='text-center my-3 !text-3xl md:my-6 md:!text-5xl'>2026 - Coming Soon</h2>
+                    <p className='text-center'>Check back soon for more information about this year&apos;s corn maze!</p>
                 </div>
                 <BodyBlock src="/cornMazeEntrance.jpg">
                     <h2>10 acres of fun</h2>
@@ -66,47 +124,12 @@ export default async function CornMaze() {
             <div className={styles.pastMazes + ' body basic'}>
                 <h2>Past Maze Designs</h2>
                 <ul>
-                    <li>
-                        <img src='/charleswmcdonaldmaze.jpg'></img>
-                        <span>2024</span>
-                    </li>
-                    <li>
-                        <img src='/2024maze.avif'></img>
-                        <span>2023</span>
-                    </li>
-                    <li>
-                        <img src='/2021maze.avif'></img>
-                        <span>2021</span>
-                    </li>
-                    <li>
-                        <img src='/2020maze.avif'></img>
-                        <span>2020</span>
-                    </li>
-                    <li>
-                        <img src='/americaMaze.avif'></img>
-                        <span>2012</span>
-                    </li>
-                    <li>
-                        <img src='/looseLipsMaze.avif'></img>
-                        <span>2016</span>
-                    </li>
-                    <li>
-                        <img src='/noahsArkMaze.avif'></img>
-                        <span>2015</span>
-                    </li>
-                    <li>
-                        <img src='/mountaineersMaze.avif'></img>
-                        <span>2014</span>
-                    </li>
-                    <li>
-                        <img src='/eatLocalMaze.avif'></img>
-                        <span>2011</span>
-                    </li>
-                    <li>
-                        <img src='/protectedMaze.avif'></img>
-                        <span>2008</span>
-                    </li>
-
+                    {pastMazes.map(({ year, image, caption }) => (
+                        <li key={year}>
+                            <img src={image} alt={caption}></img>
+                            <span>{year}{caption && ` - ${caption}`}</span>
+                        </li>
+                    ))}
                 </ul>
             </div>
         </Layout>
