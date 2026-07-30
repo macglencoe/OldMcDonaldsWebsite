@@ -1,4 +1,119 @@
 
+.charlieBillStory {
+    width: min(1180px, calc(100% - 2rem));
+    margin: clamp(5rem, 10vw, 8rem) auto;
+}
+
+.charlieBillIntro {
+    max-width: 760px;
+    margin: 0 auto clamp(2.25rem, 5vw, 4rem);
+    text-align: center;
+}
+
+.charlieBillIntro > p:first-child {
+    margin-bottom: 0.6rem;
+    color: var(--accent);
+    font-family: Inter, Helvetica, sans-serif;
+    font-size: 0.78rem !important;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.charlieBillIntro h2 {
+    margin: 0 0 1rem;
+}
+
+.charlieBillIntro > p:last-child {
+    max-width: 680px;
+    margin: 0 auto;
+    font-family: Inter, Helvetica, sans-serif;
+    font-size: clamp(1rem, 2vw, 1.15rem) !important;
+    line-height: 1.75;
+}
+
+.charlieBillFeature,
+.charlieBillClosing,
+.charlieBillPhoto {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    background: var(--foreground);
+    box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.38);
+}
+
+.charlieBillFeature {
+    aspect-ratio: 16 / 9;
+    margin: 0 0 clamp(0.75rem, 1.5vw, 1.1rem);
+}
+
+.charlieBillFeature img,
+.charlieBillClosing img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.charlieBillFeature img {
+    object-position: center 54%;
+}
+
+.charlieBillCollage {
+    column-count: 4;
+    column-gap: clamp(0.75rem, 1.5vw, 1.1rem);
+}
+
+.charlieBillPhoto {
+    width: 100%;
+    margin: 0 0 clamp(0.75rem, 1.5vw, 1.1rem);
+    break-inside: avoid;
+}
+
+.charlieBillPhoto img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 300ms ease;
+}
+
+.charlieBillPhoto:hover img {
+    transform: scale(1.025);
+}
+
+.charlieBillClosing {
+    margin: 0;
+    margin-top: clamp(0.75rem, 1.5vw, 1.1rem);
+}
+
+.charlieBillClosing img {
+    display: block;
+    height: auto;
+}
+
+.charlieBillCaption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    margin: 0;
+    padding: 1.6rem 1rem 0.75rem;
+    color: white;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.76));
+    font-family: Inter, Helvetica, sans-serif;
+    font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+    line-height: 1.4;
+    text-align: center;
+    text-wrap: balance;
+    transition: opacity 300ms ease;
+}
+
+.charlieBillFeature:hover .charlieBillCaption,
+.charlieBillClosing:hover .charlieBillCaption,
+.charlieBillPhoto:hover .charlieBillCaption {
+    opacity: 0;
+}
+
 .gallery {
     display: flex;
     flex-direction: row;
@@ -86,10 +201,59 @@
 }
 
 @media screen and (max-width: 740px) {
+    .charlieBillStory {
+        width: calc(100% - 1rem);
+        margin-top: 4.5rem;
+        margin-bottom: 5rem;
+    }
+
+    .charlieBillCollage {
+        column-count: 2;
+        column-gap: 0.55rem;
+    }
+
+    .charlieBillFeature,
+    .charlieBillPhoto {
+        margin-bottom: 0.55rem;
+        border-radius: 0.65rem;
+    }
+
+    .charlieBillClosing {
+        border-radius: 0.65rem;
+    }
+
+    .charlieBillCaption {
+        padding: 1.35rem 0.45rem 0.45rem;
+        font-size: 0.68rem;
+    }
+
+    .charlieBillFeature:hover .charlieBillCaption,
+    .charlieBillClosing:hover .charlieBillCaption,
+    .charlieBillPhoto:hover .charlieBillCaption {
+        opacity: 1;
+    }
+
     .gallery > div:hover > p {
         opacity: 1;
     }
     .gallery > div > p:hover {
         opacity: 0;
+    }
+}
+
+@media screen and (min-width: 741px) and (max-width: 1020px) {
+    .charlieBillCollage {
+        column-count: 3;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .charlieBillPhoto img,
+    .charlieBillCaption {
+        transition: none;
+    }
+
+    .charlieBillPhoto:hover img {
+        transform: none;
     }
 }

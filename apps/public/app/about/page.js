@@ -3,8 +3,175 @@ import { BodyBlock } from "@/components/bodyBlock";
 import Layout from "@/components/layout";
 import styles from "./page.module.css";
 import Link from "next/link";
+import Image from "next/image";
 import PageHeader from "@/components/pageHeader";
 import Head from "next/head";
+
+const charlieBillPhotos = {
+    feature: {
+        src: "/charlie-bill/IMG_20260729_233027 (3).jpg",
+        width: 1582,
+        height: 1080,
+        alt: "Charlie Bill McDonald standing beside a tractor and planter in a pasture at Glencoe Farm",
+        displayCaption: false
+    },
+    collage: [
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (2).jpg",
+            width: 1536,
+            height: 2048,
+            alt: "Milkshake time!",
+            displayCaption: true
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233026 (1).jpg",
+            width: 1331,
+            height: 2048,
+            alt: "Charlie Bill, Spencer, and Muffin",
+            displayCaption: true
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233026.jpg",
+            width: 1536,
+            height: 2048,
+            alt: "Charlie Bill carries a piglet",
+            displayCaption: false
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (1).jpg",
+            width: 1054,
+            height: 1499,
+            alt: "Charlie Bill and Ted in the sunflower field",
+            displayCaption: false
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (10).jpg",
+            width: 1152,
+            height: 2048,
+            alt: "Charlie Bill and family at his father's 96th birthday party",
+            displayCaption: true
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (4).jpg",
+            width: 922,
+            height: 2047,
+            alt: "Charlie Bill and Reece in the garden",
+            displayCaption: false
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (5).jpg",
+            width: 1536,
+            height: 2048,
+            alt: "Charlie Bill holding a piglet wrapped in a blanket",
+            displayCaption: false
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (6).jpg",
+            width: 995,
+            height: 2047,
+            alt: "OJ and Charlie Bill",
+            displayCaption: true
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (7).jpg",
+            width: 1536,
+            height: 2048,
+            alt: "Charlie Bill and family working together planting pumpkins",
+            displayCaption: false
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (8).jpg",
+            width: 2048,
+            height: 2048,
+            alt: "Charlie Bill relaxing at home with Spencer",
+            displayCaption: false
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027 (9).jpg",
+            width: 972,
+            height: 2047,
+            alt: "Charlie Bill found an unusually shaped rock",
+            displayCaption: true
+        },
+        {
+            src: "/charlie-bill/IMG_20260729_233027.jpg",
+            width: 1196,
+            height: 2047,
+            alt: "Charlie Bill the plumber",
+            displayCaption: true
+        },
+    ],
+    closing: {
+        src: "/charlie-bill/IMG_20260729_233028.jpg",
+        width: 2047,
+        height: 995,
+        alt: "Charlie Bill pushing a wheelbarrow past a pig in the barnyard at Glencoe Farm",
+        displayCaption: false
+    },
+};
+
+function CharlieBillCollage() {
+    return (
+        <section className={styles.charlieBillStory} aria-labelledby="charlie-bill-heading">
+            <header className={styles.charlieBillIntro}>
+                <p>Charlie Bill McDonald · 1964–2024</p>
+                <h2 id="charlie-bill-heading">A life at Glencoe</h2>
+                <p>
+                    Charlie Bill spent his life taking care of Glencoe. He was happiest working in the fields, tending the animals, and spending time here with his family.
+                </p>
+            </header>
+
+            <figure className={styles.charlieBillFeature}>
+                <Image
+                    src={charlieBillPhotos.feature.src}
+                    width={charlieBillPhotos.feature.width}
+                    height={charlieBillPhotos.feature.height}
+                    alt={charlieBillPhotos.feature.alt}
+                    sizes="(max-width: 900px) 100vw, 1180px"
+                />
+                {charlieBillPhotos.feature.displayCaption && (
+                    <figcaption className={styles.charlieBillCaption}>
+                        {charlieBillPhotos.feature.alt}
+                    </figcaption>
+                )}
+            </figure>
+
+            <div className={styles.charlieBillCollage}>
+                {charlieBillPhotos.collage.map((photo) => (
+                    <figure className={styles.charlieBillPhoto} key={photo.src}>
+                        <Image
+                            src={photo.src}
+                            width={photo.width}
+                            height={photo.height}
+                            alt={photo.alt}
+                            sizes="(max-width: 540px) 50vw, (max-width: 900px) 33vw, 25vw"
+                        />
+                        {photo.displayCaption && (
+                            <figcaption className={styles.charlieBillCaption}>
+                                {photo.alt}
+                            </figcaption>
+                        )}
+                    </figure>
+                ))}
+            </div>
+
+            <figure className={styles.charlieBillClosing}>
+                <Image
+                    src={charlieBillPhotos.closing.src}
+                    width={charlieBillPhotos.closing.width}
+                    height={charlieBillPhotos.closing.height}
+                    alt={charlieBillPhotos.closing.alt}
+                    sizes="(max-width: 900px) 100vw, 1180px"
+                />
+                {charlieBillPhotos.closing.displayCaption && (
+                    <figcaption className={styles.charlieBillCaption}>
+                        {charlieBillPhotos.closing.alt}
+                    </figcaption>
+                )}
+            </figure>
+        </section>
+    );
+}
 
 function Generations() {
     const generations = [
@@ -447,6 +614,8 @@ export default function About() {
                     <p>In the 1950s, our grandfather, Charles &quot;Bub&quot; Francis Wall McDonald founded McDonald Farm Machinery and operated it until 1985.</p>
                     <p>In 2006, our father, Charles &quot;Charlie Bill&quot; William McDonald, together with his wife Stephanie, planted corn and pumpkins on the farm for the first time, and established Old McDonald&apos;s Pumpkin Patch.</p>
                 </BodyBlock>
+
+                <CharlieBillCollage />
 
                 <Generations />
             </div>
