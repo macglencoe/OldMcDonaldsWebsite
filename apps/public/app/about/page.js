@@ -445,10 +445,10 @@ export default function About() {
                 <Generations />
 
                 
-                <BodyBlock src="protectedForever.jpg">
+                <BodyBlock src="/protectedForever.jpg">
                     <h2>Protected Forever</h2>
-                    <p>In 2007, Glencoe Farm was accepted into the <a href="https://landtrustalliance.org/land-trusts/explore/berkeley-county-farmland-protection-board-wv" target="_blank" className="!break-normal">Berkeley County Farm Preservation Land Trust.</a></p>
-                    <p>We are very proud to be a part of this union, which ensures that this land will be conserved for generations to come.</p>
+                    <p>On August 17, 2007, a permanent conservation easement was placed on 161 acres of Glencoe Farm. Held by the <a href="https://wvfp.org/berkeley/" target="_blank" rel="noreferrer" className="!break-normal">Berkeley County Farmland Protection Board</a>, it ensures that this land will remain farmland for generations to come.</p>
+                    <p><Link href="/keeping-glencoe-beautiful"><b>See how we care for Glencoe&apos;s land, water, and wildlife.</b></Link></p>
                 </BodyBlock>
             </div>
         </Layout>
