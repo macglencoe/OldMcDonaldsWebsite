@@ -117,6 +117,9 @@ const Footer = () => {
         <a href="/attribution" className="text-[var(--background)] opacity-70 hover:opacity-100">
           Attribution
         </a>
+        <a href="/under-the-hood" className="text-[var(--background)] opacity-70 hover:opacity-100">
+          Under the Hood
+        </a>
         <span className="text-[var(--background)] opacity-70">© 2025 Old McDonalds Pumpkin Patch LLC. All Rights Reserved</span>
       </div>
     </footer>
