@@ -96,7 +96,7 @@ export default async function CornMaze() {
                     <div className={styles.nightMaze}>
                         <h2>Night Maze</h2>
                         <p>After the sun sets, the corn maze becomes a new, spooky challenge</p>
-                        <p>Starting October 17th, come back after dark and find your way through the maze without the help of daylight</p>
+                        <p>Starting October 16th, come back after dark and find your way through the maze without the help of daylight</p>
                         <Action as='Link' href='/activities/night-maze' variant='secondary' className={'mx-auto'}>See More</Action>
                     </div>
 
