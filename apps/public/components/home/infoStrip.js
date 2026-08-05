@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Geist, Geist_Mono } from "next/font/google"
 import { Action } from "@ui/action";
-import { Cake, ClockAfternoon, Cloud, Copy, ForkKnife, MapPin, PawPrint, Prohibit, SquareLogo, Ticket, Wheelchair } from "phosphor-react";
+import { Cake, ClockAfternoon, Cloud, Copy, ForkKnife, MapPin, PawPrint, Prohibit, Smiley, SquareLogo, Ticket, Wheelchair } from "phosphor-react";
 import clsx from "clsx";
 import Link from "next/link";
 import { track } from '@vercel/analytics'
@@ -313,112 +313,93 @@ function WeatherSummary({ loading, error, today, tomorrow }) {
 // secondary strip
 
 function SecondaryStrip() {
-    const [selected, setSelected] = useState(null);
-
     const items = [
         {
             id: "no-pets",
-            content: (
-                <>
-                    <PawPrint size={32+16} weight="fill" className="absolute"/>
-                    <Prohibit size={64+16} weight="regular" className="text-red-500 absolute"/>
-                </>
-            ),
+            topic: "Pets",
+            icon: PawPrint,
             text: (
-                <p>We have a strict <b>no pets</b> policy</p> //TODO: Rewrite this
+                <p>Please leave pets at home.</p>
             )
         },
         {
             id: "no-smoking",
-            content: (
-                <>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="absolute" width="48" height="48" fill="#ffffff" viewBox="0 0 256 256"><path d="M224,128H32a16,16,0,0,0-16,16v32a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V144A16,16,0,0,0,224,128Zm0,48H96V144H224v32ZM201,60.08c8-14.23,7.42-21.71,6.36-24.91a7.79,7.79,0,0,0-2.64-3.86,8,8,0,1,1,6.5-14.62,22.57,22.57,0,0,1,11.32,13.44c3.36,10.14.81,22.85-7.6,37.79-8,14.23-7.42,21.72-6.36,24.92a7.79,7.79,0,0,0,2.64,3.85,8,8,0,1,1-6.5,14.62,22.53,22.53,0,0,1-11.32-13.44C190.07,87.73,192.62,75,201,60.08Zm-40,0c8-14.23,7.42-21.71,6.36-24.91a7.79,7.79,0,0,0-2.64-3.86,8,8,0,1,1,6.5-14.62,22.57,22.57,0,0,1,11.32,13.44c3.36,10.14.81,22.85-7.6,37.79-8,14.23-7.42,21.72-6.36,24.92a7.79,7.79,0,0,0,2.64,3.85,8,8,0,1,1-6.5,14.62,22.53,22.53,0,0,1-11.32-13.44C150.07,87.73,152.62,75,161,60.08Z"></path></svg>
-                    <Prohibit size={64+16} weight="regular" className="text-red-500 absolute"/>
-                </>
-            ),
+            topic: "Smoking",
+            icon: Prohibit,
             text: (
-                <p><b>No smoking is allowed</b> on the farm, due to the high risk of fire in the autumn season, and children present. <br/>
-                We have <b>two designated smoking areas</b>, one near the parking lot, and another near the fire pits.</p>
+                <p>Smoking is limited to designated areas because of fire risk and the presence of children. Please follow posted signs.</p>
             )
         },
         {
             id: "handicap",
-            content: (
-                <div className="bg-blue-700 p-2 rounded-2xl">
-                    <Wheelchair size={32+16} weight="fill" color="white" />
-                    
-                </div>
-            ),
+            topic: "Accessibility",
+            icon: Wheelchair,
             text: (
-                <p>The farm is <i>mostly</i> wheelchair accessible. Hayrides are not wheelchair accessible</p>
+                <p>Most areas are wheelchair accessible, but paths include grass, gravel, and uneven ground. Hayrides are not wheelchair accessible.</p>
             )
         },
         {
             id: "card-payments",
-            content: (
-                <SquareLogo size={64} weight="duotone" />
-            ),
+            topic: "Payment",
+            icon: SquareLogo,
             text: (
-                <p>We accept <b>all major card providers</b>, as well as tap-to-pay with <a href="https://squareup.com/us/en" target="_blank" className="text-accent hover:underline">Square</a>.</p>
+                <p>We accept cash, major cards, and contactless payments.</p>
             )
         },
         {
             id: "food-vendors",
-            content: (
-                <ForkKnife size={32+16} weight="duotone" className="" />
-            ),
+            topic: "Food",
+            icon: ForkKnife,
             text: (
-                <>
-                    <p>We have <b>3</b> food vendors available on-site every weekend to make your fall day as tasty as it is fun!</p>
-                    <Link href="/vendors" className="text-accent hover:underline">See More</Link>
-                </>
+                <p>Food is available on-site during the season. Offerings may vary. <Link href="/vendors" className="text-accent hover:underline">See vendors</Link>.</p>
             )
         },
         {
             id: "all-ages",
-            content: (
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                    <p className="uppercase text-2xl font-semibold">All<br />Ages</p>
-                </div>
-            ),
+            topic: "All ages",
+            icon: Smiley,
             text: (
-                <p>Our farm is the perfect place for a fall day, no matter your age. With a large playground and various fun activities, kids are sure to be entertained.<br />
-                We have x amount photo ops, so bring your friends and take some pics for your insta story!<br />
-                Just looking for a leisurely stroll? Enjoy our park-like grounds with a gentle flowing creek, lots of benches, and scenic views of the farm.
-                </p> //TODO x amount
+                <p>Enjoy children&apos;s activities, photo opportunities, scenic walking areas, and plenty of places to rest.</p>
             )
         }
     ]
     return (
-        <div className="flex flex-col gap-4 items-center max-w-5xl mx-auto px-2">
-            {/* icons */}
-            <div className="flex flex-row flex-wrap justify-center-safe gap-2">
-                {items.map((item)=> (
-                    <button 
-                        className={clsx(`aspect-square h-18 md:h-20 bg-background/20 rounded-2xl outline-4
-                            hover:scale-105 active:scale-95 transition-all duration-300 
-                            flex items-center justify-center relative overflow-hidden text-background
-                            ${selected == item.id ? 'outline-background/40' : 'outline-transparent'}
-                            `
-                        )}
-                        onClick={() => {
-                            setSelected(item.id);
-                            track('infostrip-secondary-click', {key: item.id})
-                        }}
-                        key={item.id}
-                        >
-                        {item.content}
-                    </button>
-                ))}
-            </div>
-            {/* text */}
-            <div className={clsx(`w-full bg-background/20 rounded-2xl overflow-hidden ${selected == null ? 'sr-only' : ''}`)}>
-                {items.map((item)=> (
-                    <div className={clsx(`space-y-1 text-background text-lg ${selected == item.id ? '' : 'sr-only'}`)} key={item.id}>
-                        <h2 className="text-sm tracking-wider uppercase text-background/20 w-full px-3 py-1 pt-1.5 bg-background/10">{item.id}</h2>
-                        <div className="px-4 py-2">{item.text}</div>
-                    </div>
-                ))}
+        <div className="max-w-5xl mx-auto px-2">
+            <div className="overflow-hidden rounded-2xl border border-background/20 bg-background/10">
+                <h2 className="bg-background/20 px-4 py-2 text-center text-lg font-bold uppercase tracking-widest text-background sm:text-xl">
+                    Know Before You Go
+                </h2>
+                <table className="w-full border-collapse text-left text-background">
+                    <thead className="sr-only">
+                        <tr>
+                            <th scope="col">Topic</th>
+                            <th scope="col">What to know</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {items.map((item) => {
+                            const Icon = item.icon;
+                            return (
+                                <tr className="border-t border-background/15 first:border-t-0" key={item.id}>
+                                    <th className="w-32 px-3 py-3 align-top font-semibold sm:w-44 sm:px-4" scope="row">
+                                        <span className="flex items-center gap-2">
+                                            <Icon aria-hidden="true" className="shrink-0 text-accent" size={28} weight="duotone" />
+                                            <span>{item.topic}</span>
+                                        </span>
+                                    </th>
+                                    <td className="px-3 py-3 text-sm leading-relaxed text-background/90 sm:px-4 sm:text-base">
+                                        {item.text}
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+                <div className="border-t border-background/15 px-4 py-3 text-center">
+                    <Link className="font-semibold text-accent underline underline-offset-4 hover:text-background" href="/visit">
+                        Plan your first visit
+                    </Link>
+                </div>
             </div>
         </div>
     )
