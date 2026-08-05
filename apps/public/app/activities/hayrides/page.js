@@ -15,7 +15,7 @@ export const HayRide = async () => {
     const hayridePrice = Number(pricing.hayride?.amount ?? 0).toFixed(2)
     return (
         <Layout>
-            <PageHeader subtitle="2025 Season">Hay Rides</PageHeader>
+            <PageHeader subtitle="2026 Season">Hay Rides</PageHeader>
             <div className='body basic'>
                 <AndImage src='/hillview.jpg'>
                     <h2>A tour of the farm</h2>
@@ -39,7 +39,7 @@ export const HayRide = async () => {
                 <AndImage fromUnsplash style="night" src="https://images.unsplash.com/photo-1707755939969-e9c1da71c5bb?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
                     <div className={styles.nightMaze}>
                         <h2>Hayrides at night</h2>
-                        <p>Starting October 17th, we will have hayrides open from 7:30pm to 10pm</p>
+                        <p>Starting October 16th, we will have hayrides open from 7:30pm to 10pm</p>
                         <p>Bring your friends and some warm clothes for a spooky tour of the deep dark forest at night</p>
                         <Action as='Link' href='/activities/night-maze' className={'mx-auto'} variant='secondary'>See More</Action>
                     </div>

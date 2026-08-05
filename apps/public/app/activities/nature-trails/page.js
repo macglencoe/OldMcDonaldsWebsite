@@ -12,7 +12,7 @@ export const metadata = {
 export const NatureTrails = () => {
     return (
         <Layout>
-            <PageHeader subtitle="2025 Season">Nature Trails</PageHeader>
+            <PageHeader subtitle="2026 Season">Nature Trails</PageHeader>
             <div className='body basic'>
                 <AndImage src="/walnutbottom.jpg">
                     <h2>Take a hike!</h2>
