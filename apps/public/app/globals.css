@@ -202,10 +202,107 @@ a.link:hover {
   padding: 2px 4px;
   border-radius: 0.375rem;
 }
-.fc-view-harness, .fc-daygrid, .fc-scrollgrid, .fc-scrollgrid-section, .fc-scroller-harness, .fc-scroller, .fc-daygrid-body, .fc-scrollgrid-sync-table, .fc-toolbar  {
+.fc-view-harness, .fc-daygrid, .fc-scrollgrid, .fc-scrollgrid-section, .fc-scroller-harness, .fc-scroller, .fc-daygrid-body, .fc-scrollgrid-sync-table, .fc-toolbar {
   width: 100% !important;
-  
-  min-width: 500px !important;
+}
+
+.festival-calendar-grid .fc-daygrid-day-frame {
+  min-height: 5.5rem;
+  cursor: pointer;
+}
+
+.festival-calendar-grid .fc-daygrid-day-events {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.35rem;
+}
+
+.festival-calendar-grid .fc-daygrid-event-harness {
+  display: inline-flex;
+  margin: 0 !important;
+}
+
+.festival-calendar-grid .fc-daygrid-event {
+  display: inline-flex;
+  width: 0.85rem;
+  height: 0.85rem;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent !important;
+}
+
+.festival-calendar-dot {
+  display: block;
+  width: 0.85rem;
+  height: 0.85rem;
+  border: 2px solid rgb(255 255 255 / 70%);
+  border-radius: 9999px;
+}
+
+.festival-calendar-grid .fc-daygrid-day.is-selected {
+  background: rgb(227 139 38 / 24%);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.festival-calendar-day-label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.15rem;
+}
+
+.festival-calendar-day-label img {
+  width: 2rem;
+  height: 2rem;
+}
+
+.calendar-detail-panel {
+  width: 100%;
+  min-height: 14rem;
+  padding: 1rem;
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: 0.75rem;
+  background: rgb(22 40 12 / 72%);
+}
+
+.calendar-detail-event {
+  display: block;
+  width: 100%;
+  padding: 0.85rem;
+  border-left: 0.35rem solid;
+  border-radius: 0.5rem;
+  background: rgb(255 255 255 / 10%);
+  color: var(--background);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.calendar-detail-event:hover,
+.calendar-detail-event:focus-visible {
+  background: rgb(255 255 255 / 18%);
+  transform: translateY(-1px);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.calendar-detail-action {
+  display: block;
+  margin-top: 0.65rem;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.calendar-detail-empty {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: rgb(255 255 255 / 8%);
+  color: rgb(253 255 255 / 75%);
 }
 
   /* gridlines */
@@ -229,6 +326,47 @@ a.link:hover {
 
 
 @media screen and (max-width: 768px) {
+  .fc .fc-toolbar {
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .fc .fc-toolbar-title {
+    font-size: 1.35rem;
+  }
+
+  .fc .fc-button {
+    padding: 0.35rem 0.55rem;
+  }
+
+  .festival-calendar-grid .fc-daygrid-day-frame {
+    min-height: 3.75rem;
+  }
+
+  .festival-calendar-grid .fc-daygrid-day-top {
+    font-size: 0.8rem;
+  }
+
+  .festival-calendar-grid .fc-daygrid-day-events {
+    gap: 0.15rem;
+    padding: 0.1rem 0.2rem;
+  }
+
+  .festival-calendar-grid .fc-daygrid-event,
+  .festival-calendar-dot {
+    width: 0.65rem;
+    height: 0.65rem;
+  }
+
+  .festival-calendar-dot {
+    border-width: 1px;
+  }
+
+  .festival-calendar-day-label img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
   .body.basic {
     padding: 0.5em;
   }
