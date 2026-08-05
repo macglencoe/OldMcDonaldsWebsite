@@ -2,7 +2,13 @@ function toDateTimeInputValue(isoString) {
     if (!isoString) return "";
     const date = new Date(isoString);
     if (Number.isNaN(date.getTime())) return "";
-    return date.toISOString().slice(0, 16);
+
+    // datetime-local expects local clock values, not the UTC values returned by
+    // toISOString(). Feeding it UTC values makes the field appear offset even
+    // though the persisted ISO timestamp is correct.
+    const pad = (value) => String(value).padStart(2, "0");
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
+        + `T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
 
 function fromDateTimeInput(value) {
