@@ -13,6 +13,7 @@
   "dependencies": {
     "@flags-sdk/statsig": "^0.2.2",
     "@fullcalendar/daygrid": "^6.1.17",
+    "@fullcalendar/interaction": "^6.1.17",
     "@fullcalendar/react": "^6.1.17",
     "@fullcalendar/timegrid": "^6.1.17",
     "@react-google-maps/api": "^2.20.6",
