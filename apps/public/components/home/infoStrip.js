@@ -10,7 +10,7 @@ import { useFlags } from "@/app/FlagsContext";
 import { useConfig, useConfigs } from "@/app/ConfigsContext";
 import Hours from "../hours";
 
-const OPENING_DAY_DATE = "2026-09-28T10:00:00-04:00";
+const OPENING_DAY_DATE = "2026-09-26T10:00:00-04:00";
 const DEFAULT_CALENDAR_DATES = "20260928T100000/20260928T180000";
 
 const formatCalendarDatesParam = (isoDate, startTime = "T100000", endTime = "T180000") => {
