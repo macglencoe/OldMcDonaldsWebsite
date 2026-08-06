@@ -18,6 +18,7 @@ test('normalizes a manual gazebo booking', () => {
   const result = validateGazeboBooking({
     ...customer,
     bookingDate: '2026-10-10',
+    gazeboCode: 'B',
     timeSlot: 'early',
     status: 'confirmed',
     partySize: '18',
@@ -33,6 +34,7 @@ test('normalizes a manual gazebo booking', () => {
     customerEmail: 'jane@example.com',
     customerPhone: '(304) 555-0123',
     customerPhoneNormalized: '3045550123',
+    gazeboCode: 'B',
     timeSlot: 'early',
   });
 });
@@ -41,16 +43,29 @@ test('gazebo bookings require a concrete slot', () => {
   const result = validateGazeboBooking({
     ...customer,
     bookingDate: '2026-10-10',
+    gazeboCode: 'A',
     timeSlot: 'either',
     status: 'tentative',
   });
   assert.equal(result.error, 'Choose an early or late gazebo slot.');
 });
 
+test('gazebo bookings require a concrete gazebo assignment', () => {
+  const result = validateGazeboBooking({
+    ...customer,
+    bookingDate: '2026-10-10',
+    gazeboCode: 'C',
+    timeSlot: 'early',
+    status: 'tentative',
+  });
+  assert.equal(result.error, 'Choose Gazebo A or Gazebo B.');
+});
+
 test('validates conversion input without accepting customer copies', () => {
   const result = validateGazeboConversion({
     reservationRequestId: '381',
     bookingDate: '2026-10-11',
+    gazeboCode: 'A',
     timeSlot: 'late',
     status: 'confirmed',
     partySize: '',
@@ -62,6 +77,7 @@ test('validates conversion input without accepting customer copies', () => {
     status: 'confirmed',
     partySize: null,
     internalNotes: null,
+    gazeboCode: 'A',
     timeSlot: 'late',
     reservationRequestId: 381,
   });

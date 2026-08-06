@@ -1,5 +1,6 @@
 const STATUS_FILTERS = new Set(['active', 'tentative', 'confirmed', 'cancelled', 'all']);
 const SLOT_FILTERS = new Set(['early', 'late', 'all']);
+const GAZEBO_FILTERS = new Set(['A', 'B', 'all']);
 const DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 
 function validDate(value) {
@@ -15,6 +16,7 @@ export function parseBookingFilters(params = {}, type) {
   const search = rawSearch.slice(0, 120) || null;
   const status = STATUS_FILTERS.has(params.status) ? params.status : 'active';
   const slot = type === 'gazebo' && SLOT_FILTERS.has(params.slot) ? params.slot : 'all';
+  const gazebo = type === 'gazebo' && GAZEBO_FILTERS.has(params.gazebo) ? params.gazebo : 'all';
   const from = validDate(params.from);
   const to = validDate(params.to);
   const prefix = type === 'gazebo' ? 'GZ' : 'CF';
@@ -26,6 +28,7 @@ export function parseBookingFilters(params = {}, type) {
     search,
     status,
     slot,
+    gazebo,
     from,
     to,
     bookingId: bookingMatch ? Number(bookingMatch[1]) : null,
@@ -39,6 +42,7 @@ export function bookingFilterParams(filters, { page } = {}) {
   if (filters.search) params.set('search', filters.search);
   if (filters.status !== 'active') params.set('status', filters.status);
   if (filters.slot && filters.slot !== 'all') params.set('slot', filters.slot);
+  if (filters.gazebo && filters.gazebo !== 'all') params.set('gazebo', filters.gazebo);
   if (filters.from) params.set('from', filters.from);
   if (filters.to) params.set('to', filters.to);
   if (page && page > 1) params.set('page', page);

@@ -41,7 +41,7 @@ export default async function NewGazeboBookingPage({ searchParams }) {
               <strong>Previous bookings:</strong>
               <ul className="list-disc pl-5">
                 {request.bookings.map((booking) => (
-                  <li key={booking.id}>GZ-{booking.id}: {booking.booking_date}, {booking.time_slot}, {booking.status}</li>
+                  <li key={booking.id}>GZ-{booking.id}: {booking.booking_date}, Gazebo {booking.gazebo_code}, {booking.time_slot}, {booking.status}</li>
                 ))}
               </ul>
             </div>

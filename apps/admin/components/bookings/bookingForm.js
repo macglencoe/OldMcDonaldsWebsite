@@ -81,19 +81,33 @@ export default function BookingForm({ type, request = null, booking = null, retu
           />
         </label>
         {type === "gazebo" && (
-          <label className="font-semibold">
-            Gazebo slot
-            <select
-              className={inputClass}
-              defaultValue={booking?.time_slot ?? (request?.preferred_time_slot === "either" ? "" : request?.preferred_time_slot ?? "")}
-              name="timeSlot"
-              required
-            >
-              <option disabled value="">Choose a slot</option>
-              <option value="early">Early</option>
-              <option value="late">Late</option>
-            </select>
-          </label>
+          <>
+            <label className="font-semibold">
+              Gazebo
+              <select
+                className={inputClass}
+                defaultValue={booking?.gazebo_code ?? "A"}
+                name="gazeboCode"
+                required
+              >
+                <option value="A">Gazebo A</option>
+                <option value="B">Gazebo B</option>
+              </select>
+            </label>
+            <label className="font-semibold">
+              Time slot
+              <select
+                className={inputClass}
+                defaultValue={booking?.time_slot ?? (request?.preferred_time_slot === "either" ? "" : request?.preferred_time_slot ?? "")}
+                name="timeSlot"
+                required
+              >
+                <option disabled value="">Choose a slot</option>
+                <option value="early">Early</option>
+                <option value="late">Late</option>
+              </select>
+            </label>
+          </>
         )}
         <label className="font-semibold">
           Status

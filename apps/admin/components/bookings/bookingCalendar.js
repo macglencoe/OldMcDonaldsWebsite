@@ -59,7 +59,7 @@ export default function BookingCalendar({
         color: STATUS_COLORS[booking.status],
         title:
           type === "gazebo"
-            ? `${booking.time_slot === "early" ? "Early" : "Late"} · ${booking.customer_name}`
+            ? `Gazebo ${booking.gazebo_code} · ${booking.time_slot === "early" ? "Early" : "Late"} · ${booking.customer_name}`
             : `CF-${booking.id} · ${booking.customer_name}`,
         extendedProps: booking,
       })),

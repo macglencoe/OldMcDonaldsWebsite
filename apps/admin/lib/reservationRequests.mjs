@@ -26,6 +26,7 @@ export async function getReservationRequests({ page, year, slot, requestId = nul
            json_build_object(
              'id', b.id::text,
              'booking_date', b.booking_date::text,
+             'gazebo_code', b.gazebo_code,
              'time_slot', b.time_slot,
              'status', b.status,
              'created_at', b.created_at

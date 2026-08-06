@@ -48,6 +48,7 @@ function BookingHistory({ bookings }) {
             <span>
               <strong>GZ-{booking.id}</strong>
               {' · '}{formatDate(booking.booking_date)}
+              {' · '}Gazebo {booking.gazebo_code}
               {' · '}<span className="capitalize">{booking.time_slot}</span>
               {' · '}<span className="capitalize">{booking.status}</span>
             </span>

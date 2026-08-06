@@ -69,8 +69,8 @@ export default function BookingList({ bookings, type, returnTo = null }) {
             </div>
             {type === "gazebo" && (
               <div>
-                <dt className="text-sm font-semibold text-foreground/60">Slot</dt>
-                <dd className="capitalize">{booking.time_slot} · {formatTime(booking.start_time)}–{formatTime(booking.end_time)}</dd>
+                <dt className="text-sm font-semibold text-foreground/60">Gazebo and time</dt>
+                <dd>Gazebo {booking.gazebo_code} · <span className="capitalize">{booking.time_slot}</span> · {formatTime(booking.start_time)}–{formatTime(booking.end_time)}</dd>
               </div>
             )}
             <div>

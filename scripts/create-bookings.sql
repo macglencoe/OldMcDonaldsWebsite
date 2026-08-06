@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS gazebo_season_config (
 CREATE TABLE IF NOT EXISTS gazebo_bookings (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   booking_date DATE NOT NULL,
+  gazebo_code TEXT NOT NULL DEFAULT 'A' CHECK (gazebo_code IN ('A', 'B')),
   time_slot TEXT NOT NULL CHECK (time_slot IN ('early', 'late')),
   start_time_snapshot TIME NOT NULL,
   end_time_snapshot TIME NOT NULL,
@@ -47,7 +48,7 @@ CREATE TABLE IF NOT EXISTS gazebo_bookings (
 -- Tentative and confirmed bookings both hold inventory. Cancelled records remain
 -- available as history and do not prevent a replacement booking.
 CREATE UNIQUE INDEX IF NOT EXISTS gazebo_bookings_active_slot_unique_idx
-  ON gazebo_bookings (booking_date, time_slot)
+  ON gazebo_bookings (booking_date, time_slot, gazebo_code)
   WHERE status IN ('tentative', 'confirmed');
 
 -- One request may have several cancelled historical bookings, but only one active
@@ -58,7 +59,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS gazebo_bookings_active_request_unique_idx
     AND status IN ('tentative', 'confirmed');
 
 CREATE INDEX IF NOT EXISTS gazebo_bookings_date_idx
-  ON gazebo_bookings (booking_date, time_slot);
+  ON gazebo_bookings (booking_date, time_slot, gazebo_code);
 
 CREATE INDEX IF NOT EXISTS gazebo_bookings_status_date_idx
   ON gazebo_bookings (status, booking_date);

@@ -16,7 +16,7 @@ export default function BookingsPage() {
           </div>
           <p className="text-sm font-semibold uppercase tracking-widest text-accent">Day staff</p>
           <h2 className="mt-1 text-2xl font-bold">Gazebo bookings</h2>
-          <p className="mt-2 text-foreground/70">Manage the gazebo’s early and late rental slots.</p>
+          <p className="mt-2 text-foreground/70">Manage early and late rental slots for Gazebos A and B.</p>
           <p className="mt-5 flex items-center gap-2 font-semibold text-accent group-hover:underline">
             Open gazebo calendar <PiArrowRightBold aria-hidden="true" />
           </p>
