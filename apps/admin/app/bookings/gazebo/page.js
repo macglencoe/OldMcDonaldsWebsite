@@ -55,7 +55,7 @@ export default async function GazeboBookingsPage({ searchParams }) {
         <div>
           <p className="text-sm font-semibold uppercase tracking-widest text-foreground/60">Bookings</p>
           <h1 className="text-3xl font-bold">Gazebo</h1>
-          <p className="mt-2 text-foreground/70">One gazebo with an early and late slot each day.</p>
+          <p className="mt-2 text-foreground/70">Gazebos A and B each have an early and late slot every configured day.</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <Link className="inline-flex items-center gap-2 rounded-lg border border-foreground px-4 py-2 font-semibold transition hover:bg-foreground hover:text-white" href="/bookings/gazebo/seasons">

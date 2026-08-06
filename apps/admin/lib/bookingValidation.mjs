@@ -13,6 +13,11 @@ export const GAZEBO_SLOTS = Object.freeze({
   late: 'Late',
 });
 
+export const GAZEBOS = Object.freeze({
+  A: 'Gazebo A',
+  B: 'Gazebo B',
+});
+
 function singleLine(value) {
   return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ') : '';
 }
@@ -109,13 +114,15 @@ function normalizeSharedBookingFields(body, { includeCustomer }) {
 export function validateGazeboBooking(body) {
   const shared = normalizeSharedBookingFields(body, { includeCustomer: true });
   if (shared.error) return shared;
+  if (!Object.hasOwn(GAZEBOS, body.gazeboCode)) return { error: 'Choose Gazebo A or Gazebo B.' };
   if (!Object.hasOwn(GAZEBO_SLOTS, body.timeSlot)) return { error: 'Choose an early or late gazebo slot.' };
-  return { value: { ...shared.value, timeSlot: body.timeSlot } };
+  return { value: { ...shared.value, gazeboCode: body.gazeboCode, timeSlot: body.timeSlot } };
 }
 
 export function validateGazeboConversion(body) {
   const shared = normalizeSharedBookingFields(body, { includeCustomer: false });
   if (shared.error) return shared;
+  if (!Object.hasOwn(GAZEBOS, body.gazeboCode)) return { error: 'Choose Gazebo A or Gazebo B.' };
   if (!Object.hasOwn(GAZEBO_SLOTS, body.timeSlot)) return { error: 'Choose an early or late gazebo slot.' };
 
   const rawRequestId = typeof body.reservationRequestId === 'string'
@@ -128,7 +135,14 @@ export function validateGazeboConversion(body) {
     return { error: 'Choose a valid reservation request.' };
   }
 
-  return { value: { ...shared.value, timeSlot: body.timeSlot, reservationRequestId } };
+  return {
+    value: {
+      ...shared.value,
+      gazeboCode: body.gazeboCode,
+      timeSlot: body.timeSlot,
+      reservationRequestId,
+    },
+  };
 }
 
 export function validateCampfireBooking(body) {

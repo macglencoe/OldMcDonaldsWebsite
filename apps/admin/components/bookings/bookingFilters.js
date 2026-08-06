@@ -6,7 +6,7 @@ const inputClass = "mt-1 block w-full rounded-lg border border-foreground/30 bg-
 export default function BookingFilters({ filters, type }) {
   const basePath = `/bookings/${type}`;
   return (
-    <form className="mt-6 grid gap-4 rounded-xl border border-foreground/20 bg-foreground/[0.02] p-4 sm:grid-cols-2 lg:grid-cols-6">
+    <form className="mt-6 grid gap-4 rounded-xl border border-foreground/20 bg-foreground/[0.02] p-4 sm:grid-cols-2 lg:grid-cols-7">
       <label className="font-semibold sm:col-span-2">
         <span className="flex items-center gap-1.5"><PiMagnifyingGlassBold aria-hidden="true" /> Customer or ID</span>
         <input
@@ -36,14 +36,24 @@ export default function BookingFilters({ filters, type }) {
         </select>
       </label>
       {type === "gazebo" && (
-        <label className="font-semibold">
-          Slot
-          <select className={inputClass} defaultValue={filters.slot} name="slot">
-            <option value="all">Both slots</option>
-            <option value="early">Early</option>
-            <option value="late">Late</option>
-          </select>
-        </label>
+        <>
+          <label className="font-semibold">
+            Gazebo
+            <select className={inputClass} defaultValue={filters.gazebo} name="gazebo">
+              <option value="all">Both gazebos</option>
+              <option value="A">Gazebo A</option>
+              <option value="B">Gazebo B</option>
+            </select>
+          </label>
+          <label className="font-semibold">
+            Time
+            <select className={inputClass} defaultValue={filters.slot} name="slot">
+              <option value="all">Both times</option>
+              <option value="early">Early</option>
+              <option value="late">Late</option>
+            </select>
+          </label>
+        </>
       )}
       <div className="flex items-end gap-2 sm:col-span-2 lg:col-span-1">
         <button className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-semibold text-white transition hover:opacity-90">

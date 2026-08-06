@@ -21,10 +21,10 @@ export class BookingError extends Error {
 export async function getGazeboBookings(filters = {}, { sql = getDatabase() } = {}) {
   const {
     from = null, to = null, status = 'active', search = null,
-    phoneDigits = null, bookingId = null, requestId = null, slot = 'all',
+    phoneDigits = null, bookingId = null, requestId = null, slot = 'all', gazebo = 'all',
   } = filters;
   return sql.query(
-    `SELECT id::text, booking_date::text, time_slot,
+    `SELECT id::text, booking_date::text, gazebo_code, time_slot,
        to_char(start_time_snapshot, 'HH24:MI') AS start_time,
        to_char(end_time_snapshot, 'HH24:MI') AS end_time,
        status, customer_name, customer_email, customer_phone,
@@ -47,14 +47,15 @@ export async function getGazeboBookings(filters = {}, { sql = getDatabase() } = 
          OR ($7::bigint IS NOT NULL AND reservation_request_id = $7)
        )
        AND ($8::text = 'all' OR time_slot = $8)
+       AND ($9::text = 'all' OR gazebo_code = $9)
      ORDER BY booking_date, start_time_snapshot, id`,
-    [from, to, status, search, phoneDigits, bookingId, requestId, slot],
+    [from, to, status, search, phoneDigits, bookingId, requestId, slot, gazebo],
   );
 }
 
 export async function getGazeboBooking(id, { sql = getDatabase() } = {}) {
   return getBookingById('gazebo_bookings', id, sql, `
-    id::text, booking_date::text, time_slot,
+    id::text, booking_date::text, gazebo_code, time_slot,
     to_char(start_time_snapshot, 'HH24:MI') AS start_time,
     to_char(end_time_snapshot, 'HH24:MI') AS end_time,
     status, customer_name, customer_email, customer_phone,
@@ -152,6 +153,7 @@ export async function getReservationRequestForBooking(id, { sql = getDatabase() 
            json_build_object(
              'id', b.id::text,
              'booking_date', b.booking_date::text,
+             'gazebo_code', b.gazebo_code,
              'time_slot', b.time_slot,
              'status', b.status
            ) ORDER BY b.created_at
@@ -189,7 +191,7 @@ function translateDatabaseError(error) {
   if (error?.constraint === 'gazebo_bookings_active_slot_unique_idx') {
     return new BookingError(
       'SLOT_UNAVAILABLE',
-      'The selected gazebo slot is already held by another booking.',
+      'The selected gazebo and time slot are already held by another booking.',
       409,
     );
   }
@@ -315,22 +317,22 @@ export async function createGazeboBooking(input, { sql = getDatabase() } = {}) {
   try {
     const rows = await sql.query(
       `INSERT INTO gazebo_bookings (
-         booking_date, time_slot, start_time_snapshot, end_time_snapshot, status,
+         booking_date, gazebo_code, time_slot, start_time_snapshot, end_time_snapshot, status,
          customer_name, customer_email, customer_phone, customer_phone_normalized,
          party_size, internal_notes
        )
-       SELECT $1::date, $2, 
-         CASE $2 WHEN 'early' THEN early_start_time ELSE late_start_time END,
-         CASE $2 WHEN 'early' THEN early_end_time ELSE late_end_time END,
-         $3, $4, $5, $6, $7, $8, $9
+       SELECT $1::date, $2, $3,
+         CASE $3 WHEN 'early' THEN early_start_time ELSE late_start_time END,
+         CASE $3 WHEN 'early' THEN early_end_time ELSE late_end_time END,
+         $4, $5, $6, $7, $8, $9, $10
        FROM gazebo_season_config
        WHERE $1::date BETWEEN start_date AND end_date
-       RETURNING id::text, booking_date, time_slot, start_time_snapshot,
+       RETURNING id::text, booking_date, gazebo_code, time_slot, start_time_snapshot,
          end_time_snapshot, status, customer_name, customer_email, customer_phone,
          customer_phone_normalized, party_size, reservation_request_id,
          internal_notes, created_at, updated_at`,
       [
-        value.bookingDate, value.timeSlot, value.status, value.customerName,
+        value.bookingDate, value.gazeboCode, value.timeSlot, value.status, value.customerName,
         value.customerEmail, value.customerPhone, value.customerPhoneNormalized,
         value.partySize, value.internalNotes,
       ],
@@ -347,24 +349,24 @@ export async function convertReservationRequest(input, { sql = getDatabase() } =
   try {
     const rows = await sql.query(
       `INSERT INTO gazebo_bookings (
-         booking_date, time_slot, start_time_snapshot, end_time_snapshot, status,
+         booking_date, gazebo_code, time_slot, start_time_snapshot, end_time_snapshot, status,
          customer_name, customer_email, customer_phone, customer_phone_normalized,
          party_size, reservation_request_id, internal_notes
        )
-       SELECT $2::date, $3,
-         CASE $3 WHEN 'early' THEN c.early_start_time ELSE c.late_start_time END,
-         CASE $3 WHEN 'early' THEN c.early_end_time ELSE c.late_end_time END,
-         $4, r.name, r.email, r.phone, r.phone_normalized, $5, r.id, $6
+       SELECT $2::date, $3, $4,
+         CASE $4 WHEN 'early' THEN c.early_start_time ELSE c.late_start_time END,
+         CASE $4 WHEN 'early' THEN c.early_end_time ELSE c.late_end_time END,
+         $5, r.name, r.email, r.phone, r.phone_normalized, $6, r.id, $7
        FROM reservation_requests r
        JOIN gazebo_season_config c
          ON $2::date BETWEEN c.start_date AND c.end_date
        WHERE r.id = $1
-       RETURNING id::text, booking_date, time_slot, start_time_snapshot,
+       RETURNING id::text, booking_date, gazebo_code, time_slot, start_time_snapshot,
          end_time_snapshot, status, customer_name, customer_email, customer_phone,
          customer_phone_normalized, party_size, reservation_request_id::text,
          internal_notes, created_at, updated_at`,
       [
-        value.reservationRequestId, value.bookingDate, value.timeSlot, value.status,
+        value.reservationRequestId, value.bookingDate, value.gazeboCode, value.timeSlot, value.status,
         value.partySize, value.internalNotes,
       ],
     );
@@ -401,29 +403,30 @@ export async function updateGazeboBooking(id, input, { sql = getDatabase() } = {
     const rows = await sql.query(
       `UPDATE gazebo_bookings b
        SET booking_date = $2::date,
-         time_slot = $3,
-         start_time_snapshot = CASE $3 WHEN 'early' THEN c.early_start_time ELSE c.late_start_time END,
-         end_time_snapshot = CASE $3 WHEN 'early' THEN c.early_end_time ELSE c.late_end_time END,
-         status = $4,
-         customer_name = $5,
-         customer_email = $6,
-         customer_phone = $7,
-         customer_phone_normalized = $8,
-         party_size = $9,
-         internal_notes = $10,
+         gazebo_code = $3,
+         time_slot = $4,
+         start_time_snapshot = CASE $4 WHEN 'early' THEN c.early_start_time ELSE c.late_start_time END,
+         end_time_snapshot = CASE $4 WHEN 'early' THEN c.early_end_time ELSE c.late_end_time END,
+         status = $5,
+         customer_name = $6,
+         customer_email = $7,
+         customer_phone = $8,
+         customer_phone_normalized = $9,
+         party_size = $10,
+         internal_notes = $11,
          updated_at = CURRENT_TIMESTAMP
        FROM gazebo_season_config c
        WHERE b.id = $1
          AND b.status <> 'cancelled'
          AND $2::date BETWEEN c.start_date AND c.end_date
-       RETURNING b.id::text, b.booking_date::text, b.time_slot,
+       RETURNING b.id::text, b.booking_date::text, b.gazebo_code, b.time_slot,
          to_char(b.start_time_snapshot, 'HH24:MI') AS start_time,
          to_char(b.end_time_snapshot, 'HH24:MI') AS end_time,
          b.status, b.customer_name, b.customer_email, b.customer_phone,
          b.customer_phone_normalized, b.party_size, b.reservation_request_id::text,
          b.internal_notes, b.created_at, b.updated_at`,
       [
-        normalizedId, value.bookingDate, value.timeSlot, value.status,
+        normalizedId, value.bookingDate, value.gazeboCode, value.timeSlot, value.status,
         value.customerName, value.customerEmail, value.customerPhone,
         value.customerPhoneNormalized, value.partySize, value.internalNotes,
       ],

@@ -59,7 +59,7 @@ function GazeboRentalTable({ season }) {
 
 export const metadata = {
   title: "Reservations",
-  description: "Book a private party gazebo at Old McDonald’s Pumpkin Patch in Inwood, WV. Reserve picnic space for birthdays, family gatherings, and special fall events."
+  description: "Request a private party gazebo at Old McDonald’s Pumpkin Patch in Inwood, WV. Reserve picnic space for birthdays, family gatherings, and special fall events."
 }
 
 
@@ -92,8 +92,8 @@ export const Reservations = async () => {
                   <p>Rent a campfire for your group at the Night Maze</p>
                   <a href="/activities/night-maze#reservations"><p>See More</p></a>
                 </BodyBlock>
-                <h2>Party Gazebo</h2>
-                <p className="description">A private party gazebo can be booked for a 2-hour time slot during daytime hours</p>
+                <h2>Party Gazebos</h2>
+                <p className="description">Gazebos A and B can each be reserved for a 2-hour time slot during daytime hours</p>
                 <BodyBlock src="/rentalgazebo.jpg">
                     <h3>Pricing</h3>
                     <p>For 2 hours:</p>

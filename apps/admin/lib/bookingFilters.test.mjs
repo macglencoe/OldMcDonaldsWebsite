@@ -12,6 +12,7 @@ test('parses gazebo search, status, slot, and date filters', () => {
   assert.deepEqual(parseBookingFilters({
     search: ' GZ-42 ',
     status: 'confirmed',
+    gazebo: 'B',
     slot: 'late',
     from: '2026-09-01',
     to: '2026-11-30',
@@ -19,6 +20,7 @@ test('parses gazebo search, status, slot, and date filters', () => {
     search: 'GZ-42',
     status: 'confirmed',
     slot: 'late',
+    gazebo: 'B',
     from: '2026-09-01',
     to: '2026-11-30',
     bookingId: 42,
@@ -40,6 +42,7 @@ test('uses safe defaults for invalid filters', () => {
   }, 'gazebo');
   assert.equal(filters.status, 'active');
   assert.equal(filters.slot, 'all');
+  assert.equal(filters.gazebo, 'all');
   assert.equal(filters.from, null);
 });
 
@@ -47,9 +50,10 @@ test('builds compact, stable filter URLs', () => {
   const filters = parseBookingFilters({
     search: 'Smith',
     status: 'all',
+    gazebo: 'A',
     slot: 'early',
   }, 'gazebo');
-  assert.equal(bookingFilterParams(filters, { page: 2 }).toString(), 'search=Smith&status=all&slot=early&page=2');
+  assert.equal(bookingFilterParams(filters, { page: 2 }).toString(), 'search=Smith&status=all&slot=early&gazebo=A&page=2');
 });
 
 test('only accepts return paths within the matching booking section', () => {
