@@ -16,6 +16,10 @@ CREATE TABLE IF NOT EXISTS vendor_applications (
   certification_status TEXT CHECK (certification_status IS NULL OR certification_status IN ('ready', 'later')),
   availability_notes TEXT CHECK (availability_notes IS NULL OR char_length(availability_notes) <= 2000),
   policy_version SMALLINT NOT NULL DEFAULT 1 CHECK (policy_version > 0),
+  review_status TEXT NOT NULL DEFAULT 'new'
+    CHECK (review_status IN ('new', 'reviewing', 'contacted', 'accepted', 'declined', 'spam')),
+  internal_note TEXT CHECK (internal_note IS NULL OR char_length(internal_note) <= 1000),
+  reviewed_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ip_hash CHAR(64) NOT NULL CHECK (ip_hash ~ '^[0-9a-f]{64}$'),
   user_agent TEXT,
@@ -38,5 +42,8 @@ CREATE INDEX IF NOT EXISTS vendor_applications_electricity_idx
 
 CREATE INDEX IF NOT EXISTS vendor_applications_ip_hash_created_at_idx
   ON vendor_applications (ip_hash, created_at DESC);
+
+CREATE INDEX IF NOT EXISTS vendor_applications_review_status_created_at_idx
+  ON vendor_applications (review_status, created_at DESC);
 
 COMMIT;

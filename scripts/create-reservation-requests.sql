@@ -17,6 +17,10 @@ CREATE TABLE IF NOT EXISTS reservation_requests (
   price_cents_snapshot INTEGER NOT NULL CHECK (price_cents_snapshot > 0),
   policy_version SMALLINT NOT NULL DEFAULT 1 CHECK (policy_version > 0),
   additional_comments TEXT CHECK (additional_comments IS NULL OR char_length(additional_comments) <= 2000),
+  review_status TEXT NOT NULL DEFAULT 'new'
+    CHECK (review_status IN ('new', 'reviewing', 'resolved', 'irrelevant', 'spam')),
+  internal_note TEXT CHECK (internal_note IS NULL OR char_length(internal_note) <= 1000),
+  reviewed_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ip_hash CHAR(64) NOT NULL CHECK (ip_hash ~ '^[0-9a-f]{64}$'),
   user_agent TEXT,
@@ -31,5 +35,8 @@ CREATE INDEX IF NOT EXISTS reservation_requests_preferred_date_idx
 
 CREATE INDEX IF NOT EXISTS reservation_requests_ip_hash_created_at_idx
   ON reservation_requests (ip_hash, created_at DESC);
+
+CREATE INDEX IF NOT EXISTS reservation_requests_review_status_created_at_idx
+  ON reservation_requests (review_status, created_at DESC);
 
 COMMIT;
