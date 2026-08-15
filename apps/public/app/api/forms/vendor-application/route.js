@@ -2,6 +2,7 @@ import { getDatabase } from '@oldmc/db';
 import { NextResponse } from 'next/server';
 import { sendVendorCustomerReceipt, sendVendorStaffNotification } from '@/lib/email/server';
 import { getClientIp, hashIp, normalizeUserAgent } from '@/lib/mazeEntry.mjs';
+import { verifyVendorTurnstile } from '@/lib/turnstile.mjs';
 import { CERTIFICATION_LABELS, ELECTRICITY_LABELS, validateVendorApplication } from '@/lib/vendorApplication.mjs';
 
 export const runtime = 'nodejs';
@@ -17,8 +18,24 @@ export async function POST(request) {
   try { body = await request.json(); } catch { return NextResponse.json({ error: 'Invalid JSON.' }, { status: 400 }); }
   const validation = validateVendorApplication(body);
   if (validation.error) return NextResponse.json({ error: validation.error }, { status: 400 });
+  const clientIp = getClientIp(request.headers);
+  const turnstile = await verifyVendorTurnstile({ token: body.turnstileToken, remoteIp: clientIp });
+  if (!turnstile.ok) {
+    if (turnstile.category === 'configuration' || turnstile.category === 'unavailable') {
+      console.error('Vendor application Turnstile error:', turnstile.reason);
+      return NextResponse.json(
+        { error: 'Verification is temporarily unavailable. Please try again.', code: 'VERIFICATION_UNAVAILABLE' },
+        { status: 503 },
+      );
+    }
+    console.warn('Vendor application Turnstile rejection:', turnstile.reason);
+    return NextResponse.json(
+      { error: 'Please complete the verification and try again.', code: 'VERIFICATION_FAILED' },
+      { status: 400 },
+    );
+  }
   let ipHash;
-  try { ipHash = hashIp(getClientIp(request.headers), process.env.IP_HASH_SECRET); }
+  try { ipHash = hashIp(clientIp, process.env.IP_HASH_SECRET); }
   catch (error) {
     console.error('Vendor application configuration error:', error.message);
     return NextResponse.json({ error: 'Vendor application service is unavailable.' }, { status: 503 });
