@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useFlags } from '@/app/FlagsContext';
 import { CERTIFICATION_LABELS, ELECTRICITY_LABELS } from '@/lib/vendorApplication.mjs';
+import TurnstileWidget from './turnstileWidget';
 
 const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdNLOwNjhKnsI4QT18MCGOrEvxXP164zfLpXQOZSSBcJQxo3A/viewform?usp=header';
 const initialForm = {
@@ -18,6 +19,8 @@ export default function VendorApplicationForm() {
   const [message, setMessage] = useState('');
   const [applicationId, setApplicationId] = useState(null);
   const [forceGoogleForm, setForceGoogleForm] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
   useEffect(() => {
     if (Number(localStorage.getItem('vendor_forms_disabled_until') || 0) > Date.now()) setForceGoogleForm(true);
   }, []);
@@ -37,20 +40,36 @@ export default function VendorApplicationForm() {
     localStorage.setItem('vendor_forms_disabled_until', String(Date.now() + 24 * 60 * 60 * 1000));
     setForceGoogleForm(true);
   };
+  const resetTurnstile = useCallback(() => {
+    setTurnstileToken('');
+    setTurnstileResetKey(current => current + 1);
+  }, []);
+  const handleTurnstileToken = useCallback(token => setTurnstileToken(token), []);
+  const handleTurnstileError = useCallback(() => {
+    setMessage('Verification could not be completed. Please refresh the page and try again.');
+  }, []);
   const submit = async event => {
     event.preventDefault(); setIsSubmitting(true); setMessage('');
+    if (!turnstileToken) {
+      setMessage('Please complete the verification before submitting.');
+      setIsSubmitting(false);
+      return;
+    }
     try {
       const response = await fetch('/api/forms/vendor-application', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form),
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, turnstileToken }),
       });
       const data = await response.json();
       if (response.ok) { setApplicationId(data.applicationId); setForm(initialForm); }
       else {
+        resetTurnstile();
         setMessage(data.error || 'The application could not be submitted.');
         if (response.status === 429 || response.status >= 500) enableFallback();
       }
     } catch (error) {
       console.error('Vendor application submission error:', error);
+      resetTurnstile();
       setMessage('The application service is unavailable. Please use our backup form.');
       enableFallback();
     } finally { setIsSubmitting(false); }
@@ -97,8 +116,17 @@ export default function VendorApplicationForm() {
       <p>Normal business hours are Friday 1 PM–6 PM, Saturday 11 AM–6 PM, and Sunday 12 PM–6 PM.</p>
       <label className="block font-semibold">Known times or days you cannot vend<textarea className={input} maxLength={2000} name="availabilityNotes" onChange={update} rows={5} value={form.availabilityNotes} /></label>
     </fieldset>
+    <div className="space-y-2 rounded-xl border border-foreground/20 p-5 sm:p-7">
+      <p className="font-semibold">Security verification *</p>
+      <TurnstileWidget
+        onTokenChange={handleTurnstileToken}
+        onVerificationError={handleTurnstileError}
+        resetKey={turnstileResetKey}
+      />
+      <p className="text-sm text-foreground/70">This verification helps us prevent automated spam.</p>
+    </div>
     {message && <p className="rounded-lg bg-red-50 p-3 text-red-800" role="alert">{message}</p>}
     <p className="text-center font-semibold">Submitting this application does not guarantee approval.</p>
-    <button className="w-full rounded-lg bg-accent px-5 py-3 font-bold text-white disabled:opacity-60" disabled={isSubmitting} type="submit">{isSubmitting ? 'Submitting…' : 'Submit application'}</button>
+    <button className="w-full rounded-lg bg-accent px-5 py-3 font-bold text-white disabled:opacity-60" disabled={isSubmitting || !turnstileToken} type="submit">{isSubmitting ? 'Submitting…' : 'Submit application'}</button>
   </form>;
 }
