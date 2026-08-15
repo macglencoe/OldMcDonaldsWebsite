@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 const SENSITIVE_PREFIXES = [
   "/maze-entries",
   "/reservation-requests",
+  "/api/reservation-requests",
   "/vendor-applications",
   "/api/vendor-applications",
   "/bookings",

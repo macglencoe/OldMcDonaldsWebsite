@@ -1,10 +1,30 @@
 import { escapeCsvCell } from './mazeEntriesView.mjs';
 
 export const SLOT_LABELS = Object.freeze({ early: '1:00 PM – 3:00 PM', late: '4:00 PM – 6:00 PM', either: 'Either works' });
+export const REQUEST_REVIEW_STATUS_LABELS = Object.freeze({
+  new: 'New', reviewing: 'Reviewing', resolved: 'Resolved', irrelevant: 'Irrelevant', spam: 'Spam',
+});
+export const REQUEST_REVIEW_FILTER_LABELS = Object.freeze({
+  open: 'Open requests', all: 'All requests', ...REQUEST_REVIEW_STATUS_LABELS,
+});
 export function parseSlot(value) { return Object.hasOwn(SLOT_LABELS, value) ? value : null; }
+export function parseRequestReviewStatus(value) { return Object.hasOwn(REQUEST_REVIEW_STATUS_LABELS, value) ? value : null; }
+export function parseRequestReviewFilter(value) { return Object.hasOwn(REQUEST_REVIEW_FILTER_LABELS, value) ? value : 'open'; }
+export function isRequestOpen(status) { return status === 'new' || status === 'reviewing'; }
 export function parseRequestId(value) {
   const normalized = typeof value === 'string' && /^\d+$/.test(value.trim()) ? Number(value.trim()) : value;
   return Number.isSafeInteger(normalized) && normalized > 0 ? normalized : null;
+}
+export function validateRequestReviewUpdate(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return { error: 'Invalid request.' };
+  const id = parseRequestId(value.id);
+  if (!id) return { error: 'Choose a valid reservation request.' };
+  const status = parseRequestReviewStatus(value.status);
+  if (!status) return { error: 'Choose a valid status.' };
+  if (typeof value.note !== 'string') return { error: 'The internal note must be text.' };
+  const note = value.note.trim();
+  if (note.length > 1000) return { error: 'The internal note must be 1,000 characters or fewer.' };
+  return { id, status, note: note || null };
 }
 export function getActiveBooking(bookings = []) {
   return bookings.find(booking => booking.status === 'tentative' || booking.status === 'confirmed') ?? null;

@@ -3,14 +3,34 @@ import {
   createReservationCsv,
   getActiveBooking,
   getRequestSlotLabel,
+  isRequestOpen,
   parseRequestId,
+  parseRequestReviewFilter,
+  parseRequestReviewStatus,
   parseSlot,
+  validateRequestReviewUpdate,
 } from './reservationRequestsView.mjs';
 test('validates reservation slots',()=>{ assert.equal(parseSlot('early'),'early'); assert.equal(parseSlot('bad'),null); });
 test('validates direct request filters', () => {
   assert.equal(parseRequestId('381'), 381);
   assert.equal(parseRequestId('0'), null);
   assert.equal(parseRequestId('nope'), null);
+});
+test('validates reservation review filters and statuses', () => {
+  assert.equal(parseRequestReviewFilter(undefined), 'open');
+  assert.equal(parseRequestReviewFilter('resolved'), 'resolved');
+  assert.equal(parseRequestReviewFilter('unexpected'), 'open');
+  assert.equal(parseRequestReviewStatus('spam'), 'spam');
+  assert.equal(parseRequestReviewStatus('open'), null);
+  assert.equal(isRequestOpen('new'), true);
+  assert.equal(isRequestOpen('resolved'), false);
+});
+test('validates reservation review updates', () => {
+  assert.deepEqual(validateRequestReviewUpdate({ id: '42', status: 'resolved', note: ' Campfire booked ' }), {
+    id: 42, status: 'resolved', note: 'Campfire booked',
+  });
+  assert.match(validateRequestReviewUpdate({ id: 0, status: 'spam', note: '' }).error, /valid reservation/);
+  assert.match(validateRequestReviewUpdate({ id: 1, status: 'open', note: '' }).error, /valid status/);
 });
 test('finds tentative or confirmed bookings but ignores cancelled history', () => {
   const cancelled = { id: '1', status: 'cancelled' };

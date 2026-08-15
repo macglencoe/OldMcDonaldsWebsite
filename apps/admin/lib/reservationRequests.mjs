@@ -3,12 +3,15 @@ import { getDatabase } from '@oldmc/db';
 
 export const RESERVATION_PAGE_SIZE = 25;
 
-export async function getReservationRequests({ page, year, slot, requestId = null }) {
+export async function getReservationRequests({ page, year, slot, requestId = null, reviewFilter = 'open' }) {
   const sql = getDatabase();
-  const params = [year ?? null, slot ?? null, requestId];
+  const params = [year ?? null, slot ?? null, requestId, reviewFilter];
   const where = `WHERE ($1::int IS NULL OR EXTRACT(YEAR FROM r.preferred_date) = $1)
     AND ($2::text IS NULL OR r.preferred_time_slot = $2)
-    AND ($3::bigint IS NULL OR r.id = $3)`;
+    AND ($3::bigint IS NULL OR r.id = $3)
+    AND ($3::bigint IS NOT NULL OR $4::text = 'all'
+      OR ($4::text = 'open' AND r.review_status IN ('new', 'reviewing'))
+      OR r.review_status = $4)`;
   const [[count], years] = await Promise.all([
     sql.query(`SELECT count(*)::int AS count FROM reservation_requests r ${where}`, params),
     sql.query(`SELECT DISTINCT EXTRACT(YEAR FROM preferred_date)::int AS year FROM reservation_requests ORDER BY year DESC`),
@@ -20,6 +23,7 @@ export async function getReservationRequests({ page, year, slot, requestId = nul
     `SELECT r.id::text, r.email, r.name, r.phone, r.phone_normalized,
        r.preferred_date, r.preferred_time_slot, r.fallback_dates,
        r.price_cents_snapshot, r.policy_version, r.additional_comments, r.created_at,
+       r.review_status, r.internal_note, r.reviewed_at,
        r.meta_json->'gazeboSlotConfig' AS gazebo_slot_config,
        COALESCE(
          json_agg(
@@ -39,10 +43,19 @@ export async function getReservationRequests({ page, year, slot, requestId = nul
      ${where}
      GROUP BY r.id
      ORDER BY r.created_at DESC, r.id DESC
-     LIMIT $4 OFFSET $5`,
+     LIMIT $5 OFFSET $6`,
     [...params, RESERVATION_PAGE_SIZE, (currentPage - 1) * RESERVATION_PAGE_SIZE],
   );
   return { entries, years: years.map(r => r.year), totalEntries, totalPages, currentPage };
+}
+
+export async function updateReservationRequestReview({ id, status, note }) {
+  return getDatabase().query(
+    `UPDATE reservation_requests
+     SET review_status = $2, internal_note = $3, reviewed_at = CURRENT_TIMESTAMP
+     WHERE id = $1 RETURNING id::text, review_status, internal_note, reviewed_at`,
+    [id, status, note],
+  );
 }
 
 export function exportReservationRequests({ year, slot }) {

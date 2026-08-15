@@ -348,7 +348,8 @@ export async function convertReservationRequest(input, { sql = getDatabase() } =
   const value = activeBookingValue(validateGazeboConversion(input));
   try {
     const rows = await sql.query(
-      `INSERT INTO gazebo_bookings (
+      `WITH created_booking AS (
+       INSERT INTO gazebo_bookings (
          booking_date, gazebo_code, time_slot, start_time_snapshot, end_time_snapshot, status,
          customer_name, customer_email, customer_phone, customer_phone_normalized,
          party_size, reservation_request_id, internal_notes
@@ -364,7 +365,16 @@ export async function convertReservationRequest(input, { sql = getDatabase() } =
        RETURNING id::text, booking_date, gazebo_code, time_slot, start_time_snapshot,
          end_time_snapshot, status, customer_name, customer_email, customer_phone,
          customer_phone_normalized, party_size, reservation_request_id::text,
-         internal_notes, created_at, updated_at`,
+         internal_notes, created_at, updated_at
+       ), resolved_request AS (
+         UPDATE reservation_requests r
+         SET review_status = 'resolved', reviewed_at = CURRENT_TIMESTAMP
+         WHERE r.id = $1 AND EXISTS (SELECT 1 FROM created_booking)
+         RETURNING r.id
+       )
+       SELECT created_booking.*
+       FROM created_booking
+       JOIN resolved_request ON true`,
       [
         value.reservationRequestId, value.bookingDate, value.gazeboCode, value.timeSlot, value.status,
         value.partySize, value.internalNotes,
