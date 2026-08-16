@@ -1,10 +1,7 @@
 import Layout from "@/components/layout";
-import YearProgressBar from "@/components/yearProgress";
-import OldMcDonutsAd from "@/components/oldMcDonutsAd";
-import TestimonialCarousel from "@/components/testimonials";
+import Testimonials from "@/components/testimonials";
 import styles from "./page.module.css";
 import FacebookFeed from "@/components/facebookFeed";
-import Rates from "@/components/home/rates";
 import ContactForm from "@/components/contactForm";
 import Hero from "@/components/home/hero";
 import NightMazeBanner from "@/components/home/nightMazeBanner";
@@ -16,6 +13,38 @@ import SurveyBanner from "@/components/home/surveyBanner";
 import { getFlagEvaluator, getFlags } from "./flags.server";
 import Calendar from "@/components/calendarClient"; 
 import InfoStrip from "@/components/home/infoStrip";
+import ActivityShowcase from "@/components/home/activityShowcase";
+import FarmStory from "@/components/home/farmStory";
+import PricingOverview from "@/components/home/pricingOverview";
+import ClosingVisit from "@/components/home/closingVisit";
+import VendorHighlights from "@/components/home/vendorHighlights";
+
+const featuredVendors = [
+  {
+    name: "Old McDonuts",
+    description: "Fresh apple cider donuts, hot coffee, and ice-cold cider slushies served right here on the farm.",
+    image: {
+      src: "/oldMcDonuts.jpg",
+      alt: "The Old McDonuts concession trailer at the farm",
+      position: "center 48%",
+    },
+    actions: [
+      { href: "/vendors/old-mcdonuts", label: "View menu" },
+    ],
+  },
+  {
+    name: "Twisted Taters",
+    description: "Crispy butterfly potatoes, burgers, and satisfying festival favorites for a full day at the farm.",
+    image: {
+      src: "/twistedTaters.jpg",
+      alt: "The Twisted Taters food trailer at the farm",
+      position: "center",
+    },
+    actions: [
+      { href: "/vendors", label: "Learn more" },
+    ],
+  },
+];
 
 export const metadata = {
   title: "Real Farm Fun - Old McDonald's Pumpkin Patch",
@@ -139,7 +168,11 @@ export default async function Home() {
 
         <Calendar />
 
-        <Rates />
+        <ActivityShowcase />
+
+        <FarmStory />
+
+        <PricingOverview />
         {isFeatureEnabled("show_farm_swap_banner") &&
           <FarmSwapBanner />
         }
@@ -151,28 +184,15 @@ export default async function Home() {
 
 
         {isFeatureEnabled("show_vendor_promos") && (
-          <>
-            <OldMcDonutsAd
-              title="Old McDonuts"
-              description="Coffee, Apple Cider Donuts, and Slushies, right on the farm"
-              menu="/vendors/old-mcdonuts"
-              src="/oldMcDonuts.jpg"
-            />
-            <OldMcDonutsAd
-              title="Twisted Taters"
-              description="Butterfly Potatoes, Burgers, & more!"
-              href="/vendors"
-              buttonText="See More"
-              src="/twistedTaters.jpg"
-            />
-          </>
+          <VendorHighlights vendors={featuredVendors} />
         )
         }
-        <TestimonialCarousel />
+        <Testimonials />
         <FacebookFeed />
         {isFeatureEnabled("show_contact_form") &&
           <div className="flex justify-center bg-foreground"><ContactForm theme="onDark" /></div>
         }
+        <ClosingVisit />
       </div>
     </Layout>
   )
