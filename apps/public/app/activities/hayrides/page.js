@@ -51,7 +51,7 @@ export const HayRide = async () => {
 
                 <ArticleSection image="/hayrideGroupPhoto.jpg" imageAlt="A group riding together on a farm haywagon" imagePosition="left" imageRatio="landscape" imageFocalPoint="center 48%">
                     <h2>Hayride corral</h2>
-                    <p>Can't find the corral? Check the map below</p>
+                    <p>Can&apos;t find the corral? Check the map below</p>
                     <Action as='Link' href='/map?x=39.382529281329774&y=-78.04355774914931' variant='primary'>Find on the Map</Action>
                 </ArticleSection>
 

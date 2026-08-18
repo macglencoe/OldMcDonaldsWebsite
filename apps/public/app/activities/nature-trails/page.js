@@ -33,7 +33,7 @@ export const NatureTrails = () => {
                 />
 
                 <ArticleSection image="/forestlane.jpg" imageAlt="The farm lane leading toward the forest" imagePosition="left" imageRatio="landscape" imageFocalPoint="center 54%">
-                    <h2>Still can't find it?</h2>
+                    <h2>Still can&apos;t find it?</h2>
                     <p>Use our interactive map</p>
                     <Action as='Link' href='/map?x=39.38477237376192&y=-78.04864825577425' variant='primary'>Find on the Map</Action>
                 </ArticleSection>
