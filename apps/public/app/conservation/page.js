@@ -52,7 +52,7 @@ const wildlife = [
 export default function KeepingGlencoeBeautiful() {
     return (
         <Layout>
-            <main className={styles.page}>
+            <div className={styles.page}>
                 <section className={styles.hero}>
                     <Image
                         src="/hillview.jpg"
@@ -262,7 +262,7 @@ export default function KeepingGlencoeBeautiful() {
                         </div>
                     </div>
                 </section>
-            </main>
+            </div>
         </Layout>
     );
 }

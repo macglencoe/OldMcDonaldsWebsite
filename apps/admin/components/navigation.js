@@ -31,13 +31,11 @@ export default function Navigation() {
               title: "Reservation Requests"
             }
           ]}
-          auxiliaryItems={[
-            {
-                href: "https://oldmcdonaldspumpkinpatch.com",
-                label: "Public Site",
-                children: <span className="text-white font-semibold px-1">Public Site</span>
-            }
-          ]}
+          actionItem={{
+            href: "https://oldmcdonaldspumpkinpatch.com",
+            title: "Public Site",
+            external: true
+          }}
         />
     )
 }

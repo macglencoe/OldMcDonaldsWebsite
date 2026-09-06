@@ -1,32 +1,58 @@
 "use client"
-import { useEffect, useRef, useState } from "react"
-import styles from "./navbar.module.css"
-import { usePathname } from "next/navigation"
+
 import Link from "next/link"
-import { track } from "@vercel/analytics"
-import { CaretDown, CaretUp, MapTrifold } from "phosphor-react"
-import React from "react"
+import { useEffect, useRef, useState } from "react"
+import { usePathname } from "next/navigation"
+import styles from "./navbar.module.css"
 
 const MORE_MENU_ID = "navbar-more-menu"
+const MOBILE_MENU_ID = "navbar-mobile-menu"
 
-const mergeClassNames = (...classNames) => classNames.filter(Boolean).join(' ')
+const mergeClassNames = (...classNames) => classNames.filter(Boolean).join(" ")
+const isExternalHref = (href) => /^(https?:|tel:|mailto:)/.test(href)
+
+function NavLink({ href, className, children, external = false, onClick, ...props }) {
+    if (external || isExternalHref(href)) {
+        const opensNewWindow = external && /^https?:/.test(href)
+        return (
+            <a
+                href={href}
+                className={className}
+                onClick={onClick}
+                target={opensNewWindow ? "_blank" : undefined}
+                rel={opensNewWindow ? "noopener noreferrer" : undefined}
+                {...props}
+            >
+                {children}
+            </a>
+        )
+    }
+
+    return <Link href={href} className={className} onClick={onClick} {...props}>{children}</Link>
+}
 
 const Navbar = ({
     items,
-    primaryKeys,
+    primaryKeys = new Set(),
     titleText,
-    auxiliaryItems
+    actionItem,
+    mobileFooter,
+    moreLabel = "More"
 }) => {
+    const pathname = usePathname()
     const primaryItems = items.filter((item) => primaryKeys.has(item.key))
     const secondaryItems = items.filter((item) => !primaryKeys.has(item.key))
     const hasSecondaryItems = secondaryItems.length > 0
 
-
-
     const [isOpen, setIsOpen] = useState(false)
     const [isMoreOpen, setIsMoreOpen] = useState(false)
-    const pathname = usePathname()
     const moreRef = useRef(null)
+    const mobileMenuRef = useRef(null)
+    const mobileToggleRef = useRef(null)
+
+    const isItemActive = (item) => (
+        pathname === item.path || (item.path !== "/" && pathname.startsWith(`${item.path}/`))
+    )
 
     useEffect(() => {
         setIsOpen(false)
@@ -34,156 +60,181 @@ const Navbar = ({
     }, [pathname])
 
     useEffect(() => {
-        if (!isMoreOpen) {
-            return
-        }
+        if (!isMoreOpen) return
 
         const handlePointer = (event) => {
-            if (moreRef.current && moreRef.current.contains(event.target)) {
-                return
-            }
-            setIsMoreOpen(false)
+            if (!moreRef.current?.contains(event.target)) setIsMoreOpen(false)
         }
-
         const handleKey = (event) => {
             if (event.key === "Escape") {
                 setIsMoreOpen(false)
-                const toggle = moreRef.current?.querySelector('button')
-                toggle?.focus()
+                moreRef.current?.querySelector("button")?.focus()
             }
         }
 
-        document.addEventListener('pointerdown', handlePointer)
-        document.addEventListener('keydown', handleKey)
-
+        document.addEventListener("pointerdown", handlePointer)
+        document.addEventListener("keydown", handleKey)
         return () => {
-            document.removeEventListener('pointerdown', handlePointer)
-            document.removeEventListener('keydown', handleKey)
+            document.removeEventListener("pointerdown", handlePointer)
+            document.removeEventListener("keydown", handleKey)
         }
     }, [isMoreOpen])
 
-    const renderNavItem = (item) => (
-        <li key={item.path} className={pathname === item.path ? styles.active : undefined}>
-            <a href={item.path}>{item.title}</a>
-        </li>
-    )
+    useEffect(() => {
+        if (!isOpen) return
 
-    const moreToggleClassName = mergeClassNames(
-        styles.moreToggle,
-        isMoreOpen ? styles.moreToggleOpen : undefined
-    )
-    const moreMenuClassName = mergeClassNames(
-        styles.moreMenu,
-        isMoreOpen ? styles.moreMenuOpen : undefined
-    )
+        const previousOverflow = document.body.style.overflow
+        document.body.style.overflow = "hidden"
+
+        const focusableSelector = "a[href], button:not([disabled])"
+        const menuItems = () => [...mobileMenuRef.current?.querySelectorAll(focusableSelector) ?? []]
+        const focusableItems = () => [mobileToggleRef.current, ...menuItems()].filter(Boolean)
+        const focusTimer = window.setTimeout(() => {
+            menuItems()[0]?.focus({ preventScroll: true })
+        }, 50)
+
+        const handleKey = (event) => {
+            if (event.key === "Escape") {
+                setIsOpen(false)
+                mobileToggleRef.current?.focus()
+                return
+            }
+            if (event.key !== "Tab") return
+
+            const elements = focusableItems()
+            if (!elements.length) return
+            const first = elements[0]
+            const last = elements[elements.length - 1]
+
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault()
+                last.focus()
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault()
+                first.focus()
+            }
+        }
+
+        document.addEventListener("keydown", handleKey)
+        return () => {
+            window.clearTimeout(focusTimer)
+            document.body.style.overflow = previousOverflow
+            document.removeEventListener("keydown", handleKey)
+        }
+    }, [isOpen])
+
+    const closeMobileMenu = () => setIsOpen(false)
+
+    const renderNavItem = (item, mobile = false) => {
+        const active = isItemActive(item)
+        return (
+            <li key={item.path} className={active ? styles.active : undefined}>
+                <NavLink
+                    href={item.path}
+                    external={item.external}
+                    aria-current={active ? "page" : undefined}
+                    onClick={mobile ? closeMobileMenu : undefined}
+                >
+                    {item.title}
+                </NavLink>
+            </li>
+        )
+    }
 
     return (
         <>
-            <a href="#skip-navbar" className="
-                absolute z-[1000]
-                -left-[9999px]
-                focus:left-5
-                p-5
-                bg-white
-            "
-            >Skip to main content</a>
-            <header className={styles.navbar}>
-                <a href="/" aria-label="Home"><span className={styles.title}>{titleText}</span></a>
-                <nav>
-                    <ul>
-                        {primaryItems.map(renderNavItem)}
-                        {hasSecondaryItems && (
-                            <li className={styles.more} ref={moreRef}>
-                                <button
-                                    type="button"
-                                    className={moreToggleClassName}
-                                    aria-haspopup="true"
-                                    aria-expanded={isMoreOpen}
-                                    aria-controls={MORE_MENU_ID}
-                                    onClick={() => setIsMoreOpen((prev) => !prev)}
-                                >
-                                    More
-                                    <CaretUp width={45} weight="bold" height={45} aria-hidden="true" className={styles.chevron}></CaretUp>
-                                </button>
+            <a href="#main-content" className={styles.skipLink}>Skip to main content</a>
+            <header className={styles.navbar} data-testid="site-nav">
+                <div className={styles.inner}>
+                    <NavLink href="/" className={styles.brand} aria-label={`${titleText} home`}>
+                        {titleText}
+                    </NavLink>
 
-                                <ul
-                                    id={MORE_MENU_ID}
-                                    className={moreMenuClassName}
-                                    hidden={!isMoreOpen}
-                                    aria-hidden={!isMoreOpen}
-                                >
-                                    {secondaryItems.map(renderNavItem)}
-                                </ul>
-                            </li>
-                        )}
-                    </ul>
-                </nav>
-                {
-                    auxiliaryItems ? (
-                        <div className="hidden md:flex flex-row gap-2 items-stretch">
-                            {auxiliaryItems.map(({ href, children, label }, index) => {
-                                return (
-                                    <a
-                                        key={index}
-                                        href={href}
-                                        aria-label={label}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className={`rounded-full p-1.5 flex items-center justify-center hover:scale-105 transition-all shadow-md` + (index % 2 === 0 ? " bg-accent" : " bg-foreground")}
-                                    >
-                                        {children}
-                                    </a>
-                                )
-                            })}
-                        </div>
-                    ) : null
-                }
-                <div className={styles.mobileNav}>
-                    <Link className={styles.mobileMap + (pathname === "/map" ? " " + styles.active : "")} href="/map">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m600-120-240-84-186 72q-20 8-37-4.5T120-170v-560q0-13 7.5-23t20.5-15l212-72 240 84 186-72q20-8 37 4.5t17 33.5v560q0 13-7.5 23T812-192l-212 72Zm-40-98v-468l-160-56v468l160 56Zm80 0 120-40v-474l-120 46v468Zm-440-10 120-46v-468l-120 40v474Zm440-458v468-468Zm-320-56v468-468Z" /></svg>
-                    </Link>
-                    <button
-                        onClick={() => setIsOpen(!isOpen)} className={styles.hamburger + (isOpen ? " " + styles.open : "")}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" /></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" /></svg>
-                    </button>
-                </div>
-                <div className={styles.menu + (isOpen ? " " + styles.open : "")}>
-                    <nav>
+                    <nav className={styles.desktopNav} aria-label="Primary navigation">
                         <ul>
-                            {items.map((item) => (
-                                <li key={item.path} className={pathname === item.path ? styles.active : null}>
-                                    <a href={item.path}>{item.title}</a>
+                            {primaryItems.map((item) => renderNavItem(item))}
+                            {hasSecondaryItems && (
+                                <li
+                                    className={mergeClassNames(
+                                        styles.more,
+                                        secondaryItems.some(isItemActive) ? styles.active : undefined
+                                    )}
+                                    ref={moreRef}
+                                >
+                                    <button
+                                        type="button"
+                                        className={styles.moreToggle}
+                                        aria-haspopup="true"
+                                        aria-expanded={isMoreOpen}
+                                        aria-controls={MORE_MENU_ID}
+                                        onClick={() => setIsMoreOpen((open) => !open)}
+                                    >
+                                        {moreLabel}
+                                        <svg className={styles.chevron} viewBox="0 0 20 20" aria-hidden="true">
+                                            <path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                    </button>
+                                    <ul id={MORE_MENU_ID} className={styles.moreMenu} hidden={!isMoreOpen}>
+                                        {secondaryItems.map((item) => renderNavItem(item))}
+                                    </ul>
                                 </li>
-                            ))}
+                            )}
                         </ul>
                     </nav>
-                    {
-                        auxiliaryItems ? (
-                            <div className={`flex md:hidden flex-row gap-2 items-stretch`}>
-                                {auxiliaryItems.map(({ href, children, label }, index) => {
-                                    return (
-                                        <a
-                                            key={index}
-                                            href={href}
-                                            aria-label={label}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className={`rounded-full p-1.5 flex items-center justify-center hover:scale-105 transition-all shadow-md` + (index % 2 === 0 ? " bg-accent" : " bg-foreground")}
-                                        >
-                                            {children}
-                                        </a>
-                                    )
-                                })}
-                            </div>
-                        ) : null
-                    }
+
+                    {actionItem && (
+                        <NavLink
+                            href={actionItem.href}
+                            external={actionItem.external}
+                            className={styles.desktopAction}
+                        >
+                            {actionItem.title}
+                            <span aria-hidden="true">↗</span>
+                        </NavLink>
+                    )}
+
+                    <button
+                        ref={mobileToggleRef}
+                        type="button"
+                        className={styles.mobileToggle}
+                        aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+                        aria-expanded={isOpen}
+                        aria-controls={MOBILE_MENU_ID}
+                        onClick={() => setIsOpen((open) => !open)}
+                    >
+                        <span aria-hidden="true" className={styles.menuIcon}>
+                            <i></i><i></i><i></i>
+                        </span>
+                    </button>
                 </div>
-                <div id="skip-navbar" className="hidden"></div>
+
+                <div
+                    id={MOBILE_MENU_ID}
+                    ref={mobileMenuRef}
+                    className={mergeClassNames(styles.mobileMenu, isOpen ? styles.mobileMenuOpen : undefined)}
+                    aria-hidden={!isOpen}
+                >
+                    <div className={styles.mobileMenuInner}>
+                        {actionItem && (
+                            <NavLink
+                                href={actionItem.href}
+                                external={actionItem.external}
+                                className={styles.mobileAction}
+                                onClick={closeMobileMenu}
+                            >
+                                {actionItem.title}
+                                <span aria-hidden="true">↗</span>
+                            </NavLink>
+                        )}
+                        <nav aria-label="Mobile navigation">
+                            <ul>{items.map((item) => renderNavItem(item, true))}</ul>
+                        </nav>
+                        {mobileFooter && <div className={styles.mobileFooter}>{mobileFooter}</div>}
+                    </div>
+                </div>
             </header>
         </>
     )
 }
 
-export { Navbar };
+export { Navbar }

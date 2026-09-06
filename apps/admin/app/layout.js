@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Navigation />
-        <div className="max-w-5xl mx-auto px-1 shadow-2xl bg-background" style={{
+        <div id="main-content" tabIndex={-1} className="max-w-5xl mx-auto px-1 shadow-2xl bg-background" style={{
           boxShadow: "0px 0px 100px rgba(0, 0, 0, 0.2)",
           minHeight: "calc(100vh - 64px)",
         }}>
