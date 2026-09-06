@@ -169,25 +169,25 @@ function getAnnouncementDisplayMeta(announcement) {
 function AnnouncementSummary({ announcement, count, meta }) {
     const { Icon, severityStyles, issuedText } = meta
     return (
-        <summary className="list-none border-b border-foreground/10 px-4 py-4 text-left text-sm text-foreground outline-none transition hover:bg-foreground/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex sm:items-center sm:justify-between [&::-webkit-details-marker]:hidden" onClick={
+        <summary className="flex list-none items-center justify-between gap-3 border-b border-foreground/10 px-3 py-2 text-left text-sm text-foreground outline-none transition hover:bg-foreground/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:px-4 sm:py-4 [&::-webkit-details-marker]:hidden" onClick={
             () => { track('announcement-click', {title: announcement.short})}
         }>
-            <div className="flex flex-1 items-start gap-3">
+            <div className="flex min-w-0 flex-1 items-center gap-2 sm:items-start sm:gap-3">
                 <span
-                    className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${severityStyles.iconWrapper ?? "bg-foreground/10 text-foreground"}`}
+                    className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg sm:h-11 sm:w-11 sm:rounded-xl ${severityStyles.iconWrapper ?? "bg-foreground/10 text-foreground"}`}
                 >
-                    <Icon size={26} weight="bold" />
+                    <Icon size={22} weight="bold" />
                 </span>
-                <div className="space-y-1">
-                    <p className="text-base font-semibold">{announcement.short}</p>
+                <div className="min-w-0 space-y-0.5 sm:space-y-1">
+                    <p className="truncate text-sm font-semibold sm:text-base">{announcement.short}</p>
                     {issuedText && (
-                        <p className="text-xs uppercase tracking-wide text-foreground/60">
+                        <p className="hidden text-xs uppercase tracking-wide text-foreground/60 sm:block">
                             Issued {issuedText}
                         </p>
                     )}
                 </div>
             </div>
-            <div className="mt-3 flex items-center gap-3 text-xs uppercase tracking-wide text-foreground/60 sm:mt-0">
+            <div className="flex shrink-0 items-center gap-3 text-[0.65rem] uppercase tracking-wide text-foreground/60 sm:text-xs">
                 <span className="group-open:hidden">
                     View {count} updates
                 </span>

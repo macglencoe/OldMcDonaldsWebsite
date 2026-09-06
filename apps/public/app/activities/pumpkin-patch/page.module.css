@@ -113,3 +113,29 @@
         font-size: 1rem;
     }
 }
+
+.dosAndDonts > div {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 5vw, 4rem);
+}
+
+.dosAndDonts section {
+    padding: 1rem;
+}
+
+.dosAndDonts section + section {
+    border-left: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent);
+}
+
+@media screen and (max-width: 600px) {
+    .dosAndDonts > div {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .dosAndDonts section + section {
+        border-top: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent);
+        border-left: 0;
+    }
+}

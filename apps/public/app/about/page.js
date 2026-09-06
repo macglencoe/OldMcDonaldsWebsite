@@ -1,5 +1,14 @@
 import { AndImage } from "@/components/andImage";
-import { BodyBlock } from "@/components/bodyBlock";
+import {
+    ArticleDivider,
+    ArticleFacts,
+    ArticleLayout,
+    ArticleLead,
+    ArticleNotice,
+    ArticleQuote,
+    ArticleSection,
+    ArticleTimeline,
+} from "@/components/article";
 import Layout from "@/components/layout";
 import styles from "./page.module.css";
 import Link from "next/link";
@@ -559,7 +568,7 @@ function Generations() {
                         { generation.images.map((image) => (
                             <div key={image.srcs[0]}>
                                 {image.srcs.map((src) => (
-                                    <img key={src} src={src} />
+                                    <img key={src} src={src} alt={image.caption} />
                                 ))}
                                 <p>{image.caption}</p>
                             </div>
@@ -577,48 +586,102 @@ export const metadata = {
     description: "Learn the history of Old McDonald’s Pumpkin Patch and Glencoe Farm in Inwood, WV. Discover our family legacy, farm traditions, and 250+ years of agricultural heritage."
 }
 
+const farmTimeline = [
+    {
+        year: "1700s",
+        title: "The McDonalds come to West Virginia",
+        description: "Andrew MacDonald immigrated from Glencoe, Scotland to Arden, Virginia (now West Virginia).",
+    },
+    {
+        year: "Late 1800s",
+        title: "Apple industry",
+        description: "Our farm played a role in Berkeley County's thriving Apple Industry. Our great-grandfather, Ernest Faulkner McDonald, was one of the original 18 guarantors of the C.H. Musselman Company Apple Plant in Inwood.",
+    },
+    {
+        year: "1950s",
+        title: "McDonald Farm Machinery",
+        description: "Our grandfather, Charles “Bub” Francis Wall McDonald, founded McDonald Farm Machinery and operated it until 1985.",
+    },
+    {
+        year: "2006",
+        title: "The pumpkin patch begins",
+        description: "Our father, Charles “Charlie Bill” William McDonald, together with his wife Stephanie, planted corn and pumpkins on the farm for the first time and established Old McDonald's Pumpkin Patch.",
+    },
+    {
+        year: "2007",
+        title: "Protected forever",
+        description: "A permanent conservation easement was placed on 161 acres of Glencoe Farm.",
+    },
+    {
+        year: "2021",
+        title: "Sestercentennial Farm Award",
+        description: "Glencoe Farm received the Sestercentennial Farm Award after 250 years of continuous operation.",
+    },
+];
+
 export default function About() {
     
     return (
         <Layout>
             <PageHeader subtitle="The Story of Glencoe Farm">About Us</PageHeader>
-            <div className="body basic">
-                
-                <BodyBlock src="localMap.png">
-                    <h2>Our Farm</h2>
+            <ArticleLayout>
+                <ArticleLead
+                    image="/summer.jpg"
+                    imageAlt="Sunset over the fields at Glencoe Farm"
+                    imageFocalPoint="center 54%"
+                    caption="Summer at Glencoe Farm"
+                    eyebrow="Inwood, West Virginia"
+                    heading="Glencoe Farm"
+                >
                     <p>We&apos;re a family-owned (and operated) farm in <b>Berkeley County, West Virginia</b>, right off Interstate 81.</p>
+                </ArticleLead>
+
+                <ArticleFacts items={[
+                    { value: "250+", label: "Years", detail: "In continuous operation" },
+                    { value: "161", label: "Acres", detail: "Protected forever" },
+                    { value: "6", label: "Weekends", detail: "Open each fall" },
+                    { value: "7", label: "Generations", detail: "Of McDonalds" },
+                ]} />
+
+                <ArticleDivider label="Our Farm" />
+
+                <ArticleSection image="/localMap.png" imageAlt="Map showing Glencoe Farm near Inwood, West Virginia" imageRatio="landscape" imageFocalPoint="center" caption="Glencoe Farm, just off Interstate 81">
+                    <h2>Our Farm</h2>
                     <p>With Middle Creek running through our park-like grounds, our farm is the perfect place to spend some quality time with your family or friends!</p>
                     <p>Six weekends each fall, we open our farm to the community for various festival <Link href="/activities">activities</Link>.</p>
-                    <p>It is a labor of love to spend the year preparing for the season, and we&apos;re dedicated to bringing you and your family the best farm experience. We feel blessed to be able to share our home place with you!</p>
-                </BodyBlock>
-                <BodyBlock src="/protectedForever.jpg">
-                    <h2>Protected Forever</h2>
+                </ArticleSection>
+
+                <ArticleQuote cite="The McDonald family">
+                    It is a labor of love to spend the year preparing for the season, and we&apos;re dedicated to bringing you and your family the best farm experience. We feel blessed to be able to share our home place with you!
+                </ArticleQuote>
+
+                <ArticleTimeline
+                    title="Throughout the years"
+                    intro="Our farm has been home to many different ventures over the decades."
+                    items={farmTimeline}
+                />
+
+                <ArticleNotice
+                    title="Protected forever"
+                    eyebrow="Conservation at Glencoe"
+                    action={<Link href="/conservation"><b>See how we care for the land →</b></Link>}
+                >
                     <p>On August 17, 2007, a permanent conservation easement was placed on 161 acres of Glencoe Farm. Held by the <a href="https://wvfp.org/berkeley/" target="_blank" rel="noreferrer" className="!break-normal">Berkeley County Farmland Protection Board</a>, it ensures that this land will remain farmland for generations to come.</p>
-                    <p><Link href="/conservation"><b>See how we care for Glencoe&apos;s land, water, and wildlife.</b></Link></p>
-                </BodyBlock>
-                <BodyBlock src="macdonaldOfGlencoe.jpg">
+                </ArticleNotice>
+
+                <ArticleSection image="/macdonaldOfGlencoe.jpg" imageAlt="Historic MacDonald of Glencoe family image" imagePosition="left" imageRatio="landscape" caption="The MacDonald connection reaches back to Glencoe, Scotland">
                     <h2 className="md:!text-5xl">Yes, we&apos;re really <u>McDonalds</u></h2>
                     <p>Or <b><i>Mac</i>Donalds</b>, originally.</p>
                     <p>In the early 1700s, a man named <b>Andrew MacDonald</b> immigrated from <b>Glencoe, Scotland</b> to <b>Arden, Virginia (now West Virginia)</b>.</p>
                     <p>Seven generations later, we carry on the traditions of <a href="https://en.wikipedia.org/wiki/Clan_MacDonald_of_Glencoe" className="!break-normal" target="_blank"><b>Clan MacDonald of Glencoe (Clann Iain Abrach)</b></a>. Take that, King William!</p>
-                </BodyBlock>
-                <BodyBlock src="westwing.jpg">
-                    <h2>And yes, we&apos;re really <u>old</u></h2>
-                    <p>In 2021, Glencoe Farm had the honor of receiving the <a href="https://www.wvca.us/education/century_farms.cfm" target="_blank" className="!break-normal"><b>Sestercentennial Farm Award</b></a>. That means our farm has been in continuous operation for 250 years!</p>
-                </BodyBlock>
-                <BodyBlock>
-                    <h2>Throughout the years,</h2>
-                    <p>Our farm has been home to many different ventures over the decades.</p>
-                    <p>From the late 1800s to the 1950s, we played a role in <a href="https://www.journal-news.net/journal-news/long-and-short-of-it-berkeley-countys-apple-industry-discussion-to-be-held/article_34739292-a1ba-5b92-a050-0757d0ce868e.html" target="_blank" className="!break-normal">Berkeley County&apos;s thriving Apple Industry</a>.<br/>
-                    Our great-grandfather, Ernest Faulkner McDonald, was one of the original 18 guarantors of the C.H. Musselman Company Apple Plant in Inwood.</p>
-                    <p>In the 1950s, our grandfather, Charles &quot;Bub&quot; Francis Wall McDonald founded McDonald Farm Machinery and operated it until 1985.</p>
-                    <p>In 2006, our father, Charles &quot;Charlie Bill&quot; William McDonald, together with his wife Stephanie, planted corn and pumpkins on the farm for the first time, and established Old McDonald&apos;s Pumpkin Patch.</p>
-                </BodyBlock>
+                </ArticleSection>
+
+                <ArticleDivider label="Our Family" />
 
                 <CharlieBillCollage />
 
                 <Generations />
-            </div>
+            </ArticleLayout>
         </Layout>
     );
 }

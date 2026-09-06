@@ -1,6 +1,16 @@
 import Layout from "@/components/layout";
 import styles from "./page.module.css";
-import { BodyBlock } from "@/components/bodyBlock";
+import {
+    ArticleCallout,
+    ArticleDivider,
+    ArticleFacts,
+    ArticleLayout,
+    ArticleLead,
+    ArticleNotice,
+    ArticleSection,
+    ArticleSteps,
+} from "@/components/article";
+import { Action } from "@oldmc/ui";
 
 import PageHeader from "@/components/pageHeader";
 import { gazeboSlotLabels } from "@/lib/gazeboSlotConfig.mjs";
@@ -86,33 +96,47 @@ export const Reservations = async () => {
     return (
         <Layout>
             <PageHeader subtitle={gazeboSeason?.season_name ?? "Reservations"}>Reservations</PageHeader>
-            <div className="body basic">
-                <BodyBlock src='/bonfires.jpg'>
-                <h2>Night-time campfire</h2>
-                  <p>Rent a campfire for your group at the Night Maze</p>
-                  <a href="/activities/night-maze#reservations"><p>See More</p></a>
-                </BodyBlock>
-                <h2>Party Gazebos</h2>
-                <p className="description">Gazebos A and B can each be reserved for a 2-hour time slot during daytime hours</p>
-                <BodyBlock src="/rentalgazebo.jpg">
-                    <h3>Pricing</h3>
-                    <p>For 2 hours:</p>
-                    <p className="big">${gazeboPrice}</p>
-                    <p>You will recieve an <b>email invoice</b> for your rental after booking</p>
-                </BodyBlock>
-                <BodyBlock>
+            <ArticleLayout>
+                <ArticleLead
+                    image="/rentalgazebo.jpg"
+                    imageAlt="A reservable picnic gazebo at Old McDonald's"
+                    imageFocalPoint="center 58%"
+                    caption="Party Gazebo"
+                    eyebrow="Reservations"
+                    heading="Party Gazebos"
+                >
+                    <p>Gazebos A and B can each be reserved for a 2-hour time slot during daytime hours.</p>
+                </ArticleLead>
+
+                <ArticleFacts items={[
+                    { value: `$${gazeboPrice}`, label: "Price", detail: "For 2 hours" },
+                    { value: "2", label: "Hours", detail: "Per time slot" },
+                    { value: "2", label: "Picnic tables", detail: "Under each gazebo" }
+                ]} />
+
+                <ArticleSteps
+                    title="How reservations work"
+                    items={[
+                        { title: "Fill out the form", description: "Enter your name, phone number, and email address, and any special requests." },
+                        { title: "Wait for confirmation", description: "You will receive an email confirmation once your request is reviewed." },
+                        { title: "Receive an invoice", description: "You will receive an email invoice for your rental after booking." },
+                    ]}
+                />
+
+                <ArticleCallout tone="quiet">
                     {gazeboSeason &&
-                        <p>
+                        <div>
                           <h3 className="font-semibold font-satisfy text-4xl mx-auto text-center">{gazeboSeason.season_name}:</h3>
                           <p className="mx-auto text-center"><b>{formatSeasonDate(gazeboSeason.start_date)}</b> through <b>{formatSeasonDate(gazeboSeason.end_date)}</b></p>
-                        </p>
+                        </div>
                     }
                     <div className={styles.timeSlots + " font-[Inter]"}>
                         <GazeboRentalTable season={gazeboSeason} />
                     </div>
-                </BodyBlock>
-                <BodyBlock>
-                    <h3>What&apos;s included</h3>
+                </ArticleCallout>
+
+                <ArticleSection image="/picnicTable.jpg" imageAlt="Picnic tables ready for a gathering at the farm" imageRatio="landscape" imageFocalPoint="center 62%">
+                    <h2>What&apos;s included</h2>
                     <ul>
                         <li>Two picnic tables under the gazebo</li>
                         <li>You may arrive <b>30 minutes early</b> to decorate</li>
@@ -123,22 +147,29 @@ export const Reservations = async () => {
                         <li>Outside food or cake (unfortunately, no grills are available)</li>
                         <li>Additional seating if necessary, such as lawn chairs</li>
                     </ul>
-                </BodyBlock>
-                <BodyBlock src="https://images.unsplash.com/photo-1603321544554-f416a9a11fcf?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
-                    <h3>Weather Policy</h3>
+                </ArticleSection>
+
+                <ArticleNotice title="Weather Policy" tone="weather">
                     <p>If we have to close due to weather, you will receive a full refund for your gazebo rental</p>
                     <p>Keep this in mind and have a backup plan for your party!</p>
-                </BodyBlock>
-                <BodyBlock src="/entrance.jpg">
-                    <h3>General Admission</h3>
+                </ArticleNotice>
+
+                <ArticleNotice title="General Admission">
                     <p>All guests must pay <b>General Admission</b> at the gate:</p>
-                    <p className="big">{admissionDisplay} per {admissionUnit}*</p>
+                    <p><b className="text-3xl!">{admissionDisplay}</b> per {admissionUnit}*</p>
                     <p>* Over the age of 3</p>
-                </BodyBlock>
+                </ArticleNotice>
+
                 <ReservationRequestForm priceDisplay={`$${gazeboPrice}`} />
 
-
-            </div>
+                <ArticleNotice
+                    title="Night-time campfire"
+                    tone="night"
+                    action={<Action as="Link" href="/activities/night-maze#reservations" variant="secondary">See More</Action>}
+                >
+                    <p>Rent a campfire for your group at the Night Maze</p>
+                </ArticleNotice>
+            </ArticleLayout>
         </Layout>
     );
 }

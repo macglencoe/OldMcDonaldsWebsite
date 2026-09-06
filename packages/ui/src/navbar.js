@@ -88,7 +88,7 @@ const Navbar = ({
             "
             >Skip to main content</a>
             <header className={styles.navbar}>
-                <a href="/" aria-label="Home"><h1>{titleText}</h1></a>
+                <a href="/" aria-label="Home"><span className={styles.title}>{titleText}</span></a>
                 <nav>
                     <ul>
                         {primaryItems.map(renderNavItem)}

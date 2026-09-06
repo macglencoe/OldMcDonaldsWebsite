@@ -9,7 +9,8 @@
     z-index: 999;
 }
 
-.navbar h1 {
+.navbar .title {
+    display: block;
     white-space: nowrap;
     font-weight: 700;
     font-size: 34px;
