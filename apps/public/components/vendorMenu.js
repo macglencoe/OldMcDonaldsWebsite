@@ -9,7 +9,7 @@ export default function VendorMenu({ sections, bgSrc, bgAlt, mapHref }) {
   return (
     <div className="body basic">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <main className="lg:col-span-3 relative p-5 rounded-xl overflow-hidden">
+        <div className="lg:col-span-3 relative p-5 rounded-xl overflow-hidden">
           {bgSrc && (
             <div className="absolute inset-0 -z-20">
               <Image src={bgSrc} alt={bgAlt || "Vendor background"} priority fill className="object-cover object-center" />
@@ -47,7 +47,7 @@ export default function VendorMenu({ sections, bgSrc, bgAlt, mapHref }) {
               </ul>
             </section>
           ))}
-        </main>
+        </div>
 
         <aside className="lg:col-span-1 lg:sticky lg:top-8 space-y-4">
           <div className="bg-amber-50 rounded-lg p-4 shadow-sm ring-1 ring-black/5">

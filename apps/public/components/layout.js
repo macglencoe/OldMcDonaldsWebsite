@@ -14,10 +14,10 @@ const Layout = (props) => {
             <Announcements />
             <Analytics />
             <Suspense fallback={null}><QrTracker /></Suspense>
-            <div className="overflow-x-scroll">
+            <main id="main-content" tabIndex={-1} className="overflow-x-auto">
                 {props.children}
                 <AuxiliaryFAQ />
-            </div>
+            </main>
             <Footer />
         </div>
     )

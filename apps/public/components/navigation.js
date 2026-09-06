@@ -3,8 +3,11 @@
 import { FloatingNav } from "@ui/floatingNav";
 import { Navbar } from "@ui/navbar";
 import { usePathname } from "next/navigation";
-import { ArrowUp, MapTrifold, NavigationArrow, Phone } from "phosphor-react";
+import { ArrowUp } from "phosphor-react";
 import faq from '@/public/data/faq.json';
+
+const DIRECTIONS_URL = "https://www.google.com/maps/dir/?api=1&destination=1597%20Arden%20Nollville%20Rd.%20Inwood%2C%20WV%2025428";
+const PRIMARY_KEYS = new Set(["visit", "activities", "pricing", "reservations"]);
 
 export default function Navigation() {
     const pathname = usePathname();
@@ -35,39 +38,29 @@ export default function Navigation() {
             <Navbar
                 titleText="Old McDonald's"
                 items={[
+                    { key: "visit", title: "Visit", path: '/visit' },
                     { key: "activities", title: "Activities", path: '/activities' },
+                    { key: "pricing", title: "Pricing", path: '/pricing' },
+                    { key: "reservations", title: "Groups & Events", path: '/reservations' },
                     { key: "about", title: "About", path: '/about' },
-                    { key: "reservations", title: "Reservations", path: '/reservations' },
-                    { key: "faq", title: "FAQ", path: '/faq' },
                     { key: "gallery", title: "Gallery", path: '/gallery' },
-                    { key: "pricing", title: "Pricing", path: '/pricing' }
+                    { key: "faq", title: "FAQ", path: '/faq' },
+                    { key: "vendors", title: "Vendors", path: '/vendors' },
+                    { key: "contact", title: "Contact", path: '/contact' },
+                    { key: "map", title: "Farm Map", path: '/map' }
                 ]}
-                primaryKeys={new Set(["activities", "reservations", "pricing"])}
-                primaryLink={{
-                    href: "tel:304-839-2330",
-                    text: "Call"
+                primaryKeys={PRIMARY_KEYS}
+                actionItem={{
+                    href: DIRECTIONS_URL,
+                    title: "Get Directions",
+                    external: true
                 }}
-                secondaryLink={{
-                    href: "/visit",
-                    text: "Visit"
-                }}
-                auxiliaryItems={[
-                    {
-                        href: "/map",
-                        label: "Map",
-                        children: <MapTrifold size={27} weight="bold" color="white" />
-                    },
-                    {
-                        href: "tel:304-839-2330",
-                        label: "Call",
-                        children: <Phone size={27} weight="bold" color="white"/>
-                    },
-                    {
-                        href: "/visit",
-                        label: "Visit",
-                        children: <NavigationArrow size={27} weight="bold" color="white" />
-                    }
-                ]}
+                mobileFooter={(
+                    <>
+                        <p>1597 Arden Nollville Rd<br />Inwood, WV 25428</p>
+                        <p><a href="tel:304-839-2330">Call (304) 839-2330</a></p>
+                    </>
+                )}
             />
         </>
     )
