@@ -1,0 +1,449 @@
+
+> old-mcdonalds@0.1.0 dev:public
+> turbo dev --filter=@oldmc/public
+
+• Packages in scope: @oldmc/public
+• Running dev in 1 packages
+• Remote caching disabled
+@oldmc/public:dev: cache bypass, force executing 52d9f00c18503768
+@oldmc/public:dev: 
+@oldmc/public:dev: > @oldmc/public@0.1.0 dev
+@oldmc/public:dev: > next dev
+@oldmc/public:dev: 
+@oldmc/public:dev:    ▲ Next.js 15.2.8
+@oldmc/public:dev:  ⚠ Invalid next.config.mjs options detected: 
+@oldmc/public:dev:    - Local:        http://localhost:3000
+@oldmc/public:dev:    - Network:      http://192.168.56.1:3000
+@oldmc/public:dev:    - Environments: .env.local
+@oldmc/public:dev: 
+@oldmc/public:dev:  ✓ Starting...
+@oldmc/public:dev:  ⚠     Unrecognized key(s) in object: 'outputFileTracingRoot' at "experimental"
+@oldmc/public:dev:  ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+@oldmc/public:dev:  ⚠ `experimental.outputFileTracingRoot` has been moved to `outputFileTracingRoot`. Please update your next.config.mjs file accordingly.
+@oldmc/public:dev:  ✓ Ready in 1604ms
+@oldmc/public:dev:  ○ Compiling / ...
+@oldmc/public:dev:  ✓ Compiled / in 4.6s (4372 modules)
+@oldmc/public:dev: (node:6320) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+@oldmc/public:dev: (Use `node --trace-deprecation ...` to show where the warning was created)
+@oldmc/public:dev:  GET / 200 in 5389ms
+@oldmc/public:dev:  ○ Compiling /_not-found ...
+@oldmc/public:dev:  ✓ Compiled /_not-found in 1469ms (4376 modules)
+@oldmc/public:dev:  GET / 404 in 2012ms
+@oldmc/public:dev:  GET /_next/static/css/app/not-found.css?v=1785943996428 404 in 140ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943996428 404 in 140ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943996847 404 in 455ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943996846 404 in 458ms
+@oldmc/public:dev:  GET /_next/static/chunks/app-pages-internals.js 404 in 953ms
+@oldmc/public:dev:  GET /_next/static/chunks/main-app.js?v=1785943996428 404 in 955ms
+@oldmc/public:dev:  GET /_next/static/chunks/app/error.js 404 in 954ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943996999 404 in 335ms
+@oldmc/public:dev:  GET /_next/static/chunks/app/page.js 404 in 417ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943997002 404 in 370ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943997000 404 in 372ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943997003 404 in 372ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943997001 404 in 375ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943997745 404 in 306ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943997971 404 in 307ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943997747 404 in 308ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943997972 404 in 307ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943998353 404 in 249ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943998355 404 in 251ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943998354 404 in 252ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943998661 404 in 187ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943998660 404 in 190ms
+@oldmc/public:dev:  ✓ Compiled /favicon.ico in 398ms (2373 modules)
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943998914 404 in 1007ms
+@oldmc/public:dev:  GET /favicon.ico 200 in 1155ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785943999882 404 in 130ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944000125 404 in 109ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944000267 404 in 89ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944000368 404 in 62ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944000459 404 in 88ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944000527 404 in 62ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944000616 404 in 66ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944000680 404 in 94ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944000748 404 in 83ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944000848 404 in 69ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944000930 404 in 81ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944001000 404 in 94ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944001084 404 in 102ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944001183 404 in 78ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944001285 404 in 118ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944001365 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944001488 404 in 79ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944001563 404 in 110ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944001648 404 in 89ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944001764 404 in 102ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944001853 404 in 71ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944001957 404 in 69ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944002029 404 in 76ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944002101 404 in 75ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944002179 404 in 100ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944002258 404 in 88ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944002361 404 in 101ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944002450 404 in 108ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944002556 404 in 71ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944002663 404 in 78ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944002737 404 in 83ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944002816 404 in 101ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944002902 404 in 73ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944003006 404 in 77ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944003079 404 in 70ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944003159 404 in 71ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944003231 404 in 80ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944003305 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944003387 404 in 80ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944003462 404 in 100ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944003545 404 in 73ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944003646 404 in 77ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944003722 404 in 79ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944003800 404 in 79ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944003880 404 in 97ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944003964 404 in 90ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944004063 404 in 73ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944004156 404 in 68ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944004230 404 in 83ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944004299 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944004384 404 in 100ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944004461 404 in 122ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944004569 404 in 117ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944004695 404 in 113ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944004812 404 in 116ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944004929 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944005045 404 in 71ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944005124 404 in 82ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944005195 404 in 68ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944005281 404 in 69ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944005351 404 in 103ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944005424 404 in 81ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944005530 404 in 89ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944005615 404 in 112ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944005733 404 in 105ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944005849 404 in 92ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944005954 404 in 75ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944006047 404 in 79ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944006124 404 in 102ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944006209 404 in 122ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944006314 404 in 119ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944006440 404 in 106ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944006562 404 in 100ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944006673 404 in 100ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944006776 404 in 95ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944006881 404 in 82ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944006977 404 in 85ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944007062 404 in 78ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944007149 404 in 76ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944007228 404 in 80ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944007307 404 in 78ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944007391 404 in 85ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944007472 404 in 86ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944007559 404 in 83ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944007647 404 in 86ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944007733 404 in 76ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944007821 404 in 73ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944007898 404 in 75ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944007975 404 in 101ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944008051 404 in 77ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944008157 404 in 69ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944008234 404 in 69ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944008308 404 in 82ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944008379 404 in 93ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944008464 404 in 94ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944008560 404 in 79ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944008657 404 in 118ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944008744 404 in 69ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944008858 404 in 71ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944008929 404 in 100ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944009002 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944009105 404 in 71ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944009180 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944009255 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944009330 404 in 72ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944009407 404 in 73ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944009481 404 in 68ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944009558 404 in 72ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944009627 404 in 76ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944009703 404 in 87ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944009781 404 in 71ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944009870 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944009943 404 in 79ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944010020 404 in 78ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944010100 404 in 71ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944010179 404 in 75ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944010253 404 in 67ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944010331 404 in 69ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944010399 404 in 76ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944010471 404 in 67ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944010549 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944010617 404 in 65ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944010694 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944010762 404 in 88ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944010839 404 in 64ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944010928 404 in 68ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944010994 404 in 73ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944011064 404 in 70ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944011140 404 in 76ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944011213 404 in 65ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944011291 404 in 75ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944011359 404 in 66ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944011436 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944011505 404 in 69ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944011580 404 in 73ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944011651 404 in 75ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944011727 404 in 78ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944011805 404 in 76ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944011884 404 in 85ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944011962 404 in 98ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944012052 404 in 110ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944012152 404 in 177ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944012328 404 in 86ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944012446 404 in 92ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944012533 404 in 70ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944012628 404 in 68ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944012700 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944012772 404 in 88ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944012846 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944012940 404 in 88ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944013014 404 in 70ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944013106 404 in 88ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944013177 404 in 94ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944013267 404 in 105ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944013363 404 in 124ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944013475 404 in 124ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944013603 404 in 68ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944013727 404 in 67ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944013797 404 in 80ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944013866 404 in 72ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944013948 404 in 71ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944014024 404 in 77ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944014096 404 in 68ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944014176 404 in 70ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944014245 404 in 66ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944014317 404 in 97ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944014389 404 in 114ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944014488 404 in 114ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944014603 404 in 80ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944014722 404 in 84ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944014804 404 in 70ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944014890 404 in 68ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944014962 404 in 69ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944015032 404 in 75ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944015106 404 in 76ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944015181 404 in 72ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944015259 404 in 73ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944015333 404 in 105ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944015410 404 in 79ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944015516 404 in 163ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944015600 404 in 113ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944015765 404 in 81ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944015880 404 in 78ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944015963 404 in 72ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944016044 404 in 69ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944016118 404 in 78ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944016191 404 in 72ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944016274 404 in 95ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944016347 404 in 89ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944016446 404 in 86ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944016537 404 in 69ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944016624 404 in 84ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944016696 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944016782 404 in 75ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944016859 404 in 76ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944016937 404 in 67ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944017014 404 in 68ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944017083 404 in 87ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944017156 404 in 73ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944017242 404 in 68ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944017317 404 in 81ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944017389 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944017472 404 in 77ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944017546 404 in 72ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944017625 404 in 74ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944017699 404 in 79ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944017776 404 in 80ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944017858 404 in 70ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944017940 404 in 77ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944018010 404 in 70ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944018090 404 in 67ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944018162 404 in 75ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944018231 404 in 70ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944018308 404 in 77ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944018379 404 in 70ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944018459 404 in 68ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944018532 404 in 90ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944018601 404 in 87ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944018695 404 in 66ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944018782 404 in 76ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944018850 404 in 73ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944018928 404 in 68ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944019004 404 in 70ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944019074 404 in 68ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944019146 404 in 87ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944019215 404 in 93ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944019307 404 in 89ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944019402 404 in 92ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944019495 404 in 94ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944019592 404 in 82ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944019689 404 in 124ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944019773 404 in 103ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944019899 404 in 98ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944020005 404 in 88ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944020105 404 in 103ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944020194 404 in 97ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944020300 404 in 113ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944020398 404 in 108ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944020515 404 in 89ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944020625 404 in 122ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944020718 404 in 122ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944020846 404 in 131ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944020972 404 in 98ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944021106 404 in 104ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944021207 404 in 99ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944021311 404 in 89ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944021411 404 in 114ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944021504 404 in 98ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944021619 404 in 96ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944021722 404 in 125ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944021822 404 in 103ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944021951 404 in 118ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944022058 404 in 111ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944022180 404 in 115ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944022294 404 in 109ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944022411 404 in 117ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944022526 404 in 105ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944022644 404 in 81ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944022754 404 in 90ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944022837 404 in 106ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944022930 404 in 90ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944023037 404 in 110ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944023132 404 in 143ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944023247 404 in 138ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944023395 404 in 105ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944023537 404 in 112ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944023645 404 in 107ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944023757 404 in 111ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944023865 404 in 120ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944023979 404 in 102ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944024102 404 in 138ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944024209 404 in 144ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944024355 404 in 137ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944024501 404 in 103ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944024642 404 in 121ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944024748 404 in 116ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944024873 404 in 90ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944024991 404 in 117ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944025084 404 in 125ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944025206 404 in 137ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944025340 404 in 122ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944025482 404 in 134ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944025607 404 in 112ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944025744 404 in 84ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944025859 404 in 112ms
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944025946 404 in 136ms
+@oldmc/public:dev:  ○ Compiling /_error ...
+@oldmc/public:dev:  ✓ Compiled /_error in 1884ms (4720 modules)
+@oldmc/public:dev:  GET /_next/static/css/app/layout.css?v=1785944026063 404 in 2261ms
+@oldmc/public:dev:  ✓ Compiled in 1427ms (2322 modules)
+@oldmc/public:dev:  ✓ Compiled in 396ms (2259 modules)
+@oldmc/public:dev: <w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: EPERM: operation not permitted, rename 'C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\server-development\1.pack.gz_' -> 'C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\server-development\1.pack.gz'
+@oldmc/public:dev:  ✓ Compiled in 1227ms (2259 modules)
+@oldmc/public:dev:  ✓ Compiled in 911ms (2268 modules)
+@oldmc/public:dev:  ✓ Compiled in 369ms (2259 modules)
+@oldmc/public:dev:  ✓ Compiled in 718ms (2257 modules)
+@oldmc/public:dev:  ✓ Compiled in 448ms (2257 modules)
+@oldmc/public:dev:  ⚠ ./components/home/rates.js
+@oldmc/public:dev: Attempted import error: 'Tractor' is not exported from 'phosphor-react' (imported as 'Tractor').
+@oldmc/public:dev: 
+@oldmc/public:dev: Import trace for requested module:
+@oldmc/public:dev: ./components/home/rates.js
+@oldmc/public:dev: 
+@oldmc/public:dev: ./components/home/rates.js
+@oldmc/public:dev: Attempted import error: 'Plant' is not exported from 'phosphor-react' (imported as 'Plant').
+@oldmc/public:dev: 
+@oldmc/public:dev: Import trace for requested module:
+@oldmc/public:dev: ./components/home/rates.js
+@oldmc/public:dev:  ⚠ ./components/home/rates.js
+@oldmc/public:dev: Attempted import error: 'Tractor' is not exported from 'phosphor-react' (imported as 'Tractor').
+@oldmc/public:dev: 
+@oldmc/public:dev: Import trace for requested module:
+@oldmc/public:dev: ./components/home/rates.js
+@oldmc/public:dev: 
+@oldmc/public:dev: ./components/home/rates.js
+@oldmc/public:dev: Attempted import error: 'Plant' is not exported from 'phosphor-react' (imported as 'Plant').
+@oldmc/public:dev: 
+@oldmc/public:dev: Import trace for requested module:
+@oldmc/public:dev: ./components/home/rates.js
+@oldmc/public:dev:  ⚠ ./components/home/rates.js
+@oldmc/public:dev: Attempted import error: 'Tractor' is not exported from 'phosphor-react' (imported as 'Tractor').
+@oldmc/public:dev: 
+@oldmc/public:dev: Import trace for requested module:
+@oldmc/public:dev: ./components/home/rates.js
+@oldmc/public:dev: 
+@oldmc/public:dev: ./components/home/rates.js
+@oldmc/public:dev: Attempted import error: 'Plant' is not exported from 'phosphor-react' (imported as 'Plant').
+@oldmc/public:dev: 
+@oldmc/public:dev: Import trace for requested module:
+@oldmc/public:dev: ./components/home/rates.js
+@oldmc/public:dev:  ✓ Compiled in 522ms (2257 modules)
+@oldmc/public:dev:  ✓ Compiled in 2s (2266 modules)
+@oldmc/public:dev:  ✓ Compiled in 779ms (2257 modules)
+@oldmc/public:dev:  ✓ Compiled in 459ms (2257 modules)
+@oldmc/public:dev:  ✓ Compiled in 1026ms (2257 modules)
+@oldmc/public:dev:  ✓ Compiled in 467ms (2257 modules)
+@oldmc/public:dev:  ✓ Compiled /favicon.ico in 64ms (127 modules)
+@oldmc/public:dev:  GET /favicon.ico 200 in 350ms
+@oldmc/public:dev:  ✓ Compiled in 2.9s (2257 modules)
+@oldmc/public:dev:  ✓ Compiled in 1130ms (2286 modules)
+@oldmc/public:dev: <w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+@oldmc/public:dev:  ✓ Compiled in 555ms (2259 modules)
+@oldmc/public:dev: <w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+@oldmc/public:dev:  ✓ Compiled in 596ms (2259 modules)
+@oldmc/public:dev:  ✓ Compiled in 420ms (2259 modules)
+@oldmc/public:dev: <w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\client-development\0.pack.gz_' -> 'C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\client-development\0.pack.gz'
+@oldmc/public:dev:  ✓ Compiled in 1479ms (2313 modules)
+@oldmc/public:dev:  ✓ Compiled in 473ms (2259 modules)
+@oldmc/public:dev:  ✓ Compiled in 488ms (2259 modules)
+@oldmc/public:dev:  ✓ Compiled in 500ms (2259 modules)
+@oldmc/public:dev:  ✓ Compiled in 432ms (2259 modules)
+@oldmc/public:dev: <w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\client-development\0.pack.gz_' -> 'C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\client-development\0.pack.gz'
+@oldmc/public:dev:  ○ Compiling / ...
+@oldmc/public:dev:  ✓ Compiled / in 694ms (2400 modules)
+@oldmc/public:dev:  GET / 200 in 1408ms
+@oldmc/public:dev:  ✓ Compiled /favicon.ico in 412ms (2415 modules)
+@oldmc/public:dev:  GET /favicon.ico 200 in 741ms
+@oldmc/public:dev:  ○ Compiling /api/weather ...
+@oldmc/public:dev:  ✓ Compiled /api/weather in 1115ms (4678 modules)
+@oldmc/public:dev:  GET /api/weather 200 in 1546ms
+@oldmc/public:dev:  GET / 200 in 564ms
+@oldmc/public:dev:  GET /api/weather 200 in 160ms
+@oldmc/public:dev:  ○ Compiling /_not-found ...
+@oldmc/public:dev:  ✓ Compiled /_not-found in 931ms (4679 modules)
+@oldmc/public:dev:  ✓ Compiled in 0ms (2420 modules)
+@oldmc/public:dev:  ✓ Compiled in 0ms (2420 modules)
+@oldmc/public:dev:  ✓ Compiled in 0ms (2420 modules)
+@oldmc/public:dev:  GET /api/weather 200 in 1314ms
+@oldmc/public:dev:  ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+@oldmc/public:dev:  GET /_next/static/webpack/03ad1588a209a996.webpack.hot-update.json 404 in 2014ms
+@oldmc/public:dev:  ✓ Compiled in 0ms (2420 modules)
+@oldmc/public:dev:  GET / 200 in 1436ms
+@oldmc/public:dev:  ✓ Compiled in 0ms (2420 modules)
+@oldmc/public:dev:  ✓ Compiled in 1ms (2420 modules)
+@oldmc/public:dev:  GET /api/weather 200 in 1473ms
+@oldmc/public:dev:  GET / 200 in 1412ms
+@oldmc/public:dev:  GET /api/weather 200 in 65ms
+@oldmc/public:dev:  GET /api/weather 200 in 46ms
+@oldmc/public:dev:  GET /favicon.ico 200 in 242ms
+@oldmc/public:dev: <w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: EPERM: operation not permitted, rename 'C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\server-development\1.pack.gz_' -> 'C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\server-development\1.pack.gz'
+@oldmc/public:dev:  ✓ Compiled in 7.4s (4659 modules)
+@oldmc/public:dev:    Reload env: .env.local
+@oldmc/public:dev:  ✓ Compiled in 21.4s (4740 modules)
+@oldmc/public:dev: <w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\server-development\0.pack.gz_' -> 'C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\server-development\0.pack.gz'
+@oldmc/public:dev: <w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\client-development\1.pack.gz_' -> 'C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\client-development\1.pack.gz'
+@oldmc/public:dev:  ✓ Compiled in 613ms (2259 modules)
+@oldmc/public:dev:  ✓ Compiled in 353ms (2259 modules)
+@oldmc/public:dev:  ✓ Compiled in 545ms (2259 modules)
+@oldmc/public:dev:  ✓ Compiled in 564ms (2259 modules)
+@oldmc/public:dev:  ✓ Compiled in 421ms (2259 modules)
+@oldmc/public:dev:  ✓ Compiled in 468ms (2259 modules)
+@oldmc/public:dev:  ✓ Compiled in 400ms (2259 modules)
+@oldmc/public:dev: <w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\client-development\0.pack.gz_' -> 'C:\Users\mcpau\Documents\GitHub\OldMcDonaldsWebsite\apps\public\.next\cache\webpack\client-development\0.pack.gz'

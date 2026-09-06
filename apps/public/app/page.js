@@ -6,13 +6,11 @@ import ContactForm from "@/components/contactForm";
 import Hero from "@/components/home/hero";
 import NightMazeBanner from "@/components/home/nightMazeBanner";
 import FloodBanner from "@/components/home/floodBanner";
-import AuxSearch from "@/components/home/auxSearch";
 import FarmSwapBanner from "@/components/home/farmSwapBanner";
 import OneLaneRoadBanner from "@/components/home/oneLaneRoadBanner";
-import SurveyBanner from "@/components/home/surveyBanner";
 import { getFlagEvaluator, getFlags } from "./flags.server";
 import Calendar from "@/components/calendarClient"; 
-import InfoStrip from "@/components/home/infoStrip";
+import VisitOverview from "@/components/home/visitOverview";
 import ActivityShowcase from "@/components/home/activityShowcase";
 import FarmStory from "@/components/home/farmStory";
 import PricingOverview from "@/components/home/pricingOverview";
@@ -156,15 +154,7 @@ export default async function Home() {
           <Hero />
         </section>
 
-        <InfoStrip />
-
-        {isFeatureEnabled("show_aux_search") &&
-          <AuxSearch />
-        }
-
-        {isFeatureEnabled("show_survey") &&
-          <SurveyBanner href="https://docs.google.com/forms/d/e/1FAIpQLSckFc0F7xg2RFf8z_Qg2cYz7LSfBSCCaVdQQwbENOV00yOU-w/viewform?usp=header" />
-        }
+        <VisitOverview />
 
         <Calendar />
 
