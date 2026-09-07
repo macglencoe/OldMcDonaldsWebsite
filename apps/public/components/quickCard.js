@@ -17,7 +17,7 @@ export default function QuickCard({ title, href, image, Icon, external }) {
                     {Icon && <Icon />}
                     <h3 className="text-sm md:text-xl font-bold uppercase">{title}</h3>
                 </div>
-                <span className="text-sm md:text-lgmt-1 underline underline-offset-2 group-hover:text-accent flex items-center gap-1">
+                <span className="mt-1 flex items-center gap-1 text-sm underline underline-offset-2 group-hover:text-accent md:text-lg">
                     Learn more <ArrowSquareOut size={18} weight="bold" />
                 </span>
             </div>
