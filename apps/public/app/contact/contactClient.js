@@ -1,190 +1,93 @@
-"use client"
+"use client";
+
 import ContactForm from "@/components/contactForm";
-import QuickCard from "@/components/quickCard";
-import Image from "next/image";
-import { Envelope, PaperPlaneTilt, PhoneCall, Pinwheel, MapTrifold, MapPin, Ticket, Question, Clock, ArrowDown, Code, GithubLogo, ArrowSquareUpRight, ArrowSquareOut, Chat, Chats } from "phosphor-react";
+import EssentialActions from "@/components/essentialActions";
+import { CalendarCheck, ChatCircleText, Envelope, MapPin, PhoneCall } from "phosphor-react";
+
+const FARM_PHONE = "+13048392330";
+const FARM_EMAIL = "team@oldmcdonaldspumpkinpatch.com";
+const DEV_EMAIL = "me@macglencoe.com";
 
 export default function ContactClient() {
-    const address = "1597 Arden Nollville Rd. Inwood, WV 25428";
-    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
-    const devPhone = "+13042406828";
-    const smsPrompt = "Hi Liam, I wanted to ask you something about Old McDonald's Website:\n\n";
-    const smsHref = `sms:${devPhone}?&body=${encodeURIComponent(smsPrompt)}`;
-    const devEmail = "me@macglencoe.com";
-    const emailSubject = "Website feedback";
-    const emailBody = "Hi Liam, I wanted to ask you something about Old McDonald's Website:\n\n";
-    const mailtoHref = `mailto:${devEmail}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+    const developerMailto = `mailto:${DEV_EMAIL}?subject=${encodeURIComponent("Website feedback")}`;
 
     return (
-        <div className="mx-auto max-w-5xl">
-            {/* Quick Links */}
-            <section>
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[160px] sm:auto-rows-[180px] ">
-                    <QuickCard
-                        title="Reservations"
-                        href="/reservations"
-                        image="/rentalgazebo.jpg"
-                        Icon={() => <Clock size={28} weight="duotone" />}
-                    />
-                    <QuickCard
-                        title="Pricing & Tickets"
-                        href="/pricing"
-                        image="/entrance.jpg"
-                        Icon={() => <Ticket size={28} weight="duotone" />}
-                    />
-                    <QuickCard
-                        title="FAQ"
-                        href="/faq"
-                        image="/natureMazePath.jpg"
-                        Icon={() => <Question size={28} weight="duotone" />}
-                    />
+        <div className="mx-auto max-w-5xl px-4 md:px-6">
+            <section aria-labelledby="contact-options-heading" className="mt-8">
+                <div className="mb-5 max-w-2xl">
+                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">Choose the quickest route</p>
+                    <h2 id="contact-options-heading" className="mt-1 font-satisfy text-4xl md:text-5xl">How can we help?</h2>
+                    <p className="mt-2 text-lg text-foreground/70">
+                        Call for a quick question, email for business inquiries, or send us a message below.
+                    </p>
                 </div>
+
+                <EssentialActions
+                    className="lg:grid-cols-3"
+                    actions={[
+                        { title: "Call the farm", description: "(304) 839-2330", href: `tel:${FARM_PHONE}`, Icon: PhoneCall, native: true, primary: true },
+                        { title: "Email us", description: "Business and general inquiries", href: `mailto:${FARM_EMAIL}`, Icon: Envelope, native: true },
+                        { title: "Send a message", description: "Use the contact form", href: "#contact-form", Icon: ChatCircleText },
+                    ]}
+                />
             </section>
-            <section>
-                <div className="grid gap-6 md:grid-cols-2 mt-8">
-                    <div className="rounded-xl border border-foreground/10 overflow-hidden shadow hover:shadow-md transition">
-                        <div
-                            className="p-6 bg-[url('/entrance.jpg')] bg-cover bg-center relative"
-                            aria-hidden
-                        >
-                            <div className="absolute inset-0 standard-backdrop rounded-t-xl" />
-                            <div className="relative z-10 text-background">
-                                <h3 className="text-3xl font-satisfy mb-2">Old McDonald’s Pumpkin Patch</h3>
-                                <p className="opacity-90">Glencoe Farm, Inwood, WV</p>
-                            </div>
-                        </div>
-                        <div className="p-6 flex flex-col gap-4">
-                            <ContactInfoItem title="Mailing Address" Icon={() => (<Envelope size={32} weight="bold" />)}>
-                                <p>
-                                    1597 Arden Nollville Rd
-                                    <br />
-                                    Inwood, WV 25428
-                                </p>
-                            </ContactInfoItem>
-                            <ContactInfoItem title="Phone" Icon={() => (<PhoneCall size={32} weight="bold" />)}>
-                                <a className="hover:underline text-accent" href="tel:+13048392330">+1 304 839 2330</a>
-                            </ContactInfoItem>
-                            <ContactInfoItem title="Email (Business Inquiries)" Icon={() => <PaperPlaneTilt size={32} weight="bold" />}>
-                                <a className="hover:underline text-accent" href="mailto:oldmcdonaldsglencoefarm@gmail.com">oldmcdonaldsglencoefarm@gmail.com</a>
-                            </ContactInfoItem>
+
+            <section id="contact-form" aria-label="Send us a message" className="mt-10 scroll-mt-24 overflow-hidden rounded-2xl border border-foreground/10 bg-foreground/[0.025]">
+                <ContactForm />
+            </section>
+
+            <section className="mt-10 grid gap-5 md:grid-cols-[1.15fr_0.85fr]">
+                <div className="overflow-hidden rounded-2xl border border-foreground/10 bg-background">
+                    <div className="relative bg-[url('/entrance.jpg')] bg-cover bg-center px-6 py-8 text-background">
+                        <div className="standard-backdrop absolute inset-0" />
+                        <div className="relative">
+                            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">Farm contact</p>
+                            <h2 className="mt-1 font-satisfy text-3xl md:text-4xl">Old McDonald’s Pumpkin Patch</h2>
+                            <p className="mt-1 text-background/80">Glencoe Farm · Inwood, West Virginia</p>
                         </div>
                     </div>
-
-                    <div className="rounded-xl border border-foreground/10 overflow-hidden min-h-64 shadow hover:shadow-md transition">
-                        <iframe
-                            title="Map to Old McDonald’s Pumpkin Patch"
-                            className="w-full h-full min-h-64"
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3067.314756569123!2d-78.04480392349423!3d39.3858425716188!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c10301e71eed7b%3A0x4d0d869ee11addca!2sOld%20McDonald%E2%80%99s%20Pumpkin%20Patch%20%26%20Corn%20Maze!5e0!3m2!1sen!2sus!4v1726050000000"
-                        />
+                    <div className="grid gap-5 p-6 sm:grid-cols-2">
+                        <ContactInfoItem title="Mailing address" Icon={MapPin}>
+                            <address className="not-italic text-foreground/70">
+                                1597 Arden Nollville Rd<br />Inwood, WV 25428
+                            </address>
+                        </ContactInfoItem>
+                        <ContactInfoItem title="Phone" Icon={PhoneCall}>
+                            <a className="break-words text-accent hover:underline" href={`tel:${FARM_PHONE}`}>(304) 839-2330</a>
+                        </ContactInfoItem>
+                        <ContactInfoItem title="Email" Icon={Envelope} className="sm:col-span-2">
+                            <a className="break-all text-accent hover:underline" href={`mailto:${FARM_EMAIL}`}>{FARM_EMAIL}</a>
+                        </ContactInfoItem>
                     </div>
+                </div>
+
+                <div className="flex flex-col justify-between rounded-2xl bg-foreground p-6 text-background">
+                    <div>
+                        <CalendarCheck className="text-accent" size={34} weight="duotone" aria-hidden />
+                        <h2 className="mt-4 font-satisfy text-3xl md:text-4xl">Planning a group visit?</h2>
+                        <p className="mt-3 text-background/75">Gazebo rentals, school groups, and private gatherings have their own planning form.</p>
+                    </div>
+                    <a className="mt-7 inline-flex w-fit rounded-full bg-accent px-5 py-2.5 font-semibold text-background transition hover:-translate-y-0.5 hover:shadow-lg" href="/reservations">
+                        View reservations
+                    </a>
                 </div>
             </section>
 
-            <section className="mt-2">
-                <div className="rounded-2xl overflow-hidden">
-                    <div className="relative">
-                        <div className="absolute inset-0 bg-[url('/brookbridge.jpg')] bg-cover bg-center" />
-                        <div className="absolute inset-0" />
-                        <div className="relative flex justify-center standard-backdrop">
-                            <ContactForm theme="onDark" />
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="dev" className="mt-2">
-                <div className="rounded-2xl overflow-hidden border border-foreground/10 shadow p-6 relative">
-                    <Code size={"200%"} className="-z-10 text-foreground/10 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
-                    <h2 className="text-5xl text-center font-satisfy m-3">Feedback</h2>
-                    <p className="text-center text-foreground/80">Found a problem with the website? Have a suggestion? <strong>Contact the dev <ArrowDown className="inline" weight="bold" size={20} /></strong></p>
-
-                    <div className="rounded-2xl overflow-hidden border border-foreground/10 shadow px-6 py-3 my-4 bg-background">
-                        <h3 className="text-xl font-semibold">Liam McDonald</h3>
-                        <a
-                            href="https://github.com/macglencoe"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="Visit Liam McDonald's GitHub profile"
-                            className="group block rounded border border-foreground/10 bg-foreground text-background px-6 py-4 my-4 shadow hover:shadow-lg hover:-translate-y-0.5 transition transform"
-                        >
-                            <div className="flex items-center gap-4">
-                                <span className="shrink-0">
-                                    <GithubLogo size={28} weight="fill" />
-                                </span>
-                                <Image
-                                    width={48}
-                                    height={48}
-                                    src="/macglencoe.jpeg"
-                                    alt="macglencoe avatar"
-                                    className="rounded-full shrink-0"
-                                />
-                                <div className="flex flex-col">
-                                    <span className="text-lg font-semibold">@macglencoe</span>
-                                    <span className="text-sm text-background/80">View GitHub profile</span>
-                                </div>
-                                <span className="ml-auto opacity-80 group-hover:opacity-100">
-                                    <ArrowSquareOut size={24} />
-                                </span>
-                            </div>
-                        </a>
-
-                        <a
-                            href={smsHref}
-                            aria-label="Send Liam an SMS"
-                            className="group block rounded border border-foreground/10 bg-foreground text-background px-6 py-4 my-4 shadow hover:shadow-lg hover:-translate-y-0.5 transition transform"
-                        >
-                            <div className="flex items-center gap-4">
-                                <span className="shrink-0">
-                                    <Chats size={26} weight="fill" />
-                                </span>
-                                <div className="flex flex-col">
-                                    <span className="text-lg font-semibold">Text Liam (SMS)</span>
-                                    <span className="text-sm text-background/80">Opens in your default SMS app</span>
-                                </div>
-                                <span className="ml-auto opacity-80 group-hover:opacity-100">
-                                    <Chat size={24} />
-                                </span>
-                            </div>
-                        </a>
-
-                        <a
-                            href={mailtoHref}
-                            aria-label="Email Liam"
-                            className="group block rounded border border-foreground/10 bg-foreground text-background px-6 py-4 my-4 shadow hover:shadow-lg hover:-translate-y-0.5 transition transform"
-                        >
-                            <div className="flex items-center gap-4">
-                                <span className="shrink-0">
-                                    <PaperPlaneTilt size={26} weight="fill" />
-                                </span>
-                                <div className="flex flex-col">
-                                    <span className="text-lg font-semibold">Email Liam</span>
-                                    <span className="text-sm text-background/80">Opens in your default Email app</span>
-                                </div>
-                                <span className="ml-auto opacity-80 group-hover:opacity-100">
-                                    <Envelope size={24} />
-                                </span>
-                            </div>
-                        </a>
-
-
-                    </div>
-
-                </div>
-            </section>
+            <p className="my-8 text-center text-sm text-foreground/55">
+                Found a problem with this website? <a className="font-medium text-foreground/75 underline underline-offset-2 hover:text-accent" href={developerMailto}>Email the site developer.</a>
+            </p>
         </div>
-    )
+    );
 }
 
-function ContactInfoItem({ Icon, title, children }) {
+function ContactInfoItem({ Icon, title, children, className = "" }) {
     return (
-        <div className="flex flex-row items-center gap-3">
-            {Icon && <Icon />}
-            <div>
-                <div className="font-semibold">{title}</div>
-                {children}
+        <div className={`flex items-start gap-3 ${className}`}>
+            <span className="mt-0.5 shrink-0 text-foreground"><Icon size={26} weight="duotone" aria-hidden /></span>
+            <div className="min-w-0">
+                <h3 className="font-semibold">{title}</h3>
+                <div className="mt-1">{children}</div>
             </div>
         </div>
-    )
+    );
 }
