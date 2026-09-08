@@ -68,6 +68,10 @@ export default function MazeGameClient() {
     const allFound =
         Object.keys(mazeData).length > 0 &&
         Object.keys(mazeData).every(code => foundCodes.includes(code))
+    const finalPhrase = Object.values(mazeData)
+        .map(item => item.phraseWord)
+        .filter(Boolean)
+        .join(' ')
 
     const handleEntrySubmit = async ({ name, phone }) => {
         const usingDatabase = isFeatureEnabled('use_db_forms')
@@ -133,9 +137,10 @@ export default function MazeGameClient() {
                 <p className='big'><b>Find the QR codes</b></p>
                 <p>There are <b>4 QR codes</b> hidden throughout the maze.</p>
                 <p>Scan each of them with your phone camera. Your progress will be tracked here.</p>
+                <p>Each station reveals part of a founding principle. Collect all four words to complete the phrase.</p>
                 <p>Once you find them all, you can enter in a drawing for a <b>large pumpkin</b>.</p>
                 <div className="grid grid-cols-2 border border-black w-full max-w-3xl mx-auto mb-4">
-                    {Object.entries(mazeData).map(([code, { name, img }]) => (
+                    {Object.entries(mazeData).map(([code, { name, img, phraseWord }]) => (
                         <div
                             key={code}
                             className="
@@ -163,7 +168,12 @@ export default function MazeGameClient() {
                             )}
 
                             {foundCodes.includes(code) && (
-                                <span className="text-sm sm:text-base">Found</span>
+                                <div className="flex flex-col gap-1">
+                                    <span className="text-sm sm:text-base">Found</span>
+                                    <span className="text-lg font-bold tracking-wide sm:text-xl">
+                                        {phraseWord}
+                                    </span>
+                                </div>
                             )}
                         </div>
                     ))}
@@ -175,7 +185,13 @@ export default function MazeGameClient() {
                         <p className="text-xl font-semibold">
                             🎉 Congratulations! You’ve found them all!
                         </p>
-                        <p className="mt-2">Fill out the form below to enter the drawing:</p>
+                        <div className="mx-auto mt-4 max-w-xl rounded-lg border border-black/15 bg-accent/20 px-5 py-4">
+                            <p>You uncovered a founding principle:</p>
+                            <p className="mt-1 text-2xl font-bold tracking-wide sm:text-3xl">
+                                {finalPhrase}
+                            </p>
+                        </div>
+                        <p className="mt-4">Fill out the form below to enter the drawing:</p>
 
                         { (forceGoogleFormsClient || isFeatureEnabled('use_google_forms')) ? (
                             <div className="mt-4">

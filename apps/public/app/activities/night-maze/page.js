@@ -18,7 +18,7 @@ export const NightMaze = () => {
             <Layout>
                 <div className={styles.header + " header"}>
                     <h1>Night Maze</h1>
-                    <span>2025 Season</span>
+                    <span>2026 Season</span>
                 </div>
                 <ArticleLayout className={styles.body}>
                     <ArticleLead

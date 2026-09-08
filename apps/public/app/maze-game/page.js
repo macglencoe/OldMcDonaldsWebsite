@@ -4,8 +4,8 @@ import MazeGameClient from './mazeGameClient'
 import { getFlagEvaluator, getFlags } from '@/app/flags.server'
 
 export const metadata = {
-    title: "Maze Game",
-    description: "Play the interactive Maze Game at Old McDonald’s Pumpkin Patch. Scan hidden QR codes in the corn maze and enter to win prizes during the fall season."
+    title: "250 Years Maze Game",
+    description: "Explore 250 years of American independence in Old McDonald’s corn maze. Find four historical QR-code stations, complete the phrase, and enter the drawing."
 }
 
 export default async function MazeGame() {
@@ -15,7 +15,7 @@ export default async function MazeGame() {
 
     return (
         <Layout>
-            <PageHeader subtitle="2025 Season">Maze Game</PageHeader>
+            <PageHeader subtitle="2026 Season">250 Years Maze Game</PageHeader>
             <MazeGameClient />
         </Layout>
     )

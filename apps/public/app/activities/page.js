@@ -10,7 +10,7 @@ export const metadata = {
 export default function Activities() {
     return (
         <Layout>
-            <PageHeader subtitle="2025 Season">Activities</PageHeader>
+            <PageHeader subtitle="2026 Season">Activities</PageHeader>
             <ActivitiesClient />
         </Layout>
     );

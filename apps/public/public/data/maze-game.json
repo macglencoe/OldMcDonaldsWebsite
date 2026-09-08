@@ -1,18 +1,30 @@
 {
-    "44b9fa91a18dfe781c7d6903beb3a0b0": {
-        "name": "Hammer",
-        "img": "/maze-game/hammer.png"
+    "f1840d472b1f51b74c736534ce546e52": {
+        "name": "Liberty Bell",
+        "img": "/maze-game/liberty-bell.jpg",
+        "heading": "Proclaim Liberty",
+        "blurb": "Commissioned in 1751 for the Pennsylvania State House, this bell called lawmakers to meetings and townspeople together to hear the news. Its inscription, “Proclaim Liberty Throughout All the Land Unto All the Inhabitants thereof,” later made it an enduring symbol for people demanding freedom and equal rights.",
+        "phraseWord": "CONSENT"
     },
-    "2f8bdd91772dbccd67d475aa21e6b04e": {
-        "name": "Wrench",
-        "img": "/maze-game/wrench.png"
+    "014b9430cc9164a99a72828f7d435bc2": {
+        "name": "Tea Crate",
+        "img": "/maze-game/tea-crate.jpg",
+        "heading": "Resistance in Boston Harbor",
+        "blurb": "On December 16, 1773, colonists boarded three ships in Boston Harbor and destroyed 342 chests of tea. They were resisting the Tea Act and Parliament’s claim that it could tax people who had no representatives there. Britain answered with harsh new laws, but those punishments only strengthened colonial resistance.",
+        "phraseWord": "OF"
     },
-    "23347f0632df487a932fca5c8a5fdf98": {
-        "name": "Lantern",
-        "img": "/maze-game/lamp.png"
+    "f9204e6e6cf483827c01932b2407c1c7": {
+        "name": "Printing Press",
+        "img": "/maze-game/printing-press.png",
+        "heading": "Ideas Challenge Kings",
+        "blurb": "In January 1776, Thomas Paine’s pamphlet Common Sense was published anonymously and spread rapidly through the colonies. Paine challenged hereditary monarchy and argued plainly for American independence, showing how printed ideas could help ordinary people question authority and demand a government of their own.",
+        "phraseWord": "THE"
     },
-    "12fbdf880880b58cf6f1bb53cb68e459": {
-        "name": "Strike Placard",
-        "img": "/maze-game/placard.png"
+    "154ae4c20d71f871dbed586a227daf07": {
+        "name": "Join, or Die",
+        "img": "/maze-game/join-or-die.jpg",
+        "heading": "United Against Tyranny",
+        "blurb": "Benjamin Franklin first published the segmented-snake image in 1754 to urge the colonies to unite during the French and Indian War. Revolutionary newspapers later revived it as a call for the colonies to stand together against British rule. Its warning was simple: divided colonies were weak, but united people had power.",
+        "phraseWord": "GOVERNED"
     }
 }

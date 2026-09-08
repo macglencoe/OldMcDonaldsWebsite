@@ -44,9 +44,10 @@ export default function MazeCodePage() {
       });
   }, [code]);
 
-  // After showing the result, wait 4 seconds then redirect
+  // Invalid codes return to the game automatically. Valid stations remain
+  // visible so visitors have time to read their history and phrase word.
   useEffect(() => {
-    if (status === 'loading') return;
+    if (status !== 'invalid') return;
     const timer = setTimeout(() => {
       router.replace('/maze-game');
     }, 4000);
@@ -77,15 +78,35 @@ export default function MazeCodePage() {
 
   // status === 'valid'
   return (
-    <div className="flex flex-col items-center justify-center h-screen px-4 text-center">
-      <h1 className="text-3xl font-bold mb-4">You found: {item.name}</h1>
-      <img
-        src={item.img}
-        alt={item.name}
-        className="max-w-xs mb-6 rounded-lg shadow-lg"
-      />
-      <p className="text-lg mb-4">Great job finding the {item.name} code!</p>
-      <p className="text-sm opacity-70">Redirecting back in 4 seconds…</p>
-    </div>
+    <main className="flex min-h-screen items-center justify-center px-4 py-10">
+      <div className="flex w-full max-w-xl flex-col items-center text-center">
+        <p className="mb-2 text-sm font-semibold uppercase tracking-widest opacity-70">
+          250 Years Maze Challenge
+        </p>
+        <h1 className="mb-2 text-3xl font-bold">You found the {item.name}!</h1>
+        <h2 className="mb-5 text-xl font-semibold">{item.heading}</h2>
+        <img
+          src={item.img}
+          alt={item.name}
+          className="mb-6 aspect-square w-full max-w-xs rounded-lg object-cover shadow-lg"
+        />
+        <p className="mb-6 text-lg leading-relaxed">{item.blurb}</p>
+
+        <div className="mb-6 w-full rounded-lg border border-black/15 bg-accent/20 px-5 py-4">
+          <p className="text-sm font-semibold uppercase tracking-wider opacity-70">
+            Your phrase word
+          </p>
+          <p className="mt-1 text-3xl font-bold tracking-wide">{item.phraseWord}</p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => router.replace('/maze-game')}
+          className="rounded bg-accent px-6 py-3 font-semibold !text-white hover:bg-accent/70"
+        >
+          Continue to Maze Game
+        </button>
+      </div>
+    </main>
   );
 }
