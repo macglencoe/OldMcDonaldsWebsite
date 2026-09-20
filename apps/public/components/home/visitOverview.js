@@ -181,7 +181,7 @@ export default function VisitOverview() {
     }
   }
 
-  const calendarHref = `https://calendar.google.com/calendar/r/eventedit?text=Old+McDonalds+Opening+Day&dates=20260926T100000/20260926T180000&details=Come+visit+us+for+our+opening+day!&location=${encodeURIComponent(ADDRESS)}`;
+  const calendarHref = `https://calendar.google.com/calendar/r/eventedit?text=Old+McDonalds+Opening+Day&dates=20260926T110000/20260926T180000&details=Come+visit+us+for+our+opening+day!&location=${encodeURIComponent(ADDRESS)}`;
 
   return (
     <section className={styles.section} aria-labelledby="visit-overview-heading">

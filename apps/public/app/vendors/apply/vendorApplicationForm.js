@@ -113,7 +113,7 @@ export default function VendorApplicationForm() {
       </div>}
     </fieldset>
     <fieldset className={section}><legend className="px-2 text-2xl font-bold">4. Availability</legend>
-      <p>Normal business hours are Friday 1 PM–6 PM, Saturday 11 AM–6 PM, and Sunday 12 PM–6 PM.</p>
+      <p>Normal business hours are Friday 11 AM–6 PM, Saturday 11 AM–6 PM, and Sunday 12 PM–6 PM.</p>
       <label className="block font-semibold">Known times or days you cannot vend<textarea className={input} maxLength={2000} name="availabilityNotes" onChange={update} rows={5} value={form.availabilityNotes} /></label>
     </fieldset>
     <div className="space-y-2 rounded-xl border border-foreground/20 p-5 sm:p-7">

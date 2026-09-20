@@ -26,7 +26,7 @@ export const NightMaze = () => {
                         imageAlt="A full moon visible through trees at night"
                         imageAttribution
                         imageFocalPoint="center 54%"
-                        heading="October 17th"
+                        heading="October 16th"
                         tone="night"
                     >
                         <p>Starting in October, we will have the maze and hayrides open from 7:30pm to 10:30*</p>
