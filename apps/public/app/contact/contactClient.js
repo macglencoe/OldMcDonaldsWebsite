@@ -3,13 +3,13 @@
 import ContactForm from "@/components/contactForm";
 import EssentialActions from "@/components/essentialActions";
 import { CalendarCheck, ChatCircleText, Envelope, MapPin, PhoneCall } from "phosphor-react";
+import useSiteSettings from "@/hooks/useSiteSettings";
 
-const FARM_PHONE = "+13048392330";
-const FARM_EMAIL = "team@oldmcdonaldspumpkinpatch.com";
 const DEV_EMAIL = "me@macglencoe.com";
 
 export default function ContactClient() {
     const developerMailto = `mailto:${DEV_EMAIL}?subject=${encodeURIComponent("Website feedback")}`;
+    const settings = useSiteSettings();
 
     return (
         <div className="mx-auto max-w-5xl px-4 md:px-6">
@@ -25,8 +25,8 @@ export default function ContactClient() {
                 <EssentialActions
                     className="lg:grid-cols-3"
                     actions={[
-                        { title: "Call the farm", description: "(304) 839-2330", href: `tel:${FARM_PHONE}`, Icon: PhoneCall, native: true, primary: true },
-                        { title: "Email us", description: "Business and general inquiries", href: `mailto:${FARM_EMAIL}`, Icon: Envelope, native: true },
+                        { title: "Call the farm", description: settings.business.phoneDisplay, href: `tel:${settings.business.phone}`, Icon: PhoneCall, native: true, primary: true },
+                        { title: "Email us", description: "Business and general inquiries", href: `mailto:${settings.business.email}`, Icon: Envelope, native: true },
                         { title: "Send a message", description: "Use the contact form", href: "#contact-form", Icon: ChatCircleText },
                     ]}
                 />
@@ -49,14 +49,14 @@ export default function ContactClient() {
                     <div className="grid gap-5 p-6 sm:grid-cols-2">
                         <ContactInfoItem title="Mailing address" Icon={MapPin}>
                             <address className="not-italic text-foreground/70">
-                                1597 Arden Nollville Rd<br />Inwood, WV 25428
+                                {settings.business.streetAddress}<br />{settings.business.addressLocality}, {settings.business.addressRegion} {settings.business.postalCode}
                             </address>
                         </ContactInfoItem>
                         <ContactInfoItem title="Phone" Icon={PhoneCall}>
-                            <a className="break-words text-accent hover:underline" href={`tel:${FARM_PHONE}`}>(304) 839-2330</a>
+                            <a className="break-words text-accent hover:underline" href={`tel:${settings.business.phone}`}>{settings.business.phoneDisplay}</a>
                         </ContactInfoItem>
                         <ContactInfoItem title="Email" Icon={Envelope} className="sm:col-span-2">
-                            <a className="break-all text-accent hover:underline" href={`mailto:${FARM_EMAIL}`}>{FARM_EMAIL}</a>
+                            <a className="break-all text-accent hover:underline" href={`mailto:${settings.business.email}`}>{settings.business.email}</a>
                         </ContactInfoItem>
                     </div>
                 </div>

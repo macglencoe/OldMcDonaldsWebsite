@@ -1,0 +1,77 @@
+{
+  "title": "Site Settings Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["season", "nightMaze", "policies", "business", "social"],
+  "properties": {
+    "season": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "year", "opensAt", "closesAt", "timeZone", "weekendCount"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "year": { "type": "integer", "minimum": 2020, "maximum": 2100 },
+        "opensAt": { "type": "string", "format": "date-time" },
+        "closesAt": { "type": "string", "format": "date-time" },
+        "timeZone": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "weekendCount": { "type": "integer", "minimum": 1, "maximum": 52 }
+      }
+    },
+    "nightMaze": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["firstDate", "opensAt", "closesAt", "lastAdmissionAt"],
+      "properties": {
+        "firstDate": { "type": "string", "format": "date" },
+        "opensAt": { "$ref": "#/$defs/time" },
+        "closesAt": { "$ref": "#/$defs/time" },
+        "lastAdmissionAt": { "$ref": "#/$defs/time" }
+      }
+    },
+    "policies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["freeAdmissionMaxAge"],
+      "properties": {
+        "freeAdmissionMaxAge": { "type": "integer", "minimum": 0, "maximum": 17 }
+      }
+    },
+    "business": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "legalName", "phone", "phoneDisplay", "email", "streetAddress", "addressLocality", "addressRegion", "postalCode", "addressCountry", "latitude", "longitude"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 150 },
+        "legalName": { "type": "string", "minLength": 1, "maxLength": 150 },
+        "phone": { "type": "string", "pattern": "^\\+[1-9]\\d{7,14}$" },
+        "phoneDisplay": { "type": "string", "minLength": 1, "maxLength": 50 },
+        "email": { "type": "string", "format": "email" },
+        "streetAddress": { "type": "string", "minLength": 1, "maxLength": 150 },
+        "addressLocality": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "addressRegion": { "type": "string", "minLength": 1, "maxLength": 50 },
+        "postalCode": { "type": "string", "minLength": 1, "maxLength": 20 },
+        "addressCountry": { "type": "string", "minLength": 2, "maxLength": 2 },
+        "latitude": { "type": "number", "minimum": -90, "maximum": 90 },
+        "longitude": { "type": "number", "minimum": -180, "maximum": 180 }
+      }
+    },
+    "social": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["facebookUrl", "instagramUrl", "tiktokUrl", "reviewsUrl"],
+      "properties": {
+        "facebookUrl": { "type": "string", "format": "uri" },
+        "instagramUrl": { "type": "string", "format": "uri" },
+        "tiktokUrl": { "type": "string", "format": "uri" },
+        "reviewsUrl": { "type": "string", "format": "uri" }
+      }
+    }
+  },
+  "$defs": {
+    "time": {
+      "type": "string",
+      "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+      "description": "24-hour time, HH:MM"
+    }
+  }
+}

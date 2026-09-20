@@ -8,6 +8,8 @@ import faqSchema from "@/schemas/faq.schema.json"
 import calendarScheduleSchema from "@/schemas/calendar_schedule.schema.json"
 import weeklyHoursSchema from "@/schemas/weekly-hours.schema.json"
 import pricingSchema from "@/schemas/pricing.schema.json"
+import siteSettingsSchema from "@/schemas/site-settings.schema.json"
+import { ensureSiteSettingsAreConsistent } from "@/lib/siteSettings.mjs"
 
 const statsigEnv = process.env.STATSIG_ENV_STRING?.trim()
 const consoleApiKey = process.env.STATSIG_CONSOLE_API_KEY
@@ -50,6 +52,7 @@ const schemaRegistry = {
   calendar_schedule: ajv.compile(calendarScheduleSchema),
   "weekly-hours": ajv.compile(weeklyHoursSchema),
   pricing: ajv.compile(pricingSchema),
+  "site-settings": ajv.compile(siteSettingsSchema),
 }
 
 const CONFIG_IDS = {
@@ -58,6 +61,7 @@ const CONFIG_IDS = {
   calendar_schedule: process.env.STATSIG_CONFIG_ID_CALENDAR ?? "calendar_schedule",
   "weekly-hours": process.env.STATSIG_CONFIG_ID_WEEKLY_HOURS ?? "weekly-hours",
   pricing: process.env.STATSIG_CONFIG_ID_PRICING ?? "pricing",
+  "site-settings": process.env.STATSIG_CONFIG_ID_SITE_SETTINGS ?? "site-settings",
 }
 
 /**
@@ -102,19 +106,33 @@ function ensureUniqueIdsIfPresent(key, payload) {
 async function writeConfigToStatsig(key, value) {
   if (!consoleApiKey) throw Object.assign(new Error("STATSIG_CONSOLE_API_KEY is not set"), { status: 500 })
   const configId = CONFIG_IDS[key] ?? key
-  const res = await fetch(`https://statsigapi.net/console/v1/dynamic_configs/${configId}`, {
+  const payload = {
+    isEnabled: true,
+    description: `Admin config: ${key}`,
+    rules: [],
+    defaultValue: value,
+  }
+  let res = await fetch(`https://statsigapi.net/console/v1/dynamic_configs/${configId}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "STATSIG-API-KEY": consoleApiKey,
     },
-    body: JSON.stringify({
-      isEnabled: true,
-      description: `Admin config: ${key}`,
-      rules: [],
-      defaultValue: value,
-    }),
+    body: JSON.stringify(payload),
   })
+
+  // Site Settings is new, so let its first save create the Statsig config.
+  if (res.status === 404 && key === "site-settings") {
+    res = await fetch("https://statsigapi.net/console/v1/dynamic_configs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "STATSIG-API-KEY": consoleApiKey,
+      },
+      body: JSON.stringify({ name: "Site Settings", id: configId, ...payload }),
+    })
+  }
+
   if (!res.ok) {
     const text = await res.text()
     throw Object.assign(new Error(`Failed to write config (${res.status}): ${text}`), { status: res.status })
@@ -168,6 +186,7 @@ export async function PUT(request) {
 
     // announcement-specific: ensure unique ids.
     ensureUniqueIdsIfPresent(key, body)
+    if (key === "site-settings") ensureSiteSettingsAreConsistent(body)
 
     const writeResult = await writeConfigToStatsig(key, body)
 

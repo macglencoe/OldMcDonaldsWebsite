@@ -4,6 +4,7 @@ import { useMemo, useState, useEffect, useRef } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { FAQDrop } from "@/components/faqDrop"
 import { track } from "@vercel/analytics"
+import useSiteSettings from "@/hooks/useSiteSettings"
 
 function normalize(str = "") {
     return str
@@ -33,6 +34,7 @@ function highlight(text, query) {
 }
 
 export default function FaqSearchList({ items }) {
+    const settings = useSiteSettings()
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
@@ -127,7 +129,7 @@ export default function FaqSearchList({ items }) {
             </div>
 
             {count === 0 ? (
-                <p className="text-foreground/70">No results. Try different keywords, or <a href="tel:304-839-2330">Contact Us</a>.</p>
+                <p className="text-foreground/70">No results. Try different keywords, or <a href={`tel:${settings.business.phone}`}>Contact Us</a>.</p>
             ) : (
                 <div className="space-y-2">
                     {filtered.map((item, i) => (

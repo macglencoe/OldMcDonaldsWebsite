@@ -15,6 +15,7 @@ import Link from "next/link";
 import Image from "next/image";
 import PageHeader from "@/components/pageHeader";
 import Head from "next/head";
+import { getSiteSettingsData } from "@/utils/siteSettingsServer";
 
 const charlieBillPhotos = {
     feature: {
@@ -619,7 +620,8 @@ const farmTimeline = [
     },
 ];
 
-export default function About() {
+export default async function About() {
+    const settings = await getSiteSettingsData();
     
     return (
         <Layout>
@@ -639,7 +641,7 @@ export default function About() {
                 <ArticleFacts items={[
                     { value: "250+", label: "Years", detail: "In continuous operation" },
                     { value: "161", label: "Acres", detail: "Protected forever" },
-                    { value: "6", label: "Weekends", detail: "Open each fall" },
+                    { value: String(settings.season.weekendCount), label: "Weekends", detail: "Open each fall" },
                     { value: "7", label: "Generations", detail: "Of McDonalds" },
                 ]} />
 
@@ -648,7 +650,7 @@ export default function About() {
                 <ArticleSection image="/localMap.png" imageAlt="Map showing Glencoe Farm near Inwood, West Virginia" imageRatio="landscape" imageFocalPoint="center" caption="Glencoe Farm, just off Interstate 81">
                     <h2>Our Farm</h2>
                     <p>With Middle Creek running through our park-like grounds, our farm is the perfect place to spend some quality time with your family or friends!</p>
-                    <p>Six weekends each fall, we open our farm to the community for various festival <Link href="/activities">activities</Link>.</p>
+                    <p>{settings.season.weekendCount} weekends each fall, we open our farm to the community for various festival <Link href="/activities">activities</Link>.</p>
                 </ArticleSection>
 
                 <ArticleQuote cite="The McDonald family">

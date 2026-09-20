@@ -6,19 +6,23 @@ import {
     ArticleSection,
 } from "@/components/article";
 import { Action } from "@oldmc/ui";
+import { getSiteSettingsData } from "@/utils/siteSettingsServer";
+import { formatMonthDay, formatTime24 } from "@oldmc/config/site-settings";
 
 export const metadata = {
     title: "Night Maze",
     description: "Brave the spooky Night Maze at Old McDonald’s Pumpkin Patch. Explore the corn maze after dark with hayrides, campfires, vendors, and fall night fun."
 }
 
-export const NightMaze = () => {
+export const NightMaze = async () => {
+    const settings = await getSiteSettingsData();
+    const freeAge = settings.policies.freeAdmissionMaxAge;
     return (
         <div className={styles.wrapper}>
             <Layout>
                 <div className={styles.header + " header"}>
                     <h1>Night Maze</h1>
-                    <span>2026 Season</span>
+                    <span>{settings.season.name}</span>
                 </div>
                 <ArticleLayout className={styles.body}>
                     <ArticleLead
@@ -26,11 +30,11 @@ export const NightMaze = () => {
                         imageAlt="A full moon visible through trees at night"
                         imageAttribution
                         imageFocalPoint="center 54%"
-                        heading="October 16th"
+                        heading={formatMonthDay(settings.nightMaze.firstDate, settings.season.timeZone)}
                         tone="night"
                     >
-                        <p>Starting in October, we will have the maze and hayrides open from 7:30pm to 10:30*</p>
-                        <small>*Last admission at 10:00</small>
+                        <p>Starting then, we will have the maze and hayrides open from {formatTime24(settings.nightMaze.opensAt)} to {formatTime24(settings.nightMaze.closesAt)}*</p>
+                        <small>*Last admission at {formatTime24(settings.nightMaze.lastAdmissionAt)}</small>
                     </ArticleLead>
 
                     <ArticleSection
@@ -66,7 +70,7 @@ export const NightMaze = () => {
                             </div>
                             <div className="p-4 bg-foreground/60">
                                 <p className="text-center">Must be paid at the admission booth</p>
-                            <p className="!text-sm text-center">*Children 3 and under are free</p>
+                            <p className="!text-sm text-center">*Children {freeAge} and under are free</p>
                             </div>
                         </div>
                     </ArticleSection>
@@ -94,7 +98,7 @@ export const NightMaze = () => {
                                 </ul>
                             </div>
                             <div className="p-4 bg-foreground/60">
-                                <p className="text-center">Book at the admission booth, or <Action className="ml-2" as="a" href="tel:3048392330" variant="outline-primary">Call</Action></p>
+                                <p className="text-center">Book at the admission booth, or <Action className="ml-2" as="a" href={`tel:${settings.business.phone}`} variant="outline-primary">Call</Action></p>
                             </div>
                         </div>
                     </ArticleSection>

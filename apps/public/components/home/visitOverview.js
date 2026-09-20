@@ -6,13 +6,13 @@ import { ClockAfternoon, Cloud, Copy, MapPin, PawPrint, SquareLogo, Ticket, Whee
 import { useConfig } from "@/app/ConfigsContext";
 import { useFlags } from "@/app/FlagsContext";
 import { usePricingConfig } from "@/hooks/usePricingConfig";
+import useSiteSettings from "@/hooks/useSiteSettings";
+import { formatBusinessAddress } from "@oldmc/config/site-settings";
 import styles from "./visitOverview.module.css";
 
-const OPENING_DAY_DATE = "2026-09-26T10:00:00-04:00";
-const ADDRESS = "1597 Arden Nollville Rd, Inwood, WV 25428";
 const FALLBACK_HOURS = {
-  friday: { open: "13:00", close: "18:00" },
-  saturday: { open: "10:00", close: "18:00" },
+  friday: { open: "11:00", close: "18:00" },
+  saturday: { open: "11:00", close: "18:00" },
   sunday: { open: "12:00", close: "18:00" },
 };
 const DAY_ORDER = ["friday", "saturday", "sunday"];
@@ -48,9 +48,9 @@ function normalizeSchedule(raw) {
   });
 }
 
-function getEasternTime(now) {
+function getLocalTime(now, timeZone) {
   const parts = Object.fromEntries(new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/New_York",
+    timeZone,
     weekday: "long",
     hour: "2-digit",
     minute: "2-digit",
@@ -59,11 +59,12 @@ function getEasternTime(now) {
   return { day: parts.weekday?.toLowerCase(), minutes: Number(parts.hour) * 60 + Number(parts.minute) };
 }
 
-function getSeasonStatus(now, schedule, { showCountdown, isWinter }) {
-  const openingDay = new Date(OPENING_DAY_DATE);
+function getSeasonStatus(now, schedule, settings, { showCountdown, isWinter }) {
+  const openingDay = new Date(settings.season.opensAt);
+  const closingDay = new Date(settings.season.closesAt);
   const daysUntilOpening = Math.ceil((openingDay.getTime() - now.getTime()) / 86_400_000);
 
-  if (isWinter) {
+  if (isWinter || now.getTime() > closingDay.getTime()) {
     return {
       badge: "Closed for the season",
       heading: "Thanks for a wonderful fall",
@@ -75,8 +76,8 @@ function getSeasonStatus(now, schedule, { showCountdown, isWinter }) {
     return {
       badge: "Opening soon",
       heading: "Opening",
-      headingKeep: openingDay.toLocaleDateString("en-US", { timeZone: "America/New_York", month: "long", day: "numeric" }),
-      detail: "Six weekends of pumpkins, hayrides, and real farm fun are almost here.",
+      headingKeep: openingDay.toLocaleDateString("en-US", { timeZone: settings.season.timeZone, month: "long", day: "numeric" }),
+      detail: `${settings.season.weekendCount} weekends of pumpkins, hayrides, and real farm fun are almost here.`,
       metric: daysUntilOpening,
       metricLabel: daysUntilOpening === 1 ? "day to go" : "days to go",
       isCountdown: true,
@@ -84,11 +85,11 @@ function getSeasonStatus(now, schedule, { showCountdown, isWinter }) {
     };
   }
 
-  const eastern = getEasternTime(now);
-  const today = schedule.find((day) => day.key === eastern.day);
+  const local = getLocalTime(now, settings.season.timeZone);
+  const today = schedule.find((day) => day.key === local.day);
   if (!today) return { badge: "Closed today", heading: "Open", headingKeep: "Friday through Sunday", longHeadingKeep: true, detail: "Choose the best weekend day for your visit." };
-  if (eastern.minutes < today.openMinutes) return { badge: "Closed now", heading: "Opens today at", headingKeep: today.open, detail: `We’ll be welcoming visitors until ${today.close}.` };
-  if (eastern.minutes >= today.closeMinutes) return { badge: "Closed for today", heading: "See you next visit", detail: "Use the weekend schedule below to plan your farm day." };
+  if (local.minutes < today.openMinutes) return { badge: "Closed now", heading: "Opens today at", headingKeep: today.open, detail: `We’ll be welcoming visitors until ${today.close}.` };
+  if (local.minutes >= today.closeMinutes) return { badge: "Closed for today", heading: "See you next visit", detail: "Use the weekend schedule below to plan your farm day." };
   return { badge: "Open today", heading: "Here until", headingKeep: today.close, detail: "Come on down for pumpkins, trails, animals, games, and plenty of time outside." };
 }
 
@@ -125,6 +126,7 @@ export default function VisitOverview() {
   const { isFeatureEnabled } = useFlags();
   const weeklyHoursConfig = useConfig("weekly-hours");
   const pricing = usePricingConfig();
+  const settings = useSiteSettings();
   const showWeather = isFeatureEnabled("infostrip_show_weather");
   const showCountdown = isFeatureEnabled("infostrip_show_countdown");
   const isWinter = isFeatureEnabled("use_winter_hero");
@@ -134,7 +136,8 @@ export default function VisitOverview() {
   const [weatherLoading, setWeatherLoading] = useState(showWeather);
   const [weatherError, setWeatherError] = useState(null);
   const [copied, setCopied] = useState(false);
-  const status = getSeasonStatus(spoofedNow || now, schedule, { showCountdown, isWinter });
+  const status = getSeasonStatus(spoofedNow || now, schedule, settings, { showCountdown, isWinter });
+  const address = formatBusinessAddress(settings, { oneLine: true });
 
   useEffect(() => {
     const timer = window.setInterval(() => setNow(new Date()), 60_000);
@@ -173,7 +176,7 @@ export default function VisitOverview() {
 
   async function copyAddress() {
     try {
-      await navigator.clipboard.writeText(ADDRESS);
+      await navigator.clipboard.writeText(address);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -181,7 +184,13 @@ export default function VisitOverview() {
     }
   }
 
-  const calendarHref = `https://calendar.google.com/calendar/r/eventedit?text=Old+McDonalds+Opening+Day&dates=20260926T110000/20260926T180000&details=Come+visit+us+for+our+opening+day!&location=${encodeURIComponent(ADDRESS)}`;
+  const openingDate = settings.season.opensAt.slice(0, 10).replaceAll("-", "");
+  const openingTime = settings.season.opensAt.slice(11, 19).replaceAll(":", "");
+  const openingDayKey = new Intl.DateTimeFormat("en-US", { timeZone: settings.season.timeZone, weekday: "long" })
+    .format(new Date(settings.season.opensAt)).toLowerCase();
+  const openingClose = schedule.find((day) => day.key === openingDayKey)?.closeMinutes ?? 18 * 60;
+  const closingTime = `${String(Math.floor(openingClose / 60)).padStart(2, "0")}${String(openingClose % 60).padStart(2, "0")}00`;
+  const calendarHref = `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(`${settings.business.name} Opening Day`)}&dates=${openingDate}T${openingTime}/${openingDate}T${closingTime}&ctz=${encodeURIComponent(settings.season.timeZone)}&details=${encodeURIComponent("Come visit us for our opening day!")}&location=${encodeURIComponent(address)}`;
 
   return (
     <section className={styles.section} aria-labelledby="visit-overview-heading">
@@ -226,15 +235,15 @@ export default function VisitOverview() {
               <Ticket aria-hidden="true" size={30} weight="duotone" />
               <p className={styles.cardLabel}>General admission</p>
               <p className={styles.admissionPrice}>{formatPrice(pricing.admission)}</p>
-              <p className={styles.muted}>Children age 3 and under are free.</p>
+              <p className={styles.muted}>Children age {settings.policies.freeAdmissionMaxAge} and under are free.</p>
               <Link href="/pricing">See complete pricing <span aria-hidden="true">→</span></Link>
             </article>
 
             <article className={`${styles.detailCard} ${styles.locationCard}`}>
               <MapPin aria-hidden="true" size={30} weight="duotone" />
-              <p className={styles.cardLabel}>Inwood, West Virginia</p>
+              <p className={styles.cardLabel}>{settings.business.addressLocality}, {settings.business.addressRegion}</p>
               <h3>Find your way to the farm</h3>
-              <address>1597 Arden Nollville Rd<br />Inwood, WV 25428</address>
+              <address>{settings.business.streetAddress}<br />{settings.business.addressLocality}, {settings.business.addressRegion} {settings.business.postalCode}</address>
               <div className={styles.locationActions}>
                 <Link href="/visit">Get directions <span aria-hidden="true">→</span></Link>
                 <button type="button" onClick={copyAddress} aria-live="polite"><Copy aria-hidden="true" size={18} /> {copied ? "Copied" : "Copy address"}</button>

@@ -2,6 +2,7 @@ import Layout from '@/components/layout'
 import PageHeader from '@/components/pageHeader'
 import MazeGameClient from './mazeGameClient'
 import { getFlagEvaluator, getFlags } from '@/app/flags.server'
+import { getSiteSettingsData } from '@/utils/siteSettingsServer'
 
 export const metadata = {
     title: "250 Years Maze Game",
@@ -9,13 +10,13 @@ export const metadata = {
 }
 
 export default async function MazeGame() {
-    const flags = await getFlags();
+    const [flags, settings] = await Promise.all([getFlags(), getSiteSettingsData()]);
     const isFeatureEnabled = getFlagEvaluator(flags);
     if (!isFeatureEnabled('maze_game_enabled')) return null
 
     return (
         <Layout>
-            <PageHeader subtitle="2026 Season">250 Years Maze Game</PageHeader>
+            <PageHeader subtitle={settings.season.name}>250 Years Maze Game</PageHeader>
             <MazeGameClient />
         </Layout>
     )

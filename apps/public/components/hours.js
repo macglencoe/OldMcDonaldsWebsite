@@ -4,8 +4,8 @@ import { useConfig } from "@/app/ConfigsContext";
 
 const HOURS_DAY_KEYS = ["friday", "saturday", "sunday"];
 const FALLBACK_HOURS = [
-    { day: "FRI", opens: "1:00 PM", closes: "6:00 PM" },
-    { day: "SAT", opens: "10:00 AM", closes: "6:00 PM" },
+    { day: "FRI", opens: "11:00 AM", closes: "6:00 PM" },
+    { day: "SAT", opens: "11:00 AM", closes: "6:00 PM" },
     { day: "SUN", opens: "12:00 PM", closes: "6:00 PM" },
 ];
 

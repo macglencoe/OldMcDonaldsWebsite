@@ -8,16 +8,18 @@ import {
 import Layout from '@/components/layout';
 import PageHeader from '@/components/pageHeader';
 import { Action } from "@oldmc/ui";
+import { getSiteSettingsData } from '@/utils/siteSettingsServer';
 
 export const metadata = {
     title: "Nature Trails",
     description: "Explore nature trails at Old McDonald’s Pumpkin Patch. Hike through scenic woodlands, enjoy fall colors, and experience the beauty of Inwood, WV."
 }
 
-export const NatureTrails = () => {
+export const NatureTrails = async () => {
+    const settings = await getSiteSettingsData();
     return (
         <Layout>
-            <PageHeader subtitle="2026 Season">Nature Trails</PageHeader>
+            <PageHeader subtitle={settings.season.name}>Nature Trails</PageHeader>
             <ArticleLayout>
                 <ArticleLead image="/walnutbottom.jpg" imageAlt="A mowed trail through the woods at Glencoe Farm" imageFocalPoint="center 56%" heading="Take a hike!">
                     <p>Our lush forest has many trails just for visitors!</p>

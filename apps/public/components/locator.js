@@ -1,7 +1,9 @@
 import { useEffect, useRef } from "react";
+import useSiteSettings from "@/hooks/useSiteSettings";
 
 const Locator = () => {
     const containerRef = useRef(null);
+    const settings = useSiteSettings();
 
     useEffect(() => {
         const loadStoreLocator = async () => {
@@ -23,7 +25,13 @@ const Locator = () => {
 
                 const CONFIGURATION = {
                     "locations": [
-                        { "title": "Old McDonalds Pumpkin Patch \u0026 Corn Maze", "address1": "1597 Arden Nollville Rd", "address2": "Inwood, WV 25428, USA", "coords": { "lat": 39.38584378443022, "lng": -78.04222809325408 }, "placeId": "ChIJfeseHkAHyokRyt3qHueG008" }
+                        {
+                            "title": settings.business.name,
+                            "address1": settings.business.streetAddress,
+                            "address2": `${settings.business.addressLocality}, ${settings.business.addressRegion} ${settings.business.postalCode}, ${settings.business.addressCountry}`,
+                            "coords": { "lat": settings.business.latitude, "lng": settings.business.longitude },
+                            "placeId": "ChIJfeseHkAHyokRyt3qHueG008"
+                        }
                     ],
                     "mapOptions": { "center": { "lat": 38.0, "lng": -100.0 }, "fullscreenControl": true, "mapTypeControl": false, "streetViewControl": false, "zoom": 4, "zoomControl": true, "maxZoom": 17, "mapId": "" },
                     "mapsApiKey": key,
@@ -35,7 +43,7 @@ const Locator = () => {
             }
         };
         loadStoreLocator();
-    }, []);
+    }, [settings]);
 
     return (
         <div ref={containerRef} style={{ width: '100%', height: '100%' }}>

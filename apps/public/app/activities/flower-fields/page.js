@@ -10,6 +10,7 @@ import {
 import Layout from "@/components/layout";
 import PageHeader from "@/components/pageHeader";
 import { getPricingData } from "@/utils/pricingServer";
+import { getSiteSettingsData } from "@/utils/siteSettingsServer";
 
 export const metadata = {
     title: "Flower Fields",
@@ -17,11 +18,11 @@ export const metadata = {
 }
 
 export default async function FlowerFields() {
-    const pricing = await getPricingData();
+    const [pricing, settings] = await Promise.all([getPricingData(), getSiteSettingsData()]);
     const flowerCupPrice = Number(pricing["flower-cup"]?.amount ?? 0).toFixed(2);
     return (
         <Layout>
-            <PageHeader subtitle="2026 Season">Flower Fields</PageHeader>
+            <PageHeader subtitle={settings.season.name}>Flower Fields</PageHeader>
             <ArticleLayout>
                 <ArticleLead image="/sunflowerCloseUp.jpg" imageAlt="A sunflower growing in the flower field" imageFocalPoint="center 42%" heading="Sunflowers, Cosmos, & Zinnias">
                     <p>Take a stroll out to our flower field</p>

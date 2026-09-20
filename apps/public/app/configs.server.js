@@ -1,6 +1,7 @@
 import { cache } from 'react';
 import { evaluate, combine, flag } from 'flags/next';
 import { identifyStatsigUser, statsigAdapter } from './statsig';
+import { DEFAULT_SITE_SETTINGS } from '@oldmc/config/site-settings';
 
 /**
  * Statsig dynamic config declarations and the keys we expose locally.
@@ -40,6 +41,10 @@ const CONFIG_DEFINITIONS = [
     defaultValue: {
       questions: []
     }
+  },
+  {
+    statsigKey: 'site-settings',
+    defaultValue: DEFAULT_SITE_SETTINGS,
   }
 ];
 

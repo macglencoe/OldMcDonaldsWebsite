@@ -16,6 +16,8 @@ import FarmStory from "@/components/home/farmStory";
 import PricingOverview from "@/components/home/pricingOverview";
 import ClosingVisit from "@/components/home/closingVisit";
 import VendorHighlights from "@/components/home/vendorHighlights";
+import { getConfig } from "./configs.server";
+import { getSiteSettingsData } from "@/utils/siteSettingsServer";
 
 const featuredVendors = [
   {
@@ -50,8 +52,14 @@ export const metadata = {
 }
 
 export default async function Home() {
-  const flags = await getFlags();
+  const [flags, siteSettingsConfig, weeklyHoursConfig] = await Promise.all([
+    getFlags(),
+    getConfig("site-settings"),
+    getConfig("weekly-hours"),
+  ]);
   const isFeatureEnabled = getFlagEvaluator(flags);
+  const settings = await getSiteSettingsData({ config: siteSettingsConfig });
+  const weeklyHours = weeklyHoursConfig?.raw ?? {};
 
   const canonicalBase = "https://www.oldmcdonaldspumpkinpatchwv.com";
 
@@ -59,7 +67,7 @@ export default async function Home() {
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
-      name: "Old McDonald's Pumpkin Patch",
+      name: settings.business.name,
       alternateName: "Old McDonald's Pumpkin Patch & Corn Maze",
       url: canonicalBase,
       logo: `${canonicalBase}/logo.png`,
@@ -71,44 +79,44 @@ export default async function Home() {
         `${canonicalBase}/sunflower.jpg`,
         `${canonicalBase}/localMap.png`
       ],
-      telephone: "+1-304-839-2330",
+      telephone: settings.business.phone,
       address: {
         "@type": "PostalAddress",
-        streetAddress: "1597 Arden Nollville Rd",
-        addressLocality: "Inwood",
-        addressRegion: "WV",
-        postalCode: "25428",
-        addressCountry: "US"
+        streetAddress: settings.business.streetAddress,
+        addressLocality: settings.business.addressLocality,
+        addressRegion: settings.business.addressRegion,
+        postalCode: settings.business.postalCode,
+        addressCountry: settings.business.addressCountry
       },
       geo: {
         "@type": "GeoCoordinates",
-        latitude: 39.38273,
-        longitude: -78.04342
+        latitude: settings.business.latitude,
+        longitude: settings.business.longitude
       },
       hasMap: `${canonicalBase}/map`,
       sameAs: [
-        "https://www.facebook.com/oldmcdonaldspumpkinpatchandcornmaze",
-        "https://www.instagram.com/oldmcdonaldspumpkin/",
-        "https://www.tiktok.com/@glencoefarmwv"
+        settings.social.facebookUrl,
+        settings.social.instagramUrl,
+        settings.social.tiktokUrl
       ],
       openingHoursSpecification: [
         {
           "@type": "OpeningHoursSpecification",
           dayOfWeek: "Friday",
-          opens: "11:00",
-          closes: "18:00"
+          opens: weeklyHours.friday?.open?.slice(0, 5) ?? "11:00",
+          closes: weeklyHours.friday?.close?.slice(0, 5) ?? "18:00"
         },
         {
           "@type": "OpeningHoursSpecification",
           dayOfWeek: "Saturday",
-          opens: "11:00",
-          closes: "18:00"
+          opens: weeklyHours.saturday?.open?.slice(0, 5) ?? "11:00",
+          closes: weeklyHours.saturday?.close?.slice(0, 5) ?? "18:00"
         },
         {
           "@type": "OpeningHoursSpecification",
           dayOfWeek: "Sunday",
-          opens: "12:00",
-          closes: "18:00"
+          opens: weeklyHours.sunday?.open?.slice(0, 5) ?? "12:00",
+          closes: weeklyHours.sunday?.close?.slice(0, 5) ?? "18:00"
         }
       ],
       priceRange: "$"

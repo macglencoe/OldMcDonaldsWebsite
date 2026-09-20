@@ -3,9 +3,12 @@ import { FacebookLogo, InstagramLogo, TiktokLogo } from 'phosphor-react'
 import styles from './facebookFeed.module.css'
 import { track } from '@vercel/analytics'
 import { useFlags } from '@/app/FlagsContext'
+import useSiteSettings from '@/hooks/useSiteSettings'
 
 export default function FacebookFeed() {
     const { isFeatureEnabled } = useFlags();
+    const settings = useSiteSettings();
+    const facebookEmbedUrl = `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(settings.social.facebookUrl)}&tabs=timeline&width=340&height=500&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false&appId`;
     return (
         <div className="relative">
             <img src="https://images.unsplash.com/photo-1517292987719-0369a794ec0f?q=80&w=1674&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="absolute w-full h-full object-cover z-0 left-0 top-0" ></img>
@@ -15,19 +18,19 @@ export default function FacebookFeed() {
                     <h2 className="text-background text-4xl md:text-6xl font-bold font-[Satisfy]">Stay Updated</h2>
                     <p className='text-background text-2xl'>Follow us on our socials</p>
                     <div className="flex flex-row gap-4">
-                        <a href='https://www.facebook.com/oldmcdonaldspumpkinpatchandcornmaze' target="_blank"><FacebookLogo size={32} color="var(--background)" weight="fill" onClick={() => {
+                        <a href={settings.social.facebookUrl} target="_blank" rel="noopener noreferrer"><FacebookLogo size={32} color="var(--background)" weight="fill" onClick={() => {
                             track(
                                 'Social Link Click',
                                 { location: 'Socials Section (Home)', platform: 'facebook' }
                             )
                         }}/></a>
-                        <a href='https://www.instagram.com/oldmcdonaldspumpkin/' target="_blank"><InstagramLogo size={32} color="var(--background)" weight="fill" onClick={() => {
+                        <a href={settings.social.instagramUrl} target="_blank" rel="noopener noreferrer"><InstagramLogo size={32} color="var(--background)" weight="fill" onClick={() => {
                             track(
                                 'Social Link Click',
                                 { location: 'Socials Section (Home)', platform: 'instagram' }
                             )
                         }}/></a>
-                        <a href='https://www.tiktok.com/@glencoefarmwv' target="_blank"><TiktokLogo size={32} color="var(--background)" weight="fill" onClick={() => {
+                        <a href={settings.social.tiktokUrl} target="_blank" rel="noopener noreferrer"><TiktokLogo size={32} color="var(--background)" weight="fill" onClick={() => {
                             track(
                                 'Social Link Click',
                                 { location: 'Socials Section (Home)', platform: 'tiktok' }
@@ -36,7 +39,7 @@ export default function FacebookFeed() {
                     </div>
                 </div>
                 { isFeatureEnabled('show_facebook_feed') &&
-                    <iframe className="z-2" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Foldmcdonaldspumpkinpatchandcornmaze&tabs=timeline&width=340&height=500&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false&appId" width="320" height="500" style={{ border: "none", overflow: "hidden" }} scrolling="no" frameBorder="0" allowFullScreen={true} allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                    <iframe title={`${settings.business.name} Facebook feed`} className="z-2" src={facebookEmbedUrl} width="320" height="500" style={{ border: "none", overflow: "hidden" }} scrolling="no" frameBorder="0" allowFullScreen={true} allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
                 }
                 <div className='absolute' id='skip-feed' />
             </div>

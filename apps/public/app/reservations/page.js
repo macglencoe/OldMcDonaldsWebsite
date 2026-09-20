@@ -17,6 +17,7 @@ import { gazeboSlotLabels } from "@/lib/gazeboSlotConfig.mjs";
 import { getCurrentOrUpcomingGazeboSeason } from "@/lib/gazeboSlotConfigServer.mjs";
 import { getPricingData } from "@/utils/pricingServer";
 import ReservationRequestForm from "./reservationRequestForm";
+import { getSiteSettingsData } from "@/utils/siteSettingsServer";
 
 const RENTAL_DAYS = ["Fridays", "Saturdays", "Sundays"];
 const MONTH_NAMES = [
@@ -79,12 +80,13 @@ export const Reservations = async () => {
     }).formatToParts(new Date());
     const todayValues = Object.fromEntries(todayParts.map(({ type, value }) => [type, value]));
     const today = `${todayValues.year}-${todayValues.month}-${todayValues.day}`;
-    const [pricing, gazeboSeason] = await Promise.all([
+    const [pricing, gazeboSeason, settings] = await Promise.all([
       getPricingData(),
       getCurrentOrUpcomingGazeboSeason(today).catch((error) => {
         console.error("Could not load public gazebo season configuration:", error.message);
         return null;
       }),
+      getSiteSettingsData(),
     ]);
     const gazeboRental = pricing["gazebo-rental"];
     const gazeboPrice = Number(gazeboRental?.amount ?? 0).toFixed(2);
@@ -157,7 +159,7 @@ export const Reservations = async () => {
                 <ArticleNotice title="General Admission">
                     <p>All guests must pay <b>General Admission</b> at the gate:</p>
                     <p><b className="text-3xl!">{admissionDisplay}</b> per {admissionUnit}*</p>
-                    <p>* Over the age of 3</p>
+                    <p>* Over the age of {settings.policies.freeAdmissionMaxAge}</p>
                 </ArticleNotice>
 
                 <ReservationRequestForm priceDisplay={`$${gazeboPrice}`} />

@@ -12,6 +12,7 @@ import PumpkinPriceGadget from "@/components/pumpkinPriceGadget"
 import PageHeader from "@/components/pageHeader"
 import { getPricingData } from "@/utils/pricingServer"
 import { Action } from "@oldmc/ui";
+import { getSiteSettingsData } from "@/utils/siteSettingsServer"
 
 export const metadata = {
     title: "Pumpkin Patch",
@@ -19,13 +20,13 @@ export const metadata = {
 }
 
 export const PumpkinPatch = async () => {
-    const pricing = await getPricingData()
+    const [pricing, settings] = await Promise.all([getPricingData(), getSiteSettingsData()])
     const pumpkinPatchPrice = pricing["pumpkin-patch"]
     const pumpkinAmount = Number(pumpkinPatchPrice?.amount ?? 0).toFixed(2)
     const pumpkinUnit = pumpkinPatchPrice?.per ?? 'pound'
     return (
         <Layout>
-            <PageHeader subtitle="2026 Season">Pumpkin Patch</PageHeader>
+            <PageHeader subtitle={settings.season.name}>Pumpkin Patch</PageHeader>
             <ArticleLayout>
                 <ArticleLead
                     image="/pumpkinlanes.jpg"

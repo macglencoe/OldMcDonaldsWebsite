@@ -9,6 +9,8 @@ import {
 import PageHeader from '@/components/pageHeader'
 import { getPricingData } from '@/utils/pricingServer'
 import { Action } from "@oldmc/ui";
+import { getSiteSettingsData } from '@/utils/siteSettingsServer'
+import { formatMonthDay, formatTime24 } from '@oldmc/config/site-settings'
 
 export const metadata = {
     title: "Hay Rides",
@@ -16,11 +18,11 @@ export const metadata = {
 }
 
 export const HayRide = async () => {
-    const pricing = await getPricingData()
+    const [pricing, settings] = await Promise.all([getPricingData(), getSiteSettingsData()])
     const hayridePrice = Number(pricing.hayride?.amount ?? 0).toFixed(2)
     return (
         <Layout>
-            <PageHeader subtitle="2026 Season">Hay Rides</PageHeader>
+            <PageHeader subtitle={settings.season.name}>Hay Rides</PageHeader>
             <ArticleLayout>
                 <ArticleLead image="/hillview.jpg" imageAlt="A scenic view across Glencoe Farm" imageFocalPoint="center 54%" heading="A tour of the farm">
                     <p>Relax on a 20-minute haywagon ride with scenic views of the property</p>
@@ -57,7 +59,7 @@ export const HayRide = async () => {
 
                 <ArticleSection imageAttribution tone="night" image="https://images.unsplash.com/photo-1707755939969-e9c1da71c5bb?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" imageAlt="Trees beneath a dark night sky" imageRatio="landscape" imageFocalPoint="center 62%">
                     <h2>Hayrides at night</h2>
-                    <p>Starting October 16th, we will have hayrides open from 7:30pm to 10:30pm</p>
+                    <p>Starting {formatMonthDay(settings.nightMaze.firstDate, settings.season.timeZone)}, we will have hayrides open from {formatTime24(settings.nightMaze.opensAt)} to {formatTime24(settings.nightMaze.closesAt)}</p>
                     <p>Bring your friends and some warm clothes for a spooky tour of the deep dark forest at night</p>
                     <Action as='Link' href='/activities/night-maze' variant='secondary'>See More</Action>
                 </ArticleSection>

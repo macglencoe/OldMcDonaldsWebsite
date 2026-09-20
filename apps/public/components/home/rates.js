@@ -11,6 +11,7 @@ import {
 import { motion } from "framer-motion";
 import { track } from "@vercel/analytics";
 import { usePricingConfig } from "@/hooks/usePricingConfig";
+import useSiteSettings from "@/hooks/useSiteSettings";
 
 // Mapping Phosphor icons
 const ICON_MAP = {
@@ -22,6 +23,7 @@ const ICON_MAP = {
 
 export default function Rates() {
   const pricing = usePricingConfig();
+  const settings = useSiteSettings();
   const items = [
     {
       title: "Admission",
@@ -97,7 +99,7 @@ export default function Rates() {
       </div>
 
       <p className="text-center text-lg text-white/80 mt-12 italic">
-        *Age 3 and under are free
+        *Age {settings.policies.freeAdmissionMaxAge} and under are free
       </p>
     </section>
   );

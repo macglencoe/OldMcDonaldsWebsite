@@ -12,6 +12,8 @@ import {
 import PageHeader from '@/components/pageHeader';
 import { Action } from "@oldmc/ui";
 import { getFlagEvaluator, getFlags } from '@/app/flags.server';
+import { getSiteSettingsData } from '@/utils/siteSettingsServer';
+import { formatMonthDay } from '@oldmc/config/site-settings';
 
 export const metadata = {
     title: "Corn Maze",
@@ -77,11 +79,11 @@ const pastMazes = [
 ]
 
 export default async function CornMaze() {
-    const flags = await getFlags();
+    const [flags, settings] = await Promise.all([getFlags(), getSiteSettingsData()]);
     const isFeatureEnabled = getFlagEvaluator(flags);
     return (
         <Layout>
-            <PageHeader subtitle="2026 Season">Corn Maze</PageHeader>
+            <PageHeader subtitle={settings.season.name}>Corn Maze</PageHeader>
             <ArticleLayout>
                 <ArticleLead
                     image="/cornMazeEntrance.jpg"
@@ -93,7 +95,7 @@ export default async function CornMaze() {
                     <p>Our corn maze is carefully designed each year to be both challenging and fun, all while having an over-arching theme.</p>
                 </ArticleLead>
 
-                <ArticleNotice title="2026 - Coming Soon">
+                <ArticleNotice title={`${settings.season.year} - Coming Soon`}>
                     <p>Check back soon for more information about this year&apos;s corn maze!</p>
                 </ArticleNotice>
 
@@ -107,7 +109,7 @@ export default async function CornMaze() {
                     <div className={styles.nightMaze}>
                         <h2>Night Maze</h2>
                         <p>After the sun sets, the corn maze becomes a new, spooky challenge.</p>
-                        <p>Starting October 16th, come back after dark and find your way through the maze without the help of daylight.</p>
+                        <p>Starting {formatMonthDay(settings.nightMaze.firstDate, settings.season.timeZone)}, come back after dark and find your way through the maze without the help of daylight.</p>
                         <Action as='Link' href='/activities/night-maze' variant='secondary' className={'mx-auto'}>See More</Action>
                     </div>
                 </ArticleSection>

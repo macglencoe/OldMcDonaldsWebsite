@@ -3,11 +3,7 @@ import { Compass, FacebookLogo, InstagramLogo, Phone } from 'phosphor-react';
 import Link from 'next/link';
 import { track } from '@vercel/analytics';
 import { useFlags } from '@/app/FlagsContext';
-
-const socialLinks = [
-  { platform: 'facebook', href: 'https://www.facebook.com/oldmcdonaldspumpkinpatchandcornmaze', icon: <FacebookLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
-  { platform: 'instagram', href: 'https://www.instagram.com/oldmcdonaldspumpkin/', icon: <InstagramLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
-];
+import useSiteSettings from '@/hooks/useSiteSettings';
 
 const baseQuickLinks = [
   { href: '/visit', text: 'Visit' },
@@ -48,6 +44,11 @@ const FooterLinkList = ({ title, icon, links }) => (
 
 const Footer = () => {
   const { isFeatureEnabled } = useFlags();
+  const settings = useSiteSettings();
+  const socialLinks = [
+    { platform: 'facebook', href: settings.social.facebookUrl, icon: <FacebookLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
+    { platform: 'instagram', href: settings.social.instagramUrl, icon: <InstagramLogo size={32} style={{ color: 'var(--background)' }} weight="duotone" /> },
+  ];
   const quickLinks = [
     ...baseQuickLinks,
     ...(isFeatureEnabled('show_vendors') ? [{ href: '/vendors', text: 'Vendors' }] : []),
@@ -98,13 +99,13 @@ const Footer = () => {
         <div className="flex flex-col items-center justify-center p-8 flex-1">
           <h2 className="text-xl font-semibold uppercase opacity-70 hover:opacity-100">Call Us</h2>
           <a
-            href="tel:304-839-2330"
+            href={`tel:${settings.business.phone}`}
             className="flex items-center gap-2 text-[var(--background)] font-semibold border-4 border-[var(--background)] px-4 py-2 mt-2 opacity-70 hover:opacity-100 whitespace-nowrap"
             onClick={() => {
               track('Call Button', { location: 'Footer' });
             }}
           >
-            <Phone size={32} style={{ color: 'var(--background)' }} weight="duotone" /> (304) 839-2330
+            <Phone size={32} style={{ color: 'var(--background)' }} weight="duotone" /> {settings.business.phoneDisplay}
           </a>
         </div>
       </div>
@@ -117,7 +118,7 @@ const Footer = () => {
         <a href="/attribution" className="text-[var(--background)] opacity-70 hover:opacity-100">
           Attribution
         </a>
-        <span className="text-[var(--background)] opacity-70">© 2026 Old McDonalds Pumpkin Patch LLC. All Rights Reserved</span>
+        <span className="text-[var(--background)] opacity-70">© {settings.season.year} {settings.business.legalName}. All Rights Reserved</span>
       </div>
     </footer>
   );

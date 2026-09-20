@@ -26,7 +26,7 @@ function getEventEndDate(event) {
   return event.start
 }
 
-function buildGoogleCalendarUrl(event) {
+function buildGoogleCalendarUrl(event, location) {
   if (!event?.start) return null
 
   const url = new URL(GOOGLE_CALENDAR_URL)
@@ -50,10 +50,7 @@ function buildGoogleCalendarUrl(event) {
     ?? event.details
   if (description) url.searchParams.set("details", description)
 
-  url.searchParams.set(
-    "location",
-    "Old McDonalds Pumpkin Patch & Corn Maze, 1597 Arden Nollville Rd, Inwood, WV 25428, USA"
-  )
+  if (location) url.searchParams.set("location", location)
 
   return url.toString()
 }
@@ -91,6 +88,7 @@ export function FestivalCalendar({
   scheduleArray,
   initialDateConfig,
   initialDateString,
+  location,
   bgSrc
 }) {
   const [weatherByDate, setWeatherByDate] = useState({})
@@ -236,7 +234,7 @@ export function FestivalCalendar({
                     className="calendar-detail-event"
                     style={{ borderLeftColor: eventColor(event) }}
                     onClick={() => {
-                      const calendarUrl = buildGoogleCalendarUrl(event)
+                      const calendarUrl = buildGoogleCalendarUrl(event, location)
                       if (calendarUrl) window.open(calendarUrl, "_blank", "noopener,noreferrer")
                     }}
                   >

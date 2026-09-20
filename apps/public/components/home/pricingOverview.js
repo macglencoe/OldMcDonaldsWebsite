@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle } from "phosphor-react";
 import { usePricingConfig } from "@/hooks/usePricingConfig";
+import useSiteSettings from "@/hooks/useSiteSettings";
 import styles from "./homeSections.module.css";
 
 const included = [
@@ -28,6 +29,7 @@ function formatPriceWithPer(price) {
 
 export default function PricingOverview() {
   const pricing = usePricingConfig();
+  const settings = useSiteSettings();
   const admission = pricing.admission;
   const addOns = [
     ["Hayrides", pricing.hayride],
@@ -48,7 +50,7 @@ export default function PricingOverview() {
             <p className={styles.price}>
               {formatPrice(admission)}{admission?.per && <span>/{admission.per}</span>}
             </p>
-            <p>Children age 3 and under are free.</p>
+            <p>Children age {settings.policies.freeAdmissionMaxAge} and under are free.</p>
           </article>
 
           <article className={styles.includedCard}>

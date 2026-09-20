@@ -1,4 +1,7 @@
+"use client";
+
 import styles from "./testimonials.module.css";
+import useSiteSettings from "@/hooks/useSiteSettings";
 
 const testimonials = [
   {
@@ -15,9 +18,8 @@ const testimonials = [
   },
 ];
 
-const reviewsUrl = "https://www.google.com/search?q=Old+McDonalds+Pumpkin+Patch+%26+Corn+Maze+Reviews";
-
 export default function Testimonials() {
+  const settings = useSiteSettings();
   return (
     <section className={styles.section} aria-labelledby="reviews-heading">
       <div className={styles.inner}>
@@ -34,7 +36,7 @@ export default function Testimonials() {
             </figure>
           ))}
         </div>
-        <a className={styles.link} href={reviewsUrl} target="_blank" rel="noopener noreferrer">Read more reviews on Google</a>
+        <a className={styles.link} href={settings.social.reviewsUrl} target="_blank" rel="noopener noreferrer">Read more reviews on Google</a>
       </div>
     </section>
   );

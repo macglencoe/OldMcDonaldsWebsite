@@ -4,10 +4,12 @@ import Hours from "@/components/hours";
 import EssentialActions from "@/components/essentialActions";
 import { ArrowSquareOut, MapTrifold, Question, Ticket, MapPin, Car, Wheelchair, ToiletPaper } from "phosphor-react";
 import Link from "next/link";
+import useSiteSettings from "@/hooks/useSiteSettings";
+import { createDirectionsUrl } from "@oldmc/config/site-settings";
 
 export default function VisitClient() {
-    const address = "1597 Arden Nollville Rd. Inwood, WV 25428";
-    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
+    const settings = useSiteSettings();
+    const mapsUrl = createDirectionsUrl(settings);
 
     return (
         <div className="max-w-5xl mx-auto px-4 md:px-6">
@@ -53,7 +55,7 @@ export default function VisitClient() {
                     <div className="rounded-xl border border-foreground/10 bg-background p-5">
                         <MapPin className="mb-3 text-accent" size={28} weight="duotone" aria-hidden />
                         <h3 className="text-xl font-semibold">Address</h3>
-                        <p className="mt-2 text-foreground/75">1597 Arden Nollville Rd<br />Inwood, WV 25428</p>
+                        <p className="mt-2 text-foreground/75">{settings.business.streetAddress}<br />{settings.business.addressLocality}, {settings.business.addressRegion} {settings.business.postalCode}</p>
                         <p className="mt-2 text-sm text-foreground/60">Just off I-81, between Martinsburg and Inwood.</p>
                     </div>
                     <Link href="/faq" className="group rounded-xl border border-foreground/10 bg-background p-5 hover:border-accent/60">

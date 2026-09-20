@@ -5,12 +5,15 @@ import { Navbar } from "@ui/navbar";
 import { usePathname } from "next/navigation";
 import { ArrowUp } from "phosphor-react";
 import faq from '@/public/data/faq.json';
+import useSiteSettings from '@/hooks/useSiteSettings';
+import { createDirectionsUrl } from '@oldmc/config/site-settings';
 
-const DIRECTIONS_URL = "https://www.google.com/maps/dir/?api=1&destination=1597%20Arden%20Nollville%20Rd.%20Inwood%2C%20WV%2025428";
 const PRIMARY_KEYS = new Set(["visit", "activities", "pricing", "reservations"]);
 
 export default function Navigation() {
     const pathname = usePathname();
+    const settings = useSiteSettings();
+    const directionsUrl = createDirectionsUrl(settings);
 
     const hasFaq = faq.some(item =>
         item.pages?.includes(pathname) // only true if this FAQ applies to current path
@@ -51,14 +54,14 @@ export default function Navigation() {
                 ]}
                 primaryKeys={PRIMARY_KEYS}
                 actionItem={{
-                    href: DIRECTIONS_URL,
+                    href: directionsUrl,
                     title: "Get Directions",
                     external: true
                 }}
                 mobileFooter={(
                     <>
-                        <p>1597 Arden Nollville Rd<br />Inwood, WV 25428</p>
-                        <p><a href="tel:304-839-2330">Call (304) 839-2330</a></p>
+                        <p>{settings.business.streetAddress}<br />{settings.business.addressLocality}, {settings.business.addressRegion} {settings.business.postalCode}</p>
+                        <p><a href={`tel:${settings.business.phone}`}>Call {settings.business.phoneDisplay}</a></p>
                     </>
                 )}
             />
