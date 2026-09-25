@@ -36,8 +36,8 @@ export const HayRide = async () => {
                     <h2>Pricing</h2>
                     <p>For one person, above 3 years of age:</p>
                     <p className='text-3xl! font-bold'>${hayridePrice}</p>
-                    <p>Must be paid at the admission booth</p>
-                    <p>If you plan on bringing a large group, make sure your group is all together at the admission booth</p>
+                    <p>Must be paid at the ticket booth</p>
+                    <p>If you plan on bringing a large group, make sure your group is all together at the ticket booth</p>
                 </ArticleSection>
 
                 <ArticleSteps

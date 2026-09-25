@@ -20,8 +20,8 @@
     ]
   },
   {
-    "question": "Does admission include a pumpkin?",
-    "answer": "Admission does not include pumpkins. U-pick pumpkins are priced by weight at $0.50 per pound.",
+    "question": "Does a Day Pass include a pumpkin?",
+    "answer": "A Day Pass does not include pumpkins. U-pick pumpkins are priced by weight at $0.50 per pound.",
     "pages": [
       "/activities/pumpkin-patch"
     ],
@@ -80,7 +80,7 @@
   },
   {
     "question": "Can I buy tickets online?",
-    "answer": "At this time, admission is paid at the gate. Online sales are not currently on our roadmap.",
+    "answer": "At this time, Day Passes are purchased at the gate. Online sales are not currently on our roadmap.",
     "pages": [
       "/visit"
     ],

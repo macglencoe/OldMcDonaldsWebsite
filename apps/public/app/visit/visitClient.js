@@ -32,7 +32,7 @@ export default function VisitClient() {
                 <EssentialActions
                     actions={[
                         { title: "Get directions", description: "Open the route in Google Maps", href: mapsUrl, Icon: MapTrifold, external: true, primary: true },
-                        { title: "Pricing & tickets", description: "Review admission before you arrive", href: "/pricing", Icon: Ticket },
+                        { title: "Pricing & tickets", description: "Review Day Pass pricing before you arrive", href: "/pricing", Icon: Ticket },
                         { title: "Explore activities", description: "Pumpkins, mazes, hayrides, and more", href: "/activities", Icon: MapPin },
                         { title: "Visitor FAQ", description: "Quick answers for planning your day", href: "/faq", Icon: Question },
                     ]}

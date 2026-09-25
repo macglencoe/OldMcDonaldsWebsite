@@ -154,8 +154,8 @@ export const Reservations = async () => {
                     <p>Keep this in mind and have a backup plan for your party!</p>
                 </ArticleNotice>
 
-                <ArticleNotice title="General Admission">
-                    <p>All guests must pay <b>General Admission</b> at the gate:</p>
+                <ArticleNotice title="Day Pass">
+                    <p>All guests must purchase a <b>Day Pass</b> at the gate:</p>
                     <p><b className="text-3xl!">{admissionDisplay}</b> per {admissionUnit}*</p>
                     <p>* Over the age of 3</p>
                 </ArticleNotice>

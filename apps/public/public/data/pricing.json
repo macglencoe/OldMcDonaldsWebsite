@@ -2,12 +2,12 @@
     "admission": {
         "amount": 6.00,
         "per": "person",
-        "notes": ["Paid at the admission booth"]
+        "notes": ["Paid at the ticket booth"]
     },
     "hayride": {
         "amount": 5.00,
         "per": "person",
-        "notes": ["Paid at the admission booth"]
+        "notes": ["Paid at the ticket booth"]
     },
     "pumpkin-patch": {
         "amount": 0.50,

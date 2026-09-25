@@ -65,7 +65,7 @@ export const NightMaze = () => {
                                 </ul>
                             </div>
                             <div className="p-4 bg-foreground/60">
-                                <p className="text-center">Must be paid at the admission booth</p>
+                                <p className="text-center">Must be paid at the ticket booth</p>
                             <p className="!text-sm text-center">*Children 3 and under are free</p>
                             </div>
                         </div>
@@ -94,7 +94,7 @@ export const NightMaze = () => {
                                 </ul>
                             </div>
                             <div className="p-4 bg-foreground/60">
-                                <p className="text-center">Book at the admission booth, or <Action className="ml-2" as="a" href="tel:3048392330" variant="outline-primary">Call</Action></p>
+                                <p className="text-center">Book at the ticket booth, or <Action className="ml-2" as="a" href="tel:3048392330" variant="outline-primary">Call</Action></p>
                             </div>
                         </div>
                     </ArticleSection>

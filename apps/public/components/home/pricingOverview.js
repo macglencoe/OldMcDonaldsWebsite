@@ -40,11 +40,11 @@ export default function PricingOverview() {
       <div className={styles.inner}>
         <p className={styles.eyebrow}>Family-friendly pricing</p>
         <h2 className={styles.heading} id="home-pricing-heading">A full day of farm fun starts here</h2>
-        <p className={styles.intro}>General admission covers the activities families enjoy most. A few seasonal experiences are priced separately.</p>
+        <p className={styles.intro}>A Day Pass covers the activities families enjoy most. A few seasonal experiences are priced separately.</p>
 
         <div className={styles.pricingGrid}>
           <article className={styles.admissionCard}>
-            <h3>General admission</h3>
+            <h3>Day Pass</h3>
             <p className={styles.price}>
               {formatPrice(admission)}{admission?.per && <span>/{admission.per}</span>}
             </p>
@@ -52,7 +52,7 @@ export default function PricingOverview() {
           </article>
 
           <article className={styles.includedCard}>
-            <h3>Included with admission</h3>
+            <h3>Included with your Day Pass</h3>
             <ul className={styles.includedList}>
               {included.map((item) => (
                 <li key={item}><CheckCircle aria-hidden="true" size={22} weight="fill" /> {item}</li>

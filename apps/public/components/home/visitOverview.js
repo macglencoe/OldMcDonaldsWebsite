@@ -224,7 +224,7 @@ export default function VisitOverview() {
           <div className={styles.supportingCards}>
             <article className={`${styles.detailCard} ${styles.admissionCard}`}>
               <Ticket aria-hidden="true" size={30} weight="duotone" />
-              <p className={styles.cardLabel}>General admission</p>
+              <p className={styles.cardLabel}>Day Pass</p>
               <p className={styles.admissionPrice}>{formatPrice(pricing.admission)}</p>
               <p className={styles.muted}>Children age 3 and under are free.</p>
               <Link href="/pricing">See complete pricing <span aria-hidden="true">→</span></Link>
