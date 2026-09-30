@@ -58,6 +58,23 @@ export default function () {
                 ]}
             />
 
+            <h2 className="tracking-widest uppercase text-xl ml-3 border-b-3 border-accent/10 text-foreground/80">Booking Requests</h2>
+
+            <DirectoryGrid
+                items={[
+                    {
+                        name: "Gazebo Requests",
+                        url: "/reservation-requests",
+                        icon: PiClipboardTextDuotone
+                    },
+                    {
+                        name: "Campfire Requests",
+                        url: "/campfire-requests",
+                        icon: PiClipboardTextDuotone
+                    }
+                ]}
+            />
+
 
             <h2 className="tracking-widest uppercase text-xl ml-3 border-b-3 border-accent/10 text-foreground/80">Form Submissions</h2>
 
@@ -67,11 +84,6 @@ export default function () {
                         name: "Maze Entries",
                         url: "/maze-entries",
                         icon: PiClipboardTextDuotone
-                    },
-                    {
-                        name: "Reservation Requests",
-                        url: "/reservation-requests",
-                        icon: PiCalendarDuotone
                     },
                     {
                         name: "Vendor Applications",

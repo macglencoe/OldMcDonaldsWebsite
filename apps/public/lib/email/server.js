@@ -188,6 +188,27 @@ export async function sendReservationCustomerReceipt(request) {
   });
 }
 
+function campfireRequestText(request) {
+  return [`Request ID: CF-${request.id}`, `Name: ${request.name}`, `Email: ${request.email}`,
+    `Phone: ${request.phone}`, `Preferred night: ${request.preferredDate}`,
+    `Other dates: ${request.fallbackDates || 'None provided'}`, `Party size: ${request.partySize || 'Not provided'}`,
+    `Price acknowledged: $${(request.priceCents / 100).toFixed(2)}`,
+    `Additional comments: ${request.additionalComments || 'None provided'}`].join('\n');
+}
+
+export async function sendCampfireRequestStaffNotification(request) {
+  const text = campfireRequestText(request);
+  return deliver({ to: RECIPIENTS.reservations, subject: `Campfire reservation request CF-${request.id} — ${request.preferredDate}`,
+    text, html: `<h2>Campfire reservation request CF-${request.id}</h2><p><strong>This is a request, not a confirmed booking.</strong></p><pre style="font-family: sans-serif; white-space: pre-wrap">${escapeHtml(text)}</pre>`, replyTo: request.email });
+}
+
+export async function sendCampfireRequestCustomerReceipt(request) {
+  const price = `$${(request.priceCents / 100).toFixed(2)}`;
+  const text = `Hi ${request.name},\n\nWe received your campfire reservation request CF-${request.id}.\nPreferred night: ${request.preferredDate}\nRental price acknowledged: ${price}\n\nThis is a receipt, not a booking confirmation. Staff will contact you about availability and payment details.`;
+  return deliver({ to: [request.email], subject: `We received your campfire request CF-${request.id}`, text,
+    html: `<p>Hi ${escapeHtml(request.name)},</p><p>We received your campfire reservation request <strong>CF-${request.id}</strong>.</p><ul><li>Preferred night: ${escapeHtml(request.preferredDate)}</li><li>Rental price acknowledged: ${price}</li></ul><p><strong>This is a receipt, not a booking confirmation.</strong> Staff will contact you about availability and payment details.</p>`, replyTo: RECIPIENTS.reservations });
+}
+
 function vendorDetailsText(application) {
   return [
     `Application ID: ${application.id}`,

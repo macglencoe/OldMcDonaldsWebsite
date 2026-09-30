@@ -7,6 +7,8 @@ const SENSITIVE_PREFIXES = [
   "/maze-entries",
   "/reservation-requests",
   "/api/reservation-requests",
+  "/campfire-requests",
+  "/api/campfire-requests",
   "/vendor-applications",
   "/api/vendor-applications",
   "/bookings",

@@ -27,5 +27,9 @@
     "gazebo-rental": {
         "amount": 75.00,
         "per": "2 hours"
+    },
+    "campfire-rental": {
+        "amount": 50.00,
+        "per": "night"
     }
 }

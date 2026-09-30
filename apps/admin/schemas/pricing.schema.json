@@ -7,7 +7,8 @@
         "pumpkin-patch",
         "flower-cup",
         "sunflower",
-        "gazebo-rental"
+        "gazebo-rental",
+        "campfire-rental"
     ],
     "additionalProperties": false,
     "properties": {
@@ -16,7 +17,8 @@
         "pumpkin-patch": { "$ref": "#/definitions/priceEntry" },
         "flower-cup": { "$ref": "#/definitions/priceEntry" },
         "sunflower": { "$ref": "#/definitions/priceEntry" },
-        "gazebo-rental": { "$ref": "#/definitions/priceEntry" }
+        "gazebo-rental": { "$ref": "#/definitions/priceEntry" },
+        "campfire-rental": { "$ref": "#/definitions/priceEntry" }
     },
     "definitions": {
         "priceEntry": {

@@ -4,6 +4,7 @@ import { getDatabase } from '@oldmc/db';
 
 import {
   validateCampfireBooking,
+  validateCampfireConversion,
   validateGazeboBooking,
   validateGazeboConversion,
   validateGazeboSeasonConfig,
@@ -71,7 +72,7 @@ export async function getCampfireBookings(filters = {}, { sql = getDatabase() } 
   } = filters;
   return sql.query(
     `SELECT id::text, booking_date::text, status, customer_name, customer_email,
-       customer_phone, customer_phone_normalized, party_size, internal_notes,
+       customer_phone, customer_phone_normalized, party_size, reservation_request_id::text, internal_notes,
        created_at, updated_at
      FROM campfire_bookings
      WHERE ($1::date IS NULL OR booking_date >= $1)
@@ -96,7 +97,7 @@ export async function getCampfireBookings(filters = {}, { sql = getDatabase() } 
 export async function getCampfireBooking(id, { sql = getDatabase() } = {}) {
   return getBookingById('campfire_bookings', id, sql, `
     id::text, booking_date::text, status, customer_name, customer_email,
-    customer_phone, customer_phone_normalized, party_size, internal_notes,
+    customer_phone, customer_phone_normalized, party_size, reservation_request_id::text, internal_notes,
     created_at, updated_at
   `);
 }
@@ -406,6 +407,41 @@ export async function createCampfireBooking(input, { sql = getDatabase() } = {})
   return rows[0];
 }
 
+export async function getCampfireRequestForBooking(id, { sql = getDatabase() } = {}) {
+  const normalizedId = normalizeBookingId(id);
+  const rows = await sql.query(`SELECT r.id::text, r.email, r.name, r.phone, r.phone_normalized,
+    r.preferred_date::text, r.fallback_dates, r.party_size, r.price_cents_snapshot,
+    r.additional_comments, r.created_at,
+    COALESCE(json_agg(json_build_object('id',b.id::text,'booking_date',b.booking_date::text,'status',b.status)
+      ORDER BY b.created_at) FILTER (WHERE b.id IS NOT NULL),'[]'::json) AS bookings
+    FROM campfire_reservation_requests r LEFT JOIN campfire_bookings b ON b.reservation_request_id=r.id
+    WHERE r.id=$1 GROUP BY r.id`, [normalizedId]);
+  if (!rows.length) throw new BookingError('REQUEST_NOT_FOUND', 'Campfire request not found.', 404);
+  return rows[0];
+}
+
+export async function convertCampfireRequest(input, { sql = getDatabase() } = {}) {
+  const value = activeBookingValue(validateCampfireConversion(input));
+  try {
+    const rows = await sql.query(`WITH created_booking AS (
+      INSERT INTO campfire_bookings (booking_date,status,customer_name,customer_email,customer_phone,
+        customer_phone_normalized,party_size,reservation_request_id,internal_notes)
+      SELECT $2::date,$3,r.name,r.email,r.phone,r.phone_normalized,COALESCE($4,r.party_size),r.id,$5
+      FROM campfire_reservation_requests r WHERE r.id=$1
+      RETURNING id::text,booking_date::text,status,customer_name,customer_email,customer_phone,
+        customer_phone_normalized,party_size,reservation_request_id::text,internal_notes,created_at,updated_at
+    ), resolved AS (UPDATE campfire_reservation_requests SET review_status='resolved',reviewed_at=CURRENT_TIMESTAMP
+      WHERE id=$1 AND EXISTS (SELECT 1 FROM created_booking) RETURNING id)
+    SELECT created_booking.* FROM created_booking JOIN resolved ON true`,
+    [value.reservationRequestId,value.bookingDate,value.status,value.partySize,value.internalNotes]);
+    if (!rows.length) throw new BookingError('REQUEST_NOT_FOUND', 'Campfire request not found.', 404);
+    return rows[0];
+  } catch (error) {
+    if (error?.constraint === 'campfire_bookings_active_request_unique_idx') throw new BookingError('REQUEST_ALREADY_BOOKED','This campfire request already has an active booking.',409);
+    throw error;
+  }
+}
+
 export async function updateGazeboBooking(id, input, { sql = getDatabase() } = {}) {
   const normalizedId = normalizeBookingId(id);
   const value = activeBookingValue(validateGazeboBooking(input));
@@ -459,7 +495,7 @@ export async function updateCampfireBooking(id, input, { sql = getDatabase() } =
        updated_at = CURRENT_TIMESTAMP
      WHERE id = $1 AND status <> 'cancelled'
      RETURNING id::text, booking_date::text, status, customer_name, customer_email,
-       customer_phone, customer_phone_normalized, party_size, internal_notes,
+       customer_phone, customer_phone_normalized, party_size, reservation_request_id::text, internal_notes,
        created_at, updated_at`,
     [
       normalizedId, value.bookingDate, value.status, value.customerName,

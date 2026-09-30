@@ -6,6 +6,7 @@ import {
     ArticleSection,
 } from "@/components/article";
 import { Action } from "@oldmc/ui";
+import CampfireReservationForm from "./campfireReservationForm";
 
 export const metadata = {
     title: "Night Maze",
@@ -94,9 +95,10 @@ export const NightMaze = () => {
                                 </ul>
                             </div>
                             <div className="p-4 bg-foreground/60">
-                                <p className="text-center">Book at the ticket booth, or <Action className="ml-2" as="a" href="tel:3048392330" variant="outline-primary">Call</Action></p>
+                                <p className="text-center">Submit a request below and we’ll contact you to confirm availability.</p>
                             </div>
                         </div>
+                        <CampfireReservationForm priceDisplay="$50.00" />
                     </ArticleSection>
                 </ArticleLayout>
             </Layout>

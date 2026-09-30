@@ -17,7 +17,7 @@ export function RequestStatusBadge({ status }) {
   return <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-bold ${REQUEST_STATUS_STYLES[status]}`}>{REQUEST_REVIEW_STATUS_LABELS[status]}</span>;
 }
 
-export default function ReservationRequestReview({ request }) {
+export default function ReservationRequestReview({ request, endpoint = '/api/reservation-requests/review', requestLabel = 'reservation request' }) {
   const router = useRouter();
   const [status, setStatus] = useState(request.review_status);
   const [note, setNote] = useState(request.internal_note ?? '');
@@ -31,10 +31,10 @@ export default function ReservationRequestReview({ request }) {
   async function submit(event) {
     event.preventDefault();
     if (status === 'spam' && request.review_status !== 'spam'
-      && !window.confirm(`Mark reservation request #${request.id} as spam? It can be restored later.`)) return;
+      && !window.confirm(`Mark ${requestLabel} #${request.id} as spam? It can be restored later.`)) return;
     setState({ pending: true, error: '', saved: false });
     try {
-      const response = await fetch('/api/reservation-requests/review', {
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: request.id, status, note }),

@@ -149,6 +149,15 @@ export function validateCampfireBooking(body) {
   return normalizeSharedBookingFields(body, { includeCustomer: true });
 }
 
+export function validateCampfireConversion(body) {
+  const shared = normalizeSharedBookingFields(body, { includeCustomer: false });
+  if (shared.error) return shared;
+  const raw = typeof body.reservationRequestId === 'string' ? body.reservationRequestId.trim() : body.reservationRequestId;
+  const reservationRequestId = typeof raw === 'string' && /^\d+$/.test(raw) ? Number(raw) : raw;
+  if (!Number.isSafeInteger(reservationRequestId) || reservationRequestId < 1) return { error: 'Choose a valid campfire request.' };
+  return { value: { ...shared.value, reservationRequestId } };
+}
+
 export function validateGazeboSeasonConfig(body) {
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
     return { error: 'A JSON object is required.' };

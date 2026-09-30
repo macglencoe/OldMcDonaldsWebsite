@@ -9,7 +9,7 @@ const fieldsetClass = "grid gap-4 rounded-xl border border-foreground/20 bg-whit
 
 export default function BookingForm({ type, request = null, booking = null, returnTo = null }) {
   const router = useRouter();
-  const isConversion = type === "gazebo" && Boolean(request);
+  const isConversion = Boolean(request);
   const isEditing = Boolean(booking);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
@@ -24,7 +24,7 @@ export default function BookingForm({ type, request = null, booking = null, retu
     if (isConversion) body.reservationRequestId = request.id;
 
     const endpoint = isConversion
-      ? "/api/bookings/gazebo/from-request"
+      ? `/api/bookings/${type}/from-request`
       : isEditing
         ? `/api/bookings/${type}/${booking.id}`
         : `/api/bookings/${type}`;
@@ -119,7 +119,7 @@ export default function BookingForm({ type, request = null, booking = null, retu
         {isConversion && (
           <label className="font-semibold">
             Party size <span className="font-normal text-foreground/60">(optional)</span>
-            <input className={inputClass} max={10000} min={1} name="partySize" type="number" />
+            <input className={inputClass} defaultValue={request?.party_size ?? ""} max={10000} min={1} name="partySize" type="number" />
           </label>
         )}
         <label className="font-semibold sm:col-span-2">

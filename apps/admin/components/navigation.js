@@ -2,7 +2,7 @@
 
 import { Navbar } from "@ui/navbar";
 
-const PRIMARY_KEYS = new Set(["hayrides", "bookings", "maze-entries", "reservation-requests", "vendor-applications"]);
+const PRIMARY_KEYS = new Set(["hayrides", "bookings", "maze-entries", "reservation-requests", "campfire-requests", "vendor-applications"]);
 
 export default function Navigation() {
     return (
@@ -28,7 +28,12 @@ export default function Navigation() {
             {
               key: "reservation-requests",
               path: "/reservation-requests",
-              title: "Reservation Requests"
+              title: "Gazebo Requests"
+            },
+            {
+              key: "campfire-requests",
+              path: "/campfire-requests",
+              title: "Campfire Requests"
             }
           ]}
           actionItem={{

@@ -1,16 +1,24 @@
 import { getConfig, getConfigs } from '@/app/configs.server';
 import { normalizePricing } from '@/utils/pricingConfig';
+import defaultPricing from '@/public/data/pricing.json';
+
+function withPricingDefaults(raw) {
+  return {
+    ...normalizePricing(defaultPricing),
+    ...normalizePricing(raw),
+  };
+}
 
 export function extractPricingFromFlags(flags) {
-  return normalizePricing(flags?.configs?.pricing?.raw);
+  return withPricingDefaults(flags?.configs?.pricing?.raw);
 }
 
 export function extractPricingFromConfigs(configs) {
-  return normalizePricing(configs?.pricing?.raw);
+  return withPricingDefaults(configs?.pricing?.raw);
 }
 
 export function extractPricingFromConfig(config) {
-  return normalizePricing(config?.raw);
+  return withPricingDefaults(config?.raw);
 }
 
 export async function getPricingData(options = {}) {

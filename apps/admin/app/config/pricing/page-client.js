@@ -11,6 +11,7 @@ const PRICING_KEYS = [
     { key: "flower-cup", label: "Flower cup" },
     { key: "sunflower", label: "Sunflower stem" },
     { key: "gazebo-rental", label: "Gazebo rental" },
+    { key: "campfire-rental", label: "Campfire rental" },
 ];
 
 const EMPTY_ENTRY = { amount: null, per: "", notes: [] };
