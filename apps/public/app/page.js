@@ -136,13 +136,6 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className={styles.wrapper}>
-        {isFeatureEnabled("show_night_maze_ad", {
-          now: new Date()
-        }) && (
-            <NightMazeBanner />
-          )
-        }
-
         {/* {isFeatureEnabled("show_flood_banner") && (
           <FloodBanner />
         )} */}
@@ -156,6 +149,8 @@ export default async function Home() {
 
         <VisitOverview />
 
+        {isFeatureEnabled("show_night_maze_ad") && <NightMazeBanner />}
+        
         <Calendar />
 
         <ActivityShowcase />

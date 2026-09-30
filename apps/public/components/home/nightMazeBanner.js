@@ -1,34 +1,41 @@
 "use client";
+
+import Image from "next/image";
 import Link from "next/link";
 import { track } from "@vercel/analytics";
+import { ArrowRight, Campfire, Flashlight, MoonStars } from "phosphor-react";
+import styles from "./nightMazeBanner.module.css";
 
+const highlights = [
+  { Icon: Flashlight, label: "Corn maze after dark" },
+  { Icon: MoonStars, label: "Hayrides through the woods" },
+  { Icon: Campfire, label: "Private campfires" },
+];
 
 export default function NightMazeBanner() {
-    return (
-        <Link href="/activities/night-maze" onClick={() => {
-            track('Night Maze Click', { location: 'Banner' })
-            }}>
-            <div className="w-full px-5 py-2 bg-accent flex flex-row flex-wrap gap-4 justify-between items-center" style={{
-                backgroundImage: 'url(https://images.unsplash.com/photo-1716573253327-cda613725dca?q=80&w=1331&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
-                backgroundPosition: 'center',
-                backgroundSize: 'cover'
-            }}>
-                <div className="flex flex-row flex-wrap gap-2 md:gap-4">
-                    <div className="flex flex-col">
-                        <h1 className="text-4xl md:text-6xl font-bold text-accent/70 uppercase">Six Nights</h1>
-                        <span className="text-2xl md:text-3xl text-background/70 tracking-wider">at Old McDonald&apos;s!</span>
-                    </div>
-                    <ul className="flex flex-col flex-wrap font-bold text-background/70 list-disc list-inside">
-                        <li >Corn Maze in the dark</li>
-                        <li>Hayrides through the woods</li>
-                        <li>Bonfires</li>
-                        <li>Vendors</li>
-                    </ul>
-                </div>
-                <span className="text-md md:text-3xl text-foreground font-bold tracking-wider uppercase mr-10 bg-background/50 p-2">
-                    Click to Learn More
-                </span>
-            </div>
-        </Link>
-    )
+  return (
+    <section className={styles.promotion} aria-labelledby="night-maze-promo-heading">
+      <div className={styles.fog} aria-hidden="true" />
+      <div className={styles.inner}>
+        <div className={styles.imageWrap}>
+          <Image alt="Campfires glowing in the darkness during the Night Maze" className={styles.image} fill sizes="(max-width: 800px) 100vw, 50vw" src="/bonfires.jpg" />
+          <div className={styles.imageShade} aria-hidden="true" />
+          <div className={styles.dateCard}><span>Bring a flashlight</span><strong>October nights</strong></div>
+        </div>
+        <div className={styles.copy}>
+          <p className={styles.eyebrow}>Night Maze at Old McDonald&apos;s</p>
+          <h2 id="night-maze-promo-heading">Come see the farm after dark.</h2>
+          <p className={styles.intro}>Bring a flashlight and find your way through the corn maze at night. We&apos;ll also have hayrides, campfires, vendors, and the playground open.</p>
+          <ul className={styles.highlights}>
+            {highlights.map(({ Icon, label }) => <li key={label}><Icon aria-hidden="true" weight="duotone" /><span>{label}</span></li>)}
+          </ul>
+          <div className={styles.actions}>
+            <Link className={styles.primaryAction} href="/activities/night-maze" onClick={() => track("Night Maze Click", { location: "Home Promotion" })}>Night Maze details <ArrowRight aria-hidden="true" weight="bold" /></Link>
+            <Link className={styles.secondaryAction} href="/activities/night-maze#reservations" onClick={() => track("Campfire Reservation Click", { location: "Home Night Maze Promotion" })}><Campfire aria-hidden="true" weight="fill" /> Request a campfire</Link>
+          </div>
+          <p className={styles.disclaimer}>Submitting a campfire request does not reserve one. We&apos;ll contact you to confirm availability.</p>
+        </div>
+      </div>
+    </section>
+  );
 }
