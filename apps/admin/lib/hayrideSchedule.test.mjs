@@ -21,6 +21,14 @@ test("builds the Saturday template through the 10 PM night-maze slot", () => {
   assert.equal(slots.at(-1).label, "10:00 PM");
 });
 
+test("builds the Friday template starting at 10:30 AM", () => {
+  const slots = getSlotsForDate("2026-10-02");
+  assert.equal(slots[0].start, "2026-10-02T10:30:00");
+  assert.equal(slots[0].label, "10:30 AM");
+  assert.equal(slots[1].start, "2026-10-02T11:00:00");
+  assert.equal(slots.at(-1).start, "2026-10-02T22:00:00");
+});
+
 test("uses the farm's Eastern time zone when choosing the default date", () => {
   assert.equal(
     todayInHayrideTimeZone(new Date("2026-01-01T05:30:00.000Z")),
