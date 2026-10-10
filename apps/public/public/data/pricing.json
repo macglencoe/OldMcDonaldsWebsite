@@ -9,6 +9,16 @@
         "per": "person",
         "notes": ["Paid at the ticket booth"]
     },
+    "night-maze-admission": {
+        "amount": 7.00,
+        "per": "person",
+        "notes": ["Paid at the ticket booth"]
+    },
+    "night-maze-hayride": {
+        "amount": 3.00,
+        "per": "person",
+        "notes": ["Paid at the ticket booth"]
+    },
     "pumpkin-patch": {
         "amount": 0.50,
         "per": "pound",

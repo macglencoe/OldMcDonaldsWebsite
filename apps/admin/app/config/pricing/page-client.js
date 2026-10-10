@@ -7,6 +7,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 const PRICING_KEYS = [
     { key: "admission", label: "Admission" },
     { key: "hayride", label: "Hayride" },
+    { key: "night-maze-admission", label: "Night Maze admission" },
+    { key: "night-maze-hayride", label: "Night Maze hayride" },
     { key: "pumpkin-patch", label: "Pumpkin patch" },
     { key: "flower-cup", label: "Flower cup" },
     { key: "sunflower", label: "Sunflower stem" },

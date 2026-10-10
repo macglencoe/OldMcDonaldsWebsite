@@ -4,6 +4,8 @@
     "required": [
         "admission",
         "hayride",
+        "night-maze-admission",
+        "night-maze-hayride",
         "pumpkin-patch",
         "flower-cup",
         "sunflower",
@@ -14,6 +16,8 @@
     "properties": {
         "admission": { "$ref": "#/definitions/priceEntry" },
         "hayride": { "$ref": "#/definitions/priceEntry" },
+        "night-maze-admission": { "$ref": "#/definitions/priceEntry" },
+        "night-maze-hayride": { "$ref": "#/definitions/priceEntry" },
         "pumpkin-patch": { "$ref": "#/definitions/priceEntry" },
         "flower-cup": { "$ref": "#/definitions/priceEntry" },
         "sunflower": { "$ref": "#/definitions/priceEntry" },

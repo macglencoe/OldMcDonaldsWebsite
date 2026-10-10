@@ -5,15 +5,20 @@ import {
     ArticleLead,
     ArticleSection,
 } from "@/components/article";
-import { Action } from "@oldmc/ui";
 import CampfireReservationForm from "./campfireReservationForm";
+import { getPricingData } from "@/utils/pricingServer";
 
 export const metadata = {
     title: "Night Maze",
     description: "Brave the spooky Night Maze at Old McDonald’s Pumpkin Patch. Explore the corn maze after dark with hayrides, campfires, vendors, and fall night fun."
 }
 
-export const NightMaze = () => {
+export const NightMaze = async () => {
+    const pricing = await getPricingData();
+    const admissionPrice = Number(pricing["night-maze-admission"]?.amount ?? 0);
+    const hayridePrice = Number(pricing["night-maze-hayride"]?.amount ?? 0);
+    const admissionAndHayridePrice = admissionPrice + hayridePrice;
+
     return (
         <div className={styles.wrapper}>
             <Layout>
@@ -46,7 +51,7 @@ export const NightMaze = () => {
                         <div className="rounded-lg overflow-hidden">
                             <div className="p-4 bg-foreground/20">
                                 <h3 className="font-bold !font-serif">Admission:</h3>
-                                <p><span className="text-7xl font-bold">$7</span>, per person*</p>
+                                <p><span className="text-7xl font-bold">${admissionPrice}</span>, per person*</p>
                                 <p className="italic mt-3">Includes:</p>
                                 <ul>
                                     <li>Night Maze</li>
@@ -58,7 +63,7 @@ export const NightMaze = () => {
                             <hr className="border-background/30" />
                             <div className="p-4 bg-foreground/40">
                                 <h3 className="font-bold !font-serif">Admission + Hayride:</h3>
-                                <p><span className="text-7xl font-bold">$10</span>, per person*</p>
+                                <p><span className="text-7xl font-bold">${admissionAndHayridePrice}</span>, per person*</p>
                                 <p className="italic mt-3">Includes:</p>
                                 <ul>
                                     <li>Everything above</li>
