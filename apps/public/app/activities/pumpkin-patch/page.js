@@ -41,16 +41,16 @@ export const PumpkinPatch = async () => {
                     { value: "2", label: "Pumpkin patches", detail: "Along the farm lane" },
                     { value: `$${pumpkinAmount}`, label: `Per ${pumpkinUnit}`, detail: "For pumpkins from the patch" },
                     { value: "8+", label: "Varieties", detail: "Of pumpkins" },
-                    { value: "$0.00", label: "Fee", detail: "To use our wagons"}
+                    { value: "$0.00", label: "Fee", detail: "To use our wagons" }
                 ]} />
 
                 <ArticleCallout tone="quiet" className={styles.pricing}>
-                        <h2 className="text-center border-b-3">Pricing</h2>
-                        <p className="text-center">Pumpkins from the patch are priced at:</p>
-                        <p className="text-center text-3xl!">${pumpkinAmount} / {pumpkinUnit}</p>
-                        <PumpkinPriceGadget/>
-                        <p className="text-center">Pay at the weighing station, on your way back from the patch</p>
-                        <p className="text-center">Cash and cards accepted</p>
+                    <h2 className="text-center border-b-3">Pricing</h2>
+                    <p className="text-center">Pumpkins from the patch are priced at:</p>
+                    <p className="text-center text-3xl!">${pumpkinAmount} / {pumpkinUnit}</p>
+                    <PumpkinPriceGadget />
+                    <p className="text-center">Pay at the weighing station, on your way back from the patch</p>
+                    <p className="text-center">Cash and cards accepted</p>
                 </ArticleCallout>
 
                 <ArticleDivider label="Picking Pumpkins" />
@@ -96,6 +96,36 @@ export const PumpkinPatch = async () => {
                             </ul>
                         </section>
                     </div>
+                </ArticleCallout>
+
+                <ArticleCallout tone="quiet">
+                    <h2>Blue Hubbard Pie Recipe</h2>
+                    <h3>Ingredients</h3>
+                    <ul>
+                        <li>1 Blue Hubbard pumpkin, baked and pureed (see below) - 15 ounces of puree will be needed for one pie</li>
+                        <li>¾ cup sugar</li>
+                        <li>½ tsp salt</li>
+                        <li>1 tsp cinnamon</li>
+                        <li>½ tsp ground ginger</li>
+                        <li>¼ tsp cloves</li>
+                        <li>2 eggs</li>
+                        <li>1 can (12 fl. oz.) evaporated milk</li>
+                        <li>1 10" pie crust</li>
+                    </ul>
+                    <h3>Directions</h3>
+                    <ol>
+                        <li>Preheat oven to 400°F</li>
+                        <li>Cut the hubbard squash into several large chunks and arrange on jelly roll pan. Spritz with olive oil and bake for <b>45</b> minutes or until fork easily pierces flesh.</li>
+                        <li>Scoop flesh from peel, and puree</li>
+                        <li>Prepare pie crust in 9" pie pan</li>
+                        <li>Mix sugar, salt, cinnamon, ginger, and cloves in a small bowl. Beat eggs in a large bowl.</li>
+                        <li>Stir in squash puree and spice mixture. Gradually stir in evaporated milk. Pour pie filling into shell.</li>
+                        <li>Bake in <b>425°F</b> oven for <b>15</b> minutes. Reduce temperature to <b>350°F</b>; bake <b>40-50</b> minutes or until knife inserted near center comes out clean.</li>
+                        <li>Cool on wire rack 2 hours.</li>
+                        <li>Enjoy!</li>
+                    </ol>
+                    <h3>Notes</h3>
+                    <p>By reputation, the Blue Hubbard squash makes a better pumpkin pie than the standard pumpkin. According to tasters, the pie sure seemed to prove the case. This was my first pumpkin pie from scratch. It went over very well. Thanks Margaret Liskey!</p>
                 </ArticleCallout>
             </ArticleLayout>
         </Layout>
