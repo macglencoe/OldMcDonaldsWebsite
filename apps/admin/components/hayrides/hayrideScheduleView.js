@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { PiArrowsClockwiseBold } from "react-icons/pi";
 
 import {
-  HAYRIDE_TIME_ZONE,
   todayInHayrideTimeZone,
 } from "@/lib/hayrideSchedule.mjs";
 
@@ -32,7 +31,7 @@ function formatScheduleDate(dateString) {
   return parts.map((part) => part.type === "day" ? ordinal(day) : part.value).join("");
 }
 
-function FetchedStatus({ fetchedAt, lastUpdated }) {
+function FetchStatusWidget({ fetchedAt, lastUpdated, isFetching, onRefresh }) {
   const [, setTick] = useState(0);
 
   useEffect(() => {
@@ -40,14 +39,38 @@ function FetchedStatus({ fetchedAt, lastUpdated }) {
     return () => clearInterval(timer);
   }, []);
 
-  if (!fetchedAt) return <span className="text-sm text-foreground/60">Waiting for schedule data…</span>;
-  const seconds = Math.max(0, Math.round((Date.now() - new Date(fetchedAt).getTime()) / 1_000));
+  const seconds = fetchedAt
+    ? Math.max(0, Math.round((Date.now() - new Date(fetchedAt).getTime()) / 1_000))
+    : null;
+  const fetchedLabel = seconds === null
+    ? "Waiting…"
+    : seconds < 2
+      ? "Just now"
+      : `${seconds} seconds ago`;
 
   return (
-    <span className="text-sm text-foreground/60">
-      Fetched {seconds < 2 ? "just now" : `${seconds} seconds ago`}
-      {lastUpdated ? ` · Server response ${new Date(lastUpdated).toLocaleTimeString()}` : ""}
-    </span>
+    <aside
+      aria-label="Schedule refresh status"
+      className="fixed bottom-3 left-3 right-3 z-40 rounded-xl border border-foreground/15 bg-background/95 p-3 shadow-xl backdrop-blur sm:bottom-5 sm:left-auto sm:right-5 sm:w-72"
+    >
+      <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs">
+        <dt className="font-semibold text-foreground/60">Last fetched</dt>
+        <dd className="text-right font-medium text-foreground">{fetchedLabel}</dd>
+        <dt className="font-semibold text-foreground/60">Server response</dt>
+        <dd className="text-right font-medium text-foreground">
+          {lastUpdated ? new Date(lastUpdated).toLocaleTimeString() : "—"}
+        </dd>
+      </dl>
+      <button
+        type="button"
+        onClick={onRefresh}
+        disabled={isFetching}
+        className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-3 py-2 text-sm font-bold text-white hover:brightness-105 disabled:cursor-wait disabled:opacity-60"
+      >
+        <PiArrowsClockwiseBold aria-hidden="true" className={isFetching ? "animate-spin" : ""} />
+        {isFetching ? "Refreshing…" : "Refresh"}
+      </button>
+    </aside>
   );
 }
 
@@ -105,7 +128,7 @@ export default function HayrideScheduleView({ isEditable = false }) {
   }, []);
 
   return (
-    <main className="mx-auto flex max-w-5xl flex-col gap-7 px-3 py-8 sm:px-6">
+    <main className="mx-auto flex max-w-5xl flex-col gap-7 px-3 pb-36 pt-8 sm:px-6 sm:pb-32">
       <header className="rounded-2xl border border-accent/20 bg-gradient-to-br from-accent/10 to-background p-5 shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-5">
           <div>
@@ -133,29 +156,13 @@ export default function HayrideScheduleView({ isEditable = false }) {
               }}
               className="rounded-lg border border-foreground/20 bg-background px-3 py-2 text-foreground shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
             />
-            <div className="flex gap-2">
-              <Link
-                href={isEditable ? "/hayrides" : "/hayrides/edit"}
-                className="flex-1 rounded-lg border border-foreground/20 px-3 py-2 text-center text-sm font-semibold hover:bg-foreground/5"
-              >
-                {isEditable ? "View only" : "Edit counts"}
-              </Link>
-              <button
-                type="button"
-                onClick={() => fetchSchedule()}
-                disabled={isFetching}
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-3 py-2 text-sm font-bold text-white hover:brightness-105 disabled:cursor-wait disabled:opacity-60"
-              >
-                <PiArrowsClockwiseBold className={isFetching ? "animate-spin" : ""} />
-                Refresh
-              </button>
-            </div>
+            <Link
+              href={isEditable ? "/hayrides" : "/hayrides/edit"}
+              className="rounded-lg border border-foreground/20 px-3 py-2 text-center text-sm font-semibold hover:bg-foreground/5"
+            >
+              {isEditable ? "View only" : "Edit counts"}
+            </Link>
           </div>
-        </div>
-
-        <div className="mt-4 border-t border-foreground/10 pt-3">
-          <FetchedStatus fetchedAt={meta?.fetchedAt} lastUpdated={schedule?.lastUpdated} />
-          <span className="ml-2 text-xs text-foreground/40">({schedule?.timezone ?? HAYRIDE_TIME_ZONE})</span>
         </div>
         {error ? (
           <p role="alert" className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
@@ -176,6 +183,12 @@ export default function HayrideScheduleView({ isEditable = false }) {
           onWagonChange={handleWagonChange}
         />
       )}
+      <FetchStatusWidget
+        fetchedAt={meta?.fetchedAt}
+        lastUpdated={schedule?.lastUpdated}
+        isFetching={isFetching}
+        onRefresh={() => fetchSchedule()}
+      />
     </main>
   );
 }
