@@ -7,7 +7,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 const PRICING_KEYS = [
     { key: "admission", label: "Admission" },
     { key: "hayride", label: "Hayride" },
-    { key: "night-maze-admission", label: "Night Maze admission" },
+    { key: "night-maze-admission", label: "Night Pass" },
     { key: "night-maze-hayride", label: "Night Maze hayride" },
     { key: "pumpkin-patch", label: "Pumpkin patch" },
     { key: "flower-cup", label: "Flower cup" },
@@ -299,7 +299,7 @@ function PricingEntryEditor({ entry, onChange, label }) {
                     value={notesDraft}
                     onChange={(event) => handleNotesChange(event.target.value)}
                     className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-accent focus:outline-none"
-                    placeholder="Paid at the admission booth"
+                    placeholder="Paid at the ticket booth"
                 />
             </div>
         </div>

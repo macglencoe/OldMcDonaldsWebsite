@@ -36,12 +36,12 @@ export const NightMaze = async () => {
                         tone="night"
                     >
                         <p>Starting in October, we will have the maze and hayrides open from 7:30pm to 10:30*</p>
-                        <small>*Last admission at 10:00</small>
+                        <small>*Last Night Pass sold at 10:00</small>
                     </ArticleLead>
 
                     <ArticleSection
                         image="https://images.unsplash.com/photo-1715520928476-cd350276d96e?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=779"
-                        imageAlt="Admission tickets for the Night Maze"
+                        imageAlt="Night Pass tickets for the Night Maze"
                         imageAttribution
                         imagePosition="left"
                         imageFocalPoint="center 62%"
@@ -50,7 +50,7 @@ export const NightMaze = async () => {
                         <h2>Pricing</h2>
                         <div className="rounded-lg overflow-hidden">
                             <div className="p-4 bg-foreground/20">
-                                <h3 className="font-bold !font-serif">Admission:</h3>
+                                <h3 className="font-bold !font-serif">Night Pass:</h3>
                                 <p><span className="text-7xl font-bold">${admissionPrice}</span>, per person*</p>
                                 <p className="italic mt-3">Includes:</p>
                                 <ul>
@@ -62,7 +62,7 @@ export const NightMaze = async () => {
                             </div>
                             <hr className="border-background/30" />
                             <div className="p-4 bg-foreground/40">
-                                <h3 className="font-bold !font-serif">Admission + Hayride:</h3>
+                                <h3 className="font-bold !font-serif">Night Pass + Hayride:</h3>
                                 <p><span className="text-7xl font-bold">${admissionAndHayridePrice}</span>, per person*</p>
                                 <p className="italic mt-3">Includes:</p>
                                 <ul>
