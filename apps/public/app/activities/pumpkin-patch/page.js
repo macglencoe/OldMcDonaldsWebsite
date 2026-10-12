@@ -110,14 +110,14 @@ export const PumpkinPatch = async () => {
                         <li>¼ tsp cloves</li>
                         <li>2 eggs</li>
                         <li>1 can (12 fl. oz.) evaporated milk</li>
-                        <li>1 10" pie crust</li>
+                        <li>1 10&quot; pie crust</li>
                     </ul>
                     <h3>Directions</h3>
                     <ol>
                         <li>Preheat oven to 400°F</li>
                         <li>Cut the hubbard squash into several large chunks and arrange on jelly roll pan. Spritz with olive oil and bake for <b>45</b> minutes or until fork easily pierces flesh.</li>
                         <li>Scoop flesh from peel, and puree</li>
-                        <li>Prepare pie crust in 9" pie pan</li>
+                        <li>Prepare pie crust in 9&quot; pie pan</li>
                         <li>Mix sugar, salt, cinnamon, ginger, and cloves in a small bowl. Beat eggs in a large bowl.</li>
                         <li>Stir in squash puree and spice mixture. Gradually stir in evaporated milk. Pour pie filling into shell.</li>
                         <li>Bake in <b>425°F</b> oven for <b>15</b> minutes. Reduce temperature to <b>350°F</b>; bake <b>40-50</b> minutes or until knife inserted near center comes out clean.</li>
